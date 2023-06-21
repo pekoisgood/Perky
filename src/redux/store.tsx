@@ -1,13 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
-import postArticleReducer from "./postArticleSlice";import calenderReducer from "./calenderSlice";
-
 import { authReducer } from "./authSlice";
+
+import postArticleReducer from "./postArticleSlice";
+import calenderReducer from "./calenderSlice";
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
-    postArticle: postArticleReducer,    calender: calenderReducer,
-  }
+    postArticle: postArticleReducer,
+    calender: calenderReducer,
+  },
 });
 
 export type RootState = ReturnType<typeof store.getState>;
