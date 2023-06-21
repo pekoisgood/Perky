@@ -10,12 +10,10 @@ import ReactPlayer from "react-player";
 
 const ParticipantView = ({
   participantId,
-  participantCount,
   presenterId,
 }: {
   participantId: string;
-  participantCount: number;
-  presenterId: string | null;
+  presenterId: string;
 }) => {
   const micRef = useRef<HTMLAudioElement | null>(null);
   const autoPlay = useRef();
@@ -25,7 +23,6 @@ const ParticipantView = ({
     webcamOn,
     micOn,
     isLocal,
-    displayName,
     screenShareStream,
     screenShareAudioStream,
     screenShareOn,
@@ -40,7 +37,6 @@ const ParticipantView = ({
     }
   }, [webcamStream, webcamOn]);
 
-  // 分享螢幕
   const mediaStream = useMemo(() => {
     if (screenShareOn && screenShareStream) {
       const mediaStream = new MediaStream();
@@ -48,20 +44,6 @@ const ParticipantView = ({
       return mediaStream;
     }
   }, [screenShareStream, screenShareOn]);
-
-  //Callback for when the participant starts a stream
-  //   function onStreamEnabled(stream: any) {
-  //     if (stream.kind === "share") {
-  //       console.log("Share Stream On: onStreamEnabled", stream);
-  //     }
-  //   }
-
-  //Callback for when the participant stops a stream
-  //   function onStreamDisabled(stream:any) {
-  //     if (stream.kind === "share") {
-  //       console.log("Share Stream Off: onStreamDisabled", stream);
-  //     }
-  //   }
 
   useEffect(() => {
     if (micRef.current) {
@@ -81,25 +63,12 @@ const ParticipantView = ({
     }
   }, [micStream, micOn]);
 
-  useEffect(() => {}, [screenShareAudioStream, screenShareOn, isLocal]);
-
-  function toggleShowScreen() {
-    // if (screenShareOn && presenterId === participantId) {
-    //   return "abolute top-0 left-0 w-full flex items-center";
-    // } else if (screenShareOn) {
-    // }
-
-    if (participantCount !== 1 && isLocal) {
-      return "absolute bottom-0 right-0 w-[25%] rounded-md ";
-    } else {
-      return "flex border-[1px] border-solid border-rose-500 w-full min-h-200px items-center";
-    }
-  }
+  console.log(screenShareOn);
 
   return (
-    <div className={toggleShowScreen()}>
-      {webcamOn && (
-        <div className="w-[500px]">
+    <>
+      {webcamOn && participantId !== presenterId && (
+        <div className="w-full">
           <audio ref={micRef} autoPlay playsInline muted={isLocal} />
 
           <ReactPlayer
@@ -119,12 +88,7 @@ const ParticipantView = ({
         </div>
       )}
       {screenShareOn && (
-        // {/* //   className={
-        // // screenShareOn
-        // //   ? "absolute top-0 left-0 w-full"
-        // //   : "border-[1px] border-solid border-green-500"
-        // //   } */}
-        <div>
+        <div className="w-full">
           <ReactPlayer
             playsinline // very very imp prop
             playIcon={<></>}
@@ -142,7 +106,7 @@ const ParticipantView = ({
           />
         </div>
       )}
-    </div>
+    </>
   );
 };
 

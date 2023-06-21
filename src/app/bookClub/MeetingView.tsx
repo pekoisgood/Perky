@@ -5,36 +5,42 @@ import ParticipantView from "./ParticipantView";
 
 type PresenterId = null | string;
 
+type Participant = {
+  displayName: string;
+  id: string;
+  micOn: boolean;
+  local: boolean;
+  mode: string;
+  quality: string;
+  webcamOn: boolean;
+};
+
 const MeetingView = ({ meetingId }: { meetingId: string }) => {
-  const {
-    enableScreenShare,
-    disableScreenShare,
-    toggleScreenShare,
-    // useParticipant,
-    toggleMic,
-    toggleWebcam,
-  } = useMeeting();
+  const { toggleScreenShare, toggleMic, toggleWebcam } = useMeeting();
   const { leave, end } = useMeeting();
   const [joined, setJoined] = useState<boolean>(false);
   const [isMicOn, setIsMicOn] = useState<boolean>(true);
   const [isWebCamOn, setIsWebCamOn] = useState<boolean>(true);
   const [isScreenShare, setIsScreenShare] = useState<boolean>(false);
   const [presenterId, setPresenterId] = useState<string>("");
+  const [participantsId, setParticipantsId] = useState<string[]>([]);
 
-  //Get the method which will be used to join the meeting.
-  //We will also get the participants list to display all participants
   const { join, participants } = useMeeting({
     onPresenterChanged,
-    //callback for when meeting is joined successfully
-    // onMeetingJoined: () => {
-    //   setJoined(true);
-    // },
+    onParticipantJoined,
+    onMeetingLeft,
+    onParticipantLeft,
   });
 
   const joinMeeting = async () => {
     await join();
     setJoined(true);
   };
+
+  function onParticipantJoined(participant: Participant) {
+    console.log(" onParticipantJoined", participant);
+    setParticipantsId((prev) => [...prev, participant.id]);
+  }
 
   const handleToggleScreenShare = () => {
     toggleScreenShare();
@@ -57,6 +63,7 @@ const MeetingView = ({ meetingId }: { meetingId: string }) => {
     setPresenterId("");
     setIsMicOn(true);
     setIsWebCamOn(true);
+    setParticipantsId([]);
   };
 
   const handleEndMeeting = () => {
@@ -66,18 +73,16 @@ const MeetingView = ({ meetingId }: { meetingId: string }) => {
     setPresenterId("");
     setIsMicOn(true);
     setIsWebCamOn(true);
+    setParticipantsId([]);
   };
 
-  //Event to know meeting is left
-  //   function onMeetingLeft() {
-  //     console.log("onMeetingLeft");
-  //   }
+  function onMeetingLeft() {
+    console.log("onMeetingLeft");
+  }
 
-  //   function onParticipantLeft(participant) {
-  //     console.log(" onParticipantLeft", participant);
-  //   }
-
-  //   console.log(participants.keys());
+  function onParticipantLeft(participant: Participant) {
+    console.log(" onParticipantLeft", participant);
+  }
 
   const handleToggleMic = () => {
     toggleMic();
@@ -89,70 +94,78 @@ const MeetingView = ({ meetingId }: { meetingId: string }) => {
     setIsWebCamOn((prev) => !prev);
   };
 
-  return (
-    <div className="container border-2 border-rose-[200px] border-solid">
-      {joined ? (
-        <div>
-          {/* //   className={
-        // presenterId
-        //   ? "pb-[500px] relative border-2 border-black border-solid min-h-screen bg-sky-300"
-        //   :
-        // "relative border-2 border-black border-solid min-h-[300px] pb-[80px] bg-red-300"
-        //   } */}
+  // other participants
+  const otherParticipants = Array.from(participants.keys()).filter(
+    (id) => id === participantsId.find((participantId) => participantId === id)
+  );
 
-          <div
-            className={
-              // presenterId ? "absolute top-[50px] flex left-0" :
-              "flex relative"
-            }
-          >
-            {Array.from(participants.keys()).map((participantId: string) => (
-              <ParticipantView
-                participantCount={participants.size}
-                participantId={participantId}
-                presenterId={presenterId}
-                key={participantId}
-              />
-            ))}
-          </div>
-          <div>
-            <div className="flex gap-2">
-              <button
-                className="rounded-full bg-slate-200 px-4"
-                onClick={handleToggleScreenShare}
-              >
-                {isScreenShare ? "關閉螢幕分享" : "分享螢幕"}
-              </button>
-              <button
-                className="rounded-full bg-slate-200 px-4"
-                onClick={handleToggleMic}
-              >
-                {isMicOn ? "靜音" : "開聲音"}
-              </button>
-              <button
-                className="rounded-3xl bg-slate-200 px-4"
-                onClick={handleToggleWebCam}
-              >
-                {isWebCamOn ? "關閉鏡頭" : "開起鏡頭"}
-              </button>
-              <button
-                className="rounded-3xl bg-red-400 px-4"
-                onClick={() => handleLeaveMeeting()}
-              >
-                Leave Meeting
-              </button>
-              <button
-                className="rounded-3xl bg-red-400 px-4"
-                onClick={() => handleEndMeeting()}
-              >
-                End Meeting
-              </button>
+  const localParticipantId = Array.from(participants.keys())[0];
+
+  return (
+    <div className="container border-2 border-rose-[200px] border-solid flex flex-col h-full">
+      {joined ? (
+        <>
+          <div className="flex flex-col">
+            {/* presenter screen */}
+            {presenterId && (
+              <div className="w-full">
+                <ParticipantView
+                  participantId={presenterId}
+                  presenterId={presenterId}
+                />
+              </div>
+            )}
+            <div className={`flex ${presenterId && "h-[200px]"}`}>
+              {/* participant myself */}
+              {presenterId !== localParticipantId && (
+                <ParticipantView
+                  participantId={localParticipantId}
+                  presenterId={presenterId}
+                />
+              )}
+              {/* other participant */}
+              {otherParticipants.map((participantId: string) => (
+                <ParticipantView
+                  participantId={participantId}
+                  presenterId={presenterId}
+                  key={participantId}
+                />
+              ))}
             </div>
-            <div></div>
           </div>
-        </div>
-      ) : joined ? (
-        <p>Joining the meeting...</p>
+          <div className="flex gap-2 mt-auto mb-[20px]">
+            <button
+              className="rounded-full bg-slate-200 px-4"
+              onClick={handleToggleScreenShare}
+            >
+              {isScreenShare ? "關閉螢幕分享" : "分享螢幕"}
+            </button>
+            <button
+              className="rounded-full bg-slate-200 px-4"
+              onClick={handleToggleMic}
+            >
+              {isMicOn ? "靜音" : "開聲音"}
+            </button>
+            <button
+              className="rounded-3xl bg-slate-200 px-4"
+              onClick={handleToggleWebCam}
+            >
+              {isWebCamOn ? "關閉鏡頭" : "開起鏡頭"}
+            </button>
+            <button
+              className="rounded-3xl bg-red-400 px-4"
+              onClick={() => handleLeaveMeeting()}
+            >
+              Leave Meeting
+            </button>
+            <button
+              className="rounded-3xl bg-red-400 px-4"
+              onClick={() => handleEndMeeting()}
+            >
+              End Meeting
+            </button>
+          </div>
+        </>
       ) : (
         <div className="h-[300px] mt-4">
           <button
