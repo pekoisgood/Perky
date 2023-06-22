@@ -2,6 +2,7 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import React from "react";
 import ReduxProvider from "@/redux/provider";
+import { AuthContextProvider } from "@/context/AuthContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,11 +18,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <html lang="en">
-        <ReduxProvider>
+      <ReduxProvider>
+        <AuthContextProvider>
           <body className={`box-border ${inter.className}`}>{children}</body>
-        </ReduxProvider>
-      </html>
+        </AuthContextProvider>
+      </ReduxProvider>
     </html>
   );
 }
