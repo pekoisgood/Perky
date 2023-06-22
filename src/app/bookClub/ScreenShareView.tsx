@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import { useRef, useMemo, useEffect } from "react";
 import {
   MeetingProvider,
@@ -8,11 +7,11 @@ import {
 } from "@videosdk.live/react-sdk";
 import ReactPlayer from "react-player";
 
-const ParticipantView = ({
-  participantId,
+const ScreenShareView = ({
+  //   participantId,
   presenterId,
 }: {
-  participantId: string;
+  //   participantId: string;
   presenterId: string;
 }) => {
   const micRef = useRef<HTMLAudioElement | null>(null);
@@ -27,7 +26,7 @@ const ParticipantView = ({
     screenShareAudioStream,
     screenShareOn,
     // audioPlayer,
-  } = useParticipant(participantId);
+  } = useParticipant(presenterId);
 
   const videoStream = useMemo(() => {
     if (webcamOn && webcamStream) {
@@ -63,29 +62,12 @@ const ParticipantView = ({
     }
   }, [micStream, micOn]);
 
-  return (
-    <>
-      {webcamOn && (
-        <div className="w-full">
-          <audio ref={micRef} autoPlay playsInline muted={isLocal} />
+  console.log(presenterId, screenShareOn);
 
-          <ReactPlayer
-            playsinline // very very imp prop
-            pip={false}
-            light={false}
-            controls={false}
-            muted={false}
-            playing={true}
-            url={videoStream}
-            height={"100%"}
-            width={"100%"}
-            onError={(err) => {
-              console.log(err, "participant video error");
-            }}
-          />
-        </div>
-      )}
-      {/* {screenShareOn && presenterId === participantId && (
+  return (
+    <div>
+      ScreenShareView
+      {screenShareOn && presenterId && (
         <div className="w-full">
           <ReactPlayer
             playsinline // very very imp prop
@@ -103,9 +85,9 @@ const ParticipantView = ({
             }}
           />
         </div>
-      )} */}
-    </>
+      )}
+    </div>
   );
 };
 
-export default ParticipantView;
+export default ScreenShareView;

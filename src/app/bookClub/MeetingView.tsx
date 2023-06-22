@@ -2,6 +2,7 @@
 import { useMeeting } from "@videosdk.live/react-sdk";
 import { useEffect, useState } from "react";
 import ParticipantView from "./ParticipantView";
+import ScreenShareView from "./ScreenShareView";
 
 type PresenterId = null | string;
 
@@ -25,12 +26,13 @@ const MeetingView = ({ meetingId }: { meetingId: string }) => {
   const [presenterId, setPresenterId] = useState<string>("");
   const [participantsId, setParticipantsId] = useState<string[]>([]);
 
-  const { join, participants } = useMeeting({
-    onPresenterChanged,
-    onParticipantJoined,
-    onMeetingLeft,
-    onParticipantLeft,
-  });
+  const { join, participants, enableScreenShare, disableScreenShare } =
+    useMeeting({
+      onPresenterChanged,
+      onParticipantJoined,
+      onMeetingLeft,
+      onParticipantLeft,
+    });
 
   const joinMeeting = async () => {
     await join();
@@ -41,11 +43,6 @@ const MeetingView = ({ meetingId }: { meetingId: string }) => {
     console.log(" onParticipantJoined", participant);
     setParticipantsId((prev) => [...prev, participant.id]);
   }
-
-  const handleToggleScreenShare = () => {
-    toggleScreenShare();
-    setIsScreenShare((prev) => !prev);
-  };
 
   function onPresenterChanged(presenterId: PresenterId) {
     if (presenterId) {
@@ -94,12 +91,32 @@ const MeetingView = ({ meetingId }: { meetingId: string }) => {
     setIsWebCamOn((prev) => !prev);
   };
 
+  const handleToggleScreenShare = () => {
+    toggleScreenShare();
+    setIsScreenShare((prev) => !prev);
+    setPresenterId("");
+  };
+
   // other participants
   const otherParticipants = Array.from(participants.keys()).filter(
     (id) => id === participantsId.find((participantId) => participantId === id)
   );
 
   const localParticipantId = Array.from(participants.keys())[0];
+
+  const allParticipants = Array.from(participants.keys());
+
+  const handleEnableScreenShare = () => {
+    if (presenterId) return;
+
+    enableScreenShare();
+  };
+
+  const handleDisableScreenShare = () => {
+    disableScreenShare();
+    setPresenterId("");
+    console.log("disble!!");
+  };
 
   return (
     <div className="container border-2 border-rose-[200px] border-solid flex flex-col h-full">
@@ -109,22 +126,30 @@ const MeetingView = ({ meetingId }: { meetingId: string }) => {
             {/* presenter screen */}
             {presenterId && (
               <div className="w-full">
-                <ParticipantView
-                  participantId={presenterId}
+                <ScreenShareView
+                  // participantId={presenterId}
                   presenterId={presenterId}
                 />
               </div>
             )}
             <div className={`flex ${presenterId && "h-[200px]"}`}>
               {/* participant myself */}
-              {presenterId !== localParticipantId && (
+              {/* {localParticipantId && (
                 <ParticipantView
                   participantId={localParticipantId}
                   presenterId={presenterId}
                 />
-              )}
+              )} */}
               {/* other participant */}
-              {otherParticipants.map((participantId: string) => (
+              {/* {otherParticipants.map((participantId: string) => (
+                <ParticipantView
+                  participantId={participantId}
+                  presenterId={presenterId}
+                  key={participantId}
+                />
+              ))} */}
+              {/* all */}
+              {allParticipants.map((participantId: string) => (
                 <ParticipantView
                   participantId={participantId}
                   presenterId={presenterId}
@@ -135,10 +160,18 @@ const MeetingView = ({ meetingId }: { meetingId: string }) => {
           </div>
           <div className="flex gap-2 mt-auto mb-[20px]">
             <button
-              className="rounded-full bg-slate-200 px-4"
-              onClick={handleToggleScreenShare}
+              className={`rounded-full bg-slate-200 px-4 ${
+                presenterId && "hover:cursor-not-allowed"
+              }`}
+              onClick={handleEnableScreenShare}
             >
-              {isScreenShare ? "關閉螢幕分享" : "分享螢幕"}
+              分享螢幕
+            </button>
+            <button
+              className="rounded-full bg-slate-200 px-4"
+              onClick={handleDisableScreenShare}
+            >
+              停止分享螢幕
             </button>
             <button
               className="rounded-full bg-slate-200 px-4"
