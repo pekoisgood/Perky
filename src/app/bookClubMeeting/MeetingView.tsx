@@ -1,6 +1,6 @@
 "use client";
 import { useMeeting } from "@videosdk.live/react-sdk";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ParticipantView from "./ParticipantView";
 import ScreenShareView from "./ScreenShareView";
 
@@ -16,15 +16,13 @@ type Participant = {
   webcamOn: boolean;
 };
 
-const MeetingView = ({ meetingId }: { meetingId: string }) => {
-  const { toggleScreenShare, toggleMic, toggleWebcam } = useMeeting();
+const MeetingView = () => {
+  const { toggleMic, toggleWebcam } = useMeeting();
   const { leave, end } = useMeeting();
   const [joined, setJoined] = useState<boolean>(false);
   const [isMicOn, setIsMicOn] = useState<boolean>(true);
   const [isWebCamOn, setIsWebCamOn] = useState<boolean>(true);
-  const [isScreenShare, setIsScreenShare] = useState<boolean>(false);
   const [presenterId, setPresenterId] = useState<string>("");
-  const [participantsId, setParticipantsId] = useState<string[]>([]);
 
   const { join, participants, enableScreenShare, disableScreenShare } =
     useMeeting({
@@ -41,7 +39,6 @@ const MeetingView = ({ meetingId }: { meetingId: string }) => {
 
   function onParticipantJoined(participant: Participant) {
     console.log(" onParticipantJoined", participant);
-    setParticipantsId((prev) => [...prev, participant.id]);
   }
 
   function onPresenterChanged(presenterId: PresenterId) {
@@ -56,21 +53,17 @@ const MeetingView = ({ meetingId }: { meetingId: string }) => {
   const handleLeaveMeeting = () => {
     leave();
     setJoined(false);
-    setIsScreenShare(false);
     setPresenterId("");
     setIsMicOn(true);
     setIsWebCamOn(true);
-    setParticipantsId([]);
   };
 
   const handleEndMeeting = () => {
     end();
     setJoined(false);
-    setIsScreenShare(false);
     setPresenterId("");
     setIsMicOn(true);
     setIsWebCamOn(true);
-    setParticipantsId([]);
   };
 
   function onMeetingLeft() {
@@ -91,68 +84,40 @@ const MeetingView = ({ meetingId }: { meetingId: string }) => {
     setIsWebCamOn((prev) => !prev);
   };
 
-  const handleToggleScreenShare = () => {
-    toggleScreenShare();
-    setIsScreenShare((prev) => !prev);
-    setPresenterId("");
-  };
-
-  // other participants
-  const otherParticipants = Array.from(participants.keys()).filter(
-    (id) => id === participantsId.find((participantId) => participantId === id)
-  );
-
-  const localParticipantId = Array.from(participants.keys())[0];
-
   const allParticipants = Array.from(participants.keys());
 
   const handleEnableScreenShare = () => {
     if (presenterId) return;
-
     enableScreenShare();
   };
 
   const handleDisableScreenShare = () => {
     disableScreenShare();
     setPresenterId("");
-    console.log("disble!!");
   };
 
   return (
     <div className="container border-2 border-rose-[200px] border-solid flex flex-col h-full">
       {joined ? (
         <>
-          <div className="flex flex-col">
+          <div className={"flex flex-col"}>
             {/* presenter screen */}
             {presenterId && (
               <div className="w-full">
-                <ScreenShareView
-                  // participantId={presenterId}
-                  presenterId={presenterId}
-                />
+                {allParticipants.map((participantId: string) => (
+                  <ScreenShareView
+                    participantId={participantId}
+                    presenterId={presenterId}
+                    key={participantId}
+                    handleDisableScreenShare={handleDisableScreenShare}
+                  />
+                ))}
               </div>
             )}
             <div className={`flex ${presenterId && "h-[200px]"}`}>
-              {/* participant myself */}
-              {/* {localParticipantId && (
-                <ParticipantView
-                  participantId={localParticipantId}
-                  presenterId={presenterId}
-                />
-              )} */}
-              {/* other participant */}
-              {/* {otherParticipants.map((participantId: string) => (
-                <ParticipantView
-                  participantId={participantId}
-                  presenterId={presenterId}
-                  key={participantId}
-                />
-              ))} */}
-              {/* all */}
               {allParticipants.map((participantId: string) => (
                 <ParticipantView
                   participantId={participantId}
-                  presenterId={presenterId}
                   key={participantId}
                 />
               ))}

@@ -1,40 +1,20 @@
 "use client";
 import { useRef, useMemo, useEffect } from "react";
-import {
-  MeetingProvider,
-  useMeeting,
-  useParticipant,
-} from "@videosdk.live/react-sdk";
+import { useParticipant } from "@videosdk.live/react-sdk";
 import ReactPlayer from "react-player";
 
 const ScreenShareView = ({
-  //   participantId,
+  participantId,
   presenterId,
+  handleDisableScreenShare,
 }: {
-  //   participantId: string;
+  participantId: string;
   presenterId: string;
+  handleDisableScreenShare: () => void;
 }) => {
   const micRef = useRef<HTMLAudioElement | null>(null);
-  const autoPlay = useRef();
-  const {
-    webcamStream,
-    micStream,
-    webcamOn,
-    micOn,
-    isLocal,
-    screenShareStream,
-    screenShareAudioStream,
-    screenShareOn,
-    // audioPlayer,
-  } = useParticipant(presenterId);
-
-  const videoStream = useMemo(() => {
-    if (webcamOn && webcamStream) {
-      const mediaStream = new MediaStream();
-      mediaStream.addTrack(webcamStream.track);
-      return mediaStream;
-    }
-  }, [webcamStream, webcamOn]);
+  const { micStream, micOn, screenShareStream, screenShareOn } =
+    useParticipant(presenterId);
 
   const mediaStream = useMemo(() => {
     if (screenShareOn && screenShareStream) {
@@ -67,7 +47,7 @@ const ScreenShareView = ({
   return (
     <div>
       ScreenShareView
-      {screenShareOn && presenterId && (
+      {screenShareOn && presenterId === participantId && (
         <div className="w-full">
           <ReactPlayer
             playsinline // very very imp prop
@@ -84,6 +64,9 @@ const ScreenShareView = ({
               console.log(err, "presenter video error");
             }}
           />
+          <button onClick={handleDisableScreenShare}>
+            Disable screen share
+          </button>
         </div>
       )}
     </div>

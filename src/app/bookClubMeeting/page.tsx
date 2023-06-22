@@ -1,10 +1,9 @@
 "use client";
-import React from "react";
-import Video from "./Video";
 import { useState } from "react";
 
 import Chatroom from "./Chatroom";
 import Note from "./Note";
+import Video from "./Video";
 
 const Page = () => {
   const [isChatRoom, setIsChatroom] = useState(true);
@@ -50,7 +49,7 @@ const Page = () => {
                 isPreview={isPreview}
                 setIsPreview={setIsPreview}
               />
-            )}{" "}
+            )}
           </div>
         </div>
       </div>
