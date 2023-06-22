@@ -1,5 +1,4 @@
 "use client";
-"use client";
 import { db } from "@/utils/firebase";
 import {
   Timestamp,
@@ -7,8 +6,6 @@ import {
   getDocs,
   query,
   where,
-  or,
-  and,
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import Link from "next/link";

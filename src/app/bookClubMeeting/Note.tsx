@@ -1,13 +1,14 @@
 "use client";
-import { useState } from "react";
+// import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import {
-  materialDark,
-  materialLight,
-  oneLight,
-} from "react-syntax-highlighter/dist/cjs/styles/prism";
+import React from "react";
+// import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+// import {
+//   materialDark,
+//   materialLight,
+//   oneLight,
+// } from "react-syntax-highlighter/dist/cjs/styles/prism";
 
 const Note = ({
   text,
