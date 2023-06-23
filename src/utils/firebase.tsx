@@ -6,7 +6,15 @@ import {
   signInWithPopup,
   signOut,
 } from "firebase/auth";
-import { getFirestore, doc, setDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  serverTimestamp,
+  query,
+  where,
+  collection,
+} from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCbYjeFVcLpS-4FzXRPCFm32gjlhW2mMjg",
@@ -23,14 +31,24 @@ export const db = getFirestore(app);
 export const storage = getStorage();
 export const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
-export const signInwithGoogle = async () => {
+export const signInWithGoogle = async () => {
   try {
     const result = await signInWithPopup(auth, provider);
 
     const user = result.user;
     const userId: string = user.uid;
     const name = user.displayName;
-    await setDoc(doc(db, "users", userId), { userId, name });
+
+    const userRef = collection(db, "users");
+    const isUserExist = query(userRef, where("userId", "==", userId));
+
+    if (!isUserExist) {
+      await setDoc(doc(db, "users", userId), {
+        userId,
+        name,
+        createdAt: serverTimestamp(),
+      });
+    }
 
     return await result;
   } catch (error) {

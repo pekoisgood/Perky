@@ -7,8 +7,6 @@ import googleLogo from "./google.png";
 const SignIn = () => {
   const { isLogin, logIn, logOut, user } = useContext(AuthContext);
 
-  console.log(isLogin);
-
   return (
     <div className="w-screen h-screen flex flex-col justify-center items-center">
       <h1 className="mb-[30px]">Sign In Page</h1>
