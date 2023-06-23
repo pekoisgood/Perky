@@ -34,8 +34,17 @@ export const authSlice = createSlice({
         },
       };
     },
+    logout: () => {
+      return {
+        value: {
+          id: "",
+          name: "",
+          avatar: "",
+        },
+      };
+    },
   },
 });
 
-export const { login } = authSlice.actions;
+export const { login, logout } = authSlice.actions;
 export const authReducer = authSlice.reducer;
