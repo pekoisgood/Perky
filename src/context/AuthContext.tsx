@@ -1,6 +1,6 @@
 "use client";
 import React, { createContext, useEffect, useState } from "react";
-import { auth, signInwithGoogle, firebaseSignOut } from "@/utils/firebase";
+import { auth, signInWithGoogle, firebaseSignOut } from "@/utils/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 
 type User = {
@@ -47,12 +47,14 @@ export const AuthContextProvider = ({
   }, []);
 
   const logIn = async () => {
-    const result = await signInwithGoogle();
+    const result = await signInWithGoogle();
     if (!result) return;
+    setIsLogin(true);
   };
 
   const logOut = async () => {
     await firebaseSignOut();
+    setIsLogin(false);
   };
 
   return (
