@@ -1,12 +1,23 @@
 "use client";
 import React, { createContext, useEffect, useState } from "react";
-import { auth } from "@/utils/firebase";
+import { auth, signInwithGoogle, firebaseSignOut } from "@/utils/firebase";
 import { onAuthStateChanged } from "firebase/auth";
-import { useAppDispatch } from "@/redux/hooks";
-import { login } from "@/redux/authSlice";
+
+type User = {
+  id: string;
+  name: string;
+  avatar: string;
+};
 
 export const AuthContext = createContext({
   isLogin: false,
+  logIn: () => {},
+  logOut: () => {},
+  user: {
+    name: "",
+    avatar: "",
+    id: "",
+  },
 });
 
 export const AuthContextProvider = ({
@@ -15,26 +26,38 @@ export const AuthContextProvider = ({
   children: React.ReactNode;
 }) => {
   const [isLogin, setIsLogin] = useState(false);
-  const dispatch = useAppDispatch();
+  const [user, setUser] = useState<User>({ name: "", id: "", avatar: "" });
+
   useEffect(() => {
     const checkAuthStatus = async () => {
       onAuthStateChanged(auth, (user) => {
-        if (user) {
-          const name = user.displayName;
-          const avatar = user.photoURL;
-          const uid = user.uid;
-          dispatch(login({ name, avatar, uid }));
-
+        if (user && user.displayName && user.photoURL) {
+          setUser({
+            name: user.displayName,
+            id: user.uid,
+            avatar: user.photoURL,
+          });
           setIsLogin(true);
         } else {
-          console.log("user not log in");
+          setIsLogin(false);
         }
       });
     };
     checkAuthStatus();
   }, []);
 
+  const logIn = async () => {
+    const result = await signInwithGoogle();
+    if (!result) return;
+  };
+
+  const logOut = async () => {
+    await firebaseSignOut();
+  };
+
   return (
-    <AuthContext.Provider value={{ isLogin }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ isLogin, logIn, logOut, user }}>
+      {children}
+    </AuthContext.Provider>
   );
 };

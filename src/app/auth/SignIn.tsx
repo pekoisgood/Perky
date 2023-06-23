@@ -1,28 +1,17 @@
 "use client";
-import { signInwithGoogle } from "@/utils/firebase";
-import { useAppSelector, useAppDispatch } from "@/redux/hooks";
-import { login } from "@/redux/authSlice";
 import Image from "next/image";
 import { AuthContext } from "@/context/AuthContext";
 import { useContext } from "react";
+import googleLogo from "./google.png";
 
 const SignIn = () => {
-  const { isLogin } = useContext(AuthContext);
-  const user = useAppSelector((state) => state.auth.value);
-  const dispatch = useAppDispatch();
+  const { isLogin, logIn, logOut, user } = useContext(AuthContext);
 
-  const signIn = async () => {
-    const result = await signInwithGoogle();
-    if (!result) return;
-    const name = result.user.displayName;
-    const avatar = result.user.photoURL;
-    const id = result.user.uid;
-    dispatch(login({ name, id, avatar }));
-  };
+  console.log(isLogin);
 
   return (
-    <div className="w-screen h-full flex flex-col justify-center items-center">
-      <h1>Sign In</h1>
+    <div className="w-screen h-screen flex flex-col justify-center items-center">
+      <h1 className="mb-[30px]">Sign In Page</h1>
       {isLogin ? (
         <>
           <div>
@@ -35,9 +24,13 @@ const SignIn = () => {
             />
           </div>
           <h1>name: {user.name}</h1>
+          <button onClick={logOut}>Sign out</button>
         </>
       ) : (
-        <button onClick={signIn}>Sign in with google</button>
+        <div className="bg-white rounded-[5px] border-[1px] border-[#888] shadow-gray-400 shadow-md px-5 py-2 flex gap-1">
+          <Image src={googleLogo} width={24} height={24} alt="google logo" />
+          <button onClick={logIn}>Sign in with google</button>
+        </div>
       )}
     </div>
   );
