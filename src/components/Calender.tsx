@@ -5,7 +5,7 @@ import {
   hadlePrevMonth,
   handleNexMonth,
   handleSelectDate,
-} from "../../../redux/calenderSlice";
+} from "../redux/calenderSlice";
 
 const Calender = () => {
   const dispatch = useAppDispatch();

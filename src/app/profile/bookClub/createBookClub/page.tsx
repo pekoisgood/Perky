@@ -45,6 +45,7 @@ const Page = () => {
     const isValidTime = time > new Date();
 
     if (!bookClub.date || !bookClub.time || !bookClub.name || !isValidTime) {
+      window.alert("請將內容填寫完整");
       return;
     }
 
@@ -122,7 +123,7 @@ const Page = () => {
           <div onClick={handleAddGuest}>新增</div>
         </div>
         <div className="flex gap-2">
-          <p>讀書會成員 : </p>
+          <p>已加入讀書會成員 : </p>
           {bookClub.guest.map((userId) => {
             return (
               <div
