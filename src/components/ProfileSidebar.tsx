@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const ProfileSidebar = () => {
   return (
-    <div className="w-fit flex flex-col items-center gap-2 absolute top-[50%] left-[40px]">
+    <div className="w-fit flex flex-col items-center gap-2 absolute left-[40px] top-[50%] translate-y-[-50%] translate-x-[50%]">
       <div className="border-slate-500 border-[1px] rounded-full w-[80px] h-[80px] overflow-hidden object-cover">
         <Image src="/" alt="profile avatar" width={80} height={80} />
       </div>

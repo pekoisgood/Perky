@@ -11,7 +11,7 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { getDayPerMonth } from "../bookClub/Calender";
+import { getDayPerMonth } from "@/components/Calender";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -116,9 +116,9 @@ const Page = ({
   };
 
   return (
-    <div>
-      <Line options={options} data={data} width={500} height={400} />
-    </div>
+    <>
+      <Line options={options} data={data} width={500} height={500} />
+    </>
   );
 };
 

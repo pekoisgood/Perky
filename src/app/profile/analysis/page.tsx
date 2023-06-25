@@ -20,7 +20,7 @@ const Page = async () => {
 
   return (
     <div>
-      <h1>學習分析</h1>
+      <h1 className="w-fit mx-auto text-bold text-[25px] mb-2">學習分析</h1>
       <LineChart
         articleCreatedAtRecord={articleRecourdCreatedTime}
         bookClubTimeRecord={bookClubRecordCreatedTime}
