@@ -32,7 +32,7 @@ const Page = async () => {
         {myArticles.map((article) => {
           return (
             <Link
-              href={`/article?id=${article.id}`}
+              href={`/article/${article.id}`}
               className="border-slate-500 border-[1px] rounded-lg p-3"
               key={article.id}
             >

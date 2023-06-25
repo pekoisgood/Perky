@@ -2,6 +2,7 @@ import {
   DocumentData,
   collection,
   getDocs,
+  orderBy,
   query,
   where,
 } from "firebase/firestore";
@@ -12,10 +13,12 @@ export async function GET() {
   const articleRef = collection(db, "articles");
   const queryArticles = query(
     articleRef,
-    where("authorUserId", "==", "peko123")
+    where("authorUserId", "==", "peko123"),
+    orderBy("createdAt")
   );
   const result = await getDocs(queryArticles);
   let data: DocumentData[] = [];
+
   result.forEach((doc) => {
     data.push({ id: doc.id, ...doc.data() });
   });

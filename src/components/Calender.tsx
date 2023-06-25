@@ -7,6 +7,18 @@ import {
   handleSelectDate,
 } from "../redux/calenderSlice";
 
+export const getDayPerMonth = (m: number, y: number) => {
+  if (m === 2 && y % 4 === 0) {
+    return 29;
+  } else if (m === 2) {
+    return 28;
+  } else if (m % 2 === 0) {
+    return 30;
+  } else {
+    return 31;
+  }
+};
+
 const Calender = () => {
   const dispatch = useAppDispatch();
 
@@ -27,18 +39,6 @@ const Calender = () => {
     "Dec",
   ];
   const week = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
-
-  const getDayPerMonth = (m: number, y: number) => {
-    if (m === 2 && y % 4 === 0) {
-      return 29;
-    } else if (m === 2) {
-      return 28;
-    } else if (m % 2 === 0) {
-      return 30;
-    } else {
-      return 31;
-    }
-  };
 
   const getDate = (m: number, y: number) => {
     let arr = [];
