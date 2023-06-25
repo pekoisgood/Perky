@@ -20,39 +20,6 @@ const Video = () => {
     }
   );
 
-  // const getMeetingId = async (token: string) => {
-  //   try {
-  //     //We will use VideoSDK rooms API endpoint to create a meetingId
-  //     const VIDEOSDK_API_ENDPOINT = `https://api.videosdk.live/v2/rooms`;
-  //     const options = {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         // We will pass the token in the headers
-  //         Authorization: token,
-  //       },
-  //     };
-  //     const meetingId = await fetch(VIDEOSDK_API_ENDPOINT, options)
-  //       .then(async (result) => {
-  //         const { roomId } = await result.json();
-  //         console.log(roomId);
-  //         return roomId;
-  //       })
-  //       .catch((error) => console.log("error", error));
-
-  //     //we will return the meetingId which we got from the response of the api
-  //     return meetingId;
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
-
-  // const fetchMeetingIdandToken = async () => {
-  //   const newMeetingId = await getMeetingId(API_KEY);
-  //   console.log(newMeetingId);
-  //   setMeetingId(newMeetingId);
-  // };
-
   return (
     <div className="border-solid border-[1px] border-black h-full">
       {/* <button
