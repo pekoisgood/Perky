@@ -1,6 +1,4 @@
 "use client";
-import MeetingView from "./MeetingView";
-// import { MeetingProvider } from "@videosdk.live/react-sdk";
 // import { useState } from "react";
 import dynamic from "next/dynamic";
 
@@ -19,6 +17,9 @@ const Video = () => {
       ssr: false, // 關閉伺服器端渲染
     }
   );
+  const MeetingView = dynamic(() => import("../../components/MeetingView"), {
+    ssr: false,
+  });
 
   return (
     <div className="border-solid border-[1px] border-black h-full">

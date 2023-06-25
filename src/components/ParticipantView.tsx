@@ -38,7 +38,7 @@ const ParticipantView = ({ participantId }: { participantId: string }) => {
   return (
     <>
       {webcamOn && (
-        <div className={`${screenShareOn && "absolute bottom-0"}"w-full"`}>
+        <div className={`${screenShareOn && "max-h-[200px]"} `}>
           <audio ref={micRef} autoPlay playsInline muted={isLocal} />
           <ReactPlayer
             playsinline // very very imp prop

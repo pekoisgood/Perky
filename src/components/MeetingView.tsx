@@ -1,8 +1,9 @@
 "use client";
 import { useMeeting } from "@videosdk.live/react-sdk";
 import { useState } from "react";
-import ParticipantView from "./ParticipantView";
-import ScreenShareView from "./ScreenShareView";
+// import ParticipantView from "./ParticipantView";
+// import ScreenShareView from "./ScreenShareView";
+import dynamic from "next/dynamic";
 
 type PresenterId = null | string;
 
@@ -23,6 +24,15 @@ const MeetingView = () => {
   const [isMicOn, setIsMicOn] = useState<boolean>(true);
   const [isWebCamOn, setIsWebCamOn] = useState<boolean>(true);
   const [presenterId, setPresenterId] = useState<string>("");
+  console.log(joined);
+
+  const ParticipantView = dynamic(() => import("./ParticipantView"), {
+    ssr: false,
+  });
+
+  const ScreenShareView = dynamic(() => import("./ScreenShareView"), {
+    ssr: false,
+  });
 
   const { join, participants, enableScreenShare, disableScreenShare } =
     useMeeting({
@@ -33,6 +43,8 @@ const MeetingView = () => {
     });
 
   const joinMeeting = async () => {
+    console.log("joinnn!");
+
     await join();
     setJoined(true);
   };
@@ -114,7 +126,7 @@ const MeetingView = () => {
                 ))}
               </div>
             )}
-            <div className={`flex ${presenterId && "h-[200px]"}`}>
+            <div className={`flex gap-2 ${presenterId && "w-full"}`}>
               {allParticipants.map((participantId: string) => (
                 <ParticipantView
                   participantId={participantId}
