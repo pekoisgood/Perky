@@ -6,7 +6,7 @@ import { Article } from "@/app/article/postArticle/page";
 const Markdown = ({ article }: { article: Article }) => {
   return (
     <div>
-      <h1>{article.title}</h1>
+      <h1 className="text-bold text-[30px] text-center">{article.title}</h1>
       <ReactMarkdown remarkPlugins={[remarkGfm]} className="prose">
         {article.content}
       </ReactMarkdown>

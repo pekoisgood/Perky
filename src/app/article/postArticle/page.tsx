@@ -23,7 +23,7 @@ const Page = () => {
 
   const handleAddTag = () => {
     if (tagRef.current === null || tagRef.current.value === "") return;
-    if (!article.tags) {
+    if (article.tags) {
       setArticle((prev) => {
         return { ...prev, tags: [...prev.tags, tagRef.current!.value] };
       });
@@ -131,10 +131,12 @@ const Page = () => {
             <option value="Android">Android</option>
             <option value="data science">data science</option>
           </select>
-          <div>
+          <div className="flex flex-wrap w-[300px] gap-1">
             {article.tags.map((tag, index) => (
               <p key={index}>{tag}</p>
             ))}
+          </div>
+          <div>
             <label htmlFor="tag">Tag : </label>
             <input type="text" ref={tagRef} />
             <button onClick={() => handleAddTag()}>add tag</button>
