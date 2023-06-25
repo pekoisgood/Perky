@@ -1,9 +1,5 @@
-import React from "react";
-
-const Page = async ({ searchParams }: { searchParams: any }) => {
-  const req = await fetch("http:localhost:3000/api/getArticle");
-
-  return <div>Page: {searchParams.id}</div>;
+const Page = async () => {
+  return <div>Page</div>;
 };
 
 export default Page;
