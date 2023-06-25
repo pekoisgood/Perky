@@ -10,18 +10,6 @@ const ProfileSidebar = () => {
       <h1 className="hover:cursor-pont">Username</h1>
       <div className="flex flex-col w-[100px] border-[1px] border-slate-500 rounded-2xl justify-center items-center overflow-hidden py-1">
         <Link
-          href="/profile/goal"
-          className="flex items-center justify-center w-full hover:bg-slate-200 py-2"
-        >
-          學習目標
-        </Link>
-        <Link
-          href="/profile/plan"
-          className="flex items-center justify-center w-full hover:bg-slate-200 py-2"
-        >
-          讀書計畫
-        </Link>
-        <Link
           href="/profile/analysis"
           className="flex items-center justify-center w-full hover:bg-slate-200 py-2"
         >
