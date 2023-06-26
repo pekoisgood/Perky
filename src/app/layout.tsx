@@ -4,6 +4,8 @@ import React from "react";
 import ReduxProvider from "@/redux/provider";
 import { AuthContextProvider } from "@/context/AuthContext";
 
+import Header from "@/components/Header";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -20,6 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <ReduxProvider>
         <AuthContextProvider>
+          <Header />
           <body className={`box-border ${inter.className}`}>{children}</body>
         </AuthContextProvider>
       </ReduxProvider>
