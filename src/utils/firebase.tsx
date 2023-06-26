@@ -102,7 +102,7 @@ export type Article = {
   title: string;
   id: string;
   category: string[];
-  tag: string[];
+  tags: string[];
   createdAt: Timestamp;
 };
 
