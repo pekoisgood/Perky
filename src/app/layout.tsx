@@ -23,7 +23,9 @@ export default function RootLayout({
       <ReduxProvider>
         <AuthContextProvider>
           <Header />
-          <body className={`box-border ${inter.className}`}>{children}</body>
+          <body className={`box-border ${inter.className}`}>
+            <div className="pt-[60px] h-full">{children}</div>
+          </body>
         </AuthContextProvider>
       </ReduxProvider>
     </html>

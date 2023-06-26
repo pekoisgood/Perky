@@ -1,36 +1,18 @@
-import { Article } from "@/utils/firebase";
+import React from "react";
 import Link from "next/link";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
+import { Article } from "@/utils/firebase";
 
-export default async function Home() {
-  const articlesReq = await fetch(process.env.URL + "/api/articles");
-  const articles = await articlesReq.json();
-
-  const categories = [
-    "Frontend",
-    "Backend",
-    "IOS",
-    "Android",
-    "Leetcode",
-    "Others",
-  ];
+const Page = async ({ params }: { params: { category: string } }) => {
+  const category = params.category;
+  const categoryArticlesReq = await fetch(
+    process.env.URL + "/api/articles/" + category
+  );
+  const articles = await categoryArticlesReq.json();
 
   return (
-    <div className="flex h-full w-screen">
-      <div className="flex flex-col border-2 border-sky-900 w-[180px] h-full items-center gap-2 pt-5">
-        {categories.sort().map((category) => {
-          return (
-            <Link
-              href={`/articles/${category}`}
-              key={category}
-              className="bg-slate-200 py-1 px-3 rounded-2xl w-fit hover:cursor-pointer"
-            >
-              # {category}
-            </Link>
-          );
-        })}
-      </div>
-      <div className="border-2 border-sky-900 h-full grow p-3 pt-5 flex flex-col items-center gap-3">
+    <div className="flex w-screen border-2 border-sky-900">
+      <div className="h-full grow p-3 pt-5 flex flex-col items-center gap-3">
         {articles.map((article: Article) => {
           return (
             <Link
@@ -62,9 +44,8 @@ export default async function Home() {
           );
         })}
       </div>
-      <div className="border-2 border-sky-900 w-[180px] h-full">
-        trending article
-      </div>
     </div>
   );
-}
+};
+
+export default Page;
