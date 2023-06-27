@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { auth } from "@/utils/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { useAppDispatch } from "@/redux/hooks";
-import { logIn } from "@/redux/authSlice";
+import { logIn } from "@/redux/slice/authSlice";
 
 // type User = {
 //   id: string;

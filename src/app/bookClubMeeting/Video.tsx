@@ -17,9 +17,12 @@ const Video = () => {
       ssr: false, // 關閉伺服器端渲染
     }
   );
-  const MeetingView = dynamic(() => import("../../components/MeetingView"), {
-    ssr: false,
-  });
+  const MeetingView = dynamic(
+    () => import("../../components/videoMeeting/MeetingView"),
+    {
+      ssr: false,
+    }
+  );
 
   return (
     <div className="border-solid border-[1px] border-black h-full">

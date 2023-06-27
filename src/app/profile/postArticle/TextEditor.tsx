@@ -5,7 +5,7 @@ import StarterKit from "@tiptap/starter-kit";
 import React, { useEffect } from "react";
 import { MenuBar } from "./MenuBar";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { handleUpdateArticle } from "@/redux/postArticleSlice";
+import { handleUpdateArticle } from "@/redux/slice/postArticleSlice";
 
 const Page = () => {
   const dispatch = useAppDispatch();

@@ -1,4 +1,4 @@
-import ProfileSidebar from "@/components/ProfileSidebar";
+import ProfileSidebar from "@/app/profile/ProfileSidebar";
 import React from "react";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {

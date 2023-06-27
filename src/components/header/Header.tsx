@@ -1,9 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
+import Profile from "./Profile";
 
 const Header = () => {
   return (
-    <div className="fixed w-screen top-0 left-0 h-[60px] bg-slate-200 flex items-center px-4">
+    <div className="fixed w-full top-0 left-0 h-[60px] bg-slate-200 flex items-center px-4">
       <Link href="/" className="flex items-center gap-2">
         <Image src="/" width={20} height={20} alt="Perky logo" />
         <h1 className="font-bold text-[25px]">Perky</h1>
@@ -13,13 +14,13 @@ const Header = () => {
         <Link href="/">查看好文</Link>
       </div>
       <div className="w-fit ml-auto flex items-center gap-2">
-        <p>+ 撰寫貼文</p>
+        <Link href="/article/postArticle">+ 撰寫貼文</Link>
         <p>搜尋</p>
         <Link
           href="/profile"
-          className="border-2 border-slate-300 rounded-full p-2 flex items-center justify-center"
+          className="border-2 border-slate-300 rounded-full flex items-center justify-center w-[40px] h-[40px] overflow-hidden object-contain"
         >
-          <Image src="/" alt="user avatar" width={20} height={20} />
+          <Profile />
         </Link>
       </div>
     </div>

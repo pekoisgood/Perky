@@ -16,7 +16,7 @@ export default async function Home() {
   ];
 
   return (
-    <div className="flex h-full w-screen">
+    <div className="flex h-full w-full">
       <div className="flex flex-col border-2 border-sky-900 w-[180px] h-full items-center gap-2 pt-5">
         {categories.sort().map((category) => {
           return (
@@ -44,9 +44,10 @@ export default async function Home() {
               </p>
 
               <p>{article.authorName}</p>
-              <ReactMarkdown>{article.content.slice(0, 10)}</ReactMarkdown>
+              <ReactMarkdown>{article.content.slice(0, 50)}</ReactMarkdown>
+              <span>...</span>
               <div>
-                {article.tags.length > 0 &&
+                {article.tags &&
                   article.tags.map((tag: string, index: number) => {
                     return (
                       <p

@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { authReducer } from "./authSlice";
+import postArticleReducer from "./slice/postArticleSlice";
+import calenderReducer from "./slice/calenderSlice";
 
-import postArticleReducer from "./postArticleSlice";
-import calenderReducer from "./calenderSlice";
+import { authReducer } from "./slice/authSlice";
 
 export const store = configureStore({
   reducer: {
