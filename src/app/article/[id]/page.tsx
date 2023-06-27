@@ -1,6 +1,11 @@
+import { protocol, host } from "@/utils/url";
+
 const Page = async ({ params }: { params: { id: string } }) => {
   const articleId = params.id;
-  const req = await fetch(process.env.URL + "/api/getArticle/" + articleId);
+
+  const req = await fetch(
+    protocol + "://" + host + "/api/getArticle/" + articleId
+  );
   const article = await req.json();
 
   return (
