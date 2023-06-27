@@ -1,6 +1,14 @@
 "use client";
-import Markdown from "@/components/Markdown";
+
 import React, { useEffect, useRef, useState } from "react";
+import TextEditor from "./TextEditor";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import {
+  handlePostArticle,
+  handleUpdateArticle,
+} from "@/redux/postArticleSlice";
+import { storage } from "@/utils/firebase";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 export type Article = {
   title: string;
@@ -10,141 +18,138 @@ export type Article = {
 };
 
 const Page = () => {
-  const [article, setArticle] = useState<Article>({
-    title: "",
-    content: "",
-    category: "frontend",
-    tags: [],
-  });
-  const [preview, setPreview] = useState<boolean>(false);
-  console.log(article);
-
+  const [image, setImage] = useState<any>(null);
   const tagRef = useRef<HTMLInputElement | null>(null);
+
+  const dispatch = useAppDispatch();
+  const postArticle = useAppSelector((state) => state.postArticle.value);
 
   const handleAddTag = () => {
     if (tagRef.current === null || tagRef.current.value === "") return;
-    if (article.tags) {
-      setArticle((prev) => {
-        return { ...prev, tags: [...prev.tags, tagRef.current!.value] };
+    function capitalize(tag: string) {
+      const splitTagStrings = tag.split(" ");
+      const capitalizedTag = splitTagStrings.map((string) => {
+        return string[0].toUpperCase() + string.slice(1);
       });
-    } else {
-      setArticle((prev) => {
-        return { ...prev, tags: [tagRef.current!.value] };
-      });
+      return capitalizedTag.reduce((acc, cur) => acc + " " + cur);
     }
+    const tag = capitalize(tagRef.current.value);
+
+    dispatch(
+      handleUpdateArticle({
+        action: "UPDATE_TAGS",
+        value: tag,
+      })
+    );
   };
 
-  const click = async () => {
-    console.log("hi");
-
-    if (Object.values(article).includes("")) {
+  const handleSubmitArticle = async () => {
+    if (Object.values(postArticle).includes("") || !image) {
+      window.alert("請填寫完整");
       return;
     }
-    console.log("post");
+    if (image) {
+      const storageRef = ref(storage, `peko1234-${image.name}`);
+      await uploadBytes(storageRef, image);
+      const pathReference = ref(storage, `peko1234-${image.name}`);
+      const imageUrl = await getDownloadURL(pathReference).then(
+        (downloadURL: string) => {
+          return downloadURL;
+        }
+      );
 
-    await fetch("/api/postArticle", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title: article.title,
-        content: article.content,
-        category: article.category,
-        tags: article.tags,
-      }),
-    });
+      await fetch("/api/postArticle", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: postArticle.title,
+          content: postArticle.content,
+          category: postArticle.category,
+          tags: postArticle.tags,
+          image: imageUrl,
+        }),
+      });
+    }
 
-    setArticle({
-      title: "",
-      content: "",
-      category: "frontend",
-      tags: [],
-    });
+    dispatch(handlePostArticle());
   };
 
   useEffect(() => {
     if (tagRef.current) {
       tagRef.current.value = "";
     }
-  }, [article.tags]);
+  }, [postArticle.tags]);
 
   return (
     <div className="flex flex-col gap-2 w-fit mx-auto mt-10 border-[1px]">
       <h1 className="mx-auto border-[1px]">我要發文</h1>
-      <div className="flex gap-1 mx-auto">
-        <div
-          className="border-[1px] rounded-lg px-5 py-1 hover:cursor-pointer"
-          onClick={() => setPreview(false)}
-        >
-          編輯
-        </div>
-        <div
-          className="border-[1px] rounded-lg px-5 py-1 hover:cursor-pointer"
-          onClick={() => setPreview(true)}
-        >
-          預覽
-        </div>
-      </div>
-      {preview ? (
-        <Markdown article={article} />
-      ) : (
-        <div
-          // onSubmit={handleSubmitPostArticle}
-          className="flex flex-col gap-2"
-        >
+      <div className="flex flex-col gap-2">
+        <input
+          required
+          placeholder="標題"
+          className="border-[1px] px-3 py-2"
+          value={postArticle.title}
+          onChange={(e) =>
+            dispatch(
+              handleUpdateArticle({
+                action: "UPDATE_INPUTS",
+                key: "title",
+                value: e.target.value,
+              })
+            )
+          }
+        />
+        <div>
+          <label>上傳封面照</label>
           <input
-            required
-            placeholder="標題"
-            className="border-[1px] px-3 py-2"
-            value={article.title}
-            onChange={(e) =>
-              setArticle((prev) => {
-                return { ...prev, title: e.target.value };
-              })
-            }
+            type="file"
+            accept="image/*"
+            onChange={(e) => e.target.files && setImage(e.target.files[0])}
           />
-          <textarea
-            required
-            className="border-[1px] px-3 py-2"
-            onChange={(e) =>
-              setArticle((prev) => {
-                return { ...prev, content: e.target.value };
-              })
-            }
-            value={article.content}
-          />
+        </div>
+        <TextEditor />
+        <div className="flex gap-2 mx-auto border-[1px] border-slate-500 p-2">
           <label htmlFor="category">Category</label>
           <select
             required
             id="category"
             name="category"
             onChange={(e) => {
-              setArticle((prev) => {
-                return { ...prev, category: e.target.value };
-              });
+              dispatch(
+                handleUpdateArticle({
+                  action: "UPDATE_INPUTS",
+                  key: "category",
+                  value: e.target.value,
+                })
+              );
             }}
+            className="border-[1px] border-slate-200 rounded-sm"
           >
-            <option value="frontend">frontend</option>
-            <option value="backend">backend</option>
-            <option value="iOs">iOs</option>
+            <option value="Frontend">Frontend</option>
+            <option value="Backend">Backend</option>
+            <option value="IOS">IOS</option>
             <option value="Android">Android</option>
-            <option value="data science">data science</option>
+            <option value="Others">Others</option>
           </select>
-          <div className="flex flex-wrap w-[300px] gap-1">
-            {article.tags.map((tag, index) => (
-              <p key={index}>{tag}</p>
-            ))}
-          </div>
-          <div>
-            <label htmlFor="tag">Tag : </label>
-            <input type="text" ref={tagRef} />
-            <button onClick={() => handleAddTag()}>add tag</button>
-          </div>
-
-          <button onClick={click}>送出</button>
         </div>
-      )}
+        <div className="flex flex-wrap w-[300px] gap-1">
+          {postArticle.tags.map((tag, index) => (
+            <p key={index}>{tag}</p>
+          ))}
+        </div>
+        <div className="flex gap-2 mx-auto">
+          <label htmlFor="tag">Tag : </label>
+          <input
+            type="text"
+            ref={tagRef}
+            className="border-[1px] border-slate-200 rounded-sm"
+          />
+          <button onClick={() => handleAddTag()}>add tag</button>
+        </div>
+        <button onClick={handleSubmitArticle}>送出</button>
+      </div>
     </div>
   );
 };

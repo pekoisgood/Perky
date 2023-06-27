@@ -14,6 +14,7 @@ export async function POST(req: Request) {
     authorName: "Peko",
     authorUserId: "peko123",
     category: [data.category],
+    image: data.image,
   });
 
   return new NextResponse("hiiii");
