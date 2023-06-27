@@ -1,7 +1,11 @@
-import { protocol, host } from "@/utils/url";
+import { headers } from "next/dist/client/components/headers";
 
 const Page = async ({ params }: { params: { id: string } }) => {
   const articleId = params.id;
+
+  const headersData = headers();
+  const protocol = headersData.get("x-forwarded-proto");
+  const host = headersData.get("host");
 
   const req = await fetch(
     protocol + "://" + host + "/api/getArticle/" + articleId
