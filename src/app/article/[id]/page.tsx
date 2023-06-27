@@ -1,6 +1,7 @@
 import TextEditor from "@/components/TextEditor";
 import Image from "next/image";
 import SaveButton from "./SaveButton";
+import Link from "next/link";
 
 const Page = async ({ params }: { params: { id: string } }) => {
   const articleId = params.id;
@@ -39,9 +40,13 @@ const Page = async ({ params }: { params: { id: string } }) => {
         {article.tag &&
           article.tag.map((tag: string, index: number) => {
             return (
-              <p key={index} className="rounded-xl bg-sky-100 p-2">
+              <Link
+                href={`/articles/${tag}`}
+                key={index}
+                className="rounded-xl bg-sky-100 p-2"
+              >
                 {tag}
-              </p>
+              </Link>
             );
           })}
       </div>
