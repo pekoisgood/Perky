@@ -1,7 +1,7 @@
 "use client";
 
-import { useAppSelector } from "@/redux/hooks";
-import Calender from "@/components/date/Calender";
+import { useAppSelector } from "../../../redux/hooks";
+import Calender from "../../../components/date/Calender";
 import BookClubList from "./BookClubList";
 import Link from "next/link";
 

@@ -4,7 +4,7 @@ import React from "react";
 import ReduxProvider from "@/redux/provider";
 import { AuthContextProvider } from "@/context/AuthContext";
 
-import Header from "@/components/header/Header";
+import Header from "../components/header/Header";
 
 const inter = Inter({ subsets: ["latin"] });
 

@@ -1,4 +1,4 @@
-import TextEditor from "@/components/TextEditor";
+import TextEditor from "../../../components/note/TextEditor";
 import Image from "next/image";
 import SaveButton from "./SaveButton";
 import Link from "next/link";

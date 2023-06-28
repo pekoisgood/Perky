@@ -1,4 +1,4 @@
-import ProfileAvatar from "@/components/profile/ProfileAvatar";
+import ProfileAvatar from "../../components/profile/ProfileAvatar";
 import Link from "next/link";
 
 const ProfileSidebar = () => {
