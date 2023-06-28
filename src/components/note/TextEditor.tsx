@@ -17,7 +17,7 @@ lowlight.registerLanguage("css", css);
 lowlight.registerLanguage("js", js);
 lowlight.registerLanguage("ts", ts);
 
-const Page = (article: { article: string }) => {
+const Page = ({ article }: { article: string }) => {
   const editor = useEditor({
     editorProps: {
       attributes: {
@@ -47,7 +47,7 @@ const Page = (article: { article: string }) => {
   });
 
   return (
-    <div className="border-2 border-slate-500 mx-auto flex flex-col min-h-[200px] w-full">
+    <div className="mx-auto flex flex-col min-h-[200px] w-full">
       <EditorContent editor={editor} className="prose w-full pl-[13px]" />
     </div>
   );

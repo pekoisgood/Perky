@@ -6,7 +6,6 @@ import Link from "next/link";
 
 const Profile = () => {
   const { user, isLogin } = useContext(AuthContext);
-  console.log(isLogin);
 
   return (
     <>

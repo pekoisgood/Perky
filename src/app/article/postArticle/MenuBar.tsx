@@ -132,14 +132,14 @@ export const MenuBar = ({ editor }: Props) => {
         ordered list
       </button>
       {/* FIX ME : code block 壞掉, toggle 沒作用！ */}
-      <button
+      {/* <button
         onClick={() => editor.chain().focus().toggleCodeBlock().run()}
         className={`border-[1px] border-slate-200 p-1 rounded-md ${
           editor.isActive("codeBlock") ? "is-active" : ""
         }`}
       >
         code block
-      </button>
+      </button> */}
       <button
         onClick={() => editor.chain().focus().toggleBlockquote().run()}
         className={`border-[1px] border-slate-200 p-1 rounded-md ${
