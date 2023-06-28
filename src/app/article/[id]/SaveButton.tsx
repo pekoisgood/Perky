@@ -17,10 +17,8 @@ type Prop = {
 
 const SaveButton = ({ articleId }: Prop) => {
   const [isSaved, setIsSaved] = useState<boolean | null>(null);
-  console.log(isSaved);
 
   const handleSaveArticle = async () => {
-    console.log("Saved");
     if (isSaved) return;
 
     await setDoc(
@@ -54,9 +52,6 @@ const SaveButton = ({ articleId }: Prop) => {
         doc(db, "users", "8gj17HXyiJRAPaM52IJX", "savedArticles", articleId)
       );
       const isSaved = getArticle.data();
-
-      console.log(isSaved);
-
       if (isSaved) {
         setIsSaved(true);
       } else {

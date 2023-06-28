@@ -2,8 +2,8 @@
 
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import React, { useContext } from "react";
-import { AuthContext } from "@/context/AuthContext";
+import React from "react";
+// import { AuthContext } from "@/context/AuthContext";
 import { setDoc, doc } from "firebase/firestore";
 import { db } from "@/utils/firebase";
 
@@ -18,8 +18,7 @@ const Note = ({
   isPreview: boolean;
   setIsPreview: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const { user } = useContext(AuthContext);
-  console.log("user:", user);
+  // const { user } = useContext(AuthContext);
 
   const saveNote = async () => {
     if (!text) return;

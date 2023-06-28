@@ -1,5 +1,6 @@
 import { Timestamp } from "firebase/firestore";
 import Link from "next/link";
+import { headers } from "next/dist/client/components/headers";
 
 type Articles = {
   id: string;
@@ -14,7 +15,11 @@ type Articles = {
 };
 
 const Page = async () => {
-  const req = await fetch(process.env.URL + "/api/articleRecord");
+  const headersData = headers();
+  const protocol = headersData.get("x-forwarded-proto");
+  const host = headersData.get("host");
+
+  const req = await fetch(protocol + "://" + host + "/api/articleRecord");
   const myArticles: Articles[] = await req.json();
 
   return (

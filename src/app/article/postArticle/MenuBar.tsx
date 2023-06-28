@@ -10,7 +10,7 @@ export const MenuBar = ({ editor }: Props) => {
   }
 
   return (
-    <div className="flex gap-2 flex-wrap">
+    <div className="flex gap-2 flex-wrap mx-auto">
       <button
         onClick={() => editor.chain().focus().toggleBold().run()}
         disabled={!editor.can().chain().focus().toggleBold().run()}
@@ -47,10 +47,16 @@ export const MenuBar = ({ editor }: Props) => {
       >
         code
       </button>
-      <button onClick={() => editor.chain().focus().unsetAllMarks().run()}>
+      <button
+        onClick={() => editor.chain().focus().unsetAllMarks().run()}
+        className="border-[1px] border-slate-200 p-1 rounded-md"
+      >
         clear marks
       </button>
-      <button onClick={() => editor.chain().focus().clearNodes().run()}>
+      <button
+        onClick={() => editor.chain().focus().clearNodes().run()}
+        className="border-[1px] border-slate-200 p-1 rounded-md"
+      >
         clear nodes
       </button>
       <button
@@ -125,6 +131,7 @@ export const MenuBar = ({ editor }: Props) => {
       >
         ordered list
       </button>
+      {/* FIX ME : code block 壞掉, toggle 沒作用！ */}
       <button
         onClick={() => editor.chain().focus().toggleCodeBlock().run()}
         className={`border-[1px] border-slate-200 p-1 rounded-md ${
@@ -167,14 +174,81 @@ export const MenuBar = ({ editor }: Props) => {
       >
         redo
       </button>
-      {/* <button
-        onClick={() => editor.chain().focus().setColor("#958DF1").run()}
-        className={
-          editor.isActive("textStyle", { color: "#958DF1" }) ? "is-active" : ""
-        }
-      >
-        purple
-      </button> */}
+      <div className="flex gap-2">
+        <button
+          onClick={() => editor.chain().focus().setColor("#958DF1").run()}
+          className={
+            editor.isActive("textStyle", { color: "#958DF1" })
+              ? "is-active"
+              : ""
+          }
+        >
+          purple
+        </button>
+        <button
+          onClick={() => editor.chain().focus().setColor("#F98181").run()}
+          className={
+            editor.isActive("textStyle", { color: "#F98181" })
+              ? "is-active"
+              : ""
+          }
+        >
+          red
+        </button>
+        <button
+          onClick={() => editor.chain().focus().setColor("#FBBC88").run()}
+          className={
+            editor.isActive("textStyle", { color: "#FBBC88" })
+              ? "is-active"
+              : ""
+          }
+        >
+          orange
+        </button>
+        <button
+          onClick={() => editor.chain().focus().setColor("#FAF594").run()}
+          className={
+            editor.isActive("textStyle", { color: "#FAF594" })
+              ? "is-active"
+              : ""
+          }
+        >
+          yellow
+        </button>
+        <button
+          onClick={() => editor.chain().focus().setColor("#70CFF8").run()}
+          className={
+            editor.isActive("textStyle", { color: "#70CFF8" })
+              ? "is-active"
+              : ""
+          }
+        >
+          blue
+        </button>
+        <button
+          onClick={() => editor.chain().focus().setColor("#94FADB").run()}
+          className={
+            editor.isActive("textStyle", { color: "#94FADB" })
+              ? "is-active"
+              : ""
+          }
+        >
+          teal
+        </button>
+        <button
+          onClick={() => editor.chain().focus().setColor("#B9F18D").run()}
+          className={
+            editor.isActive("textStyle", { color: "#B9F18D" })
+              ? "is-active"
+              : ""
+          }
+        >
+          green
+        </button>
+        <button onClick={() => editor.chain().focus().unsetColor().run()}>
+          unsetColor
+        </button>
+      </div>
     </div>
   );
 };

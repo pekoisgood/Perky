@@ -104,6 +104,7 @@ export type Article = {
   category: string;
   tags: string[];
   createdAt: Timestamp;
+  image: string;
 };
 
 export type BookClub = {

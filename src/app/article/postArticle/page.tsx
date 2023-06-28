@@ -83,7 +83,7 @@ const Page = () => {
   }, [postArticle.tags]);
 
   return (
-    <div className="flex flex-col gap-2 w-fit mx-auto mt-10 border-[1px]">
+    <div className="flex flex-col gap-5 w-[800px] max-w-screen mx-auto mt-10 border-[1px]">
       <h1 className="mx-auto border-[1px]">我要發文</h1>
       <div className="flex flex-col gap-2">
         <input
@@ -102,7 +102,7 @@ const Page = () => {
           }
         />
         <div>
-          <label>上傳封面照</label>
+          <label className="mr-5">上傳封面照</label>
           <input
             type="file"
             accept="image/*"

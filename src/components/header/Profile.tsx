@@ -8,7 +8,9 @@ const Profile = () => {
 
   return (
     <>
-      <Image src={user.avatar} alt="user avatar" width={50} height={50} />
+      {user.avatar && (
+        <Image src={user.avatar} alt="user avatar" width={50} height={50} />
+      )}
     </>
   );
 };

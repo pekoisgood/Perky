@@ -78,7 +78,7 @@ const BookClubList = () => {
             return (
               <Link
                 key={index}
-                href={`bookClub/:${bookClub.id}`}
+                href={`bookClub/${bookClub.id}`}
                 className="p-4 border-solid border-slate-600 border-[1px] rounded-lg flex flex-col gap-2"
               >
                 <h3 className="text-[16px]">{bookClub.name}</h3>

@@ -8,7 +8,6 @@ const getMeetingId = async (token: string) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        // We will pass the token in the headers
         Authorization: token,
       },
     };

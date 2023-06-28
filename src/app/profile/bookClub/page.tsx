@@ -7,8 +7,7 @@ import Link from "next/link";
 
 const Page = () => {
   const date = useAppSelector((state) => state.calender.value);
-  const auth = useAppSelector((state) => state.auth.value);
-  console.log(auth);
+  // const auth = useAppSelector((state) => state.auth.value);
 
   return (
     <div className="flex flex-col items-center gap-10">

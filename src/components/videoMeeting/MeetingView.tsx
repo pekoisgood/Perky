@@ -5,17 +5,17 @@ import { useState } from "react";
 // import ScreenShareView from "./ScreenShareView";
 import dynamic from "next/dynamic";
 
-type PresenterId = null | string;
+// type PresenterId = null | string;
 
-type Participant = {
-  displayName: string;
-  id: string;
-  micOn: boolean;
-  local: boolean;
-  mode: string;
-  quality: string;
-  webcamOn: boolean;
-};
+// type Participant = {
+//   displayName: string;
+//   id: string;
+//   micOn: boolean;
+//   local: boolean;
+//   mode: string;
+//   quality: string;
+//   webcamOn: boolean;
+// };
 
 const MeetingView = () => {
   const { toggleMic, toggleWebcam } = useMeeting();
@@ -35,31 +35,29 @@ const MeetingView = () => {
 
   const { join, participants, enableScreenShare, disableScreenShare } =
     useMeeting({
-      onPresenterChanged,
-      onParticipantJoined,
-      onMeetingLeft,
-      onParticipantLeft,
+      // onPresenterChanged,
+      // onParticipantJoined,
+      // onMeetingLeft,
+      // onParticipantLeft,
     });
 
   const joinMeeting = async () => {
-    console.log("joinnn!");
-
     await join();
     setJoined(true);
   };
 
-  function onParticipantJoined(participant: Participant) {
-    console.log(" onParticipantJoined", participant);
-  }
+  // function onParticipantJoined(participant: Participant) {
+  //   console.log(" onParticipantJoined", participant);
+  // }
 
-  function onPresenterChanged(presenterId: PresenterId) {
-    if (presenterId) {
-      console.log(presenterId, "started screen share");
-      setPresenterId(presenterId);
-    } else {
-      console.log("someone stopped screen share");
-    }
-  }
+  // function onPresenterChanged(presenterId: PresenterId) {
+  //   if (presenterId) {
+  //     console.log(presenterId, "started screen share");
+  //     setPresenterId(presenterId);
+  //   } else {
+  //     console.log("someone stopped screen share");
+  //   }
+  // }
 
   const handleLeaveMeeting = () => {
     leave();
@@ -77,13 +75,13 @@ const MeetingView = () => {
     setIsWebCamOn(true);
   };
 
-  function onMeetingLeft() {
-    console.log("onMeetingLeft");
-  }
+  // function onMeetingLeft() {
+  //   console.log("onMeetingLeft");
+  // }
 
-  function onParticipantLeft(participant: Participant) {
-    console.log(" onParticipantLeft", participant);
-  }
+  // function onParticipantLeft(participant: Participant) {
+  //   console.log(" onParticipantLeft", participant);
+  // }
 
   const handleToggleMic = () => {
     toggleMic();

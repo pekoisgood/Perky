@@ -42,8 +42,6 @@ const ScreenShareView = ({
     }
   }, [micStream, micOn]);
 
-  console.log(presenterId, screenShareOn);
-
   return (
     <div>
       ScreenShareView

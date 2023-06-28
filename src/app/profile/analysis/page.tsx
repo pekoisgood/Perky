@@ -1,9 +1,14 @@
 import LineChart from "./LineChart";
 import { Article, BookClub } from "@/utils/firebase";
+import { headers } from "next/dist/client/components/headers";
 
 const Page = async () => {
+  const headersData = headers();
+  const protocol = headersData.get("x-forwarded-proto");
+  const host = headersData.get("host");
+
   const articleRecordReq = await fetch(
-    process.env.URL + "/api/analysis/article"
+    protocol + "://" + host + "/api/analysis/article"
   );
   const articleRecord = await articleRecordReq.json();
   const articleRecourdCreatedTime = articleRecord.map(
@@ -11,7 +16,7 @@ const Page = async () => {
   );
 
   const bookClubRecordReq = await fetch(
-    process.env.URL + "/api/analysis/bookClub"
+    protocol + "://" + host + "/api/analysis/bookClub"
   );
   const bookClubRecord = await bookClubRecordReq.json();
   const bookClubRecordCreatedTime = bookClubRecord.map(

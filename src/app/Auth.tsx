@@ -28,8 +28,6 @@ export const Auth = () => {
         }
       });
     };
-    console.log("authhh");
-
     checkAuthStatus();
   }, []);
 

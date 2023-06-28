@@ -6,7 +6,7 @@ import {
   where,
   getDocs,
   DocumentData,
-  limit,
+  orderBy,
 } from "firebase/firestore";
 
 export async function GET(
@@ -15,7 +15,11 @@ export async function GET(
 ) {
   const category = params.category;
   const ref = collection(db, "articles");
-  const q = query(ref, where("category", "==", category), limit(10));
+  const q = query(
+    ref,
+    where("category", "==", category),
+    orderBy("createdAt", "desc")
+  );
   const result = await getDocs(q);
   let data: DocumentData[] = [];
 

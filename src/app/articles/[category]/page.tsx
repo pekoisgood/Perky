@@ -2,11 +2,16 @@ import React from "react";
 import Link from "next/link";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import { Article } from "@/utils/firebase";
+import { headers } from "next/dist/client/components/headers";
 
 const Page = async ({ params }: { params: { category: string } }) => {
   const category = params.category;
+  const headersData = headers();
+  const protocol = headersData.get("x-forwarded-proto");
+  const host = headersData.get("host");
+
   const categoryArticlesReq = await fetch(
-    process.env.URL + "/api/articles/" + category
+    protocol + "://" + host + "/api/articles/" + category
   );
   const articles = await categoryArticlesReq.json();
 

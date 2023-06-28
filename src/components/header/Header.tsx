@@ -4,7 +4,7 @@ import Profile from "./Profile";
 
 const Header = () => {
   return (
-    <div className="fixed w-full top-0 left-0 h-[60px] bg-slate-200 flex items-center px-4">
+    <div className="fixed w-full top-0 left-0 h-[60px] bg-slate-200 flex items-center px-4 z-10">
       <Link href="/" className="flex items-center gap-2">
         <Image src="/" width={20} height={20} alt="Perky logo" />
         <h1 className="font-bold text-[25px]">Perky</h1>
