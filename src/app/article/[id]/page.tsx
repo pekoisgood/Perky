@@ -2,10 +2,18 @@ import TextEditor from "@/components/TextEditor";
 import Image from "next/image";
 import SaveButton from "./SaveButton";
 import Link from "next/link";
+import { headers } from "next/dist/client/components/headers";
 
 const Page = async ({ params }: { params: { id: string } }) => {
   const articleId = params.id;
-  const req = await fetch(process.env.URL + "/api/getArticle/" + articleId);
+
+  const headersData = headers();
+  const protocol = headersData.get("x-forwarded-proto");
+  const host = headersData.get("host");
+
+  const req = await fetch(
+    protocol + "://" + host + "/api/getArticle/" + articleId
+  );
   const article = await req.json();
 
   return (

@@ -40,7 +40,7 @@ export const signInWithGoogle = async () => {
     const result = await signInWithPopup(auth, provider);
 
     const user = result.user;
-    const userId: string = user.uid;
+    const userId = user.uid;
     const name = user.displayName;
 
     const userRef = collection(db, "users");
@@ -54,7 +54,7 @@ export const signInWithGoogle = async () => {
       });
     }
 
-    return await result;
+    return result;
   } catch (error) {
     console.log(error);
   }

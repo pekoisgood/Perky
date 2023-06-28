@@ -24,7 +24,6 @@ const MeetingView = () => {
   const [isMicOn, setIsMicOn] = useState<boolean>(true);
   const [isWebCamOn, setIsWebCamOn] = useState<boolean>(true);
   const [presenterId, setPresenterId] = useState<string>("");
-  console.log(joined);
 
   const ParticipantView = dynamic(() => import("./ParticipantView"), {
     ssr: false,

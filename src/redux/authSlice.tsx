@@ -5,6 +5,7 @@ type Auth = {
   id: string;
   name: string;
   avatar: string;
+  isLogin: boolean;
 };
 
 type InitialState = {
@@ -24,13 +25,13 @@ export const authSlice = createSlice({
   name: "auth",
   initialState: initialState,
   reducers: {
-    login: (state, actions) => {
+    logIn: (state, actions) => {
       return {
         value: {
-          ...state.value,
           id: actions.payload.id,
           name: actions.payload.name,
           avatar: actions.payload.avatar,
+          isLogin: true,
         },
       };
     },
@@ -40,11 +41,12 @@ export const authSlice = createSlice({
           id: "",
           name: "",
           avatar: "",
+          isLogin: false,
         },
       };
     },
   },
 });
 
-export const { login, logout } = authSlice.actions;
+export const { logIn, logout } = authSlice.actions;
 export const authReducer = authSlice.reducer;
