@@ -16,8 +16,6 @@ const Page = async ({ params }: { params: { id: string } }) => {
   );
   const article = await req.json();
 
-  console.log(article.content);
-
   return (
     <div className="w-[800px] border-slate-500 border-[1px] rounded-lg flex flex-col gap-2 items-center justify-center mx-auto py-3 mt-[50px]">
       {article.image && (

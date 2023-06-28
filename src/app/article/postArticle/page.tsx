@@ -18,7 +18,7 @@ export type Article = {
 };
 
 const Page = () => {
-  const [image, setImage] = useState<any>(null);
+  const [image, setImage] = useState<File | null>(null);
   const tagRef = useRef<HTMLInputElement | null>(null);
 
   const dispatch = useAppDispatch();

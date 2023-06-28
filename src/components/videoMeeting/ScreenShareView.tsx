@@ -42,8 +42,6 @@ const ScreenShareView = ({
     }
   }, [micStream, micOn]);
 
-  console.log("hi");
-
   return (
     <div>
       ScreenShareView

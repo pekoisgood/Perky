@@ -25,8 +25,6 @@ const MeetingView = () => {
   const [isWebCamOn, setIsWebCamOn] = useState<boolean>(true);
   const [presenterId, setPresenterId] = useState<string>("");
 
-  console.log(joined, isMicOn, isWebCamOn, presenterId);
-
   const ParticipantView = dynamic(() => import("./ParticipantView"), {
     ssr: false,
   });
@@ -54,10 +52,7 @@ const MeetingView = () => {
 
   function onPresenterChanged(presenterId: PresenterId) {
     if (presenterId) {
-      console.log(presenterId, "started screen share");
       setPresenterId(presenterId);
-    } else {
-      console.log("someone stopped screen share");
     }
   }
 

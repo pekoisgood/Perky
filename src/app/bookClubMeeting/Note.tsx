@@ -38,7 +38,7 @@ const Note = ({
   };
 
   return (
-    <div className="h-[95%] relative border-orange-400 border-2 flex flex-col">
+    <div className="h-full relative border-2 flex flex-col">
       <div
         className={` absolute top-2 right-2 hover:cursor-pointer p-2 rounded-b-lg  ${
           isPreview ? "bg-orange-200 font-medium" : " bg-orange-100 "
@@ -57,7 +57,7 @@ const Note = ({
       {isPreview && (
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
-          className={`w-full border-sky-500 border-[1px] prose
+          className={`w-full border-sky-500 border-[1px] prose overflow-scroll
             ${isPreview && "h-1/2"}`}
         >
           {/* <SyntaxHighlighter> */}
@@ -66,7 +66,7 @@ const Note = ({
         </ReactMarkdown>
       )}
       <button
-        className="p-2 bg-rose-500 text-white rounded-md w-fit ml-auto"
+        className="p-2 bg-rose-500 text-white rounded-md w-fit ml-auto active:translate-y-[2px] drop-shadow-lg"
         onClick={saveNote}
       >
         Save

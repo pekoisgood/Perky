@@ -38,7 +38,7 @@ const Page = () => {
     <div className="h-[1px] min-h-screen flex flex-col items-center mt-5 gap-3">
       <h2>我的收藏好文</h2>
       <div className="grid grid-cols-2 gap-2">
-        {articles.map((article: any, index: number) => {
+        {articles.map((article: Article, index: number) => {
           return (
             <Link
               href={`/article/${article.id}`}

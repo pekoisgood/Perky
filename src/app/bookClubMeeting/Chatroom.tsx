@@ -98,7 +98,7 @@ const Chatroom = ({
                 message.userId === userId ? "justify-end" : "justify-start"
               }`}
             >
-              {message.userId !== userId && <span>{message.user} : </span>}
+              {message.userId !== userId && <span>{message.user} :&ensp;</span>}
               {message.text}
             </div>
           ))}
