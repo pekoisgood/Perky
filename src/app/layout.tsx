@@ -4,6 +4,8 @@ import React from "react";
 import ReduxProvider from "@/redux/provider";
 import { AuthContextProvider } from "@/context/AuthContext";
 
+import Header from "@/components/header/Header";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -18,11 +20,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <ReduxProvider>
-        <AuthContextProvider>
-          <body className={`box-border ${inter.className}`}>{children}</body>
-        </AuthContextProvider>
-      </ReduxProvider>
+      <body className={`box-border ${inter.className}`}>
+        <ReduxProvider>
+          <AuthContextProvider>
+            <Header />
+            <div className="pt-[60px] h-full">{children}</div>
+          </AuthContextProvider>
+        </ReduxProvider>
+      </body>
     </html>
   );
 }

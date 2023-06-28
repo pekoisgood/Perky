@@ -1,7 +1,7 @@
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import remarkGfm from "remark-gfm";
 import React from "react";
-import { Article } from "@/app/article/postArticle/page";
+import { Article } from "@/app/profile/postArticle/page";
 
 const Markdown = ({ article }: { article: Article }) => {
   return (

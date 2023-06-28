@@ -11,7 +11,7 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { getDayPerMonth } from "@/components/Calender";
+import { getDayPerMonth } from "@/components/date/Calender";
 ChartJS.register(
   CategoryScale,
   LinearScale,

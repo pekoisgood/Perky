@@ -5,7 +5,7 @@ import {
   hadlePrevMonth,
   handleNexMonth,
   handleSelectDate,
-} from "../redux/calenderSlice";
+} from "../../redux/slice/calenderSlice";
 
 export const getDayPerMonth = (m: number, y: number) => {
   if (m === 2 && y % 4 === 0) {

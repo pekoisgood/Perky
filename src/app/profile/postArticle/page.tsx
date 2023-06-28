@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import {
   handlePostArticle,
   handleUpdateArticle,
-} from "@/redux/postArticleSlice";
+} from "@/redux/slice/postArticleSlice";
 import { storage } from "@/utils/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
