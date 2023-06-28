@@ -41,10 +41,6 @@ export default function CodeEditor() {
       return 74;
     } else if (language === "C") {
       return 51;
-    } else if (language === "Go") {
-      return 22;
-    } else if (language === "Rust") {
-      return 42;
     }
   };
 
@@ -63,10 +59,6 @@ export default function CodeEditor() {
       return [langs.typescript()];
     } else if (language === "C") {
       return [langs.c()];
-    } else if (language === "Go") {
-      return [langs.go()];
-    } else if (language === "Rust") {
-      return [langs.rust()];
     }
   };
 
@@ -122,6 +114,8 @@ export default function CodeEditor() {
       }
     } catch (err) {
       console.log("err", err);
+      setIsRunning(false);
+      setOutput("error");
     }
   };
 

@@ -4,6 +4,8 @@ import { db } from "@/utils/firebase";
 import {
   Timestamp,
   collection,
+  doc,
+  getDoc,
   getDocs,
   query,
   where,
@@ -11,6 +13,7 @@ import {
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useAppSelector } from "@/redux/hooks";
+import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 
 type bookClub = {
   id: string;
@@ -23,6 +26,24 @@ type bookClub = {
 const BookClubList = () => {
   const date = useAppSelector((state) => state.calender.value);
   const [bookClubs, setBookClubs] = useState<bookClub[] | []>([]);
+  const [isCheckNote, setIsCheckNote] = useState<boolean>(false);
+  const [note, setNote] = useState<string>("");
+
+  const getNote = async (articleId: string) => {
+    const result = await getDoc(
+      doc(
+        db,
+        "users",
+        "bGmbmzaDDaO6lbnInODlaCfb4V63",
+        "bookClubNotes",
+        articleId
+      )
+    );
+    const note = await result!.data();
+    if (!note) return;
+    setNote(note.note);
+    setIsCheckNote(true);
+  };
 
   useEffect(() => {
     const getBookClubList = async () => {
@@ -48,13 +69,15 @@ const BookClubList = () => {
 
       const bookClubRef = query(
         collection(db, "bookClubs"),
-        where("guest", "array-contains", "Peko"),
+        where("guest", "array-contains", "peko1234"),
         where("time", ">=", dateToday),
         where("time", "<", nextDate(year, month, day))
       );
 
       const bookClubs = await getDocs(bookClubRef);
       bookClubs.forEach((doc) => {
+        console.log(doc.data().time.toDate() < new Date());
+
         setBookClubs((prev) => [
           ...prev,
           {
@@ -76,16 +99,42 @@ const BookClubList = () => {
         {bookClubs.length > 0 &&
           bookClubs.map((bookClub, index) => {
             return (
-              <Link
+              <div
                 key={index}
-                href={`bookClub/${bookClub.id}`}
                 className="p-4 border-solid border-slate-600 border-[1px] rounded-lg flex flex-col gap-2"
               >
                 <h3 className="text-[16px]">{bookClub.name}</h3>
                 <p className="text-[12px]">
                   時間：{bookClub.time.toDate().toLocaleString()}
                 </p>
-              </Link>
+                <div className="flex gap-2">
+                  <Link
+                    href={
+                      bookClub.time.toDate() < new Date()
+                        ? ""
+                        : `bookClub/${bookClub.id}`
+                    }
+                    className={`${
+                      bookClub.time.toDate() < new Date() &&
+                      "hover:cursor-not-allowed bg-slate-300"
+                    } p-1 rounded-lg bg-sky-100 text-[12px]`}
+                  >
+                    點我進入
+                  </Link>
+                  <div
+                    onClick={() => getNote(bookClub.id)}
+                    className="p-1 rounded-lg bg-sky-100 text-[12px]"
+                  >
+                    查看筆記
+                  </div>
+                </div>
+                {isCheckNote && note && (
+                  <div className="border-2 border-sky-500 absolute top-0 left-0 w-full h-full bg-sky-50/95 flex flex-col items-center justify-center">
+                    <button onClick={() => setIsCheckNote(false)}>close</button>
+                    <ReactMarkdown>{note}</ReactMarkdown>
+                  </div>
+                )}
+              </div>
             );
           })}
       </div>

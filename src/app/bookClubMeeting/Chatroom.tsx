@@ -81,7 +81,7 @@ const Chatroom = ({
   }, []);
 
   return (
-    <div className="h-[97%]">
+    <div className="h-[95%]">
       <div className="w-fit">Room: {roomId}</div>
       <form
         onSubmit={(e) => handleSubmit(e)}

@@ -61,6 +61,7 @@ const Page = () => {
     };
     const bookClubRef = collection(db, "bookClubs");
     const docRef = await addDoc(bookClubRef, data);
+    window.alert("讀書會創立成功！");
     return docRef.id;
   };
 

@@ -36,7 +36,7 @@ const Side = () => {
 
   return (
     <>
-      <div className="flex flex-col px-2 w-full h-full">
+      <div className="flex flex-col px-2 w-full h-[96%]">
         <div className="flex gap-3 mb-3">
           <div
             className={"rounded-lg bg-orange-100 px-2 hover:cursor-pointer"}
@@ -61,7 +61,7 @@ const Side = () => {
             code
           </div>
         </div>
-        <div className="h-[95%]">{getSideBarFunction()}</div>
+        {getSideBarFunction()}
       </div>
     </>
   );

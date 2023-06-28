@@ -16,6 +16,13 @@ type PresenterId = null | string;
 //   quality: string;
 //   webcamOn: boolean;
 // };
+const ParticipantView = dynamic(() => import("./ParticipantView"), {
+  ssr: false,
+});
+
+const ScreenShareView = dynamic(() => import("./ScreenShareView"), {
+  ssr: false,
+});
 
 const MeetingView = () => {
   const { toggleMic, toggleWebcam } = useMeeting();
@@ -24,14 +31,6 @@ const MeetingView = () => {
   const [isMicOn, setIsMicOn] = useState<boolean>(true);
   const [isWebCamOn, setIsWebCamOn] = useState<boolean>(true);
   const [presenterId, setPresenterId] = useState<string>("");
-
-  const ParticipantView = dynamic(() => import("./ParticipantView"), {
-    ssr: false,
-  });
-
-  const ScreenShareView = dynamic(() => import("./ScreenShareView"), {
-    ssr: false,
-  });
 
   const { join, participants, enableScreenShare, disableScreenShare } =
     useMeeting({
