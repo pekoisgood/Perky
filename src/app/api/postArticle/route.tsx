@@ -13,7 +13,7 @@ export async function POST(req: Request) {
     tag: data.tags,
     authorName: "Peko",
     authorUserId: "peko123",
-    category: [data.category],
+    category: data.category,
     image: data.image,
   });
 

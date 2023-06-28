@@ -18,7 +18,7 @@ const initailState = {
   value: {
     title: "",
     content: "",
-    category: "frontend",
+    category: "Frontend",
     tags: [],
   } as Article,
 } as InitialStateValue;

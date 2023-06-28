@@ -1,8 +1,169 @@
 "use client";
-import React from "react";
 
-const CodeEditor = () => {
-  return <div>CodeEditor</div>;
-};
+import CodeMirror from "@uiw/react-codemirror";
+import { useState } from "react";
+import { vscodeDark } from "@uiw/codemirror-theme-vscode";
+import { langs } from "@uiw/codemirror-extensions-langs";
+import axios from "axios";
 
-export default CodeEditor;
+export default function CodeEditor() {
+  const [code, setCode] = useState("console.log('hello world')");
+  const [output, setOutput] = useState<string>("");
+  const [isRunning, setIsRunning] = useState(false);
+  const [language, setLanguage] = useState<string>("Javascript");
+
+  const langueges: string[] = [
+    "Javascript",
+    "Java",
+    "Python",
+    "Php",
+    "C",
+    "Ruby",
+    "Typescript",
+  ];
+
+  const handleRun = () => {
+    setIsRunning(true);
+    compile();
+  };
+
+  const getLanguageId = () => {
+    if (language === "Javascript") {
+      return 63;
+    } else if (language === "Java") {
+      return 62;
+    } else if (language === "Php") {
+      return 68;
+    } else if (language === "Python") {
+      return 71;
+    } else if (language === "Ruby") {
+      return 72;
+    } else if (language === "Typescript") {
+      return 74;
+    } else if (language === "C") {
+      return 51;
+    } else if (language === "Go") {
+      return 22;
+    } else if (language === "Rust") {
+      return 42;
+    }
+  };
+
+  const getExtensionLanguage = () => {
+    if (language === "Javascript") {
+      return [langs.javascript()];
+    } else if (language === "Java") {
+      return [langs.java()];
+    } else if (language === "Php") {
+      return [langs.php()];
+    } else if (language === "Python") {
+      return [langs.python()];
+    } else if (language === "Ruby") {
+      return [langs.ruby()];
+    } else if (language === "Typescript") {
+      return [langs.typescript()];
+    } else if (language === "C") {
+      return [langs.c()];
+    } else if (language === "Go") {
+      return [langs.go()];
+    } else if (language === "Rust") {
+      return [langs.rust()];
+    }
+  };
+
+  const compile = async () => {
+    const url = "https://judge0-ce.p.rapidapi.com/submissions";
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-RapidAPI-Key": "9e4c26e51emshfc0813ef8ed0cd6p1da66bjsn10776e17400e",
+        "X-RapidAPI-Host": "judge0-ce.p.rapidapi.com",
+      },
+      body: JSON.stringify({
+        language_id: getLanguageId(),
+        source_code: code,
+        stdin: "SnVkZ2Uw",
+      }),
+    };
+
+    try {
+      const response = await fetch(url, options);
+      const result = await response.text();
+      const token = result.split(":")[1].split("}")[0].split('"')[1];
+      checkStatus(token);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const checkStatus = async (token: string) => {
+    const options = {
+      method: "GET",
+      url: `https://judge0-ce.p.rapidapi.com/submissions/${token}`,
+      params: { base64_encoded: "true", fields: "*" },
+      headers: {
+        "X-RapidAPI-Key": "9e4c26e51emshfc0813ef8ed0cd6p1da66bjsn10776e17400e",
+        "X-RapidAPI-Host": "judge0-ce.p.rapidapi.com",
+      },
+    };
+    try {
+      let response = await axios.request(options);
+      if (!response.data.status) return;
+      let statusId: number = response.data.status.id;
+
+      if (statusId === 1 || statusId === 2) {
+        setTimeout(() => {
+          checkStatus(token);
+        }, 2000);
+        return;
+      } else {
+        setOutput(atob(response.data.stdout));
+        setIsRunning(false);
+
+        return;
+      }
+    } catch (err) {
+      console.log("err", err);
+    }
+  };
+
+  return (
+    <>
+      <CodeMirror
+        value='console.log("hello world")'
+        height="200px"
+        extensions={getExtensionLanguage()}
+        theme={vscodeDark}
+        id="editor"
+        onChange={(editor) => {
+          setCode(editor);
+        }}
+      />
+      <div className="flex justify-between mt-[5px]">
+        <button
+          onClick={handleRun}
+          className="border-[1px] border-slate-300 p-[5px] rounded-lg"
+        >
+          {isRunning ? "running" : "run"}
+        </button>
+        <select
+          className="border-[1px] border-slate-400 rounded-lg"
+          onChange={(e) => setLanguage(e.target.value)}
+        >
+          {langueges.map((lan, index) => {
+            return (
+              <option key={index} value={lan}>
+                {lan}
+              </option>
+            );
+          })}
+        </select>
+      </div>
+      <div className="border-[1px] border-black m-[10px] p-[10px] rounded-lg">
+        <h2 className="m-0">output:</h2>
+        <div className="pl-[10px]">{output}</div>
+      </div>
+    </>
+  );
+}

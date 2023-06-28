@@ -3,6 +3,7 @@ import { useState } from "react";
 
 import Chatroom from "./Chatroom";
 import Note from "./Note";
+import CodeEditor from "./CodeEditor";
 
 const sidebarFunc = ["CHATROOM", "NOTE", "CODE EDITOR"];
 
@@ -25,7 +26,11 @@ const Side = () => {
         />
       );
     } else {
-      return <div>Code editor</div>;
+      return (
+        <div className="full">
+          <CodeEditor />
+        </div>
+      );
     }
   };
 

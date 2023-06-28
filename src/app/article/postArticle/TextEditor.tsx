@@ -34,7 +34,7 @@ const Page = () => {
     editorProps: {
       attributes: {
         class:
-          "prose dark:prose-invert prose-sm sm:prose-base lg:prose-lg xl:prose-2xl focus:outline-none p-3 border-slate-500 border-[1px] rounded-lg w-full",
+          "prose dark:prose-invert prose-md focus:outline-none p-3 border-slate-500 border-[1px] rounded-lg w-full",
       },
     },
     extensions: [
