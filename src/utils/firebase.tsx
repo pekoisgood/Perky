@@ -14,6 +14,10 @@ import {
   query,
   where,
   collection,
+  WhereFilterOp,
+  DocumentData,
+  getDocs,
+  Timestamp,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -66,3 +70,48 @@ export const firebaseSignOut = async () => {
 export const provider = googleProvider.setCustomParameters({
   prompt: "select_account",
 });
+
+export async function getRecord(
+  category: string,
+  queryItem: string,
+  operator: WhereFilterOp,
+  userId: string,
+  time: string
+) {
+  const dateOffset = 24 * 60 * 60 * 1000 * 6; // 7days
+  const today = new Date(new Date().toLocaleString().split(" ")[0]).getTime();
+  const lastWeek = new Date(today - dateOffset);
+
+  let data: DocumentData[] = [];
+  const articleRef = collection(db, category);
+  const queryArticles = await query(
+    articleRef,
+    where(queryItem, operator, userId),
+    where(time, ">=", lastWeek)
+  );
+  const result = await getDocs(queryArticles);
+  result.forEach((doc) => data.push(doc.data()));
+
+  return data;
+}
+
+export type Article = {
+  authorName: string;
+  authorUserId: string;
+  content: string;
+  title: string;
+  id: string;
+  category: string[];
+  tag: string[];
+  createdAt: Timestamp;
+};
+
+export type BookClub = {
+  host: string;
+  name: string;
+  roomId: string;
+  time: Timestamp;
+  createdAt: Timestamp;
+  attendees: string[];
+  guest: string[];
+};
