@@ -2,7 +2,7 @@ import { Article } from "@/utils/firebase";
 import Image from "next/image";
 import Link from "next/link";
 import { headers } from "next/dist/client/components/headers";
-import ArticleSnippet from "@/components/Article/ArticleSnippet";
+import ArticleSnippet from "@/components/article/ArticleSnippet";
 import TrendingArticles from "./TrendingArticles";
 
 export default async function Home() {
@@ -86,7 +86,6 @@ export default async function Home() {
       </div>
       <div className="border-2 border-sky-900 w-[300px] h-full flex flex-col gap-3 p-1">
         <h2>Tredning Articles</h2>
-        {/* @ts-expect-error Server Component */}
         <TrendingArticles />
       </div>
     </div>

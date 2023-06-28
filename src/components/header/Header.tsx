@@ -16,12 +16,7 @@ const Header = () => {
       <div className="w-fit ml-auto flex items-center gap-2">
         <Link href="/article/postArticle">+ 撰寫貼文</Link>
         <p>搜尋</p>
-        <Link
-          href="/profile"
-          className="border-2 border-slate-300 rounded-full flex items-center justify-center w-[40px] h-[40px] overflow-hidden object-contain"
-        >
-          <Profile />
-        </Link>
+        <Profile />
       </div>
     </div>
   );

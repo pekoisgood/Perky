@@ -1,4 +1,7 @@
-import { headers } from "next/dist/client/components/headers";
+"use client";
+import React, { useEffect, useState } from "react";
+import { collection, getDocs, orderBy, query, limit } from "firebase/firestore";
+import { db } from "@/utils/firebase";
 import Link from "next/link";
 
 interface TrendingArticle {
@@ -8,19 +11,33 @@ interface TrendingArticle {
   id: string;
 }
 
-const TrendingArticles = async () => {
-  const headersData = headers();
-  const protocol = headersData.get("x-forwarded-proto");
-  const host = headersData.get("host");
-  const articlesReq = await fetch(
-    protocol + "://" + host + "/api/articles/savedCount"
-  );
-
-  const trendingArticles: TrendingArticle[] = await articlesReq.json();
+const TrendingArticles = () => {
+  const [articles, setArticles] = useState<TrendingArticle[]>([]);
+  useEffect(() => {
+    const getArticle = async () => {
+      let data: TrendingArticle[] = [];
+      const q = query(
+        collection(db, "articles"),
+        orderBy("savedCount", "desc"),
+        limit(5)
+      );
+      const result = await getDocs(q);
+      result.forEach((doc) => {
+        data.push({
+          id: doc.id,
+          title: doc.data().title,
+          authorName: doc.data().authorName,
+          savedCount: doc.data().savedCount,
+        });
+      });
+      setArticles(data);
+    };
+    getArticle();
+  }, []);
 
   return (
     <>
-      {trendingArticles.map((article: TrendingArticle, index: number) => {
+      {articles.map((article: TrendingArticle, index: number) => {
         return (
           <Link
             href={`/article/${article.id}`}

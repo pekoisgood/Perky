@@ -22,7 +22,13 @@ const SaveButton = ({ articleId }: Prop) => {
     if (isSaved) return;
 
     await setDoc(
-      doc(db, "users", "8gj17HXyiJRAPaM52IJX", "savedArticles", articleId),
+      doc(
+        db,
+        "users",
+        "bGmbmzaDDaO6lbnInODlaCfb4V63",
+        "savedArticles",
+        articleId
+      ),
       {
         articleId: articleId,
         createdAt: serverTimestamp(),
@@ -37,7 +43,13 @@ const SaveButton = ({ articleId }: Prop) => {
 
   const handleUnSaveArticle = async () => {
     await deleteDoc(
-      doc(db, "users", "8gj17HXyiJRAPaM52IJX", "savedArticles", articleId)
+      doc(
+        db,
+        "users",
+        "bGmbmzaDDaO6lbnInODlaCfb4V63",
+        "savedArticles",
+        articleId
+      )
     );
     await updateDoc(doc(db, "articles", articleId), {
       savedCount: increment(-1),
@@ -49,7 +61,13 @@ const SaveButton = ({ articleId }: Prop) => {
   useEffect(() => {
     const checkSavedArticle = async () => {
       const getArticle = await getDoc(
-        doc(db, "users", "8gj17HXyiJRAPaM52IJX", "savedArticles", articleId)
+        doc(
+          db,
+          "users",
+          "bGmbmzaDDaO6lbnInODlaCfb4V63",
+          "savedArticles",
+          articleId
+        )
       );
       const isSaved = getArticle.data();
       if (isSaved) {
