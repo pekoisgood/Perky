@@ -2,7 +2,7 @@ import { Article } from "@/utils/firebase";
 import Image from "next/image";
 import Link from "next/link";
 import { headers } from "next/dist/client/components/headers";
-import ArticleSnippet from "../components/article/ArticleSnippet";
+import ArticleSnippet from "./ArticleSnippet";
 import TrendingArticles from "./TrendingArticles";
 
 export default async function Home() {
