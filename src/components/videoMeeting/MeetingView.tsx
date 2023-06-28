@@ -5,7 +5,7 @@ import { useState } from "react";
 // import ScreenShareView from "./ScreenShareView";
 import dynamic from "next/dynamic";
 
-// type PresenterId = null | string;
+type PresenterId = null | string;
 
 // type Participant = {
 //   displayName: string;
@@ -25,6 +25,8 @@ const MeetingView = () => {
   const [isWebCamOn, setIsWebCamOn] = useState<boolean>(true);
   const [presenterId, setPresenterId] = useState<string>("");
 
+  console.log(joined, isMicOn, isWebCamOn, presenterId);
+
   const ParticipantView = dynamic(() => import("./ParticipantView"), {
     ssr: false,
   });
@@ -35,7 +37,7 @@ const MeetingView = () => {
 
   const { join, participants, enableScreenShare, disableScreenShare } =
     useMeeting({
-      // onPresenterChanged,
+      onPresenterChanged,
       // onParticipantJoined,
       // onMeetingLeft,
       // onParticipantLeft,
@@ -50,14 +52,14 @@ const MeetingView = () => {
   //   console.log(" onParticipantJoined", participant);
   // }
 
-  // function onPresenterChanged(presenterId: PresenterId) {
-  //   if (presenterId) {
-  //     console.log(presenterId, "started screen share");
-  //     setPresenterId(presenterId);
-  //   } else {
-  //     console.log("someone stopped screen share");
-  //   }
-  // }
+  function onPresenterChanged(presenterId: PresenterId) {
+    if (presenterId) {
+      console.log(presenterId, "started screen share");
+      setPresenterId(presenterId);
+    } else {
+      console.log("someone stopped screen share");
+    }
+  }
 
   const handleLeaveMeeting = () => {
     leave();
@@ -112,7 +114,7 @@ const MeetingView = () => {
           <div className={"flex flex-col"}>
             {/* presenter screen */}
             {presenterId && (
-              <div className="w-full">
+              <div className="w-full boreder-2 border-rose-300">
                 {allParticipants.map((participantId: string) => (
                   <ScreenShareView
                     participantId={participantId}

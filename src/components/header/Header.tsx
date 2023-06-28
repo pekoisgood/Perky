@@ -10,7 +10,7 @@ const Header = () => {
         <h1 className="font-bold text-[25px]">Perky</h1>
       </Link>
       <div className="mx-auto flex gap-2 absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
-        <Link href="/bookClub">讀書會</Link>
+        <Link href="/bookClubMeeting">讀書會</Link>
         <Link href="/">查看好文</Link>
       </div>
       <div className="w-fit ml-auto flex items-center gap-2">
