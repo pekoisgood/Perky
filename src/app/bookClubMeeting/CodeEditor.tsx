@@ -4,7 +4,6 @@ import CodeMirror from "@uiw/react-codemirror";
 import { useState } from "react";
 import { vscodeDark } from "@uiw/codemirror-theme-vscode";
 import { langs } from "@uiw/codemirror-extensions-langs";
-import axios from "axios";
 
 export default function CodeEditor() {
   const [code, setCode] = useState("console.log('hello world')");
@@ -98,19 +97,17 @@ export default function CodeEditor() {
   };
 
   const checkStatus = async (token: string) => {
-    const options = {
-      method: "GET",
-      url: `https://judge0-ce.p.rapidapi.com/submissions/${token}`,
-      params: { base64_encoded: "true", fields: "*" },
-      headers: {
-        "X-RapidAPI-Key": "9e4c26e51emshfc0813ef8ed0cd6p1da66bjsn10776e17400e",
-        "X-RapidAPI-Host": "judge0-ce.p.rapidapi.com",
-      },
+    const url = `https://judge0-ce.p.rapidapi.com/submissions/${token}?base64_encoded=true&fields=*`;
+
+    const headers = {
+      "X-RapidAPI-Key": "9e4c26e51emshfc0813ef8ed0cd6p1da66bjsn10776e17400e",
+      "X-RapidAPI-Host": "judge0-ce.p.rapidapi.com",
     };
     try {
-      let response = await axios.request(options);
-      if (!response.data.status) return;
-      let statusId: number = response.data.status.id;
+      const response = await fetch(url, { method: "GET", headers });
+      const data = await response.json();
+      if (!data.status) return;
+      let statusId: number = data.status.id;
 
       if (statusId === 1 || statusId === 2) {
         setTimeout(() => {
@@ -118,7 +115,7 @@ export default function CodeEditor() {
         }, 2000);
         return;
       } else {
-        setOutput(atob(response.data.stdout));
+        setOutput(atob(data.stdout));
         setIsRunning(false);
 
         return;
