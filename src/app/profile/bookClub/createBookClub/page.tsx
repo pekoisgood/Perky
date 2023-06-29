@@ -1,8 +1,9 @@
 "use client";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { fetchMeetingId } from "@/utils/videoSdk";
 import { db } from "@/utils/firebase";
+import { AuthContext } from "@/context/AuthContext";
 
 type CreateBookClub = {
   name: string;
@@ -12,6 +13,7 @@ type CreateBookClub = {
 };
 
 const Page = () => {
+  const { user } = useContext(AuthContext);
   const [bookClub, setBookClub] = useState<CreateBookClub>({
     name: "",
     date: "",
@@ -54,7 +56,7 @@ const Page = () => {
       name: bookClub.name,
       time,
       guest: bookClub.guest,
-      host: "peko1234",
+      host: user.id,
       createdAt: serverTimestamp(),
       roomId,
       attendees: [],

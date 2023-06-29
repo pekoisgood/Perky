@@ -9,11 +9,14 @@ import {
 import { db } from "@/utils/firebase";
 import { NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(req: Request) {
+  const { searchParams } = new URL(req.url);
+  const userId = searchParams.get("id");
+
   const articleRef = collection(db, "articles");
   const queryArticles = query(
     articleRef,
-    where("authorUserId", "==", "peko123"),
+    where("authorUserId", "==", userId),
     orderBy("createdAt")
   );
   const result = await getDocs(queryArticles);

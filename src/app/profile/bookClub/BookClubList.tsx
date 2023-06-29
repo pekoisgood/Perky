@@ -10,10 +10,11 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import { useAppSelector } from "@/redux/hooks";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
+import { AuthContext } from "@/context/AuthContext";
 
 type bookClub = {
   id: string;
@@ -24,6 +25,7 @@ type bookClub = {
 };
 
 const BookClubList = () => {
+  const { user } = useContext(AuthContext);
   const date = useAppSelector((state) => state.calender.value);
   const [bookClubs, setBookClubs] = useState<bookClub[] | []>([]);
   const [isCheckNote, setIsCheckNote] = useState<boolean>(false);
@@ -31,13 +33,7 @@ const BookClubList = () => {
 
   const getNote = async (articleId: string) => {
     const result = await getDoc(
-      doc(
-        db,
-        "users",
-        "bGmbmzaDDaO6lbnInODlaCfb4V63",
-        "bookClubNotes",
-        articleId
-      )
+      doc(db, "users", user.id, "bookClubNotes", articleId)
     );
     const note = await result!.data();
     if (!note) return;
@@ -69,7 +65,7 @@ const BookClubList = () => {
 
       const bookClubRef = query(
         collection(db, "bookClubs"),
-        where("guest", "array-contains", "peko1234"),
+        where("guest", "array-contains", user.id),
         where("time", ">=", dateToday),
         where("time", "<", nextDate(year, month, day))
       );

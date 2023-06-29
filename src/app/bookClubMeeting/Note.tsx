@@ -2,10 +2,11 @@
 
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import React from "react";
+import React, { useContext } from "react";
 // import { AuthContext } from "@/context/AuthContext";
 import { setDoc, doc } from "firebase/firestore";
 import { db } from "@/utils/firebase";
+import { AuthContext } from "@/context/AuthContext";
 
 const Note = ({
   text,
@@ -18,18 +19,12 @@ const Note = ({
   isPreview: boolean;
   setIsPreview: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  // const { user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   const saveNote = async () => {
     if (!text) return;
     await setDoc(
-      doc(
-        db,
-        "users",
-        "bGmbmzaDDaO6lbnInODlaCfb4V63",
-        "bookClubNotes",
-        "hKi5OR9qWFgMJeSM1xJ8"
-      ),
+      doc(db, "users", user.id, "bookClubNotes", "hKi5OR9qWFgMJeSM1xJ8"),
       {
         bookClubId: "hKi5OR9qWFgMJeSM1xJ8",
         note: text,

@@ -1,6 +1,9 @@
+"use client";
+
+import { AuthContext } from "@/context/AuthContext";
 import { Timestamp } from "firebase/firestore";
 import Link from "next/link";
-import { headers } from "next/dist/client/components/headers";
+import { useContext, useEffect, useState } from "react";
 
 type Articles = {
   id: string;
@@ -14,16 +17,24 @@ type Articles = {
   starCounts?: number;
 };
 
-const Page = async () => {
-  const headersData = headers();
-  const protocol = headersData.get("x-forwarded-proto");
-  const host = headersData.get("host");
+const Page = () => {
+  const { user } = useContext(AuthContext);
+  const [articleRecord, setArticleRecord] = useState<Articles[]>([]);
 
-  const req = await fetch(protocol + "://" + host + "/api/articleRecord");
-  const myArticles: Articles[] = await req.json();
+  useEffect(() => {
+    const getArticleRecord = async () => {
+      if (user.id) {
+        const req = await fetch(`/api/articleRecord?id=${user.id}`);
+        const myArticles: Articles[] = await req.json();
+        setArticleRecord(myArticles);
+      }
+    };
+
+    getArticleRecord();
+  }, [user.id]);
 
   return (
-    <div className="relative">
+    <div className="relative min-w-[350px]">
       <h1 className="mx-auto w-fit text-[28px] font-semibold tracking-[6px] indent-[6px] mb-[50px]">
         發文紀錄
       </h1>
@@ -34,22 +45,23 @@ const Page = async () => {
         我要發文
       </Link>
       <div className="grid grid-cols-2 gap-5">
-        {myArticles.map((article) => {
-          return (
-            <Link
-              href={`/article/${article.id}`}
-              className="border-slate-500 border-[1px] rounded-lg p-3"
-              key={article.id}
-            >
-              <p className="font-semibold text-[18px]">
-                {article.title[0].toUpperCase() + article.title.slice(1)}
-              </p>
-              <p className="text-slate-400 pl-1 text-[12px]">
-                {article.content.slice(0, 20)}
-              </p>
-            </Link>
-          );
-        })}
+        {articleRecord.length > 0 &&
+          articleRecord.map((article) => {
+            return (
+              <Link
+                href={`/article/${article.id}`}
+                className="border-slate-500 border-[1px] rounded-lg p-3"
+                key={article.id}
+              >
+                <p className="font-semibold text-[18px]">
+                  {article.title[0].toUpperCase() + article.title.slice(1)}
+                </p>
+                <p className="text-slate-400 pl-1 text-[12px]">
+                  {article.content.slice(0, 20)}
+                </p>
+              </Link>
+            );
+          })}
       </div>
     </div>
   );

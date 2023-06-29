@@ -10,6 +10,11 @@ type SearchOutput = {
   name: string;
 };
 
+type Tag = {
+  id: string;
+  name: string;
+};
+
 const Search = () => {
   const [isSearching, setIsSearching] = useState<Boolean>(false);
   const [searchInput, setSearchInput] = useState<string>("");
@@ -34,7 +39,7 @@ const Search = () => {
 
   useEffect(() => {
     const filterTags = () => {
-      const result = tags.filter((tag: any) =>
+      const result = tags.filter((tag: Tag) =>
         tag.name.toLowerCase().includes(searchInput)
       );
       return result;
@@ -81,7 +86,7 @@ const Search = () => {
             </div>
             <div className="flex flex-col gap-3">
               {searchResult.length > 0 &&
-                searchResult.map((tag: any) => {
+                searchResult.map((tag: Tag) => {
                   return (
                     <div key={tag.id} className="border-[1px] border-slate-500">
                       <Link

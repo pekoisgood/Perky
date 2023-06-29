@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import React from "react";
 import {
   collection,
@@ -12,6 +12,7 @@ import {
   Timestamp,
 } from "firebase/firestore";
 import { db } from "@/utils/firebase";
+import { AuthContext } from "@/context/AuthContext";
 
 type Message = {
   user: string;
@@ -29,12 +30,12 @@ const Chatroom = ({
   newMessage: string;
   setNewMessage: React.Dispatch<React.SetStateAction<string>>;
 }) => {
+  const { user } = useContext(AuthContext);
   const [messages, setMessages] = useState<Message[]>([]);
   const messagesRef = collection(db, "messages");
   const chatRoomMessagesRef = useRef<HTMLDivElement | null>(null);
 
   const roomId = "testRoom";
-  const userId = "peko123";
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -43,8 +44,8 @@ const Chatroom = ({
     await addDoc(messagesRef, {
       text: newMessage,
       createdAt: serverTimestamp(),
-      user: "Peko",
-      userId: "peko123",
+      user: user.name,
+      userId: user.id,
       room: roomId,
     });
 
@@ -95,10 +96,12 @@ const Chatroom = ({
             <div
               key={message.id}
               className={`flex ${
-                message.userId === userId ? "justify-end" : "justify-start"
+                message.userId === user.id ? "justify-end" : "justify-start"
               }`}
             >
-              {message.userId !== userId && <span>{message.user} :&ensp;</span>}
+              {message.userId !== user.id && (
+                <span>{message.user} :&ensp;</span>
+              )}
               {message.text}
             </div>
           ))}

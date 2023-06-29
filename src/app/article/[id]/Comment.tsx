@@ -1,8 +1,7 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   collection,
-  // onSnapshot,
   serverTimestamp,
   addDoc,
   query,
@@ -10,6 +9,7 @@ import {
   getDocs,
 } from "firebase/firestore";
 import { db } from "@/utils/firebase";
+import { AuthContext } from "@/context/AuthContext";
 
 type ArticleComment = {
   comment: string;
@@ -19,6 +19,7 @@ type ArticleComment = {
 };
 
 const Comment = ({ articleId }: { articleId: string }) => {
+  const { user } = useContext(AuthContext);
   const [newComment, setNewComment] = useState<string>("");
   const [comments, setComments] = useState<ArticleComment[]>([]);
 
@@ -30,8 +31,8 @@ const Comment = ({ articleId }: { articleId: string }) => {
     await addDoc(CommentRef, {
       comment: newComment,
       createdAt: serverTimestamp(),
-      userName: "Peko",
-      userId: "peko123",
+      userName: user.name,
+      userId: user.id,
     });
 
     setNewComment("");
@@ -55,24 +56,7 @@ const Comment = ({ articleId }: { articleId: string }) => {
     };
 
     getComments();
-
-    // const unsubscribe = onSnapshot(q, (querySnapshot) => {
-    //   querySnapshot.forEach((doc) => {
-    //     commentsData.push({
-    //       comment: doc.data().comment,
-    //       userName: doc.data().userName,
-    //       userId: doc.data().userId,
-    //       createdAt: doc.data().createdAt.toDate().toLocaleString(),
-    //     });
-    //     setComments(commentsData);
-    //   });
-    // });
-
-    // return () => {
-    //   unsubscribe();
-    // };
   }, []);
-  console.log(comments);
 
   return (
     <div className="flex flex-col gap-4">

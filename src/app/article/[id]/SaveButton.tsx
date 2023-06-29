@@ -1,4 +1,5 @@
 "use client";
+import { AuthContext } from "@/context/AuthContext";
 import { db } from "@/utils/firebase";
 import {
   doc,
@@ -9,31 +10,23 @@ import {
   updateDoc,
   deleteDoc,
 } from "firebase/firestore";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 type Prop = {
   articleId: string;
 };
 
 const SaveButton = ({ articleId }: Prop) => {
+  const { user } = useContext(AuthContext);
   const [isSaved, setIsSaved] = useState<boolean | null>(null);
 
   const handleSaveArticle = async () => {
     if (isSaved) return;
 
-    await setDoc(
-      doc(
-        db,
-        "users",
-        "bGmbmzaDDaO6lbnInODlaCfb4V63",
-        "savedArticles",
-        articleId
-      ),
-      {
-        articleId: articleId,
-        createdAt: serverTimestamp(),
-      }
-    );
+    await setDoc(doc(db, "users", user.id, "savedArticles", articleId), {
+      articleId: articleId,
+      createdAt: serverTimestamp(),
+    });
     await updateDoc(doc(db, "articles", articleId), {
       savedCount: increment(1),
     });
@@ -42,15 +35,7 @@ const SaveButton = ({ articleId }: Prop) => {
   };
 
   const handleUnSaveArticle = async () => {
-    await deleteDoc(
-      doc(
-        db,
-        "users",
-        "bGmbmzaDDaO6lbnInODlaCfb4V63",
-        "savedArticles",
-        articleId
-      )
-    );
+    await deleteDoc(doc(db, "users", user.id, "savedArticles", articleId));
     await updateDoc(doc(db, "articles", articleId), {
       savedCount: increment(-1),
     });
@@ -61,13 +46,7 @@ const SaveButton = ({ articleId }: Prop) => {
   useEffect(() => {
     const checkSavedArticle = async () => {
       const getArticle = await getDoc(
-        doc(
-          db,
-          "users",
-          "bGmbmzaDDaO6lbnInODlaCfb4V63",
-          "savedArticles",
-          articleId
-        )
+        doc(db, "users", user.id, "savedArticles", articleId)
       );
       const isSaved = getArticle.data();
       if (isSaved) {

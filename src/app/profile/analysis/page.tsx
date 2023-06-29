@@ -1,27 +1,42 @@
+"use client";
+import { AuthContext } from "@/context/AuthContext";
 import LineChart from "./LineChart";
 import { Article, BookClub } from "@/utils/firebase";
-import { headers } from "next/dist/client/components/headers";
+import { useContext, useEffect, useState } from "react";
 
-const Page = async () => {
-  const headersData = headers();
-  const protocol = headersData.get("x-forwarded-proto");
-  const host = headersData.get("host");
-
-  const articleRecordReq = await fetch(
-    protocol + "://" + host + "/api/analysis/article"
+const Page = () => {
+  const { user } = useContext(AuthContext);
+  const [articleRecourdCreatedTime, setArticleRecourdCreatedTime] = useState(
+    []
   );
-  const articleRecord = await articleRecordReq.json();
-  const articleRecourdCreatedTime = articleRecord.map(
-    (article: Article) => new Date(article.createdAt.seconds * 1000)
+  const [bookClubRecordCreatedTime, setBookClubRecordCreatedTime] = useState(
+    []
   );
 
-  const bookClubRecordReq = await fetch(
-    protocol + "://" + host + "/api/analysis/bookClub"
-  );
-  const bookClubRecord = await bookClubRecordReq.json();
-  const bookClubRecordCreatedTime = bookClubRecord.map(
-    (bookClub: BookClub) => new Date(bookClub.time.seconds * 1000)
-  );
+  useEffect(() => {
+    const getRecord = async () => {
+      const articleRecordReq = await fetch(
+        `/api/analysis/article?id=${user.id}`
+      );
+      const articleRecord = await articleRecordReq.json();
+      const articleRecourdCreatedTime = articleRecord.map(
+        (article: Article) => new Date(article.createdAt.seconds * 1000)
+      );
+      setArticleRecourdCreatedTime(articleRecourdCreatedTime);
+
+      const bookClubRecordReq = await fetch(
+        `/api/analysis/bookClub?id=${user.id}`
+      );
+      const bookClubRecord = await bookClubRecordReq.json();
+      const bookClubRecordCreatedTime = bookClubRecord.map(
+        (bookClub: BookClub) => new Date(bookClub.time.seconds * 1000)
+      );
+      setBookClubRecordCreatedTime(bookClubRecordCreatedTime);
+    };
+
+    if (!user.id) return;
+    getRecord();
+  }, [user.id]);
 
   return (
     <div>

@@ -8,13 +8,11 @@ import {
 import { db } from "@/utils/firebase";
 import { NextResponse } from "next/server";
 
-export async function GET() {
-  const articleRef = collection(
-    db,
-    "users",
-    "bGmbmzaDDaO6lbnInODlaCfb4V63",
-    "savedArticles"
-  );
+export async function GET(req: Request) {
+  const { searchParams } = new URL(req.url);
+  const userId = searchParams.get("id");
+  if (!userId) return;
+  const articleRef = collection(db, "users", userId, "savedArticles");
   const querySavedArticles = query(articleRef, orderBy("createdAt", "desc"));
   const result = await getDocs(querySavedArticles);
   let data: DocumentData[] = [];

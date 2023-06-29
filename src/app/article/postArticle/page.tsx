@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import TextEditor from "./TextEditor";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import {
@@ -10,6 +10,7 @@ import {
 import { storage } from "@/utils/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { capitalize } from "@/utils/func";
+import { AuthContext } from "@/context/AuthContext";
 
 export type Article = {
   title: string;
@@ -19,7 +20,9 @@ export type Article = {
 };
 
 const Page = () => {
+  const { user } = useContext(AuthContext);
   const [image, setImage] = useState<File | null>(null);
+  const [isProcessing, setIsProcessing] = useState<Boolean>(false);
   const tagRef = useRef<HTMLInputElement | null>(null);
 
   const dispatch = useAppDispatch();
@@ -39,21 +42,23 @@ const Page = () => {
   };
 
   const handleSubmitArticle = async () => {
+    setIsProcessing(true);
     if (Object.values(postArticle).includes("") || !image) {
       window.alert("請填寫完整");
+      setIsProcessing(false);
       return;
     }
-    if (image) {
-      const storageRef = ref(storage, `peko1234-${image.name}`);
+    if (image && user.id && user.name) {
+      const storageRef = ref(storage, `${user.id}-${image.name}`);
       await uploadBytes(storageRef, image);
-      const pathReference = ref(storage, `peko1234-${image.name}`);
+      const pathReference = ref(storage, `${user.id}-${image.name}`);
       const imageUrl = await getDownloadURL(pathReference).then(
         (downloadURL: string) => {
           return downloadURL;
         }
       );
 
-      await fetch("/api/postArticle", {
+      const res = await fetch("/api/postArticle", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -64,13 +69,19 @@ const Page = () => {
           category: postArticle.category,
           tags: postArticle.tags,
           image: imageUrl,
+          userId: user.id,
+          userName: user.name,
         }),
-      }).catch((error) => {
-        window.alert(error);
-        return;
       });
 
+      if (res.status !== 200) {
+        window.alert(`Error: ${res.statusText}`);
+        setIsProcessing(false);
+        return;
+      }
+
       dispatch(handlePostArticle());
+      setIsProcessing(false);
       window.alert("發文成功");
     }
   };
@@ -147,7 +158,9 @@ const Page = () => {
           />
           <button onClick={() => handleAddTag()}>add tag</button>
         </div>
-        <button onClick={handleSubmitArticle}>送出</button>
+        <button onClick={handleSubmitArticle}>
+          {isProcessing ? "running..." : "送出"}
+        </button>
       </div>
     </div>
   );
