@@ -3,6 +3,7 @@ import Image from "next/image";
 import SaveButton from "./SaveButton";
 import Link from "next/link";
 import { headers } from "next/dist/client/components/headers";
+import Comment from "./Comment";
 
 const Page = async ({ params }: { params: { id: string } }) => {
   const articleId = params.id;
@@ -58,6 +59,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
             );
           })}
       </div>
+      <Comment articleId={article.id} />
     </div>
   );
 };

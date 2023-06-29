@@ -11,5 +11,5 @@ export async function GET(
   const result = await getDoc(ref);
   const data = result.data();
 
-  return NextResponse.json(data);
+  return NextResponse.json({ id: result.id, ...data });
 }
