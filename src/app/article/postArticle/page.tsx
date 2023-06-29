@@ -9,6 +9,7 @@ import {
 } from "@/redux/slice/postArticleSlice";
 import { storage } from "@/utils/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { capitalize } from "@/utils/func";
 
 export type Article = {
   title: string;
@@ -16,14 +17,6 @@ export type Article = {
   category: string;
   tags: string[];
 };
-
-export function capitalize(tag: string) {
-  const splitTagStrings = tag.split(" ");
-  const capitalizedTag = splitTagStrings.map((string) => {
-    return string[0].toUpperCase() + string.slice(1);
-  });
-  return capitalizedTag.reduce((acc, cur) => acc + " " + cur);
-}
 
 const Page = () => {
   const [image, setImage] = useState<File | null>(null);
