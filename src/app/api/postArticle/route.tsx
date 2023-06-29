@@ -13,24 +13,18 @@ export async function POST(req: Request) {
   const data = await req.json();
 
   const ref = collection(db, "articles");
-  // try {
   await addDoc(ref, {
     title: data.title,
     content: data.content,
     createdAt: serverTimestamp(),
-    tag: data.tags,
+    tags: data.tags,
     authorName: data.userName,
     authorUserId: data.userId,
     category: data.category,
     image: data.image,
   });
-  // } catch (error: Error) {
-  //   return new NextResponse(error);
-  // }
 
   for (let i = 0; i < data.tags.length; i++) {
-    console.log(data.tags[i]);
-
     const tagRef = collection(db, "tags");
     const q = query(tagRef, where("tagName", "==", data.tags[i]));
     const result = await getDocs(q);

@@ -12,7 +12,6 @@ const Page = () => {
   const searchParams = useSearchParams();
   const search = searchParams.get("search");
   const tag = searchParams.get("tag");
-  console.log(searchArticles);
 
   useEffect(() => {
     const ref = collection(db, "articles");
@@ -20,7 +19,6 @@ const Page = () => {
     const getTagArticles = async () => {
       if (!tag) return;
       const capitalizedTag = capitalize(tag);
-      console.log(capitalizedTag);
 
       const q = query(ref, where("tags", "array-contains", capitalizedTag));
       const result = await getDocs(q);
@@ -61,7 +59,6 @@ const Page = () => {
           image: doc.data().image,
         });
       });
-      console.log(capitalizedSearch);
 
       const filteredArticles = articles.filter(
         (article) =>

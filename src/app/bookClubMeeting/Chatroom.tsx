@@ -13,6 +13,7 @@ import {
 } from "firebase/firestore";
 import { db } from "@/utils/firebase";
 import { AuthContext } from "@/context/AuthContext";
+import { useParams } from "next/navigation";
 
 type Message = {
   user: string;
@@ -35,7 +36,8 @@ const Chatroom = ({
   const messagesRef = collection(db, "messages");
   const chatRoomMessagesRef = useRef<HTMLDivElement | null>(null);
 
-  const roomId = "testRoom";
+  const params = useParams();
+  const roomId = params.id;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

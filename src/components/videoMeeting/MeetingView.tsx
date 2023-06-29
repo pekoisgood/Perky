@@ -41,8 +41,6 @@ const MeetingView = () => {
     });
 
   const joinMeeting = async () => {
-    console.log("?joined");
-
     await join();
     setJoined(true);
   };
@@ -52,8 +50,6 @@ const MeetingView = () => {
   // }
 
   function onPresenterChanged(presenterId: PresenterId) {
-    console.log(presenterId);
-
     if (presenterId) {
       setPresenterId(presenterId);
     }
@@ -104,8 +100,6 @@ const MeetingView = () => {
     disableScreenShare();
     setPresenterId("");
   };
-  console.log(joined);
-  console.log("par:", participants);
 
   return (
     <div className="container border-2 border-rose-[200px] border-solid flex flex-col h-full">

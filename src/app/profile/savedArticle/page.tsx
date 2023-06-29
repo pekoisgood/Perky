@@ -33,15 +33,11 @@ const Page = () => {
       );
       const result = await getDocs(q);
       result.forEach((doc) => {
-        console.log(doc.id, doc.data());
-
         articleIds.push(doc.id);
       });
 
       if (!(articleIds.length > 0)) return;
       for (let i = 0; i < articleIds.length; i++) {
-        console.log(typeof articleIds[i]);
-
         const res: DocumentData = await getDoc(
           doc(db, "articles", articleIds[i])
         );

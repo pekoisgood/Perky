@@ -3,10 +3,13 @@
 import { db } from "@/utils/firebase";
 import {
   Timestamp,
+  and,
   collection,
   doc,
   getDoc,
   getDocs,
+  or,
+  orderBy,
   query,
   where,
 } from "firebase/firestore";
@@ -14,6 +17,7 @@ import { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import { useAppSelector } from "@/redux/hooks";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
+import remarkGfm from "remark-gfm";
 import { AuthContext } from "@/context/AuthContext";
 
 type bookClub = {
@@ -30,10 +34,13 @@ const BookClubList = () => {
   const [bookClubs, setBookClubs] = useState<bookClub[] | []>([]);
   const [isCheckNote, setIsCheckNote] = useState<boolean>(false);
   const [note, setNote] = useState<string>("");
+  console.log(bookClubs);
 
-  const getNote = async (articleId: string) => {
+  const getNote = async (bookClubId: string) => {
+    console.log(bookClubId);
+
     const result = await getDoc(
-      doc(db, "users", user.id, "bookClubNotes", articleId)
+      doc(db, "users", user.id, "bookClubNotes", bookClubId)
     );
     const note = await result!.data();
     if (!note) return;
@@ -65,15 +72,21 @@ const BookClubList = () => {
 
       const bookClubRef = query(
         collection(db, "bookClubs"),
-        where("guest", "array-contains", user.id),
-        where("time", ">=", dateToday),
-        where("time", "<", nextDate(year, month, day))
+        and(
+          where("time", ">=", dateToday),
+          where("time", "<", nextDate(year, month, day)),
+          where("guest", "array-contains", user.id),
+          or(
+            where("time", ">=", dateToday),
+            where("time", "<", nextDate(year, month, day)),
+            where("host", "==", user.id)
+          )
+        ),
+        orderBy("time")
       );
 
       const bookClubs = await getDocs(bookClubRef);
       bookClubs.forEach((doc) => {
-        console.log(doc.data().time.toDate() < new Date());
-
         setBookClubs((prev) => [
           ...prev,
           {
@@ -108,7 +121,7 @@ const BookClubList = () => {
                     href={
                       bookClub.time.toDate() < new Date()
                         ? ""
-                        : `bookClub/${bookClub.id}`
+                        : `/bookClubMeeting/${bookClub.id}`
                     }
                     className={`${
                       bookClub.time.toDate() < new Date() &&
@@ -119,7 +132,7 @@ const BookClubList = () => {
                   </Link>
                   <div
                     onClick={() => getNote(bookClub.id)}
-                    className="p-1 rounded-lg bg-sky-100 text-[12px]"
+                    className="p-1 rounded-lg bg-sky-100 text-[12px] hover:cursor-pointer"
                   >
                     查看筆記
                   </div>
@@ -127,7 +140,12 @@ const BookClubList = () => {
                 {isCheckNote && note && (
                   <div className="border-2 border-sky-500 absolute top-0 left-0 w-full h-full bg-sky-50/95 flex flex-col items-center justify-center">
                     <button onClick={() => setIsCheckNote(false)}>close</button>
-                    <ReactMarkdown>{note}</ReactMarkdown>
+                    <ReactMarkdown
+                      remarkPlugins={[remarkGfm]}
+                      className={`w-full prose p-0`}
+                    >
+                      {note}
+                    </ReactMarkdown>
                   </div>
                 )}
               </div>

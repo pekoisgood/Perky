@@ -109,11 +109,9 @@ export default function CodeEditor() {
       } else {
         setOutput(atob(data.stdout));
         setIsRunning(false);
-
         return;
       }
     } catch (err) {
-      console.log("err", err);
       setIsRunning(false);
       setOutput("error");
     }

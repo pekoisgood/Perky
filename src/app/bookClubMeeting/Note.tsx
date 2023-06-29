@@ -3,10 +3,10 @@
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import React, { useContext } from "react";
-// import { AuthContext } from "@/context/AuthContext";
 import { setDoc, doc } from "firebase/firestore";
 import { db } from "@/utils/firebase";
 import { AuthContext } from "@/context/AuthContext";
+import { useParams } from "next/navigation";
 
 const Note = ({
   text,
@@ -20,16 +20,15 @@ const Note = ({
   setIsPreview: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const { user } = useContext(AuthContext);
+  const param = useParams();
+  const bookClubId = param.id;
 
   const saveNote = async () => {
     if (!text) return;
-    await setDoc(
-      doc(db, "users", user.id, "bookClubNotes", "hKi5OR9qWFgMJeSM1xJ8"),
-      {
-        bookClubId: "hKi5OR9qWFgMJeSM1xJ8",
-        note: text,
-      }
-    );
+    await setDoc(doc(db, "users", user.id, "bookClubNotes", bookClubId), {
+      bookClubId: "bookClubId",
+      note: text,
+    });
   };
 
   return (

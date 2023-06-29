@@ -1,5 +1,5 @@
-import Video from "./Video";
-import Side from "./Side";
+import Video from "../Video";
+import Side from "../Side";
 
 const Page = () => {
   return (

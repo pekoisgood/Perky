@@ -77,11 +77,11 @@ const Calender = () => {
             next
           </p>
         </div>
-        <div className="flex justify-between">
+        <div className="grid grid-cols-7">
           {week.map((d, index) => (
             <p
               key={index}
-              className="w-1/7 flex justify-center text-[20px] font-bold"
+              className="text-center justify-center text-[20px] font-bold"
             >
               {d}
             </p>
@@ -93,15 +93,18 @@ const Calender = () => {
               key={index}
               className="flex justify-center items-center text-[22px] font-medium mt-2"
             >
+              {/*  leading-[30px] p-1 pt-[2px] */}
               <p
                 data-value={Number(d)}
-                className={
-                  d
-                    ? date.date && date.date === d
-                      ? "border-[1px] border-solid border-slate-400 w-[35px] h-[35px] bg-indigo-100 rounded-full text-center hover:cursor-pointer leading-[30px] p-1 pt-[2px]"
-                      : "hover:cursor-pointer hover:bg-indigo-100 w-[35px] h-[35px] rounded-full text-center leading-[30px] p-1 pt-[2px]"
-                    : ""
-                }
+                className={`
+                  w-[35px] h-[35px] rounded-full text-center hover:cursor-pointer pt-[1px]
+                  ${
+                    d
+                      ? date.date && date.date === d
+                        ? "border-[1px] border-solid border-slate-400  bg-indigo-100"
+                        : "hover:bg-indigo-100"
+                      : ""
+                  }`}
                 onClick={(e) => {
                   const value = (e.target as HTMLElement).getAttribute(
                     "data-value"

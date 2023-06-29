@@ -8,7 +8,6 @@ import ArticleSnippet from "./ArticleSnippet";
 const ArticleList = ({ articles }: { articles: Article[] }) => {
   return (
     <div>
-      {" "}
       {articles.map((article: Article) => {
         return (
           <Link
