@@ -17,6 +17,14 @@ export type Article = {
   tags: string[];
 };
 
+export function capitalize(tag: string) {
+  const splitTagStrings = tag.split(" ");
+  const capitalizedTag = splitTagStrings.map((string) => {
+    return string[0].toUpperCase() + string.slice(1);
+  });
+  return capitalizedTag.reduce((acc, cur) => acc + " " + cur);
+}
+
 const Page = () => {
   const [image, setImage] = useState<File | null>(null);
   const tagRef = useRef<HTMLInputElement | null>(null);
@@ -26,13 +34,7 @@ const Page = () => {
 
   const handleAddTag = () => {
     if (tagRef.current === null || tagRef.current.value === "") return;
-    function capitalize(tag: string) {
-      const splitTagStrings = tag.split(" ");
-      const capitalizedTag = splitTagStrings.map((string) => {
-        return string[0].toUpperCase() + string.slice(1);
-      });
-      return capitalizedTag.reduce((acc, cur) => acc + " " + cur);
-    }
+
     const tag = capitalize(tagRef.current.value);
 
     dispatch(
@@ -70,10 +72,14 @@ const Page = () => {
           tags: postArticle.tags,
           image: imageUrl,
         }),
+      }).catch((error) => {
+        window.alert(error);
+        return;
       });
-    }
 
-    dispatch(handlePostArticle());
+      dispatch(handlePostArticle());
+      window.alert("發文成功");
+    }
   };
 
   useEffect(() => {

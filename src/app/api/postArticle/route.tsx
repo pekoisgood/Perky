@@ -1,6 +1,13 @@
 import { NextResponse } from "next/server";
 import { db } from "@/utils/firebase";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  serverTimestamp,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
 
 export async function POST(req: Request) {
   const data = await req.json();
@@ -17,5 +24,22 @@ export async function POST(req: Request) {
     image: data.image,
   });
 
-  return new NextResponse("hiiii");
+  for (let i = 0; i < data.tags.length; i++) {
+    console.log(data.tags[i]);
+
+    const tagRef = collection(db, "tags");
+    const q = query(tagRef, where("tagName", "==", data.tags[i]));
+    const result = await getDocs(q);
+    let tag = "";
+    result.forEach((doc) => {
+      tag = doc.data().tagName;
+    });
+
+    if (tag) return;
+    await addDoc(collection(db, "tags"), {
+      tagName: data.tags[i],
+    });
+  }
+
+  return new NextResponse("OK");
 }

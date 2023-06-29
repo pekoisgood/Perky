@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Profile from "./Profile";
+import Search from "./Search";
 
 const Header = () => {
   return (
@@ -15,7 +16,7 @@ const Header = () => {
       </div>
       <div className="w-fit ml-auto flex items-center gap-2">
         <Link href="/article/postArticle">+ 撰寫貼文</Link>
-        <p>搜尋</p>
+        <Search />
         <div className="group relative border-2 border-sky-400">
           <Profile />
         </div>

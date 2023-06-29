@@ -20,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`box-border ${inter.className}`}>
+      <body className={`box-border ${inter.className} relative`}>
         <ReduxProvider>
           <AuthContextProvider>
             <Header />
