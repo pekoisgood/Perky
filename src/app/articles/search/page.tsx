@@ -5,7 +5,7 @@ import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import ArticleList from "@/app/ArticleList";
-import { capitalize } from "@/app/article/postArticle/page";
+import { capitalize } from "@/utils/func";
 
 const Page = () => {
   const [searchArticles, setSearchArticles] = useState<Article[]>([]);
