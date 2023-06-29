@@ -16,7 +16,9 @@ const Header = () => {
       <div className="w-fit ml-auto flex items-center gap-2">
         <Link href="/article/postArticle">+ 撰寫貼文</Link>
         <p>搜尋</p>
-        <Profile />
+        <div className="group relative border-2 border-sky-400">
+          <Profile />
+        </div>
       </div>
     </div>
   );
