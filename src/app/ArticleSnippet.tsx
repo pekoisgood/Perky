@@ -27,7 +27,12 @@ const ArticleSnippet = ({ article }: { article: string }) => {
     editable: false,
   });
 
-  return <>{editor?.getText().slice(0, 50)}</>;
+  return (
+    <div>
+      {editor?.getText().slice(0, 100)}
+      <span>...</span>
+    </div>
+  );
 };
 
 export default ArticleSnippet;

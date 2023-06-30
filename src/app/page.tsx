@@ -35,10 +35,8 @@ export default async function Home() {
           );
         })}
       </div>
-      <div className="border-2 border-sky-900 h-full grow p-3 pt-5 flex flex-col gap-3">
-        <ArticleList articles={articles} />
-      </div>
-      <div className="border-2 border-sky-900 w-[300px] h-full flex flex-col gap-3 p-1">
+      <ArticleList articles={articles} />
+      <div className="border-2 border-sky-900 w-[300px] h-full flex flex-col gap-5 p-1">
         <h2>Tredning Articles</h2>
         <TrendingArticles />
       </div>
