@@ -14,7 +14,6 @@ const Page = async ({ params }: { params: { category: string } }) => {
     protocol + "://" + host + "/api/articles/" + category
   );
   const articles = await categoryArticlesReq.json();
-  console.log(articles);
 
   return (
     <div className="flex w-screen border-2 border-sky-900">

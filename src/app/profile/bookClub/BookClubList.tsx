@@ -34,11 +34,8 @@ const BookClubList = () => {
   const [bookClubs, setBookClubs] = useState<bookClub[] | []>([]);
   const [isCheckNote, setIsCheckNote] = useState<boolean>(false);
   const [note, setNote] = useState<string>("");
-  console.log(bookClubs);
 
   const getNote = async (bookClubId: string) => {
-    console.log(bookClubId);
-
     const result = await getDoc(
       doc(db, "users", user.id, "bookClubNotes", bookClubId)
     );

@@ -15,23 +15,27 @@ const Page = () => {
 
   useEffect(() => {
     const getRecord = async () => {
-      const articleRecordReq = await fetch(
-        `/api/analysis/article?id=${user.id}`
-      );
-      const articleRecord = await articleRecordReq.json();
-      const articleRecourdCreatedTime = articleRecord.map(
-        (article: Article) => new Date(article.createdAt.seconds * 1000)
-      );
-      setArticleRecourdCreatedTime(articleRecourdCreatedTime);
+      try {
+        const articleRecordReq = await fetch(
+          `/api/analysis/article?id=${user.id}`
+        );
+        const articleRecord = await articleRecordReq.json();
+        const articleRecourdCreatedTime = articleRecord.map(
+          (article: Article) => new Date(article.createdAt.seconds * 1000)
+        );
+        setArticleRecourdCreatedTime(articleRecourdCreatedTime);
 
-      const bookClubRecordReq = await fetch(
-        `/api/analysis/bookClub?id=${user.id}`
-      );
-      const bookClubRecord = await bookClubRecordReq.json();
-      const bookClubRecordCreatedTime = bookClubRecord.map(
-        (bookClub: BookClub) => new Date(bookClub.time.seconds * 1000)
-      );
-      setBookClubRecordCreatedTime(bookClubRecordCreatedTime);
+        const bookClubRecordReq = await fetch(
+          `/api/analysis/bookClub?id=${user.id}`
+        );
+        const bookClubRecord = await bookClubRecordReq.json();
+        const bookClubRecordCreatedTime = bookClubRecord.map(
+          (bookClub: BookClub) => new Date(bookClub.time.seconds * 1000)
+        );
+        setBookClubRecordCreatedTime(bookClubRecordCreatedTime);
+      } catch (error) {
+        console.log(error);
+      }
     };
 
     if (!user.id) return;
