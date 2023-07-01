@@ -14,6 +14,21 @@ module.exports = {
         custom: "2px 3px 2px 6px",
         tag: "2px 2px 2px 7px",
       },
+      keyframes: {
+        boucing: {
+          "from, to ": { transform: "scale(1, 1)" },
+          "25%": { transform: "scale(0.9, 1.1)" },
+          "50%": { transform: "scale(1.1, 0.9)" },
+          "75%": { transform: "scale(0.95, 1.05)" },
+        },
+        wiggle: {
+          "0%, 100%": { transform: "rotate(-3deg)" },
+          "50%": { transform: "rotate(3deg)" },
+        },
+      },
+      animation: {
+        wiggle: "wiggle 2s infinite",
+      },
     },
   },
   plugins: [require("@tailwindcss/typography")],

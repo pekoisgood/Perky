@@ -1,12 +1,12 @@
 import "./globals.css";
-import { Inter } from "next/font/google";
+import { Roboto_Slab } from "next/font/google";
 import React from "react";
 import ReduxProvider from "@/redux/provider";
 import { AuthContextProvider } from "@/context/AuthContext";
 
 import Header from "../components/header/Header";
 
-const inter = Inter({ subsets: ["latin"] });
+const poppins = Roboto_Slab({ weight: "400", subsets: ["latin"] });
 
 export const metadata = {
   title: "Perky",
@@ -20,11 +20,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`box-border ${inter.className} relative`}>
+      <body
+        className={`box-border ${poppins.className} relative transform-none`}
+      >
         <ReduxProvider>
           <AuthContextProvider>
             <Header />
-            <div className="pt-[60px] h-full">{children}</div>
+            <div className="pt-[60px] h-full translate-z-0">{children}</div>
           </AuthContextProvider>
         </ReduxProvider>
       </body>

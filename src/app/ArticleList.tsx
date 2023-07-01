@@ -28,9 +28,7 @@ const ArticleList = ({ articles }: { articles: Article[] }) => {
           }
         },
         {
-          root: containerRef.current,
           threshold: 1,
-          rootMargin: "-500px 0px",
         }
       );
     });
@@ -46,18 +44,21 @@ const ArticleList = ({ articles }: { articles: Article[] }) => {
   }, [ref.current]);
 
   return (
-    <div className="h-full grow p-3 flex flex-col gap-8" ref={containerRef}>
+    <div
+      className="h-full pl-[150px] pr-[250px] flex flex-col gap-8 justify-center"
+      ref={containerRef}
+    >
       {articles.map((article: Article, index: number) => {
         return (
           <Link
             href={`/article/${article.id}`}
             key={article.id}
             ref={(el: HTMLAnchorElement) => (ref.current[index] = el)}
-            className="relative border-custom rounded-custom border-black w-full p-4 flex justify-between items-center gap-3 min-h-[140px] translate-x-[200px] opacity-0 hover:translate-y-[-10px] hover:duration-150 "
+            className="w-full p-4 pt-6 flex justify-between items-center gap-3 border-b-2 border-[#FAF0E4] min-h-[140px] translate-x-[200px] opacity-0  hover:translate-y-[-10px] hover:duration-150 "
           >
-            <div className="flex flex-col gap-4 w-full">
+            <div className="flex flex-col gap-4 w-full relative">
               {article.image && (
-                <div className="w-full h-[300px] mx-auto object-cover object-center overflow-hidden relative rounded-2xl shadow-md border-2 border-black">
+                <div className="w-full h-[300px] mx-auto object-cover object-center overflow-hidden relative rounded-2xl border-1 border-black shadow-[-10px_10px] shadow-[#435B66]">
                   <Image
                     src={article.image}
                     alt="article cover image"
@@ -73,17 +74,17 @@ const ArticleList = ({ articles }: { articles: Article[] }) => {
                 <p className="text-center text-[14px]">
                   author: {article.authorName}
                 </p>
-                <p className="bg-[#CEAB93] tracking-[1px] px-2 py-1 rounded-3xl w-fit text-[12px] font-bold absolute top-[-15px] right-[5px]">
+                <p className="bg-[#435B66] tracking-[1px] px-2 py-1 rounded-3xl w-fit text-[12px] text-white border-2 shadow-[-3px_3px] shadow-black border-black font-bold absolute top-[-16px] right-[5px]">
                   {article.category}
                 </p>
                 <ArticleSnippet article={article.content} />
-                <div className="flex gap-2">
+                <div className="flex gap-2 items-center justify-center">
                   {article.tags &&
                     article.tags.map((tag: string, index: number) => {
                       return (
                         <p
                           key={index}
-                          className="px-1 border-tag w-fit text-[12px]"
+                          className="px-1 border-tag border-[#FFD89C] rounded-md w-fit text-[12px]"
                         >
                           # {tag}
                         </p>
