@@ -19,6 +19,8 @@ import { useAppSelector } from "@/redux/hooks";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import remarkGfm from "remark-gfm";
 import { AuthContext } from "@/context/AuthContext";
+import { motion } from "framer-motion";
+import { IoMdClose } from "react-icons/io";
 
 type bookClub = {
   id: string;
@@ -32,7 +34,7 @@ const BookClubList = () => {
   const { user } = useContext(AuthContext);
   const date = useAppSelector((state) => state.calender.value);
   const [bookClubs, setBookClubs] = useState<bookClub[] | []>([]);
-  const [isCheckNote, setIsCheckNote] = useState<boolean>(false);
+  const [isPreviewNote, setIsPreviewNote] = useState<boolean>(false);
   const [note, setNote] = useState<string>("");
 
   const getNote = async (bookClubId: string) => {
@@ -40,9 +42,43 @@ const BookClubList = () => {
       doc(db, "users", user.id, "bookClubNotes", bookClubId)
     );
     const note = await result!.data();
-    if (!note) return;
+    if (!note) {
+      alert("尚未有筆記！");
+      return;
+    }
     setNote(note.note);
-    setIsCheckNote(true);
+    setIsPreviewNote(true);
+  };
+
+  const container = {
+    hidden: {
+      opacity: 0,
+    },
+    show: {
+      opacity: 1,
+    },
+    transition: {
+      type: "ease",
+      stiffness: 120,
+      delayChildren: 1,
+      staggerChildren: 0.5,
+    },
+  };
+
+  const child = {
+    hidden: {
+      opacity: 0,
+    },
+    show: {
+      opacity: 1,
+      x: [500, -100, 0, 10, 0],
+    },
+    transition: {
+      type: "tween",
+      ease: "linear",
+      stiffness: 150,
+      duration: 2,
+    },
   };
 
   useEffect(() => {
@@ -72,11 +108,10 @@ const BookClubList = () => {
         and(
           where("time", ">=", dateToday),
           where("time", "<", nextDate(year, month, day)),
-          where("guest", "array-contains", user.id),
+
           or(
-            where("time", ">=", dateToday),
-            where("time", "<", nextDate(year, month, day)),
-            where("host", "==", user.id)
+            where("host", "==", user.id),
+            where("guest", "array-contains", user.id)
           )
         ),
         orderBy("time")
@@ -98,57 +133,74 @@ const BookClubList = () => {
     };
     getBookClubList();
   }, [date]);
+  console.log(isPreviewNote);
 
   return (
     <div className="w-fit">
-      <div className="grid grid-cols-2 gap-5 mt-4">
+      <motion.div
+        className="grid grid-cols-2 gap-5 mt-4"
+        initial="hidden"
+        animate="show"
+        variants={container}
+      >
         {bookClubs.length > 0 &&
           bookClubs.map((bookClub, index) => {
             return (
-              <div
+              <motion.div
                 key={index}
-                className="p-4 border-solid border-slate-600 border-[1px] rounded-lg flex flex-col gap-2"
+                variants={child}
+                className="p-1 border-solid rounded-xl hover:translate-y-[-10px] hover:duration-100 bg-[#1B9C85] text-white"
               >
-                <h3 className="text-[16px]">{bookClub.name}</h3>
-                <p className="text-[12px]">
-                  時間：{bookClub.time.toDate().toLocaleString()}
-                </p>
-                <div className="flex gap-2">
-                  <Link
-                    href={
-                      bookClub.time.toDate() < new Date()
-                        ? ""
-                        : `/bookClubMeeting/${bookClub.id}`
-                    }
-                    className={`${
-                      bookClub.time.toDate() < new Date() &&
-                      "hover:cursor-not-allowed bg-slate-300"
-                    } p-1 rounded-lg bg-sky-100 text-[12px]`}
-                  >
-                    點我進入
-                  </Link>
-                  <div
-                    onClick={() => getNote(bookClub.id)}
-                    className="p-1 rounded-lg bg-sky-100 text-[12px] hover:cursor-pointer"
-                  >
-                    查看筆記
-                  </div>
-                </div>
-                {isCheckNote && note && (
-                  <div className="border-2 border-sky-500 absolute top-0 left-0 w-full h-full bg-sky-50/95 flex flex-col items-center justify-center">
-                    <button onClick={() => setIsCheckNote(false)}>close</button>
-                    <ReactMarkdown
-                      remarkPlugins={[remarkGfm]}
-                      className={`w-full prose p-0`}
+                <div className="flex flex-col p-4 gap-2 justify-center items-center border-dashed border-2 border-white rounded-lg">
+                  <h3 className="text-[16px] text-black text-bold">
+                    {bookClub.name}
+                  </h3>
+                  <p className="text-[12px]">
+                    時間：{bookClub.time.toDate().toLocaleString()}
+                  </p>
+                  <div className="flex gap-2 justify-center text-black">
+                    <Link
+                      href={
+                        bookClub.time.toDate() < new Date()
+                          ? ""
+                          : `/bookClubMeeting/${bookClub.id}`
+                      }
+                      className={`${
+                        bookClub.time.toDate() < new Date() &&
+                        "hover:cursor-not-allowed "
+                      } p-1 rounded-lg bg-[#F0EB8D] text-[12px]`}
                     >
-                      {note}
-                    </ReactMarkdown>
+                      點我進入
+                    </Link>
+                    <div
+                      onClick={() => getNote(bookClub.id)}
+                      className="p-1 rounded-lg bg-[#F0EB8D] text-[12px] hover:cursor-pointer"
+                    >
+                      查看筆記
+                    </div>
                   </div>
-                )}
-              </div>
+                  {isPreviewNote && note && (
+                    <div className="border-2 border-[#1B9C85] rounded-lg absolute top-0 left-0 w-[200%] h-[300%] p-3 overflow-y-scroll bg-[#F0EB8D]/95 flex flex-col items-center justify-center">
+                      <button
+                        className="absolute top-[10px] right-[15px] text-black"
+                        onClick={() => setIsPreviewNote(false)}
+                      >
+                        <IoMdClose size={20} className="text-[#1B9C85]" />
+                      </button>
+
+                      <ReactMarkdown
+                        remarkPlugins={[remarkGfm]}
+                        className={`w-full prose p-0`}
+                      >
+                        {note}
+                      </ReactMarkdown>
+                    </div>
+                  )}
+                </div>
+              </motion.div>
             );
           })}
-      </div>
+      </motion.div>
     </div>
   );
 };

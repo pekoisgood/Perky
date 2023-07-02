@@ -2,7 +2,7 @@ import UserProfile from "./UserProfile";
 
 const Page = () => {
   return (
-    <div className="flex flex-col gap-3 h-[1px] min-h-screen justify-center items-center">
+    <div className="flex flex-col h-full gap-3 justify-center items-center">
       <UserProfile />
     </div>
   );

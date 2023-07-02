@@ -12,11 +12,14 @@ import {
 import { db } from "@/utils/firebase";
 import Link from "next/link";
 import { AuthContext } from "@/context/AuthContext";
+import { motion } from "framer-motion";
+import ArticleSnippet from "@/app/ArticleSnippet";
 
 type Article = {
   title: string;
   id: string;
   authorName: string;
+  content: string;
 };
 
 const Page = () => {
@@ -45,6 +48,7 @@ const Page = () => {
           id: res.id,
           authorName: res.data().authorName,
           title: res.data().title,
+          content: res.data().content,
         });
       }
 
@@ -55,19 +59,41 @@ const Page = () => {
   }, [user.id]);
 
   return (
-    <div className="h-[1px] min-h-screen flex flex-col items-center mt-5 gap-3">
-      <h2>我的收藏好文</h2>
-      <div className="grid grid-cols-2 gap-2">
+    <div className="h-full w-full flex flex-col items-center mt-5 gap-3">
+      <h2 className="mx-auto w-fit text-[28px] font-semibold tracking-[6px] indent-[6px] mb-[50px]">
+        我的收藏好文
+      </h2>
+      <div className="grid grid-cols-2 gap-2 w-full px-3">
         {articles.length > 0 &&
           articles.map((article: Article, index: number) => {
             return (
-              <Link
-                href={`/article/${article.id}`}
-                key={index}
-                className="p-2 bg-slate-100 rounded-lg"
+              <motion.div
+                initial={{
+                  opacity: 0,
+                  x: index % 2 === 0 ? "-100vw" : "100vw",
+                }}
+                animate={{
+                  opacity: 1,
+                  x: 0,
+                }}
+                transition={{
+                  type: "ease",
+                  stiffness: 130,
+                  duration: 1,
+                }}
+                className="rounded-xl p-1 block hover:translate-y-[-10px] hover:duration-100 bg-[#1B9C85]"
               >
-                <p>{article.title}</p>
-              </Link>
+                <Link
+                  href={`/article/${article.id}`}
+                  key={index}
+                  className="flex flex-col h-full justify-center p-3 border-dashed border-2 border-white rounded-lg"
+                >
+                  <p className="font-semibold text-[18px]">{article.title}</p>
+                  <p className="text-white pl-1 text-[12px]">
+                    <ArticleSnippet article={article.content} />
+                  </p>
+                </Link>
+              </motion.div>
             );
           })}
       </div>

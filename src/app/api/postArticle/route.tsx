@@ -8,6 +8,7 @@ import {
   where,
   getDocs,
 } from "firebase/firestore";
+// FIXME : 沒有用到這個 route 了！
 
 export async function POST(req: Request) {
   const data = await req.json();

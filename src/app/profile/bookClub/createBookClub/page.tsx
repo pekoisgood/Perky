@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect, useContext } from "react";
 import { fetchMeetingId } from "@/utils/videoSdk";
 import { db } from "@/utils/firebase";
 import { AuthContext } from "@/context/AuthContext";
+import { IoMdClose } from "react-icons/io";
 
 type CreateBookClub = {
   name: string;
@@ -73,7 +74,7 @@ const Page = () => {
   }, [bookClub.guest]);
 
   return (
-    <div className="flex flex-col items-center justify-center gap-10">
+    <div className="flex flex-col items-center justify-center gap-10 mx-auto w-[60%]">
       <h1 className="text-bold text-[25px] mt-[30px]">創立讀書會</h1>
       <div className="flex flex-col gap-5">
         <div className="flex items-center gap-3">
@@ -123,22 +124,24 @@ const Page = () => {
             placeholder="輸入使用者id"
             className="border-slate-400 border-[1px] px-2 py-1 rounded-lg"
           />
-          <div onClick={handleAddGuest}>新增</div>
+          <div onClick={handleAddGuest} className="hover:cursor-pointer">
+            新增
+          </div>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-wrap w-full">
           <p>已加入讀書會成員 : </p>
           {bookClub.guest.map((userId) => {
             return (
               <div
                 key={userId}
-                className="px-2 py-1 bg-sky-500/75 rounded-md flex gap-3 items-center"
+                className="px-2 py-1 bg-[#BAD7E9] rounded-md flex gap-3 items-center "
               >
-                <p className="text-white">{userId}</p>
+                <p className="text-black">{userId}</p>
                 <span
                   className="hover:cursor-pointer"
                   onClick={() => handleRemoveGuest(userId)}
                 >
-                  x
+                  <IoMdClose />
                 </span>
               </div>
             );
@@ -146,10 +149,10 @@ const Page = () => {
         </div>
       </div>
       <button
-        className="px-2 py-1 bg-slate-300 rounded-md w-fit ml-auto"
+        className="px-3 py-1 bg-slate-300 rounded-full w-fit ml-auto"
         onClick={handleCreateBookClub}
       >
-        點我新增讀書會
+        新增讀書會
       </button>
     </div>
   );

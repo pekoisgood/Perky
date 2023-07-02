@@ -6,6 +6,7 @@ import {
   handleNexMonth,
   handleSelectDate,
 } from "../../redux/slice/calenderSlice";
+import { motion } from "framer-motion";
 
 export const getDayPerMonth = (m: number, y: number) => {
   if (m === 2 && y % 4 === 0) {
@@ -17,6 +18,20 @@ export const getDayPerMonth = (m: number, y: number) => {
   } else {
     return 31;
   }
+};
+
+const containerVariant = {
+  hidden: {
+    opacity: 0,
+  },
+  show: {
+    opacity: 1,
+    duration: 1,
+    stiffness: 120,
+  },
+  transition: {
+    type: "ease",
+  },
 };
 
 const Calender = () => {
@@ -55,11 +70,16 @@ const Calender = () => {
   };
 
   return (
-    <div className="w-fit mx-auto">
-      <div className="border-2 border-solid border-black border-r-10 w-[500px] px-6 py-10 rounded-2xl ">
+    <motion.div
+      initial="hidden"
+      animate="show"
+      variants={containerVariant}
+      className="w-fit mx-auto"
+    >
+      <div className="border-2 border-solid border-[#245953] bg-white w-[500px] px-6 py-10 rounded-2xl shadow-[-5px_10px] shadow-[#245953]">
         <div className="flex gap-3 justify-center mb-5 items-center">
           <p
-            className="mr-auto border-[1px] border-slate-400 border-solid p-1 rounded-xl text-sky-500 text-[20px] hover:cursor-pointer hover:bg-slate-100"
+            className="mr-auto bg-[#245953] py-1 px-2 rounded-xl text-[#F7D060] text-[20px] hover:cursor-pointer hover:bg-[#F7D060] hover:text-[#245953]"
             onClick={() => {
               dispatch(hadlePrevMonth());
             }}
@@ -69,7 +89,7 @@ const Calender = () => {
           <p className="font-bold text-[25px]">{monthData[date.month - 1]}</p>
           <p className="font-bold text-[25px]">{date.year}</p>
           <p
-            className="ml-auto border-[1px] border-slate-400 border-solid p-1 rounded-xl text-sky-500 text-[20px] hover:cursor-pointer hover:bg-slate-100"
+            className="ml-auto bg-[#245953] py-1 px-2 rounded-xl text-[#F7D060] text-[20px] hover:cursor-pointer hover:bg-[#F7D060] hover:text-[#245953]"
             onClick={() => {
               dispatch(handleNexMonth());
             }}
@@ -97,12 +117,12 @@ const Calender = () => {
               <p
                 data-value={Number(d)}
                 className={`
-                  w-[35px] h-[35px] rounded-full text-center hover:cursor-pointer pt-[1px]
+                  w-[35px] h-[35px] rounded-full text-center pt-[1px] 
                   ${
                     d
                       ? date.date && date.date === d
-                        ? "border-[1px] border-solid border-slate-400  bg-indigo-100"
-                        : "hover:bg-indigo-100"
+                        ? "text-white bg-[#FF6D60]"
+                        : "hover:bg-[#FF6D60] hover:text-white hover:cursor-pointer hover:animate-pulse hover:duration-75"
                       : ""
                   }`}
                 onClick={(e) => {
@@ -119,7 +139,7 @@ const Calender = () => {
           ))}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

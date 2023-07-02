@@ -43,12 +43,18 @@ const Page = () => {
   }, [user.id]);
 
   return (
-    <div>
-      <h1 className="w-fit mx-auto text-bold text-[25px] mb-2">學習分析</h1>
+    <div className="h-full">
+      <h1 className="w-fit mx-auto font-bold text-[25px] tracking-[2px] indent-[2px] mb-[20px]">
+        學習紀錄
+      </h1>
       <LineChart
         articleCreatedAtRecord={articleRecourdCreatedTime}
         bookClubTimeRecord={bookClubRecordCreatedTime}
       />
+      <div className="flex flex-col gap-3 pt-[20px] w-fit mx-auto text-center">
+        <p>本週發文總次數 : {articleRecourdCreatedTime.length}</p>
+        <p>本週讀書會參加總次數 : {bookClubRecordCreatedTime.length}</p>
+      </div>
     </div>
   );
 };

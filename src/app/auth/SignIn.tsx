@@ -8,7 +8,7 @@ const SignIn = () => {
   const { isLogin, logIn, logOut, user } = useContext(AuthContext);
 
   return (
-    <div className="w-screen h-screen flex flex-col justify-center items-center">
+    <div className="w-full h-[calc(100vh-60px)] flex flex-col justify-center items-center">
       <h1 className="mb-[30px]">Sign In Page</h1>
       {isLogin ? (
         <>

@@ -11,6 +11,16 @@ import { storage } from "@/utils/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { capitalize } from "@/utils/func";
 import { AuthContext } from "@/context/AuthContext";
+import { db } from "@/utils/firebase";
+import {
+  DocumentData,
+  collection,
+  addDoc,
+  serverTimestamp,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
 
 export type Article = {
   title: string;
@@ -58,26 +68,33 @@ const Page = () => {
         }
       );
 
-      const res = await fetch("/api/postArticle", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          title: postArticle.title,
-          content: postArticle.content,
-          category: postArticle.category,
-          tags: postArticle.tags,
-          image: imageUrl,
-          userId: user.id,
-          userName: user.name,
-        }),
+      const articleRef = collection(db, "articles");
+      await addDoc(articleRef, {
+        createdAt: serverTimestamp(),
+        authorName: user.name,
+        authorUserId: user.id,
+        title: postArticle.title,
+        content: postArticle.content,
+        category: postArticle.category,
+        tags: postArticle.tags,
+        image: imageUrl,
+        userId: user.id,
+        userName: user.name,
       });
 
-      if (res.status !== 200) {
-        window.alert(`Error: ${res.statusText}`);
-        setIsProcessing(false);
-        return;
+      for (let i = 0; i < postArticle.tags.length; i++) {
+        const tagRef = collection(db, "tags");
+        const q = query(tagRef, where("tagName", "==", postArticle.tags[i]));
+        const result = await getDocs(q);
+        let tag = "";
+        result.forEach((doc: DocumentData) => {
+          tag = doc.data().tagName;
+        });
+
+        if (tag) return;
+        await addDoc(collection(db, "tags"), {
+          tagName: postArticle.tags[i],
+        });
       }
 
       dispatch(handlePostArticle());

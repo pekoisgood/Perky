@@ -100,24 +100,24 @@ const Page = ({
       {
         label: "讀書會參加紀錄",
         data: caculateCountPerDay(filteredWeeklyBookClubRecord),
-        borderColor: "rgb(255, 99, 132)",
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        borderColor: "#FFA41B",
+        backgroundColor: "#FFA41B",
         tension: 0.1,
       },
       {
         label: "發文紀錄",
         data: caculateCountPerDay(filteredWeeklyArticleRecord),
-        borderColor: "rgb(53, 162, 235)",
-        backgroundColor: "rgba(53, 162, 235, 0.5)",
+        borderColor: "#525FE1",
+        backgroundColor: "#525FE1",
         tension: 0.1,
       },
     ],
   };
 
   return (
-    <>
-      <Line options={options} data={data} width={500} height={500} />
-    </>
+    <div className="h-[70%] max-h-[400px] flex flex-col items-center justify-center">
+      <Line options={options} data={data} width={300} height={200} />
+    </div>
   );
 };
 

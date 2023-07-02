@@ -65,26 +65,36 @@ const TrendingArticles = () => {
     >
       {articles.map((article: TrendingArticle, index: number) => {
         return (
-          <Link href={`/article/${article.id}`} key={index} className="flex">
-            <motion.div
-              variants={item}
-              whileHover={{
-                scale: 1.1,
-                transition: { type: "spring", stiffness: 300, duration: 0.5 },
-              }}
-              className="flex flex-col border-[1px] border-slate-600 rounded-lg w-[90%] p-2 mx-auto hover:scale-110 bg-black text-white"
+          <motion.div
+            key={index}
+            variants={item}
+            whileHover={{
+              scale: 1.1,
+              transition: { type: "spring", stiffness: 300, duration: 0.5 },
+            }}
+            className="flex p-[5px] bg-black rounded-xl hover:scale-110 "
+          >
+            <Link
+              href={`/article/${article.id}`}
+              className="flex flex-col rounded-lg w-full px-2 mx-auto text-white border-dashed border-2 border-white"
             >
-              <p className="text-[10px] text-bold w-fit mr-auto mb-2 font-mono">{`<h${
+              <p className="text-[10px] text-bold w-fit mr-auto mb-1 font-mono text-[#FFD89C]">{`<h${
                 index + 1
               }>`}</p>
               <h2 className="text-bold text-[15px]">{article.title}</h2>
-              <p className="text-[12px]">{article.authorName}</p>
-              <p className="text-[12px]">收藏數 : {article.savedCount}</p>
-              <p className="text-[10px] text-bold w-fit ml-auto mt-2 font-mono">{`</h${
+              <div className="flex justify-between">
+                <p className="text-[12px] hidden lg:flex">
+                  {article.authorName}
+                </p>
+                <p className="text-[12px] hidden lg:flex">
+                  收藏數 : {article.savedCount}
+                </p>
+              </div>
+              <p className="text-[10px] text-bold w-fit ml-auto mt-1 font-mono text-[#FFD89C]">{`</h${
                 index + 1
               }>`}</p>
-            </motion.div>
-          </Link>
+            </Link>{" "}
+          </motion.div>
         );
       })}
     </motion.div>

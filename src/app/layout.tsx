@@ -21,12 +21,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`box-border ${poppins.className} relative transform-none`}
+        className={`box-border ${poppins.className} transform-none max-w-[1280px] mx-auto`}
       >
         <ReduxProvider>
           <AuthContextProvider>
             <Header />
-            <div className="pt-[60px] h-full translate-z-0">{children}</div>
+            <div className="pt-[60px] w-full h-full translate-z-0 ">
+              {children}
+            </div>
           </AuthContextProvider>
         </ReduxProvider>
       </body>
