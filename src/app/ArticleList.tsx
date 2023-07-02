@@ -41,7 +41,7 @@ const ArticleList = ({ articles }: { articles: Article[] }) => {
     //     observer.observe(el);
     //   });
     // });
-  }, [ref.current]);
+  }, []);
 
   return (
     <div

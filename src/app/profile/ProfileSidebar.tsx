@@ -7,8 +7,8 @@ import { PiBooksDuotone } from "react-icons/pi";
 const ProfileSidebar = () => {
   return (
     <>
-      <div className="absolute left-[50%] translate-x-[-50%] bottom-[10px] bg-[#F2BE22] rounded-[500px] w-[350px] h-[70px] z-0" />
-      <div className="flex items-center justify-center gap-5 absolute left-[50%] bottom-[5px] translate-x-[-50%] z-10  w-[350px] h-[60px]">
+      <div className="absolute left-[50%] translate-x-[-50%] bottom-[10px] bg-[#F2BE22] rounded-[500px] w-[350px] h-[55px] sm:h-[70px] z-0" />
+      <div className="flex items-center justify-center gap-5 absolute left-[50%] bottom-[8px] sm:bottom-[5px] translate-x-[-50%] z-10 w-[350px] h-[40px] sm:h-[60px]">
         <Link
           href="/profile/analysis"
           className="group flex flex-col items-center justify-center w-fit py-2 hover:cursor-pointer hover:animate-bounce hover:scale-150"

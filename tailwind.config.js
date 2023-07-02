@@ -25,9 +25,14 @@ module.exports = {
           "0%, 100%": { transform: "rotate(-3deg)" },
           "50%": { transform: "rotate(3deg)" },
         },
+        "loaing-skeleton": {
+          from: { "background-color": "hsl(200, 20%, 80%)" },
+          to: { "background-color": "hsl(200, 20%, 95%)" },
+        },
       },
       animation: {
         wiggle: "wiggle 2s infinite",
+        skeleton: "loading-skeleton 1s linear infinite",
       },
     },
   },

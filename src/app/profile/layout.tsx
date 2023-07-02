@@ -11,7 +11,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           <div className="rounded-full h-[10px] w-[10px] bg-[#22A699]" />
         </div>
         <div className="w-full h-[50px] border-b-2 border-black bg-slate-50 rounded-t-xl" />
-        <div className="p-10 pb-[40px] overflow-hidden h-[90%]">{children}</div>
+        <div className="p-10 pb-[80px] overflow-scroll h-[90%]">{children}</div>
         <div className="sticky bottom-[-70px] left-[50%]">
           <ProfileSidebar />
         </div>

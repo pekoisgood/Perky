@@ -136,9 +136,9 @@ const BookClubList = () => {
   console.log(isPreviewNote);
 
   return (
-    <div className="w-fit">
+    <div className="w-fit mx-auto md:mx-0">
       <motion.div
-        className="grid grid-cols-2 gap-5 mt-4"
+        className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-4"
         initial="hidden"
         animate="show"
         variants={container}

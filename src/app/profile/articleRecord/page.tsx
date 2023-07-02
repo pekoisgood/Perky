@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import ArticleSnippet from "@/app/ArticleSnippet";
+import Image from "next/image";
 
 type Articles = {
   id: string;
@@ -16,6 +17,7 @@ type Articles = {
   createdAt: Timestamp;
   tags: string[];
   title: string;
+  image: string;
   starCounts?: number;
 };
 
@@ -53,40 +55,45 @@ const Page = () => {
           <div className="absolute top-[-4px] left-[-2px] w-[20px] h-[9px] bg-[#3C486B] rounded-[40%_40%_0_0/10px_10px_0_0] z-10 border-black border-l-2 border-t-2" />
         </div>
       </Link>
-      <div
-        className="columns-3 gap-5"
-        // className="grid grid-cols-2 gap-5"
-      >
+      <div className="columns-2 md:columns-3 gap-x-5">
         {articleRecord.length > 0 &&
           articleRecord.map((article, index) => {
             return (
               <Link
                 href={`/article/${article.id}`}
-                className="rounded-xl p-1 block hover:translate-y-[-10px] hover:duration-100 bg-[#1B9C85] break-inside-avoid"
+                className="rounded-xl p-1 block hover:translate-y-[-10px] hover:duration-100 bg-[#1B9C85] break-inside-avoid mb-5"
                 key={article.id}
               >
                 <motion.div
                   initial={{
                     opacity: 0,
-                    x: index % 2 === 0 ? "-100vw" : "100vw",
                   }}
                   animate={{
                     opacity: 1,
-                    x: 0,
                   }}
                   transition={{
                     type: "ease",
                     stiffness: 130,
                     duration: 1,
                   }}
-                  className="flex flex-col h-full justify-center p-3 border-dashed border-2 border-white rounded-lg"
+                  className="flex flex-col gap-2 h-full justify-center p-3 border-dashed border-2 border-white rounded-lg"
                 >
+                  <div className="w-full h-[100px] mx-auto object-cover object-center overflow-hidden rounded-2xl">
+                    <Image
+                      src={article.image}
+                      alt="cover image"
+                      width={400}
+                      height={300}
+                      className="object-cover"
+                      loading="lazy"
+                    />
+                  </div>
                   <p className="font-semibold text-[18px]">
                     {article.title[0].toUpperCase() + article.title.slice(1)}
                   </p>
-                  <p className="text-white pl-1 text-[12px]">
+                  <div className="text-white pl-1 text-[12px]">
                     <ArticleSnippet article={article.content} />
-                  </p>
+                  </div>
                 </motion.div>
               </Link>
             );

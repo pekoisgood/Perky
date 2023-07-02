@@ -11,8 +11,6 @@ export default function CodeEditor() {
   const [isRunning, setIsRunning] = useState(false);
   const [language, setLanguage] = useState<string>("Javascript");
 
-  console.log(code);
-
   const langueges: string[] = [
     "Javascript",
     "Java",
@@ -127,7 +125,7 @@ export default function CodeEditor() {
         extensions={getExtensionLanguage()}
         theme={vscodeDark}
         id="editor"
-        onChange={(editor, viewUpdate) => {
+        onChange={(editor) => {
           setCode(editor);
         }}
       />

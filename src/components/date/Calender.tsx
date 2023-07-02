@@ -76,20 +76,22 @@ const Calender = () => {
       variants={containerVariant}
       className="w-fit mx-auto"
     >
-      <div className="border-2 border-solid border-[#245953] bg-white w-[500px] px-6 py-10 rounded-2xl shadow-[-5px_10px] shadow-[#245953]">
+      <div className="border-2 border-solid border-[#245953] bg-white w-[300px] lg:w-[500px] p-[10px] lg:px-6 lg:py-10 rounded-2xl shadow-[-5px_10px] shadow-[#245953]">
         <div className="flex gap-3 justify-center mb-5 items-center">
           <p
-            className="mr-auto bg-[#245953] py-1 px-2 rounded-xl text-[#F7D060] text-[20px] hover:cursor-pointer hover:bg-[#F7D060] hover:text-[#245953]"
+            className="mr-auto bg-[#245953] py-1 px-2 rounded-xl text-[#F7D060] text-[16px] lg:text-[20px] hover:cursor-pointer hover:bg-[#F7D060] hover:text-[#245953]"
             onClick={() => {
               dispatch(hadlePrevMonth());
             }}
           >
             prev
           </p>
-          <p className="font-bold text-[25px]">{monthData[date.month - 1]}</p>
-          <p className="font-bold text-[25px]">{date.year}</p>
+          <p className="font-bold text-[20px] lg:text-[25px]">
+            {monthData[date.month - 1]}
+          </p>
+          <p className="font-bold text-[20px] lg:text-[25px]">{date.year}</p>
           <p
-            className="ml-auto bg-[#245953] py-1 px-2 rounded-xl text-[#F7D060] text-[20px] hover:cursor-pointer hover:bg-[#F7D060] hover:text-[#245953]"
+            className="ml-auto bg-[#245953] py-1 px-2 rounded-xl text-[#F7D060] text-[16px] lg:text-[20px] hover:cursor-pointer hover:bg-[#F7D060] hover:text-[#245953]"
             onClick={() => {
               dispatch(handleNexMonth());
             }}
@@ -101,17 +103,17 @@ const Calender = () => {
           {week.map((d, index) => (
             <p
               key={index}
-              className="text-center justify-center text-[20px] font-bold"
+              className="text-center justify-center text-[16px] lg:text-[20px] font-bold"
             >
               {d}
             </p>
           ))}
         </div>
-        <div className="grid grid-cols-7 mt-2 items-center mx-auto justify-items-center">
+        <div className="grid grid-cols-7 mt-2 text-[20px] items-center mx-auto justify-items-center">
           {getDate(date.month, date.year).map((d, index) => (
             <div
               key={index}
-              className="flex justify-center items-center text-[22px] font-medium mt-2"
+              className="flex justify-center items-center font-medium mt-2"
             >
               {/*  leading-[30px] p-1 pt-[2px] */}
               <p

@@ -9,11 +9,11 @@ const Page = () => {
   const date = useAppSelector((state) => state.calender.value);
 
   return (
-    <div className="flex items-center justify-center gap-10 h-full">
+    <div className="flex sm:flex-row flex-col items-center justify-center gap-10 h-full">
       <Calender />
       <div className="flex flex-col items-start h-[75%]">
         <div className="w-full">
-          <p className="w-fit text-[20px] font-semibold">
+          <p className="w-fit text-[18px] md:text-[20px] font-semibold">
             讀書會日期：{date.year} / {date.month} / {date.date}
           </p>
           <Link
