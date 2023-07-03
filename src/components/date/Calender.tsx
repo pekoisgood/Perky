@@ -74,7 +74,7 @@ const Calender = () => {
       initial="hidden"
       animate="show"
       variants={containerVariant}
-      className="w-fit mx-auto"
+      className="w-fit"
     >
       <div className="border-2 border-solid border-[#245953] bg-white w-[300px] lg:w-[500px] p-[10px] lg:px-6 lg:py-10 rounded-2xl shadow-[-5px_10px] shadow-[#245953]">
         <div className="flex gap-3 justify-center mb-5 items-center">

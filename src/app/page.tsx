@@ -22,7 +22,7 @@ export default async function Home() {
 
   return (
     <div className="flex h-full w-full pt-5 relative overflow-hidden">
-      <div className="flex flex-col w-[150px] items-center gap-5 pt-[60px] fixed top-[50%] left-0 2xl:left-[15%] 2xl:translate-x-[-50%] translate-y-[-50%]">
+      <div className="hidden sm:flex flex-col w-[150px] items-center gap-5 pt-[60px] fixed top-[50%] left-0 2xl:left-[15%] 2xl:translate-x-[-50%] translate-y-[-50%]">
         {categories.sort().map((category) => {
           return (
             <Link

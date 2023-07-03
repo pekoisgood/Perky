@@ -133,75 +133,73 @@ const BookClubList = () => {
     };
     getBookClubList();
   }, [date]);
-  console.log(isPreviewNote);
 
   return (
-    <div className="w-fit mx-auto md:mx-0">
-      <motion.div
-        className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-4"
-        initial="hidden"
-        animate="show"
-        variants={container}
-      >
-        {bookClubs.length > 0 &&
-          bookClubs.map((bookClub, index) => {
-            return (
-              <motion.div
-                key={index}
-                variants={child}
-                className="p-1 border-solid rounded-xl hover:translate-y-[-10px] hover:duration-100 bg-[#1B9C85] text-white"
-              >
-                <div className="flex flex-col p-4 gap-2 justify-center items-center border-dashed border-2 border-white rounded-lg">
-                  <h3 className="text-[16px] text-black text-bold">
-                    {bookClub.name}
-                  </h3>
-                  <p className="text-[12px]">
-                    時間：{bookClub.time.toDate().toLocaleString()}
-                  </p>
-                  <div className="flex gap-2 justify-center text-black">
-                    <Link
-                      href={
-                        bookClub.time.toDate() < new Date()
-                          ? ""
-                          : `/bookClubMeeting/${bookClub.id}`
-                      }
-                      className={`${
-                        bookClub.time.toDate() < new Date() &&
-                        "hover:cursor-not-allowed "
-                      } p-1 rounded-lg bg-[#F0EB8D] text-[12px]`}
-                    >
-                      點我進入
-                    </Link>
-                    <div
-                      onClick={() => getNote(bookClub.id)}
-                      className="p-1 rounded-lg bg-[#F0EB8D] text-[12px] hover:cursor-pointer"
-                    >
-                      查看筆記
-                    </div>
+    <motion.div
+      className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 mx-auto mt-4"
+      initial="hidden"
+      animate="show"
+      variants={container}
+    >
+      {bookClubs.length > 0 &&
+        bookClubs.map((bookClub, index) => {
+          return (
+            <motion.div
+              key={index}
+              variants={child}
+              whileHover={{ y: -10 }}
+              className="p-1 border-solid rounded-xl bg-[#1B9C85] text-white hover:cursor-pointer"
+            >
+              <div className="flex flex-col p-4 gap-2 justify-center items-center border-dashed border-2 border-white rounded-lg">
+                <h3 className="text-[16px] text-black text-bold">
+                  {bookClub.name}
+                </h3>
+                <p className="text-[12px]">
+                  {bookClub.time.toDate().toLocaleString()}
+                </p>
+                <div className="flex gap-2 justify-center text-black">
+                  <Link
+                    href={
+                      bookClub.time.toDate() < new Date()
+                        ? ""
+                        : `/bookClubMeeting/${bookClub.id}`
+                    }
+                    className={`${
+                      bookClub.time.toDate() < new Date() &&
+                      "hover:cursor-not-allowed "
+                    } p-1 rounded-lg bg-[#F0EB8D] text-[12px]`}
+                  >
+                    點我進入
+                  </Link>
+                  <div
+                    onClick={() => getNote(bookClub.id)}
+                    className="p-1 rounded-lg bg-[#F0EB8D] text-[12px] hover:cursor-pointer"
+                  >
+                    查看筆記
                   </div>
-                  {isPreviewNote && note && (
-                    <div className="border-2 border-[#1B9C85] rounded-lg absolute top-0 left-0 w-[200%] h-[300%] p-3 overflow-y-scroll bg-[#F0EB8D]/95 flex flex-col items-center justify-center">
-                      <button
-                        className="absolute top-[10px] right-[15px] text-black"
-                        onClick={() => setIsPreviewNote(false)}
-                      >
-                        <IoMdClose size={20} className="text-[#1B9C85]" />
-                      </button>
-
-                      <ReactMarkdown
-                        remarkPlugins={[remarkGfm]}
-                        className={`w-full prose p-0`}
-                      >
-                        {note}
-                      </ReactMarkdown>
-                    </div>
-                  )}
                 </div>
-              </motion.div>
-            );
-          })}
-      </motion.div>
-    </div>
+                {isPreviewNote && note && (
+                  <div className="border-2 border-[#1B9C85] rounded-lg absolute top-0 left-0 w-[200%] h-[300%] p-3 overflow-y-scroll bg-[#F0EB8D]/95 flex flex-col items-center justify-center">
+                    <button
+                      className="absolute top-[10px] right-[15px] text-black"
+                      onClick={() => setIsPreviewNote(false)}
+                    >
+                      <IoMdClose size={20} className="text-[#1B9C85]" />
+                    </button>
+
+                    <ReactMarkdown
+                      remarkPlugins={[remarkGfm]}
+                      className={`w-full prose p-0`}
+                    >
+                      {note}
+                    </ReactMarkdown>
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          );
+        })}
+    </motion.div>
   );
 };
 

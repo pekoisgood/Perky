@@ -57,7 +57,7 @@ const Page = () => {
       </Link>
       <div className="columns-2 md:columns-3 gap-x-5">
         {articleRecord.length > 0 &&
-          articleRecord.map((article, index) => {
+          articleRecord.map((article) => {
             return (
               <Link
                 href={`/article/${article.id}`}

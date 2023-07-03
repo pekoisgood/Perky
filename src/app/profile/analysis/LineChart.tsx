@@ -115,7 +115,7 @@ const Page = ({
   };
 
   return (
-    <div className="h-[70%] max-h-[400px] flex flex-col items-center justify-center">
+    <div className="h-[70%] max-h-[400px] max-w-[600px] flex flex-col items-center justify-center">
       <Line options={options} data={data} width={300} height={200} />
     </div>
   );

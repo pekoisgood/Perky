@@ -35,19 +35,11 @@ const ArticleList = ({ articles }: { articles: Article[] }) => {
     ref.current.forEach((el) => {
       observer.observe(el);
     });
-
-    // window.addEventListener("scroll", () => {
-    //   ref.current.forEach((el) => {
-    //     observer.observe(el);
-    //   });
-    // });
   }, []);
 
   return (
     <div
-      // className="h-full pl-[150px] w-screen columns-3 gap-[10px] mx-auto lg:pr-[250px] md:pr-[170px]"
-      className="h-full pl-[150px] w-screen flex flex-col gap-8 justify-center lg:pr-[250px] md:pr-[170px]"
-      // 搭配子元素  break-inside-avoid  => 避免截斷
+      className="h-full sm:pl-[150px] w-screen flex flex-col gap-8 justify-center lg:pr-[250px] md:pr-[170px]"
       ref={containerRef}
     >
       {articles.map((article: Article, index: number) => {

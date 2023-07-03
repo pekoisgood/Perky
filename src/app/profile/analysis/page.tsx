@@ -43,7 +43,7 @@ const Page = () => {
   }, [user.id]);
 
   return (
-    <div className="h-full">
+    <div className="h-full max-w-[600px] mx-auto">
       <h1 className="w-fit mx-auto font-bold text-[25px] tracking-[2px] indent-[2px] mb-[20px]">
         學習紀錄
       </h1>
