@@ -6,7 +6,6 @@ import ReactPlayer from "react-player";
 const ScreenShareView = ({
   participantId,
   presenterId,
-  handleDisableScreenShare,
 }: {
   participantId: string;
   presenterId: string;
@@ -44,9 +43,8 @@ const ScreenShareView = ({
 
   return (
     <div>
-      ScreenShareView
       {screenShareOn && presenterId === participantId && (
-        <div className="w-full">
+        <div className="h-full max-h-[calc(100vh-290px)] relative">
           <ReactPlayer
             playsinline // very very imp prop
             playIcon={<></>}
@@ -62,9 +60,6 @@ const ScreenShareView = ({
               console.log(err, "presenter video error");
             }}
           />
-          <button onClick={handleDisableScreenShare}>
-            Disable screen share
-          </button>
         </div>
       )}
     </div>

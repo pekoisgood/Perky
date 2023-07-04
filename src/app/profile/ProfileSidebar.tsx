@@ -13,28 +13,28 @@ const ProfileSidebar = () => {
           href="/profile/analysis"
           className="group flex flex-col items-center justify-center w-fit py-2 hover:cursor-pointer hover:animate-bounce"
         >
-          <MdOutlineDataThresholding size={35} />
+          <MdOutlineDataThresholding size={37} />
           <p className="collapse text-[16px] group-hover:visible">學習分析</p>
         </Link>
         <Link
           href="/profile/articleRecord"
           className="group flex flex-col items-center justify-center w-fit py-2 hover:cursor-pointer hover:animate-bounce"
         >
-          <GrArticle size={30} />
+          <GrArticle size={32} />
           <p className="collapse group-hover:visible">發文紀錄</p>
         </Link>
         <Link
           href="/profile/savedArticle"
           className="group flex flex-col items-center justify-center w-fit py-2 hover:cursor-pointer hover:animate-bounce"
         >
-          <BsBookmarkHeart size={30} />
+          <BsBookmarkHeart size={28} />
           <p className="collapse group-hover:visible">收藏貼文</p>
         </Link>
         <Link
           href="/profile/bookClub"
           className="group flex flex-col items-center justify-center w-fit py-2 hover:cursor-pointer hover:animate-bounce"
         >
-          <PiBooksDuotone size={40} />
+          <PiBooksDuotone size={36} />
           <p className="collapse group-hover:visible">讀書會</p>
         </Link>
       </div>

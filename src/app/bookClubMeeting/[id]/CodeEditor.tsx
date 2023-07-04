@@ -1,15 +1,21 @@
 "use client";
 
 import CodeMirror from "@uiw/react-codemirror";
-import { useState } from "react";
+import React, { useState } from "react";
 import { vscodeDark } from "@uiw/codemirror-theme-vscode";
 import { langs } from "@uiw/codemirror-extensions-langs";
+import { VscDebugStart } from "react-icons/vsc";
 
-export default function CodeEditor() {
-  const [code, setCode] = useState("console.log('hello world')");
+type Props = {
+  code: string;
+  setCode: React.Dispatch<React.SetStateAction<string>>;
+};
+
+export default function CodeEditor({ code, setCode }: Props) {
   const [output, setOutput] = useState<string>("");
   const [isRunning, setIsRunning] = useState(false);
   const [language, setLanguage] = useState<string>("Javascript");
+  console.log(code);
 
   const langueges: string[] = [
     "Javascript",
@@ -21,7 +27,7 @@ export default function CodeEditor() {
     "Typescript",
   ];
 
-  const handleRun = () => {
+  const handleRunCode = () => {
     setIsRunning(true);
     compile();
   };
@@ -118,24 +124,8 @@ export default function CodeEditor() {
   };
 
   return (
-    <>
-      <CodeMirror
-        value='console.log("hello world")'
-        height="200px"
-        extensions={getExtensionLanguage()}
-        theme={vscodeDark}
-        id="editor"
-        onChange={(editor) => {
-          setCode(editor);
-        }}
-      />
-      <div className="flex justify-between mt-[5px]">
-        <button
-          onClick={handleRun}
-          className="border-[1px] border-slate-300 p-[5px] rounded-lg"
-        >
-          {isRunning ? "running" : "run"}
-        </button>
+    <div className="m-1 rounded-xl h-[89%]">
+      <div className="flex justify-between mb-3">
         <select
           className="border-[1px] border-slate-400 rounded-lg"
           onChange={(e) => setLanguage(e.target.value)}
@@ -148,11 +138,34 @@ export default function CodeEditor() {
             );
           })}
         </select>
+        <button
+          onClick={handleRunCode}
+          className={`bg-orange-100 rounded-lg
+          ${isRunning ? "animate-bounce p-[3px]" : "p-[5px]"}
+        `}
+        >
+          {isRunning ? "running" : <VscDebugStart />}
+        </button>
       </div>
-      <div className="border-[1px] border-black m-[10px] p-[10px] rounded-lg">
-        <h2 className="m-0">output:</h2>
-        <div className="pl-[10px]">{output}</div>
+
+      <div className="h-[90%] rounded-t-lg overflow-hidden">
+        <CodeMirror
+          value={code}
+          height="100%"
+          extensions={getExtensionLanguage()}
+          theme={vscodeDark}
+          className="h-full"
+          id="editor"
+          onChange={(editor) => {
+            setCode(editor);
+          }}
+        />
       </div>
-    </>
+
+      <div className="min-h-[calc(100%-600px)] p-2 mb-2 bg-black text-white rounded-b-lg border-white border-dashed border-t-[1px]">
+        <h2 className="m-0">output :</h2>
+        <div className="w-full overflow-y-scroll">{output}</div>
+      </div>
+    </div>
   );
 }
