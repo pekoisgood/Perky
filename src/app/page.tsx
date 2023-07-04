@@ -21,7 +21,7 @@ export default async function Home() {
   ];
 
   return (
-    <div className="flex h-full w-full pt-5 relative overflow-hidden">
+    <div className="flex h-full w-full pt-5 relative overflow-hidden gap-5">
       <div className="hidden sm:flex flex-col w-[150px] items-center gap-5 pt-[60px] fixed top-[50%] left-0 2xl:left-[15%] 2xl:translate-x-[-50%] translate-y-[-50%]">
         {categories.sort().map((category) => {
           return (
@@ -36,8 +36,8 @@ export default async function Home() {
         })}
       </div>
       <ArticleList articles={articles} />
-      <div className="lg:w-[230px] w-[150px] pr-[15px] h-full hidden flex-col gap-5 pt-[60px] justify-center absolute top-[350px] right-0 translate-y-[-50%] mt-4 md:flex">
-        <h2 className="mx-auto bg-[#FFD89C] text-bold font-mono shadow-[-3px_3px] shadow-black border-2 border-black py-1 px-3 rounded-2xl w-fit text-[14px] lg:text-[18px] text-center">
+      <div className="lg:w-[250px] md:w-[160px] h-full hidden md:flex flex-col gap-5 pt-[60px] items-center mt-4">
+        <h2 className="mx-auto bg-[#FFD89C] text-bold font-mono border-2 border-black py-1 px-3 shadow-[-3px_3px] shadow-black rounded-2xl w-fit text-[12px] lg:text-[18px] text-center">
           Tredning Articles
         </h2>
         <TrendingArticles />

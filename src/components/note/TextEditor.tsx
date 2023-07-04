@@ -22,7 +22,7 @@ const Page = ({ article }: { article: string }) => {
     editorProps: {
       attributes: {
         class:
-          "prose dark:prose-invert prose-md focus:outline-none p-3 border-slate-500 border-[1px] rounded-lg w-full",
+          "prose dark:prose-invert prose-md focus:outline-none p-3 rounded-lg mx-auto",
       },
     },
     extensions: [
@@ -48,7 +48,7 @@ const Page = ({ article }: { article: string }) => {
 
   return (
     <div className="mx-auto flex flex-col min-h-[200px] w-full">
-      <EditorContent editor={editor} className="prose w-full pl-[13px]" />
+      <EditorContent editor={editor} className="prose w-fit mx-auto" />
     </div>
   );
 };

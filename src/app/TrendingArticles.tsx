@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { collection, getDocs, orderBy, query, limit } from "firebase/firestore";
 import { db } from "@/utils/firebase";
 import Link from "next/link";
-import { motion, spring } from "framer-motion";
+import { motion, spring, stagger } from "framer-motion";
 
 interface TrendingArticle {
   title: string;
@@ -24,10 +24,11 @@ const container = {
 };
 
 const item = {
-  hidden: { opacity: 0 },
+  hidden: { opacity: 0, y: -100 },
   show: {
     opacity: 1,
-    trasition: { delay: 0.2, stiffness: 120, type: spring },
+    y: 0,
+    trasition: { type: spring, delay: stagger(0.2), stiffness: 120 },
   },
 };
 
@@ -61,7 +62,7 @@ const TrendingArticles = () => {
       initial="hidden"
       animate="show"
       variants={container}
-      className="flex flex-col gap-3 w-fit"
+      className="flex flex-col gap-3 w-fit min-h-[600px] shadow-black shadow-[-7px_7px] p-4 border-2 border-black rounded-lg"
     >
       {articles.map((article: TrendingArticle, index: number) => {
         return (
@@ -72,7 +73,7 @@ const TrendingArticles = () => {
               scale: 1.1,
               transition: { type: "spring", stiffness: 300, duration: 0.5 },
             }}
-            className="flex p-[5px] bg-black rounded-xl hover:scale-110 "
+            className="flex p-[5px] bg-[#435B66] rounded-xl hover:scale-110 "
           >
             <Link
               href={`/article/${article.id}`}

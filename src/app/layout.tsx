@@ -1,12 +1,15 @@
 import "./globals.css";
-import { Roboto_Slab } from "next/font/google";
+import { Poppins } from "next/font/google";
 import React from "react";
 import ReduxProvider from "@/redux/provider";
 import { AuthContextProvider } from "@/context/AuthContext";
 
 import Header from "../components/header/Header";
 
-const poppins = Roboto_Slab({ weight: "400", subsets: ["latin"] });
+const poppins = Poppins({
+  weight: ["400", "700", "500", "800"],
+  subsets: ["latin"],
+});
 
 export const metadata = {
   title: "Perky",

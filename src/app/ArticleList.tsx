@@ -39,7 +39,7 @@ const ArticleList = ({ articles }: { articles: Article[] }) => {
 
   return (
     <div
-      className="h-full sm:pl-[150px] w-screen flex flex-col gap-8 justify-center lg:pr-[250px] md:pr-[170px]"
+      className="h-full sm:pl-[150px] md:w-[calc(100%-200px)] lg:w-[calc(100%-250px)] flex flex-col gap-8 justify-center"
       ref={containerRef}
     >
       {articles.map((article: Article, index: number) => {
@@ -48,11 +48,11 @@ const ArticleList = ({ articles }: { articles: Article[] }) => {
             href={`/article/${article.id}`}
             key={article.id}
             ref={(el: HTMLAnchorElement) => (ref.current[index] = el)}
-            className="w-full p-4 pt-6 flex justify-between items-center gap-3 border-b-2 border-[#435B66] min-h-[140px] translate-x-[200px] opacity-0  hover:translate-y-[-10px] hover:duration-150"
+            className="w-full p-4 pt-6 flex justify-between items-center gap-3 border-b-2 border-black min-h-[140px] translate-x-[200px] opacity-0  hover:translate-y-[-10px] hover:duration-150"
           >
             <div className="flex flex-col gap-4 w-full relative">
               {article.image && (
-                <div className="w-full h-[300px] mx-auto object-cover object-center overflow-hidden relative rounded-2xl border-2 border-[#435B66] shadow-[-10px_10px] shadow-[#435B66]">
+                <div className="w-full h-[300px] mx-auto object-cover object-center overflow-hidden relative rounded-2xl border-2 border-black shadow-[-10px_10px] shadow-[#0000003b]">
                   <Image
                     src={article.image}
                     alt="article cover image"

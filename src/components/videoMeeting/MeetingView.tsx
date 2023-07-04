@@ -13,6 +13,7 @@ import { ImExit } from "react-icons/im";
 import { MdCallEnd } from "react-icons/md";
 import Image from "next/image";
 import { AuthContext } from "@/context/AuthContext";
+import { motion } from "framer-motion";
 
 type PresenterId = null | string;
 
@@ -225,13 +226,17 @@ const MeetingView = () => {
             className="rounded-full overflow-hidden"
           />
           <p>{user.name}</p>
-          <button
+          <motion.button
             className={`rounded-3xl bg-[#9575DE] border-2 border-white text-white text-bold text-[20px] tacking-[1px]
             py-[5px] px-[14px] mx-auto w-fit hover:cursor-pointer hover:scale-110 hover:duration-75`}
             onClick={joinMeeting}
+            whileHover={{
+              scale: 1.1,
+              transition: { type: "spring", stiffness: 300, duration: 0.5 },
+            }}
           >
             Join the meeting
-          </button>
+          </motion.button>
         </div>
       )}
     </div>

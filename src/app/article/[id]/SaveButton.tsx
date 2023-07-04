@@ -11,6 +11,7 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import React, { useContext, useEffect, useState } from "react";
+import { BsBookmark, BsBookmarkHeartFill } from "react-icons/bs";
 
 type Prop = {
   articleId: string;
@@ -21,26 +22,24 @@ const SaveButton = ({ articleId }: Prop) => {
   const [isSaved, setIsSaved] = useState<boolean | null>(null);
 
   const handleSaveArticle = async () => {
-    if (isSaved) return;
+    if (isSaved) {
+      await deleteDoc(doc(db, "users", user.id, "savedArticles", articleId));
+      await updateDoc(doc(db, "articles", articleId), {
+        savedCount: increment(-1),
+      });
 
-    await setDoc(doc(db, "users", user.id, "savedArticles", articleId), {
-      articleId: articleId,
-      createdAt: serverTimestamp(),
-    });
-    await updateDoc(doc(db, "articles", articleId), {
-      savedCount: increment(1),
-    });
+      setIsSaved(false);
+    } else {
+      await setDoc(doc(db, "users", user.id, "savedArticles", articleId), {
+        articleId: articleId,
+        createdAt: serverTimestamp(),
+      });
+      await updateDoc(doc(db, "articles", articleId), {
+        savedCount: increment(1),
+      });
 
-    setIsSaved(true);
-  };
-
-  const handleUnSaveArticle = async () => {
-    await deleteDoc(doc(db, "users", user.id, "savedArticles", articleId));
-    await updateDoc(doc(db, "articles", articleId), {
-      savedCount: increment(-1),
-    });
-
-    setIsSaved(false);
+      setIsSaved(true);
+    }
   };
 
   useEffect(() => {
@@ -62,21 +61,17 @@ const SaveButton = ({ articleId }: Prop) => {
 
   return (
     <>
-      {isSaved ? (
-        <button
-          className="absolute top-[50%] right-[20px] translate-y-[-50%]"
-          onClick={handleUnSaveArticle}
-        >
-          取消收藏
-        </button>
-      ) : (
-        <button
-          className="absolute top-[50%] right-[20px] translate-y-[-50%]"
-          onClick={handleSaveArticle}
-        >
-          + 收藏
-        </button>
-      )}
+      <abbr
+        title={`${isSaved ? "已收藏此篇貼文" : "收藏此貼文"}`}
+        className="fixed bottom-0 right-[20px] md:absolute md:top-[50%] md:right-0 translate-y-[-50%] hover:cursor-pointer p-2 bg-white/50 rounded-full z-10"
+        onClick={handleSaveArticle}
+      >
+        {isSaved ? (
+          <BsBookmarkHeartFill size={30} className="text-[#EB455F]" />
+        ) : (
+          <BsBookmark size={30} />
+        )}
+      </abbr>
     </>
   );
 };
