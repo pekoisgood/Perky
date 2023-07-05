@@ -1,5 +1,6 @@
-import ProfileSidebar from "@/app/profile/ProfileSidebar";
 import React from "react";
+import ProfileSidebar from "@/app/profile/ProfileSidebar";
+import Auth from "./Auth";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -16,6 +17,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           <ProfileSidebar />
         </div>
       </div>
+      <Auth />
     </div>
   );
 };

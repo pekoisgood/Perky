@@ -2,6 +2,7 @@
 import React, { createContext, useEffect, useState } from "react";
 import { auth, signInWithGoogle, firebaseSignOut } from "@/utils/firebase";
 import { onAuthStateChanged } from "firebase/auth";
+import { useRouter } from "next/navigation";
 
 type User = {
   id: string;
@@ -27,6 +28,7 @@ export const AuthContextProvider = ({
 }) => {
   const [isLogin, setIsLogin] = useState(false);
   const [user, setUser] = useState<User>({ name: "", id: "", avatar: "" });
+  const router = useRouter();
 
   useEffect(() => {
     const checkAuthStatus = async () => {
@@ -50,6 +52,7 @@ export const AuthContextProvider = ({
     const result = await signInWithGoogle();
     if (!result) return;
     setIsLogin(true);
+    router.replace("/profile/analysis");
   };
 
   const logOut = async () => {

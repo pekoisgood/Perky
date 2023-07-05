@@ -21,6 +21,7 @@ import {
   where,
   getDocs,
 } from "firebase/firestore";
+import { redirect } from "next/navigation";
 
 export type Article = {
   title: string;
@@ -34,7 +35,7 @@ border-2 border-black rounded-2xl shadow-black shadow-[3px_3px]
 hover:cursor-pointer hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-none duration-100`;
 
 const Page = () => {
-  const { user } = useContext(AuthContext);
+  const { user, isLogin } = useContext(AuthContext);
   const [image, setImage] = useState<File | null>(null);
   const [isProcessing, setIsProcessing] = useState<Boolean>(false);
   const tagRef = useRef<HTMLInputElement | null>(null);
@@ -114,6 +115,12 @@ const Page = () => {
       tagRef.current.value = "";
     }
   }, [postArticle.tags]);
+
+  useEffect(() => {
+    if (!isLogin) {
+      redirect("/auth");
+    }
+  }, []);
 
   return (
     <div

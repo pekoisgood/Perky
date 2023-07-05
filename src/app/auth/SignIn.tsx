@@ -11,7 +11,6 @@ const SignIn = () => {
 
   return (
     <div className="w-full h-[calc(100vh-60px)] flex flex-col justify-center items-center">
-      <h1 className="mb-[30px]">Sign In Page</h1>
       {isLogin ? (
         <>
           <div>
