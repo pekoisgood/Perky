@@ -11,7 +11,7 @@ const Profile = () => {
   return (
     <>
       <Link
-        href={`${isLogin ? "/profile" : "/auth"}`}
+        href={`${isLogin ? "/profile/analyze" : "/auth"}`}
         className="rounded-full flex items-center justify-center w-[40px] h-[40px] object-contain overflow-hidden"
       >
         {isLogin ? (

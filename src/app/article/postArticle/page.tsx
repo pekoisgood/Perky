@@ -187,7 +187,10 @@ const Page = () => {
             className="w-fit px-2 py-1 bg-orange-300 border-2 border-black rounded-full "
           >
             {tag}
-            <span className="ml-3" onClick={() => handleTag("DELETE", tag)}>
+            <span
+              className="ml-3 hover:cursor-pointer"
+              onClick={() => handleTag("DELETE", tag)}
+            >
               x
             </span>
           </p>
@@ -206,7 +209,9 @@ const Page = () => {
       </div>
       <button
         className={
-          "bg-orange-300 text-black " + buttonClass + " mx-auto mt-[50px]"
+          `bg-orange-300 text-black mx-auto mt-[50px] ${
+            isProcessing && "hover:cursor-wait"
+          }` + buttonClass
         }
         onClick={handleSubmitArticle}
       >

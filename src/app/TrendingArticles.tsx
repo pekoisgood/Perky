@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { collection, getDocs, orderBy, query, limit } from "firebase/firestore";
 import { db } from "@/utils/firebase";
 import Link from "next/link";
-import { motion, spring, stagger } from "framer-motion";
+import { motion, spring } from "framer-motion";
 
 interface TrendingArticle {
   title: string;

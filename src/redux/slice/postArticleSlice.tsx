@@ -1,7 +1,4 @@
-import {
-  createSlice,
-  // , PayloadAction
-} from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 export type Article = {
   title: string;
@@ -37,13 +34,12 @@ export const postArticleSlice = createSlice({
             },
           };
         case "DELETE_TAG":
-          const newTags = state.value.tags.filter(
-            (tag) => tag !== actions.payload.value
-          );
           return {
             value: {
               ...state.value,
-              tags: newTags,
+              tags: state.value.tags.filter(
+                (tag) => tag !== actions.payload.value
+              ),
             },
           };
         case "UPDATE_INPUTS":

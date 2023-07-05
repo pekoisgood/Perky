@@ -1,11 +1,7 @@
 import React from "react";
-import Link from "next/link";
-import { ReactMarkdown } from "react-markdown/lib/react-markdown";
-import { Article } from "@/utils/firebase";
 import { headers } from "next/dist/client/components/headers";
 import ArticleList from "@/app/ArticleList";
 import { capitalize } from "@/utils/func";
-import { useSearchParams } from "next/navigation";
 
 const Page = async ({
   searchParams,
