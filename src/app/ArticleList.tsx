@@ -5,7 +5,13 @@ import Image from "next/image";
 import { Article } from "@/utils/firebase";
 import ArticleSnippet from "./ArticleSnippet";
 
-const ArticleList = ({ articles }: { articles: Article[] }) => {
+const ArticleList = ({
+  articles,
+  customLayout,
+}: {
+  articles: Article[];
+  customLayout?: string;
+}) => {
   const ref = useRef<HTMLAnchorElement[]>([]);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -39,7 +45,11 @@ const ArticleList = ({ articles }: { articles: Article[] }) => {
 
   return (
     <div
-      className="h-full sm:pl-[150px] md:w-[calc(100%-200px)] lg:w-[calc(100%-250px)] flex flex-col gap-8 justify-center"
+      className={`h-full ${
+        customLayout
+          ? customLayout
+          : "sm:pl-[150px] md:w-[calc(100%-200px)] lg:w-[calc(100%-250px)]"
+      } flex flex-col gap-8 justify-center`}
       ref={containerRef}
     >
       {articles.map((article: Article, index: number) => {
@@ -68,17 +78,17 @@ const ArticleList = ({ articles }: { articles: Article[] }) => {
                 <p className="text-center text-[14px]">
                   author: {article.authorName}
                 </p>
-                <p className="bg-[#435B66] tracking-[1px] px-2 py-1 rounded-3xl w-fit text-[12px] text-white border-2 shadow-[-3px_3px] shadow-black border-black font-bold absolute top-[-16px] right-[5px]">
+                <p className="bg-[#435B66] tracking-[1px] px-2 py-1 rounded-3xl w-fit text-[10px] sm:text-[12px] text-white border-2 shadow-[-3px_3px] shadow-black border-black font-bold absolute top-[-16px] right-[5px]">
                   {article.category}
                 </p>
                 <ArticleSnippet article={article.content} />
-                <div className="flex gap-2 items-center justify-center">
+                <div className="flex gap-2 items-center justify-center flex-wrap">
                   {article.tags &&
                     article.tags.map((tag: string, index: number) => {
                       return (
                         <p
                           key={index}
-                          className="px-1 border-tag border-[#FFD89C] bg-[#F5EDDC] rounded-md w-fit text-[12px]"
+                          className="px-1 border-tag border-orange-300 bg-orange-100 rounded-md w-fit text-[12px]"
                         >
                           # {tag}
                         </p>

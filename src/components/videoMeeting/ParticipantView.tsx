@@ -1,10 +1,12 @@
 "use client";
+
 import React from "react";
 import { useRef, useMemo, useEffect, useContext } from "react";
 import { useParticipant } from "@videosdk.live/react-sdk";
 import ReactPlayer from "react-player";
 import { AuthContext } from "@/context/AuthContext";
 import Image from "next/image";
+import { PiFinnTheHumanFill } from "react-icons/pi";
 
 type Props = {
   participantId: string;
@@ -84,27 +86,21 @@ const ParticipantView = ({
           <div
             className={`flex flex-col ${presenterId ? "w-[100px]" : "w-full"}`}
           >
-            <Image
-              src={user.avatar}
-              alt="avatar"
-              width={40}
-              height={40}
-              className="rounded-full overflow-hidden"
-            />
+            {user.avatar !== " " ? (
+              <Image
+                src={user.avatar}
+                alt="avatar"
+                width={40}
+                height={40}
+                className="rounded-full overflow-hidden"
+              />
+            ) : (
+              <PiFinnTheHumanFill />
+            )}
             <p className="text-white text-[12px]">{user.name}</p>
           </div>
         )}
       </div>
-      {/* <div className="flex flex-col gap-2 justify-center items-center h-full w-[200px] border-[1px] border-orange-100">
-          <Image
-            src={user.avatar}
-            alt="avatar"
-            width={40}
-            height={40}
-            className="rounded-full overflow-hidden"
-          />
-          <p className="text-white text-[12px]">{user.name}</p>
-        </div> */}
     </>
   );
 };

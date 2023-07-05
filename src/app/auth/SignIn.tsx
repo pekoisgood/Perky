@@ -1,8 +1,10 @@
 "use client";
+
 import Image from "next/image";
 import { AuthContext } from "@/context/AuthContext";
 import { useContext } from "react";
 import googleLogo from "./google.png";
+import { PiFinnTheHumanFill } from "react-icons/pi";
 
 const SignIn = () => {
   const { isLogin, logIn, logOut, user } = useContext(AuthContext);
@@ -13,13 +15,17 @@ const SignIn = () => {
       {isLogin ? (
         <>
           <div>
-            <Image
-              src={user.avatar}
-              alt="user avatar"
-              width={100}
-              height={100}
-              priority={true}
-            />
+            {user.avatar !== " " ? (
+              <Image
+                src={user.avatar}
+                alt="user avatar"
+                width={100}
+                height={100}
+                priority={true}
+              />
+            ) : (
+              <PiFinnTheHumanFill size={40} />
+            )}
           </div>
           <h1>name: {user.name}</h1>
           <button onClick={logOut}>Sign out</button>

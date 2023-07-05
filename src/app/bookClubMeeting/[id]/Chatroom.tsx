@@ -14,6 +14,7 @@ import { db } from "@/utils/firebase";
 import { AuthContext } from "@/context/AuthContext";
 import { useParams } from "next/navigation";
 import { HiPaperAirplane } from "react-icons/hi";
+import { PiFinnTheHumanFill } from "react-icons/pi";
 import Image from "next/image";
 
 type Message = {
@@ -177,13 +178,17 @@ const Chatroom = ({
                 className="flex gap-1 w-fit mr-auto justify-start items-center"
                 key={index}
               >
-                <Image
-                  src={message.avatar}
-                  alt="user avatar"
-                  width={25}
-                  height={25}
-                  className="rounded-full overflow-hidden h-fit w-fit object-cover"
-                />
+                {message.avatar !== " " ? (
+                  <Image
+                    src={message.avatar}
+                    alt="user avatar"
+                    width={25}
+                    height={25}
+                    className="rounded-full overflow-hidden h-fit w-fit object-cover"
+                  />
+                ) : (
+                  <PiFinnTheHumanFill />
+                )}
                 <div>
                   <p className="text-[12px]">{message.user}</p>
                   <p

@@ -11,6 +11,7 @@ import {
 import { LuScreenShare, LuScreenShareOff } from "react-icons/lu";
 import { ImExit } from "react-icons/im";
 import { MdCallEnd } from "react-icons/md";
+import { PiFinnTheHumanFill } from "react-icons/pi";
 import Image from "next/image";
 import { AuthContext } from "@/context/AuthContext";
 import { motion } from "framer-motion";
@@ -218,13 +219,17 @@ const MeetingView = () => {
         </>
       ) : (
         <div className="w-full h-full flex flex-col gap-3 justify-center items-center text-white">
-          <Image
-            src={user.avatar}
-            alt="user avatar"
-            width={100}
-            height={100}
-            className="rounded-full overflow-hidden"
-          />
+          {user.avatar !== " " ? (
+            <Image
+              src={user.avatar}
+              alt="user avatar"
+              width={100}
+              height={100}
+              className="rounded-full overflow-hidden"
+            />
+          ) : (
+            <PiFinnTheHumanFill />
+          )}
           <p>{user.name}</p>
           <motion.button
             className={`rounded-3xl bg-[#9575DE] border-2 border-white text-white text-bold text-[20px] tacking-[1px]

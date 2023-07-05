@@ -17,6 +17,7 @@ const container = {
   show: {
     opacity: 1,
     transition: {
+      delay: 0.8,
       delayChildren: 1,
       staggerChildren: 0.5,
     },
@@ -28,7 +29,7 @@ const item = {
   show: {
     opacity: 1,
     y: 0,
-    trasition: { type: spring, delay: stagger(0.2), stiffness: 120 },
+    trasition: { type: spring, duration: 1, delay: 2, stiffness: 120 },
   },
 };
 
@@ -62,7 +63,7 @@ const TrendingArticles = () => {
       initial="hidden"
       animate="show"
       variants={container}
-      className="flex flex-col gap-3 w-fit min-h-[600px] shadow-black shadow-[-7px_7px] p-4 border-2 border-black rounded-lg"
+      className="flex flex-col gap-3 w-fit h-fit min-w-[160px] sm:min-w-[250px] shadow-black shadow-[-7px_7px] p-4 border-2 border-black rounded-lg"
     >
       {articles.map((article: TrendingArticle, index: number) => {
         return (

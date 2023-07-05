@@ -29,6 +29,10 @@ export type Article = {
   tags: string[];
 };
 
+const buttonClass = `w-fit h-fit bg-[#245953] text-white px-3 py-1
+border-2 border-black rounded-2xl shadow-black shadow-[3px_3px]
+hover:cursor-pointer hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-none duration-100`;
+
 const Page = () => {
   const { user } = useContext(AuthContext);
   const [image, setImage] = useState<File | null>(null);
@@ -38,17 +42,19 @@ const Page = () => {
   const dispatch = useAppDispatch();
   const postArticle = useAppSelector((state) => state.postArticle.value);
 
-  const handleAddTag = () => {
-    if (tagRef.current === null || tagRef.current.value === "") return;
-
-    const tag = capitalize(tagRef.current.value);
-
-    dispatch(
-      handleUpdateArticle({
-        action: "UPDATE_TAGS",
-        value: tag,
-      })
-    );
+  const handleTag = (action: string, tag?: string) => {
+    if (action === "ADD") {
+      if (tagRef.current === null || tagRef.current.value === "") return;
+      const tagValue = capitalize(tagRef.current.value);
+      dispatch(
+        handleUpdateArticle({
+          action: "UPDATE_TAGS",
+          value: tagValue,
+        })
+      );
+    } else if (action === "DELETE" && tag) {
+      dispatch(handleUpdateArticle({ action: "DELETE_TAG", value: tag }));
+    }
   };
 
   const handleSubmitArticle = async () => {
@@ -110,75 +116,102 @@ const Page = () => {
   }, [postArticle.tags]);
 
   return (
-    <div className="flex flex-col gap-5 w-[800px] max-w-screen mx-auto mt-10 border-[1px]">
-      <h1 className="mx-auto border-[1px]">我要發文</h1>
-      <div className="flex flex-col gap-2">
-        <input
-          required
-          placeholder="標題"
-          className="border-[1px] px-3 py-2"
-          value={postArticle.title}
-          onChange={(e) =>
-            dispatch(
-              handleUpdateArticle({
-                action: "UPDATE_INPUTS",
-                key: "title",
-                value: e.target.value,
-              })
-            )
-          }
-        />
-        <div>
-          <label className="mr-5">上傳封面照</label>
+    <div
+      className={`flex flex-col justify-center w-full max-w-[800px] h-full min-h-[calc(100vh-200px)] 
+      gap-3 mx-auto my-[50px] p-5 border-2 border-black rounded-3xl shadow-black shadow-[-5px_5px]`}
+    >
+      <input
+        required
+        placeholder="Title..."
+        className="outline-none px-3 py-2 placeholder:text-slate-200 text-[25px] border-dashed border-2 border-[#245953] rounded-2xl focus:border-solid"
+        value={postArticle.title}
+        onChange={(e) =>
+          dispatch(
+            handleUpdateArticle({
+              action: "UPDATE_INPUTS",
+              key: "title",
+              value: e.target.value,
+            })
+          )
+        }
+      />
+      <div className="flex items-center justify-center">
+        <label className={buttonClass + " mr-3"}>
           <input
             type="file"
             accept="image/*"
+            className="hidden"
             onChange={(e) => e.target.files && setImage(e.target.files[0])}
           />
-        </div>
+          Add cover
+        </label>
+        {image && (
+          <span className="text-[#245953]">{image.name.slice(0, 15)}...</span>
+        )}
+      </div>
+      <div className="grow mx-auto flex flex-col min-h-[200px] w-full ">
         <TextEditor />
-        <div className="flex gap-2 mx-auto border-[1px] border-slate-500 p-2">
-          <label htmlFor="category">Category</label>
-          <select
-            required
-            id="category"
-            name="category"
-            onChange={(e) => {
-              dispatch(
-                handleUpdateArticle({
-                  action: "UPDATE_INPUTS",
-                  key: "category",
-                  value: e.target.value,
-                })
-              );
-            }}
-            className="border-[1px] border-slate-200 rounded-sm"
+      </div>
+
+      <div className="flex items-center gap-2 mx-auto p-2">
+        <label htmlFor="category" className="font-medium">
+          Category
+        </label>
+        <select
+          required
+          id="category"
+          name="category"
+          onChange={(e) => {
+            dispatch(
+              handleUpdateArticle({
+                action: "UPDATE_INPUTS",
+                key: "category",
+                value: e.target.value,
+              })
+            );
+          }}
+          className={`border-2 border-black rounded-2xl shadow-black shadow-[3px_3px] bg-[#245953] outline-none
+          hover:cursor-pointer hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-none p-2 text-white`}
+        >
+          <option value="Frontend">Frontend</option>
+          <option value="Backend">Backend</option>
+          <option value="IOS">IOS</option>
+          <option value="Android">Android</option>
+          <option value="Others">Others</option>
+        </select>
+      </div>
+      <div className="flex flex-wrap w-80% gap-1">
+        {postArticle.tags.map((tag, index) => (
+          <p
+            key={index}
+            className="w-fit px-2 py-1 bg-orange-300 border-2 border-black rounded-full "
           >
-            <option value="Frontend">Frontend</option>
-            <option value="Backend">Backend</option>
-            <option value="IOS">IOS</option>
-            <option value="Android">Android</option>
-            <option value="Others">Others</option>
-          </select>
-        </div>
-        <div className="flex flex-wrap w-[300px] gap-1">
-          {postArticle.tags.map((tag, index) => (
-            <p key={index}>{tag}</p>
-          ))}
-        </div>
-        <div className="flex gap-2 mx-auto">
-          <label htmlFor="tag">Tag : </label>
-          <input
-            type="text"
-            ref={tagRef}
-            className="border-[1px] border-slate-200 rounded-sm"
-          />
-          <button onClick={() => handleAddTag()}>add tag</button>
-        </div>
-        <button onClick={handleSubmitArticle}>
-          {isProcessing ? "running..." : "送出"}
+            {tag}
+            <span className="ml-3" onClick={() => handleTag("DELETE", tag)}>
+              x
+            </span>
+          </p>
+        ))}
+      </div>
+      <div className="flex items-center gap-2 mx-auto">
+        <input
+          type="text"
+          ref={tagRef}
+          placeholder="Add tag..."
+          className="px-2 py-1 outline-none border-dashed border-2 border-[#245953] rounded-2xl focus:border-solid"
+        />
+        <button className={buttonClass} onClick={() => handleTag("ADD")}>
+          add tag
         </button>
       </div>
+      <button
+        className={
+          "bg-orange-300 text-black " + buttonClass + " mx-auto mt-[50px]"
+        }
+        onClick={handleSubmitArticle}
+      >
+        {isProcessing ? "running..." : "送出"}
+      </button>
     </div>
   );
 };

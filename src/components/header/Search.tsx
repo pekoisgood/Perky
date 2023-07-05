@@ -64,8 +64,10 @@ const Search = () => {
         <RiSearch2Line size={25} />
       </div>
       {isSearching && (
-        <div className="w-screen h-screen absolute top-0 left-0 bg-slate-50/40 flex flex-col justify-center items-center">
-          <div className="flex flex-col gap-4 bg-slate-200 p-3 rounded-lg">
+        <div
+          className={`w-screen h-screen absolute top-0 left-0 bg-slate-50/40 flex flex-col justify-center items-center`}
+        >
+          <div className="w-[] flex flex-col gap-4 bg-slate-200 p-3 rounded-lg">
             <button
               onClick={() => setIsSearching(false)}
               className="w-fit text-red-500 ml-auto block"
@@ -78,7 +80,7 @@ const Search = () => {
                 onChange={(e) => setSearchInput(e.target.value.toLowerCase())}
               />
               <Link
-                href={`/articles/search?search=${searchInput}`}
+                href={`/articles?search=${searchInput}`}
                 className="bg-slate-500 p-1 rounded-lg"
                 onClick={() => setIsSearching(false)}
               >
@@ -91,7 +93,7 @@ const Search = () => {
                   return (
                     <div key={tag.id} className="border-[1px] border-slate-500">
                       <Link
-                        href={`/articles/search?tag=${tag.name}`}
+                        href={`/articles?tag=${tag.name}`}
                         onClick={() => setIsSearching(false)}
                       >
                         {tag.name}

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { headers } from "next/dist/client/components/headers";
 import Comment from "./Comment";
 import { HiFire } from "react-icons/hi";
+import { PiFinnTheHumanFill } from "react-icons/pi";
 
 const Page = async ({ params }: { params: { id: string } }) => {
   const articleId = params.id;
@@ -40,11 +41,12 @@ const Page = async ({ params }: { params: { id: string } }) => {
         </p>
       </div>
       <p className="text-[13px] sm:text-[16px]">
-        <HiFire className="inline pb-1" />
+        <HiFire className="inline sm:pb-1" />
         收藏數：{article.savedCount ?? 0}
       </p>
-      {article.image && (
-        <div className="w-full h-[400px] object-cover mx-auto overflow-hidden rounded-2xl border-2 border-dashed border-[#245953] shadow-[#245953] shadow-[-7px_7px]">
+
+      <div className="w-full h-fit object-cover mx-auto overflow-hidden rounded-2xl border-2 border-dashed border-[#245953] shadow-[#245953] shadow-[-7px_7px]">
+        {article.image !== "" ? (
           <Image
             src={article.image}
             alt="cover image of this article"
@@ -52,8 +54,11 @@ const Page = async ({ params }: { params: { id: string } }) => {
             height={400}
             priority={false}
           />
-        </div>
-      )}
+        ) : (
+          <PiFinnTheHumanFill size={30} />
+        )}
+      </div>
+
       <div className="w-full mx-auto mt-8">
         <TextEditor article={article.content} />
       </div>

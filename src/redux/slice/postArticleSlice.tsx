@@ -36,6 +36,16 @@ export const postArticleSlice = createSlice({
               tags: [...state.value.tags, actions.payload.value],
             },
           };
+        case "DELETE_TAG":
+          const newTags = state.value.tags.filter(
+            (tag) => tag !== actions.payload.value
+          );
+          return {
+            value: {
+              ...state.value,
+              tags: newTags,
+            },
+          };
         case "UPDATE_INPUTS":
           return {
             value: {

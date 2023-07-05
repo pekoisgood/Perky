@@ -34,7 +34,7 @@ const Page = () => {
     editorProps: {
       attributes: {
         class:
-          "prose dark:prose-invert prose-md focus:outline-none p-3 border-slate-500 border-[1px] rounded-lg w-full",
+          "prose dark:prose-invert prose-md focus:outline-none min-h-[calc(100vh-660px)] p-3 w-full border-dashed border-2 border-[#245953] rounded-2xl overflow-y-scroll max-h-[calc(100vh-500px)] focus:border-solid",
       },
     },
     extensions: [
@@ -71,10 +71,14 @@ const Page = () => {
   }, [editor?.getHTML()]);
 
   return (
-    <div className="border-2 border-slate-500 mx-auto flex flex-col min-h-[200px] w-full">
+    <>
       <MenuBar editor={editor} />
-      <EditorContent editor={editor} className="prose mx-auto w-full mt-5" />
-    </div>
+      <EditorContent
+        editor={editor}
+        className="prose mx-auto w-full mt-5"
+        placeholder="Let's create some awsome content...!"
+      />
+    </>
   );
 };
 

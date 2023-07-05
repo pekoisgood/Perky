@@ -26,7 +26,7 @@ export default async function Home() {
         {categories.sort().map((category) => {
           return (
             <Link
-              href={`/articles/${category}`}
+              href={`/articles?category=${category}`}
               key={category}
               className="bg-[#FFD89C] text-bold font-mono shadow-[-3px_3px] shadow-black py-1 px-3 rounded-2xl w-fit border-2 border-black hover:cursor-pointer hover:animate-wiggle"
             >

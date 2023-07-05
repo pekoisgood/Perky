@@ -3,6 +3,7 @@ import { AuthContext } from "@/context/AuthContext";
 import Image from "next/image";
 import { useContext } from "react";
 import Link from "next/link";
+import { PiFinnTheHumanFill } from "react-icons/pi";
 
 const Profile = () => {
   const { user, isLogin, logOut } = useContext(AuthContext);
@@ -11,11 +12,20 @@ const Profile = () => {
     <>
       <Link
         href={`${isLogin ? "/profile" : "/auth"}`}
-        className="border-2 border-slate-300 rounded-full flex items-center justify-center w-[40px] h-[40px] object-contain overflow-hidden"
+        className="rounded-full flex items-center justify-center w-[40px] h-[40px] object-contain overflow-hidden"
       >
         {isLogin ? (
           <>
-            <Image src={user.avatar} alt="user avatar" width={50} height={50} />
+            {user.avatar !== " " ? (
+              <Image
+                src={user.avatar}
+                alt="user avatar"
+                width={50}
+                height={50}
+              />
+            ) : (
+              <PiFinnTheHumanFill />
+            )}
           </>
         ) : (
           <p>登入</p>
