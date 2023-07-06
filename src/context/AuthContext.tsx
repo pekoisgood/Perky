@@ -10,7 +10,14 @@ type User = {
   avatar: string;
 };
 
-export const AuthContext = createContext({
+type Auth = {
+  isLogin: boolean | null;
+  logIn: () => void;
+  logOut: () => void;
+  user: User;
+};
+
+export const AuthContext = createContext<Auth>({
   isLogin: false,
   logIn: () => {},
   logOut: () => {},
@@ -26,7 +33,7 @@ export const AuthContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState<null | boolean>(null);
   const [user, setUser] = useState<User>({ name: "", id: "", avatar: "" });
   const router = useRouter();
 

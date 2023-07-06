@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 type CalrenderState = {
   year: number;
@@ -22,20 +22,6 @@ export const calenderSlice = createSlice({
   name: "calender",
   initialState: initailState,
   reducers: {
-    // switch (action.type){
-    //     case "HANDLE_PREV_MONTH"
-    //         return {
-    //             value: {
-    //               year: state.value.year,
-    //               month: state.value.month - 1,
-    //               date: 0,
-    //             },
-
-    //     default:
-    //         return state
-    // }
-
-    // }
     hadlePrevMonth: (state) => {
       if (state.value.month > 1) {
         return {
@@ -66,13 +52,22 @@ export const calenderSlice = createSlice({
         value: { ...state.value, year: state.value.year + 1, month: 1 },
       };
     },
-    handleSelectDate: (state, actions: PayloadAction<number>) => {
-      return {
-        value: {
-          ...state.value,
-          date: actions.payload,
-        },
-      };
+    handleSelectDate: (state, actions) => {
+      console.log(actions);
+
+      switch (actions.payload.type) {
+        case "UPDATE":
+          return {
+            value: {
+              ...state.value,
+              date: actions.payload.value,
+            },
+          };
+        case "TODAY":
+          return initailState;
+        default:
+          return state;
+      }
     },
   },
 });

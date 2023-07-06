@@ -115,7 +115,6 @@ const Calender = () => {
               key={index}
               className="flex justify-center items-center font-medium mt-2"
             >
-              {/*  leading-[30px] p-1 pt-[2px] */}
               <p
                 data-value={Number(d)}
                 className={`
@@ -124,7 +123,7 @@ const Calender = () => {
                     d
                       ? date.date && date.date === d
                         ? "text-white bg-[#FF6D60]"
-                        : "hover:bg-[#FF6D60] hover:text-white hover:cursor-pointer hover:animate-pulse hover:duration-75"
+                        : "hover:bg-[#FF6D60] hover:text-white hover:cursor-pointer"
                       : ""
                   }`}
                 onClick={(e) => {
@@ -132,7 +131,9 @@ const Calender = () => {
                     "data-value"
                   );
                   if (!value) return;
-                  dispatch(handleSelectDate(Number(value)));
+                  dispatch(
+                    handleSelectDate({ type: "UPDATE", value: Number(value) })
+                  );
                 }}
               >
                 {d}
@@ -140,6 +141,12 @@ const Calender = () => {
             </div>
           ))}
         </div>
+        <p
+          className="ml-auto w-fit text-[#245953] hover:cursor-pointer"
+          onClick={() => dispatch(handleSelectDate({ type: "TODAY" }))}
+        >
+          Today
+        </p>
       </div>
     </motion.div>
   );

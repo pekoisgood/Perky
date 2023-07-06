@@ -5,7 +5,7 @@ type Props = {
   children: React.ReactNode | React.JSX.Element;
   customLayout?: string;
   time?: number;
-  customCloseButton: boolean;
+  customCloseButton?: boolean;
 };
 
 const Alert = ({
