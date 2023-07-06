@@ -23,13 +23,17 @@ type Articles = {
 
 const Page = () => {
   const { user } = useContext(AuthContext);
-  const [articleRecord, setArticleRecord] = useState<Articles[]>([]);
+  const [articleRecord, setArticleRecord] = useState<Articles[] | null>([]);
 
   useEffect(() => {
     const getArticleRecord = async () => {
       if (user.id) {
         const req = await fetch(`/api/articleRecord?id=${user.id}`);
         const myArticles: Articles[] = await req.json();
+        if (!myArticles) {
+          setArticleRecord(null);
+          return;
+        }
         setArticleRecord(myArticles);
       }
     };
@@ -56,12 +60,12 @@ const Page = () => {
         </div>
       </Link>
       <div className="columns-2 md:columns-3 gap-x-5">
-        {articleRecord.length > 0 &&
+        {articleRecord &&
           articleRecord.map((article) => {
             return (
               <Link
                 href={`/article/${article.id}`}
-                className="rounded-xl p-1 block hover:translate-y-[-10px] hover:duration-100 bg-[#1B9C85] break-inside-avoid mb-5"
+                className="rounded-xl p-1 block hover:translate-y-[-10px] hover:duration-100 bg-orange-200 break-inside-avoid mb-5"
                 key={article.id}
               >
                 <motion.div
@@ -78,13 +82,13 @@ const Page = () => {
                   }}
                   className="flex flex-col gap-2 h-full justify-center p-3 border-dashed border-2 border-white rounded-lg"
                 >
-                  <div className="w-full h-[100px] mx-auto object-cover object-center overflow-hidden rounded-2xl">
+                  <div className="w-full h-[100px] mx-auto overflow-hidden rounded-2xl">
                     <Image
                       src={article.image}
                       alt="cover image"
                       width={400}
                       height={300}
-                      className="object-cover"
+                      className="object-cover h-full"
                       loading="lazy"
                     />
                   </div>
@@ -99,6 +103,11 @@ const Page = () => {
             );
           })}
       </div>
+      {articleRecord === null && (
+        <div>
+          <p>目前還沒有發過文耶！快點去發文吧 ~</p>
+        </div>
+      )}
     </div>
   );
 };

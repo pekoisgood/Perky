@@ -4,7 +4,7 @@ import Auth from "./Auth";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="relative flex flex-col items-center h-[calc(100vh-60px)] w-full">
+    <div className="relative flex flex-col items-center h-[calc(100vh-75px)] w-full mt-[15px]">
       <div className="border-slate-400 border-2 w-full h-[96%] relative rounded-xl shadow-[-15px_15px] shadow-black overflow-y-auto">
         <div className="flex gap-3 absolute top-[20px] left-[20px]">
           <div className="rounded-full h-[10px] w-[10px] bg-[#F24C3D]" />
@@ -13,9 +13,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         </div>
         <div className="w-full h-[50px] border-b-2 border-black bg-slate-50 rounded-t-xl" />
         <div className="p-10 pb-[80px] overflow-scroll h-[90%]">{children}</div>
-        <div className="sticky bottom-[-70px] left-[50%]">
-          <ProfileSidebar />
-        </div>
+        <ProfileSidebar />
       </div>
       <Auth />
     </div>

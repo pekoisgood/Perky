@@ -44,7 +44,7 @@ const Page = () => {
 
   return (
     <div className="h-full max-w-[600px] mx-auto">
-      <h1 className="w-fit mx-auto font-bold text-[25px] tracking-[2px] indent-[2px] mb-[20px]">
+      <h1 className="mx-auto w-fit text-[28px] font-semibold tracking-[6px] indent-[6px] mb-[30px]">
         學習紀錄
       </h1>
       <LineChart

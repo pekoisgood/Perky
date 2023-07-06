@@ -15,6 +15,7 @@ import { AuthContext } from "@/context/AuthContext";
 import { motion } from "framer-motion";
 import ArticleSnippet from "@/app/ArticleSnippet";
 import Image from "next/image";
+import Button from "@/components/button/Button";
 
 type Article = {
   title: string;
@@ -67,7 +68,7 @@ const Page = () => {
         我的收藏好文
       </h2>
       <div className="columns-2 md:columns-3 gap-2 w-full px-3">
-        {articles.length > 0 &&
+        {articles.length > 0 ? (
           articles.map((article: Article, index: number) => {
             return (
               <motion.div
@@ -89,13 +90,13 @@ const Page = () => {
                   href={`/article/${article.id}`}
                   className="flex flex-col gap-2 h-full justify-center p-3 border-dashed border-2 border-white rounded-lg"
                 >
-                  <div className="w-full h-[100px] mx-auto object-cover object-center overflow-hidden rounded-2xl">
+                  <div className="w-full h-[100px] mx-auto overflow-hidden rounded-2xl">
                     <Image
                       src={article.image}
                       alt="cover image"
                       width={400}
                       height={300}
-                      className="object-cover"
+                      className="object-cover h-full"
                       loading="lazy"
                     />
                   </div>
@@ -106,7 +107,16 @@ const Page = () => {
                 </Link>
               </motion.div>
             );
-          })}
+          })
+        ) : (
+          <>
+            <p>還沒有任何收藏的貼文...</p>
+
+            <Link href="/">
+              <Button>立馬尋找好文</Button>
+            </Link>
+          </>
+        )}
       </div>
     </div>
   );

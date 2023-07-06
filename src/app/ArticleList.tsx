@@ -92,7 +92,7 @@ const ArticleList = ({
                 <p className="text-center text-[14px]">
                   作者: {article.authorName}
                 </p>
-                <p className="bg-[#FFD89C] text-black tracking-[1px] px-2 py-1 rounded-3xl w-fit text-[10px] sm:text-[12px] text-white border-2 shadow-[-3px_3px] shadow-black border-black font-bold absolute top-[-16px] right-[5px]">
+                <p className="bg-[#FFD89C] text-black font-mono  tracking-[1px] px-2 py-1 rounded-3xl w-fit text-[10px] sm:text-[12px] border-2 shadow-[-3px_3px] shadow-black border-black font-bold absolute top-[-16px] right-[5px]">
                   {article.category}
                 </p>
                 <ArticleSnippet article={article.content} />
