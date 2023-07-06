@@ -4,7 +4,7 @@ import { db } from "@/utils/firebase";
 import { collection, getDocs } from "firebase/firestore";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { RiSearch2Line } from "react-icons/ri";
+import { HiSearch } from "react-icons/hi";
 
 type SearchOutput = {
   id: string;
@@ -61,7 +61,7 @@ const Search = () => {
         className="hover:cursor-pointer"
         onClick={() => setIsSearching(true)}
       >
-        <RiSearch2Line size={25} />
+        <HiSearch size={30} />
       </div>
       {isSearching && (
         <div

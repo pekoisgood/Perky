@@ -63,7 +63,7 @@ const TrendingArticles = () => {
       initial="hidden"
       animate="show"
       variants={container}
-      className="flex flex-col gap-3 w-fit h-fit min-w-[160px] sm:min-w-[250px] shadow-black shadow-[-7px_7px] p-4 border-2 border-black rounded-lg"
+      className="flex flex-col gap-3 h-fit w-[95%] p-4"
     >
       {articles.map((article: TrendingArticle, index: number) => {
         return (
@@ -74,11 +74,11 @@ const TrendingArticles = () => {
               scale: 1.1,
               transition: { type: "spring", stiffness: 300, duration: 0.5 },
             }}
-            className="flex p-[5px] bg-[#435B66] rounded-xl hover:scale-110 "
+            className="flex p-[5px] bg-[#435B66] rounded-xl hover:scale-110 shadow-[-5px_5px] shadow-black"
           >
             <Link
               href={`/article/${article.id}`}
-              className="flex flex-col rounded-lg w-full px-2 mx-auto text-white border-dashed border-2 border-white"
+              className="flex flex-col rounded-lg w-[95%] px-2 mx-auto text-white border-dashed border-2 border-white"
             >
               <p className="text-[10px] text-bold w-fit mr-auto mb-1 font-mono text-[#FFD89C]">{`<h${
                 index + 1
@@ -95,7 +95,7 @@ const TrendingArticles = () => {
               <p className="text-[10px] text-bold w-fit ml-auto mt-1 font-mono text-[#FFD89C]">{`</h${
                 index + 1
               }>`}</p>
-            </Link>{" "}
+            </Link>
           </motion.div>
         );
       })}

@@ -1,11 +1,11 @@
-import TextEditor from "../../../components/note/TextEditor";
+import TextEditor from "./TextEditor";
 import Image from "next/image";
 import SaveButton from "./SaveButton";
 import Link from "next/link";
 import { headers } from "next/dist/client/components/headers";
 import Comment from "./Comment";
-import { HiFire } from "react-icons/hi";
 import { PiFinnTheHumanFill } from "react-icons/pi";
+import SaveCount from "./SaveCount";
 
 const Page = async ({ params }: { params: { id: string } }) => {
   const articleId = params.id;
@@ -23,14 +23,16 @@ const Page = async ({ params }: { params: { id: string } }) => {
     <div className="w-full max-w-[800px] rounded-lg flex flex-col gap-2 items-center justify-center mx-auto py-10">
       <div className="relative w-full">
         <h1 className="font-bold text-[24px] sm:text-[30px] w-fit mx-auto tracking-[1px] indent-[1px] text-center">
-          {article.title[0].toUpperCase() + article.title.slice(1)}
+          {article.title}
         </h1>
-        <SaveButton articleId={articleId} />
+        <SaveButton count={article.savedCount ?? 0} articleId={articleId} />
       </div>
       <div className="flex gap-3 items-center text-[13px] sm:text-[16px] text-[#245953]">
         <p>{article.authorName}</p>
         <span className="w-[5px] h-[5px] rounded-full bg-[#00000088] " />
-        <p>{article.category}</p>
+        <p className="bg-[#FFD89C] text-black tracking-[1px] px-2 py-1 rounded-3xl w-fit text-[10px] sm:text-[12px] border-2 border-black font-bold">
+          {article.category}
+        </p>
         <span className="w-[5px] h-[5px] rounded-full bg-[#00000088] " />
         <p>
           {
@@ -40,11 +42,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
           }
         </p>
       </div>
-      <p className="text-[13px] sm:text-[16px]">
-        <HiFire className="inline sm:pb-1" />
-        收藏數：{article.savedCount ?? 0}
-      </p>
-
+      <SaveCount articleId={articleId} />
       <div className="w-full h-fit object-cover mx-auto overflow-hidden rounded-2xl border-2 border-dashed border-[#245953] shadow-[#245953] shadow-[-7px_7px]">
         {article.image !== "" ? (
           <Image

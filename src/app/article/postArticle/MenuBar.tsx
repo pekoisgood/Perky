@@ -1,75 +1,67 @@
 import { Editor } from "@tiptap/react";
+import {
+  FaBold,
+  FaListUl,
+  FaListOl,
+  FaStrikethrough,
+  FaRedo,
+  FaUndo,
+  FaItalic,
+} from "react-icons/fa";
+import { PiCodeBold } from "react-icons/pi";
+import { BsQuote } from "react-icons/bs";
+import { VscHorizontalRule } from "react-icons/vsc";
+import { GrClear } from "react-icons/gr";
+import { useState } from "react";
 
 type Props = {
   editor: Editor | null;
 };
 
 export const MenuBar = ({ editor }: Props) => {
+  const [showColorPalette, setShowColorPalette] = useState<boolean>(false);
   if (!editor) {
     return null;
   }
 
   return (
-    <div className="flex gap-2 flex-wrap mx-auto">
+    <div className="flex justify-center gap-2 flex-wrap mx-auto">
       <button
         onClick={() => editor.chain().focus().toggleBold().run()}
         disabled={!editor.can().chain().focus().toggleBold().run()}
-        className={`border-[1px] border-slate-200 p-1 rounded-md ${
-          editor.isActive("bold") ? "is-active" : ""
-        }`}
+        className={`border-[1px] border-slate-200 p-1 rounded-md flex items-center justify-center
+        w-[30px] h-[30px]
+        ${editor.isActive("bold") ? "is-active" : ""}`}
       >
-        bold
+        <FaBold />
       </button>
       <button
         onClick={() => editor.chain().focus().toggleItalic().run()}
         disabled={!editor.can().chain().focus().toggleItalic().run()}
-        className={`border-[1px] border-slate-200 p-1 rounded-md ${
-          editor.isActive("italic") ? "is-active" : ""
-        }`}
+        className={`border-[1px] border-slate-200 p-1 rounded-md flex items-center justify-center
+        w-[30px] h-[30px] ${editor.isActive("italic") ? "is-active" : ""}`}
       >
-        italic
+        <FaItalic />
       </button>
       <button
         onClick={() => editor.chain().focus().toggleStrike().run()}
         disabled={!editor.can().chain().focus().toggleStrike().run()}
-        className={`border-[1px] border-slate-200 p-1 rounded-md ${
-          editor.isActive("strike") ? "is-active" : ""
-        }`}
+        className={`border-[1px] border-slate-200 p-1 rounded-md flex items-center justify-center
+        w-[30px] h-[30px] ${editor.isActive("strike") ? "is-active" : ""}`}
       >
-        strike
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleCode().run()}
-        disabled={!editor.can().chain().focus().toggleCode().run()}
-        className={`border-[1px] border-slate-200 p-1 rounded-md ${
-          editor.isActive("code") ? "is-active" : ""
-        }`}
-      >
-        code
-      </button>
-      <button
-        onClick={() => editor.chain().focus().unsetAllMarks().run()}
-        className="border-[1px] border-slate-200 p-1 rounded-md"
-      >
-        clear marks
-      </button>
-      <button
-        onClick={() => editor.chain().focus().clearNodes().run()}
-        className="border-[1px] border-slate-200 p-1 rounded-md"
-      >
-        clear nodes
+        <FaStrikethrough />
       </button>
       <button
         onClick={() => editor.chain().focus().setParagraph().run()}
-        className={`border-[1px] border-slate-200 p-1 rounded-md ${
-          editor.isActive("paragraph") ? "is-active" : ""
-        }`}
+        className={`border-[1px] border-slate-200 p-1 rounded-md flex items-center justify-center
+        w-[30px] h-[30px] ${editor.isActive("paragraph") ? "is-active" : ""}`}
       >
-        paragraph
+        p
       </button>
       <button
         onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-        className={`border-[1px] border-slate-200 p-1 rounded-md ${
+        className={`border-[1px] border-slate-200 p-1 rounded-md flex items-center justify-center
+        w-[30px] h-[30px] ${
           editor.isActive("heading", { level: 1 }) ? "is-active" : ""
         }`}
       >
@@ -77,7 +69,8 @@ export const MenuBar = ({ editor }: Props) => {
       </button>
       <button
         onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-        className={`border-[1px] border-slate-200 p-1 rounded-md ${
+        className={`border-[1px] border-slate-200 p-1 rounded-md flex items-center justify-center
+        w-[30px] h-[30px] ${
           editor.isActive("heading", { level: 2 }) ? "is-active" : ""
         }`}
       >
@@ -85,7 +78,8 @@ export const MenuBar = ({ editor }: Props) => {
       </button>
       <button
         onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-        className={`border-[1px] border-slate-200 p-1 rounded-md ${
+        className={`border-[1px] border-slate-200 p-1 rounded-md flex items-center justify-center
+        w-[30px] h-[30px] ${
           editor.isActive("heading", { level: 3 }) ? "is-active" : ""
         }`}
       >
@@ -93,162 +87,142 @@ export const MenuBar = ({ editor }: Props) => {
       </button>
       <button
         onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
-        className={`border-[1px] border-slate-200 p-1 rounded-md ${
+        className={`border-[1px] border-slate-200 p-1 rounded-md flex items-center justify-center
+        w-[30px] h-[30px] ${
           editor.isActive("heading", { level: 4 }) ? "is-active" : ""
         }`}
       >
         h4
       </button>
       <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 5 }).run()}
-        className={`border-[1px] border-slate-200 p-1 rounded-md ${
-          editor.isActive("heading", { level: 5 }) ? "is-active" : ""
-        }`}
-      >
-        h5
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 6 }).run()}
-        className={`border-[1px] border-slate-200 p-1 rounded-md ${
-          editor.isActive("heading", { level: 6 }) ? "is-active" : ""
-        }`}
-      >
-        h6
-      </button>
-      <button
         onClick={() => editor.chain().focus().toggleBulletList().run()}
-        className={`border-[1px] border-slate-200 p-1 rounded-md ${
-          editor.isActive("bulletList") ? "is-active" : ""
-        }`}
+        className={`border-[1px] border-slate-200 p-1 rounded-md flex items-center justify-center
+        w-[30px] h-[30px] ${editor.isActive("bulletList") ? "is-active" : ""}`}
       >
-        bullet list
+        <FaListUl />
       </button>
       <button
         onClick={() => editor.chain().focus().toggleOrderedList().run()}
-        className={`border-[1px] border-slate-200 p-1 rounded-md ${
-          editor.isActive("orderedList") ? "is-active" : ""
-        }`}
+        className={`border-[1px] border-slate-200 p-1 rounded-md flex items-center justify-center
+        w-[30px] h-[30px] ${editor.isActive("orderedList") ? "is-active" : ""}`}
       >
-        ordered list
+        <FaListOl />
       </button>
-      {/* FIX ME : code block 壞掉, toggle 沒作用！ */}
-      {/* <button
-        onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-        className={`border-[1px] border-slate-200 p-1 rounded-md ${
-          editor.isActive("codeBlock") ? "is-active" : ""
-        }`}
+      <button
+        onClick={() =>
+          editor.chain().focus().toggleCodeBlock({ language: "js" }).run()
+        }
+        className={`border-[1px] border-slate-200 p-1 rounded-md flex items-center justify-center
+        w-[30px] h-[30px] ${editor.isActive("codeBlock") ? "is-active" : ""}`}
       >
-        code block
-      </button> */}
+        <PiCodeBold />
+      </button>
       <button
         onClick={() => editor.chain().focus().toggleBlockquote().run()}
-        className={`border-[1px] border-slate-200 p-1 rounded-md ${
-          editor.isActive("blockquote") ? "is-active" : ""
-        }`}
+        className={`border-[1px] border-slate-200 p-1 rounded-md flex items-center justify-center
+        w-[30px] h-[30px] ${editor.isActive("blockquote") ? "is-active" : ""}`}
       >
-        blockquote
+        <BsQuote />
       </button>
       <button
         onClick={() => editor.chain().focus().setHorizontalRule().run()}
-        className={`border-[1px] border-slate-200 p-1 rounded-md`}
+        className={`border-[1px] border-slate-200 p-1 rounded-md flex items-center justify-center
+        w-[30px] h-[30px]`}
       >
-        horizontal rule
+        <VscHorizontalRule />
       </button>
-      <button
+      {/* <button
         onClick={() => editor.chain().focus().setHardBreak().run()}
         className={`border-[1px] border-slate-200 p-1 rounded-md`}
       >
         hard break
-      </button>
+      </button> */}
       <button
         onClick={() => editor.chain().focus().undo().run()}
         disabled={!editor.can().chain().focus().undo().run()}
-        className={`border-[1px] border-slate-200 p-1 rounded-md`}
+        className={`border-[1px] border-slate-200 p-1 rounded-md flex items-center justify-center
+        w-[30px] h-[30px] hover:cursor-pointer`}
       >
-        undo
+        <FaUndo />
       </button>
       <button
         onClick={() => editor.chain().focus().redo().run()}
         disabled={!editor.can().chain().focus().redo().run()}
-        className={`border-[1px] border-slate-200 p-1 rounded-md`}
+        className={`border-[1px] border-slate-200 p-1 rounded-md flex items-center justify-center
+        w-[30px] h-[30px] hover:cursor-pointer`}
       >
-        redo
+        <FaRedo />
       </button>
-      <div className="flex gap-2">
-        <button
-          onClick={() => editor.chain().focus().setColor("#958DF1").run()}
-          className={
-            editor.isActive("textStyle", { color: "#958DF1" })
-              ? "is-active"
-              : ""
-          }
-        >
-          purple
-        </button>
-        <button
-          onClick={() => editor.chain().focus().setColor("#F98181").run()}
-          className={
-            editor.isActive("textStyle", { color: "#F98181" })
-              ? "is-active"
-              : ""
-          }
-        >
-          red
-        </button>
-        <button
-          onClick={() => editor.chain().focus().setColor("#FBBC88").run()}
-          className={
-            editor.isActive("textStyle", { color: "#FBBC88" })
-              ? "is-active"
-              : ""
-          }
-        >
-          orange
-        </button>
-        <button
-          onClick={() => editor.chain().focus().setColor("#FAF594").run()}
-          className={
-            editor.isActive("textStyle", { color: "#FAF594" })
-              ? "is-active"
-              : ""
-          }
-        >
-          yellow
-        </button>
-        <button
-          onClick={() => editor.chain().focus().setColor("#70CFF8").run()}
-          className={
-            editor.isActive("textStyle", { color: "#70CFF8" })
-              ? "is-active"
-              : ""
-          }
-        >
-          blue
-        </button>
-        <button
-          onClick={() => editor.chain().focus().setColor("#94FADB").run()}
-          className={
-            editor.isActive("textStyle", { color: "#94FADB" })
-              ? "is-active"
-              : ""
-          }
-        >
-          teal
-        </button>
-        <button
-          onClick={() => editor.chain().focus().setColor("#B9F18D").run()}
-          className={
-            editor.isActive("textStyle", { color: "#B9F18D" })
-              ? "is-active"
-              : ""
-          }
-        >
-          green
-        </button>
-        <button onClick={() => editor.chain().focus().unsetColor().run()}>
-          unsetColor
-        </button>
+      <div
+        className="border-[1px] border-slate-200 p-1 rounded-md hover:cursor-pointer"
+        onClick={() => setShowColorPalette((prev) => !prev)}
+      >
+        color
       </div>
+      {showColorPalette && (
+        <div className="flex flex-wrap justify-center items-center gap-2">
+          <button
+            onClick={() => editor.chain().focus().setColor("#958DF1").run()}
+            className={`w-[15px] h-[15px] bg-[#958DF1] text-[#958DF1] ${
+              editor.isActive("textStyle", { color: "#958DF1" })
+                ? "is-active"
+                : ""
+            }`}
+          ></button>
+          <button
+            onClick={() => editor.chain().focus().setColor("#F98181").run()}
+            className={`w-[15px] h-[15px] bg-[#F98181] ${
+              editor.isActive("textStyle", { color: "#F98181" })
+                ? "is-active"
+                : ""
+            }`}
+          ></button>
+          <button
+            onClick={() => editor.chain().focus().setColor("#FBBC88").run()}
+            className={`w-[15px] h-[15px] bg-[#FBBC88] ${
+              editor.isActive("textStyle", { color: "#FBBC88" })
+                ? "is-active"
+                : ""
+            }`}
+          ></button>
+
+          <button
+            onClick={() => editor.chain().focus().setColor("#FAF594").run()}
+            className={`w-[15px] h-[15px] bg-[#FAF594] ${
+              editor.isActive("textStyle", { color: "#FAF594" })
+                ? "is-active"
+                : ""
+            }`}
+          ></button>
+          <button
+            onClick={() => editor.chain().focus().setColor("#70CFF8").run()}
+            className={`w-[15px] h-[15px] bg-[#70CFF8] ${
+              editor.isActive("textStyle", { color: "#70CFF8" })
+                ? "is-active"
+                : ""
+            }`}
+          ></button>
+          <button
+            onClick={() => editor.chain().focus().setColor("#94FADB").run()}
+            className={`w-[15px] h-[15px] bg-[#94FADB] ${
+              editor.isActive("textStyle", { color: "#94FADB" })
+                ? "is-active"
+                : ""
+            }`}
+          ></button>
+          <button
+            onClick={() => editor.chain().focus().setColor("#B9F18D").run()}
+            className={`w-[15px] h-[15px] bg-[#B9F18D] ${
+              editor.isActive("textStyle", { color: "#B9F18D" })
+                ? "is-active"
+                : ""
+            }`}
+          ></button>
+          <button onClick={() => editor.chain().focus().unsetColor().run()}>
+            <GrClear />
+          </button>
+        </div>
+      )}
     </div>
   );
 };

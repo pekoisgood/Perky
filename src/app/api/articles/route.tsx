@@ -9,8 +9,6 @@ import {
 import { db } from "@/utils/firebase";
 import { NextResponse } from "next/server";
 
-export const revalidate = "force-cache";
-
 export async function GET() {
   const articleRef = collection(db, "articles");
   const q = query(articleRef, orderBy("createdAt", "desc"), limit(10));

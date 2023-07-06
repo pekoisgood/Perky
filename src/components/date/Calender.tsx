@@ -119,7 +119,7 @@ const Calender = () => {
               <p
                 data-value={Number(d)}
                 className={`
-                  w-[35px] h-[35px] rounded-full text-center pt-[1px] 
+                  w-[35px] h-[35px] rounded-full text-center leading-[35px]
                   ${
                     d
                       ? date.date && date.date === d

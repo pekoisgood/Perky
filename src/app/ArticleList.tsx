@@ -16,6 +16,7 @@ const ArticleList = ({
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    let observerRefValue: null | HTMLAnchorElement[] = null;
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(
         (entry) => {
@@ -38,17 +39,30 @@ const ArticleList = ({
         }
       );
     });
-    ref.current.forEach((el) => {
-      observer.observe(el);
-    });
+    if (ref.current && window) {
+      ref.current.forEach((el) => {
+        observer.observe(el);
+      });
+      observerRefValue = ref.current;
+    }
+
+    return () => {
+      if (ref.current) {
+        if (observerRefValue) {
+          console.log(observerRefValue);
+
+          observerRefValue.forEach((el) => {
+            observer.unobserve(el);
+          });
+        }
+      }
+    };
   }, []);
 
   return (
     <div
       className={`h-full ${
-        customLayout
-          ? customLayout
-          : "sm:pl-[150px] md:w-[calc(100%-200px)] lg:w-[calc(100%-250px)]"
+        customLayout ? customLayout : "w-full"
       } flex flex-col gap-8 justify-center`}
       ref={containerRef}
     >
@@ -76,9 +90,9 @@ const ArticleList = ({
                   {article.title}
                 </h2>
                 <p className="text-center text-[14px]">
-                  author: {article.authorName}
+                  作者: {article.authorName}
                 </p>
-                <p className="bg-[#435B66] tracking-[1px] px-2 py-1 rounded-3xl w-fit text-[10px] sm:text-[12px] text-white border-2 shadow-[-3px_3px] shadow-black border-black font-bold absolute top-[-16px] right-[5px]">
+                <p className="bg-[#FFD89C] text-black tracking-[1px] px-2 py-1 rounded-3xl w-fit text-[10px] sm:text-[12px] text-white border-2 shadow-[-3px_3px] shadow-black border-black font-bold absolute top-[-16px] right-[5px]">
                   {article.category}
                 </p>
                 <ArticleSnippet article={article.content} />

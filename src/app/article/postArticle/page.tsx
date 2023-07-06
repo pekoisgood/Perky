@@ -21,7 +21,10 @@ import {
   where,
   getDocs,
 } from "firebase/firestore";
-import { redirect } from "next/navigation";
+import Warning from "@/components/warning/Warning";
+import { PiWarningFill } from "react-icons/pi";
+import Link from "next/link";
+import Button from "@/components/button/Button";
 
 export type Article = {
   title: string;
@@ -30,14 +33,23 @@ export type Article = {
   tags: string[];
 };
 
+const postStatus = {
+  PENDING: "Pending",
+  SUCCESS: "Success",
+  FAIL: "Fail",
+};
+
 const buttonClass = `w-fit h-fit bg-[#245953] text-white px-3 py-1
 border-2 border-black rounded-2xl shadow-black shadow-[3px_3px]
 hover:cursor-pointer hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-none duration-100`;
 
 const Page = () => {
-  const { user, isLogin } = useContext(AuthContext);
+  const {
+    user,
+    // isLogin
+  } = useContext(AuthContext);
   const [image, setImage] = useState<File | null>(null);
-  const [isProcessing, setIsProcessing] = useState<Boolean>(false);
+  const [isProcessing, setIsProcessing] = useState<string | null>(null);
   const tagRef = useRef<HTMLInputElement | null>(null);
 
   const dispatch = useAppDispatch();
@@ -58,11 +70,54 @@ const Page = () => {
     }
   };
 
+  const postArticleErrorMessage = () => {
+    const contentMessage = "Content can't be empty";
+    const titleMessage = "Title can't be empty";
+    const imageMessage = "Please upload cover image.";
+    const tagMessage = "Tag can't be empty";
+    const messages = [];
+
+    if (postArticle.title === "") {
+      messages.push(titleMessage);
+    }
+
+    if (!image) {
+      messages.push(imageMessage);
+    }
+    console.log("PC", postArticle.content);
+
+    if (postArticle.content === "" || postArticle.content === "<p></p>") {
+      messages.push(contentMessage);
+    }
+
+    if (postArticle.tags.length === 0) {
+      messages.push(tagMessage);
+    }
+
+    return (
+      <ul className="flex flex-col gap-2">
+        <PiWarningFill size={35} className="w-fit mx-auto" />
+        {messages.map((m, i) => {
+          return (
+            <li
+              key={i}
+              className="list-disc text-[12px] sm:text-[16px] lg:text-[20px]"
+            >
+              {m}
+            </li>
+          );
+        })}
+      </ul>
+    );
+  };
+
   const handleSubmitArticle = async () => {
-    setIsProcessing(true);
+    setIsProcessing(postStatus.PENDING);
     if (Object.values(postArticle).includes("") || !image) {
-      window.alert("請填寫完整");
-      setIsProcessing(false);
+      setIsProcessing(postStatus.FAIL);
+      setTimeout(() => {
+        setIsProcessing(null);
+      }, 3000);
       return;
     }
     if (image && user.id && user.name) {
@@ -86,8 +141,12 @@ const Page = () => {
         tags: postArticle.tags,
         image: imageUrl,
         userId: user.id,
+        savedCount: 0,
         userName: user.name,
       });
+
+      dispatch(handlePostArticle());
+      setIsProcessing(postStatus.SUCCESS);
 
       for (let i = 0; i < postArticle.tags.length; i++) {
         const tagRef = collection(db, "tags");
@@ -103,10 +162,6 @@ const Page = () => {
           tagName: postArticle.tags[i],
         });
       }
-
-      dispatch(handlePostArticle());
-      setIsProcessing(false);
-      window.alert("發文成功");
     }
   };
 
@@ -116,21 +171,18 @@ const Page = () => {
     }
   }, [postArticle.tags]);
 
-  useEffect(() => {
-    if (!isLogin) {
-      redirect("/auth");
-    }
-  }, []);
+  console.log(postArticle);
+  console.log("s: ", isProcessing);
 
   return (
     <div
-      className={`flex flex-col justify-center w-full max-w-[800px] h-full min-h-[calc(100vh-200px)] 
-      gap-3 mx-auto my-[50px] p-5 border-2 border-black rounded-3xl shadow-black shadow-[-5px_5px]`}
+      className={`flex flex-col justify-center items-center w-full max-w-[800px] h-full min-h-[calc(100vh-200px)] 
+      gap-3 mx-auto my-[50px] p-5 border-2 border-black rounded-3xl shadow-black shadow-[20px_20px]`}
     >
       <input
         required
         placeholder="Title..."
-        className="outline-none px-3 py-2 placeholder:text-slate-200 text-[25px] border-dashed border-2 border-[#245953] rounded-2xl focus:border-solid"
+        className="outline-none md:w-[86%] w-full px-3 py-2 text-[25px] border-dashed border-2 border-[#245953] rounded-2xl focus:border-solid"
         value={postArticle.title}
         onChange={(e) =>
           dispatch(
@@ -150,7 +202,7 @@ const Page = () => {
             className="hidden"
             onChange={(e) => e.target.files && setImage(e.target.files[0])}
           />
-          Add cover
+          Add Cover
         </label>
         {image && (
           <span className="text-[#245953]">{image.name.slice(0, 15)}...</span>
@@ -178,7 +230,7 @@ const Page = () => {
             );
           }}
           className={`border-2 border-black rounded-2xl shadow-black shadow-[3px_3px] bg-[#245953] outline-none
-          hover:cursor-pointer hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-none p-2 text-white`}
+          hover:cursor-pointer hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-none px-2 py-1 text-white`}
         >
           <option value="Frontend">Frontend</option>
           <option value="Backend">Backend</option>
@@ -211,7 +263,7 @@ const Page = () => {
           className="px-2 py-1 outline-none border-dashed border-2 border-[#245953] rounded-2xl focus:border-solid"
         />
         <button className={buttonClass} onClick={() => handleTag("ADD")}>
-          add tag
+          Add Tag
         </button>
       </div>
       <button
@@ -222,8 +274,23 @@ const Page = () => {
         }
         onClick={handleSubmitArticle}
       >
-        {isProcessing ? "running..." : "送出"}
+        {isProcessing === postStatus.PENDING ? "running..." : "送出"}
       </button>
+      {isProcessing === postStatus.FAIL && (
+        <Warning>{postArticleErrorMessage()}</Warning>
+      )}
+      {isProcessing === postStatus.SUCCESS && (
+        <Warning time={0}>
+          <div className="flex flex-col gap-3 items-center justify-center">
+            <p>發文成功！</p>
+            <Button customLayout="shadow-[3px_3px] px-2">
+              <Link href="/" className="text-black">
+                回首頁
+              </Link>
+            </Button>
+          </div>
+        </Warning>
+      )}
     </div>
   );
 };

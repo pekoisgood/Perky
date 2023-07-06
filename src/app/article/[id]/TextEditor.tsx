@@ -1,6 +1,6 @@
 "use client";
 
-import { EditorContent, useEditor, ReactNodeViewRenderer } from "@tiptap/react";
+import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import css from "highlight.js/lib/languages/css";
@@ -9,8 +9,6 @@ import ts from "highlight.js/lib/languages/typescript";
 import html from "highlight.js/lib/languages/xml";
 import { lowlight } from "lowlight";
 import "@/app/article/postArticle/style.css";
-
-import CodeBlockComponent from "../../app/article/postArticle/CodeBlockComponent";
 
 lowlight.registerLanguage("html", html);
 lowlight.registerLanguage("css", css);
@@ -36,11 +34,7 @@ const Page = ({ article }: { article: string }) => {
           keepAttributes: true,
         },
       }),
-      CodeBlockLowlight.extend({
-        addNodeView() {
-          return ReactNodeViewRenderer(CodeBlockComponent);
-        },
-      }).configure({ lowlight }),
+      CodeBlockLowlight.configure({ lowlight }),
     ],
     content: article,
     editable: false,

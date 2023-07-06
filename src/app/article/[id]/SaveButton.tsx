@@ -3,7 +3,6 @@ import { AuthContext } from "@/context/AuthContext";
 import { db } from "@/utils/firebase";
 import {
   doc,
-  increment,
   serverTimestamp,
   setDoc,
   getDoc,
@@ -12,20 +11,34 @@ import {
 } from "firebase/firestore";
 import React, { useContext, useEffect, useState } from "react";
 import { BsBookmark, BsBookmarkHeartFill } from "react-icons/bs";
+import Warning from "../../../components/warning/Warning";
+import Link from "next/link";
+import Button from "@/components/button/Button";
 
 type Prop = {
   articleId: string;
+  count: number;
 };
 
-const SaveButton = ({ articleId }: Prop) => {
-  const { user } = useContext(AuthContext);
+const SaveButton = ({ articleId, count }: Prop) => {
+  const { user, isLogin } = useContext(AuthContext);
   const [isSaved, setIsSaved] = useState<boolean | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [showWarning, setShowWarning] = useState(false);
 
   const handleSaveArticle = async () => {
-    if (isSaved) {
+    if (!isLogin) {
+      setShowWarning(true);
+      return;
+    }
+
+    const articleSavedCountRef = doc(db, "articles", articleId);
+
+    if (isSaved && articleId) {
       await deleteDoc(doc(db, "users", user.id, "savedArticles", articleId));
-      await updateDoc(doc(db, "articles", articleId), {
-        savedCount: increment(-1),
+
+      await updateDoc(articleSavedCountRef, {
+        savedCount: count - 1,
       });
 
       setIsSaved(false);
@@ -34,8 +47,8 @@ const SaveButton = ({ articleId }: Prop) => {
         articleId: articleId,
         createdAt: serverTimestamp(),
       });
-      await updateDoc(doc(db, "articles", articleId), {
-        savedCount: increment(1),
+      await updateDoc(articleSavedCountRef, {
+        savedCount: count + 1,
       });
 
       setIsSaved(true);
@@ -43,8 +56,17 @@ const SaveButton = ({ articleId }: Prop) => {
   };
 
   useEffect(() => {
+    if (isLogin === null) {
+      setIsLoading(true);
+    } else {
+      setIsLoading(false);
+    }
+  }, [isLogin]);
+
+  useEffect(() => {
     const checkSavedArticle = async () => {
       const getArticle = await getDoc(
+        // user.id 可能還沒拿到...
         doc(db, "users", user.id, "savedArticles", articleId)
       );
       const isSaved = getArticle.data();
@@ -54,24 +76,44 @@ const SaveButton = ({ articleId }: Prop) => {
         setIsSaved(false);
       }
     };
+    if (isLoading) return;
     checkSavedArticle();
-  }, []);
-
-  if (isSaved === null) return <></>;
+  }, [user.id, articleId, isLoading]);
 
   return (
     <>
       <abbr
         title={`${isSaved ? "已收藏此篇貼文" : "收藏此貼文"}`}
-        className="fixed bottom-0 right-[20px] md:absolute md:top-[50%] md:right-0 translate-y-[-50%] hover:cursor-pointer p-2 bg-white/50 rounded-full z-10"
+        className={`fixed bottom-0 right-[20px] md:absolute md:top-0 md:right-0  p-2 bg-white/50 rounded-full z-10
+        hover:cursor-pointer focus:scale-95`}
         onClick={handleSaveArticle}
       >
-        {isSaved ? (
-          <BsBookmarkHeartFill size={30} className="text-[#EB455F]" />
+        {isLoading ? (
+          isSaved ? (
+            <BsBookmarkHeartFill size={30} className="text-[#EB455F]" />
+          ) : (
+            <BsBookmark size={30} />
+          )
         ) : (
           <BsBookmark size={30} />
         )}
       </abbr>
+      {showWarning && (
+        <Warning time={0} customCloseButton={true}>
+          <div className="flex flex-col gap-2 items-center justify-center">
+            <p
+              className="absolute top-0 right-[10px] text-black hover:cursor-pointer"
+              onClick={() => setShowWarning(false)}
+            >
+              x
+            </p>
+            <p>尚未登入</p>
+            <Link href="/auth">
+              <Button>點我去登入會員！</Button>
+            </Link>
+          </div>
+        </Warning>
+      )}
     </>
   );
 };

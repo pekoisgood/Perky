@@ -7,6 +7,15 @@ module.exports = {
   ],
   theme: {
     extend: {
+      typography: {
+        DEFAULT: {
+          css: {
+            strong: {
+              color: { "--tw-prose-bold": "inherit" },
+            },
+          },
+        },
+      },
       borderRadius: {
         custom: "3% 1% 36% 1% / 2% 21% 4% 17%",
       },

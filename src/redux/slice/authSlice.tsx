@@ -1,11 +1,12 @@
 "use client";
+
 import { createSlice } from "@reduxjs/toolkit";
 
 type Auth = {
   id: string;
   name: string;
   avatar: string;
-  isLogin: boolean;
+  isLogin: boolean | null;
 };
 
 type InitialState = {
@@ -17,7 +18,7 @@ const initialState = {
     id: "",
     name: "",
     avatar: "",
-    isLogin: false,
+    isLogin: null,
   } as Auth,
 } as InitialState;
 

@@ -29,7 +29,6 @@ export async function GET(req: Request) {
     result.forEach((doc) => {
       data.push({ id: doc.id, ...doc.data() });
     });
-    console.log("cat", data);
   } else if (tag) {
     const capitalizedTag = capitalize(tag);
 

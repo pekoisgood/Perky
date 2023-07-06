@@ -85,9 +85,11 @@ const Comment = ({ articleId }: { articleId: string }) => {
     };
   }, []);
 
+  console.log(comments);
+
   return (
     <div
-      className={`w-full max-w-[630px] flex flex-col justify-center gap-4 mt-[35px] bg-[#ebebeb] 
+      className={`w-full max-w-[800px] flex flex-col justify-center gap-4 mt-[35px] bg-[#ebebeb] 
     border-2 rounded-2xl border-[#245953] p-5 shadow-[#245953] shadow-[-5px_5px]`}
     >
       <h1 className="w-fit mx-auto font-semibold text-[20px] tracking-[2px] indent-[2px]">
@@ -97,11 +99,14 @@ const Comment = ({ articleId }: { articleId: string }) => {
         <input
           type="text"
           value={newComment}
-          className="border-[1px] border-[#245953] rounded-md shadow-[#245953] shadow-[-2px_2px] p-2 w-[93%] focus:shadow-none focus-translate-x-[-2px] focus:translate-y-[2px] outline-none"
+          className="w-[95%] h-[42px] p-2 border-[1px] border-[#245953] rounded-md focus:border-2 outline-none"
           onChange={(e) => setNewComment(e.target.value)}
         />
-        <Button handleOnClick={handleSubmitComment}>
-          <HiPaperAirplane size={20} />
+        <Button
+          customLayout="h-[42px] w-[42px] flex items-center justify-center rotate-90 shadow-[2px_2px]"
+          handleOnClick={handleSubmitComment}
+        >
+          <HiPaperAirplane size={35} />
         </Button>
       </div>
       <div className="flex flex-col gap-2">
@@ -113,26 +118,24 @@ const Comment = ({ articleId }: { articleId: string }) => {
                   key={index}
                   className="flex flex-col sm:flex-row gap-3 items-center border-2 border-dashed border-orange-300 rounded-tl-xl rounded-tr-xl rounded-br-xl p-2 bg-white text-center sm:text-start"
                 >
-                  <div className="flex flex-col gap-2 justify-center items-center">
-                    {comment.userAvatar !== " " ? (
-                      <Image
-                        src={comment.userAvatar}
-                        alt="avatar"
-                        width={30}
-                        height={30}
-                        className="rounded-full overflow-hidden"
-                      />
-                    ) : (
-                      <PiFinnTheHumanFill size={30} />
-                    )}
-                    <p className="text-black text-[10px] sm:text-[12px]">
-                      {comment.userName}
-                    </p>
-                  </div>
+                  {comment.userAvatar ? (
+                    <Image
+                      src={comment.userAvatar}
+                      alt="avatar"
+                      width={30}
+                      height={30}
+                      className="rounded-full overflow-hidden"
+                    />
+                  ) : (
+                    <PiFinnTheHumanFill size={30} />
+                  )}
                   <div className="flex flex-col gap-1">
-                    <span className="text-[8px] sm:text-[12px]">
-                      {comment.createdAt}
-                    </span>
+                    <p className="text-black text-[12px] sm:text-[14px]">
+                      {comment.userName}
+                      <span className="text-[8px] sm:text-[10px] ml-2">
+                        {comment.createdAt}
+                      </span>
+                    </p>
                     <p className="text-[14px] sm:text-[16px]">
                       {comment.comment}
                     </p>
@@ -142,8 +145,8 @@ const Comment = ({ articleId }: { articleId: string }) => {
             })}
           </div>
         ) : (
-          <p className="w-fit mx-auto text-[14px] text-[#ECECEC] italic tracking-[1px]">
-            ... 快來當第一個留言的人！
+          <p className="w-fit mx-auto text-[14px] text-black tracking-[1px]">
+            目前還沒有人留言...快來當第一個留言的人！
           </p>
         )}
       </div>

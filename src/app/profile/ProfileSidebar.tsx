@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { MdOutlineDataThresholding } from "react-icons/md";
 import { GrArticle } from "react-icons/gr";
-import { BsBookmarkHeart } from "react-icons/bs";
+import { FiBookmark } from "react-icons/fi";
 import { PiBooksDuotone } from "react-icons/pi";
 
 const ProfileSidebar = () => {
@@ -27,7 +27,7 @@ const ProfileSidebar = () => {
           href="/profile/savedArticle"
           className="group flex flex-col items-center justify-center w-fit py-2 hover:cursor-pointer hover:animate-bounce"
         >
-          <BsBookmarkHeart size={28} />
+          <FiBookmark size={28} />
           <p className="collapse group-hover:visible">收藏貼文</p>
         </Link>
         <Link

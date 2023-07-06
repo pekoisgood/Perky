@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { db } from "@/utils/firebase";
 import { doc, getDoc } from "firebase/firestore";
 
+export const revalidation = "force-cache";
+
 export async function GET(
   req: Request,
   { params }: { params: { id: string } }

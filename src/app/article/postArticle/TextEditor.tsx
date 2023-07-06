@@ -34,7 +34,7 @@ const Page = () => {
     editorProps: {
       attributes: {
         class:
-          "prose dark:prose-invert prose-md focus:outline-none min-h-[calc(100vh-660px)] p-3 w-full border-dashed border-2 border-[#245953] rounded-2xl overflow-y-scroll max-h-[calc(100vh-500px)] focus:border-solid",
+          "focus:outline-none min-h-[calc(100vh-660px)] p-3 w-full border-dashed border-2 border-[#245953] rounded-2xl overflow-y-scroll max-h-[calc(100vh-500px)] focus:border-solid",
       },
     },
     extensions: [
@@ -68,7 +68,7 @@ const Page = () => {
         value: editor.getHTML(),
       })
     );
-  }, [editor?.getHTML()]);
+  }, [editor, dispatch, editor?.getHTML()]);
 
   return (
     <>
