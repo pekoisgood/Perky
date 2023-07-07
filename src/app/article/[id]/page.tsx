@@ -19,6 +19,10 @@ const Page = async ({ params }: { params: { id: string } }) => {
   );
   const article = await req.json();
 
+  if (!article) {
+    return <div>Article Not Found...</div>;
+  }
+
   return (
     <div className="w-full max-w-[800px] rounded-lg flex flex-col gap-2 items-center justify-center mx-auto py-10">
       <div className="relative w-full">

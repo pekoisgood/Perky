@@ -34,10 +34,7 @@ border-2 border-black rounded-2xl shadow-black shadow-[3px_3px]
 hover:cursor-pointer hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-none duration-100`;
 
 const Form = ({ image }: { image: File | null }) => {
-  const {
-    user,
-    // isLogin
-  } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [isProcessing, setIsProcessing] = useState<string | null>(null);
   const tagRef = useRef<HTMLInputElement | null>(null);
 
@@ -286,7 +283,7 @@ const Form = ({ image }: { image: File | null }) => {
         }
         onClick={handleSubmitArticle}
       >
-        {isProcessing === postStatus.PENDING ? "running..." : "送出"}
+        {isProcessing === postStatus.PENDING ? "running..." : "Submit"}
       </button>
       {isProcessing === postStatus.FAIL && (
         <Warning>{postArticleErrorMessage()}</Warning>
@@ -294,10 +291,10 @@ const Form = ({ image }: { image: File | null }) => {
       {isProcessing === postStatus.SUCCESS && (
         <Warning time={0}>
           <div className="flex flex-col gap-3 items-center justify-center">
-            <p>發文成功！</p>
+            <p>Article Post Success!</p>
             <Button customLayout="shadow-[3px_3px] px-2">
               <Link href="/" className="text-black">
-                回首頁
+                Back to Home page
               </Link>
             </Button>
           </div>

@@ -89,7 +89,7 @@ const TrendingArticles = () => {
                   {article.authorName}
                 </p>
                 <p className="text-[12px] hidden lg:flex">
-                  收藏數 : {article.savedCount}
+                  Saved : {article.savedCount}
                 </p>
               </div>
               <p className="text-[10px] text-bold w-fit ml-auto mt-1 font-mono text-[#FFD89C]">{`</h${

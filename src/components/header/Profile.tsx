@@ -28,7 +28,7 @@ const Profile = () => {
             )}
           </>
         ) : (
-          <p>登入</p>
+          <p>Login</p>
         )}
       </Link>
       {isLogin && (
@@ -37,7 +37,7 @@ const Profile = () => {
             className="w-full p-1 hover:bg-orange-200 text-center hover:cursor-pointer"
             onClick={logOut}
           >
-            登出
+            Logout
           </div>
         </div>
       )}
