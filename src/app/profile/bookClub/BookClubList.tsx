@@ -167,15 +167,15 @@ const BookClubList = () => {
                     className={`${
                       bookClub.time.toDate() < new Date() &&
                       "hover:cursor-not-allowed "
-                    } p-1 rounded-lg bg-[#F0EB8D] text-[12px]`}
+                    } w-[40px] text-center p-1 rounded-lg bg-[#F0EB8D] text-[12px]`}
                   >
-                    點我進入
+                    Join
                   </Link>
                   <div
                     onClick={() => getNote(bookClub.id)}
-                    className="p-1 rounded-lg bg-[#F0EB8D] text-[12px] hover:cursor-pointer"
+                    className="text-center w-[40px] p-1 rounded-lg bg-[#F0EB8D] text-[12px] hover:cursor-pointer"
                   >
-                    查看筆記
+                    Note
                   </div>
                 </div>
                 {isPreviewNote && note && (

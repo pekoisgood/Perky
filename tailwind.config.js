@@ -13,6 +13,7 @@ module.exports = {
             strong: {
               color: { "--tw-prose-bold": "inherit" },
             },
+            "max-width": "none",
           },
         },
       },

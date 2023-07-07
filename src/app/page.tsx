@@ -28,7 +28,7 @@ export default async function Home() {
     pb-[60px] pt-[30px] items-center overflow-y-scroll`}
       >
         <div className="flex flex-col w-[150px] items-center gap-5 mt-[40px]">
-          <h2 className={`text-center text-[20px] font-medium`}>類別</h2>
+          <h2 className={`text-center text-[20px] font-medium`}>Category</h2>
           {categories.sort().map((category) => {
             return (
               <Link
@@ -44,7 +44,7 @@ export default async function Home() {
           })}
         </div>
         <h2 className={`text-center text-[20px] font-medium mt-[60px]`}>
-          熱門文章
+          Trending Articles
         </h2>
         <TrendingArticles />
       </div>

@@ -98,14 +98,14 @@ const Page = ({
     labels,
     datasets: [
       {
-        label: "讀書會參加紀錄",
+        label: "Book Club",
         data: caculateCountPerDay(filteredWeeklyBookClubRecord),
         borderColor: "#FFA41B",
         backgroundColor: "#FFA41B",
         tension: 0.1,
       },
       {
-        label: "發文紀錄",
+        label: "Article Post",
         data: caculateCountPerDay(filteredWeeklyArticleRecord),
         borderColor: "#525FE1",
         backgroundColor: "#525FE1",

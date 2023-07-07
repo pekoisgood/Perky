@@ -23,7 +23,7 @@ type Articles = {
 
 const Page = () => {
   const { user } = useContext(AuthContext);
-  const [articleRecord, setArticleRecord] = useState<Articles[] | null>([]);
+  const [articleRecord, setArticleRecord] = useState<Articles[] | null>(null);
 
   useEffect(() => {
     const getArticleRecord = async () => {
@@ -44,7 +44,7 @@ const Page = () => {
   return (
     <div className="relative">
       <h1 className="mx-auto w-fit text-[28px] font-semibold tracking-[6px] indent-[6px] mb-[50px]">
-        發文紀錄
+        Article Record
       </h1>
       <Link
         href="/article/postArticle"
@@ -52,16 +52,16 @@ const Page = () => {
       >
         <div className="relative w-[65px] h-[35px]">
           <div className="flex items-center h-full relative before:absolute before:block before:top-0 before:left-[-2px] before:content-[ ] before:w-[65px] before:h-[35px] before:bg-[#677cbefb] before:rounded-md px-[6px] py-1 z-20 before:border-2 before:border-black before:hover:skew-x-12 before:hover:h-[32px] before:hover:top-[3px] before:hover:left-[-7px] group-hover:duration-100">
-            <span className="inline-block relative z-100 text-[12px] group-hover:left-[-6px] group-hover:duration-100">
-              我要發文
+            <span className="inline-block relative z-100 text-[12px] group-hover:left-[-6px] group-hover:duration-100 pl-[7px]">
+              Post +
             </span>
           </div>
           <div className="absolute top-[-4px] left-[-2px] w-[20px] h-[9px] bg-[#3C486B] rounded-[40%_40%_0_0/10px_10px_0_0] z-10 border-black border-l-2 border-t-2" />
         </div>
       </Link>
-      <div className="columns-2 md:columns-3 gap-x-5">
-        {articleRecord &&
-          articleRecord.map((article) => {
+      {articleRecord && (
+        <div className="columns-2 md:columns-3 gap-x-5">
+          {articleRecord.map((article) => {
             return (
               <Link
                 href={`/article/${article.id}`}
@@ -89,7 +89,7 @@ const Page = () => {
                       width={400}
                       height={300}
                       className="object-cover h-full"
-                      loading="lazy"
+                      priority={true}
                     />
                   </div>
                   <p className="font-semibold text-[18px]">
@@ -102,10 +102,11 @@ const Page = () => {
               </Link>
             );
           })}
-      </div>
+        </div>
+      )}
       {articleRecord === null && (
-        <div>
-          <p>目前還沒有發過文耶！快點去發文吧 ~</p>
+        <div className="flex justify-center items-center h-full text-[#245953]">
+          <p>There&apos;s no article yet!! Go to post your first article!!</p>
         </div>
       )}
     </div>

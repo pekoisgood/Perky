@@ -45,15 +45,15 @@ const Page = () => {
   return (
     <div className="h-full max-w-[600px] mx-auto">
       <h1 className="mx-auto w-fit text-[28px] font-semibold tracking-[6px] indent-[6px] mb-[30px]">
-        學習紀錄
+        Analysis
       </h1>
       <LineChart
         articleCreatedAtRecord={articleRecourdCreatedTime}
         bookClubTimeRecord={bookClubRecordCreatedTime}
       />
       <div className="flex flex-col gap-3 pt-[20px] w-fit mx-auto text-center">
-        <p>本週發文總次數 : {articleRecourdCreatedTime.length}</p>
-        <p>本週讀書會參加總次數 : {bookClubRecordCreatedTime.length}</p>
+        <p>Total posts this week : {articleRecourdCreatedTime.length}</p>
+        <p>Total book club this week : {bookClubRecordCreatedTime.length}</p>
       </div>
     </div>
   );

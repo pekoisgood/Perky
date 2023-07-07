@@ -50,7 +50,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
             alt="cover image of this article"
             width={800}
             height={400}
-            priority={false}
+            priority={true}
           />
         ) : (
           <PiFinnTheHumanFill size={30} />

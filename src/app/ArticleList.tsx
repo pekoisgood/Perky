@@ -16,7 +16,6 @@ const ArticleList = ({
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    let observerRefValue: null | HTMLAnchorElement[] = null;
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(
         (entry) => {
@@ -43,20 +42,7 @@ const ArticleList = ({
       ref.current.forEach((el) => {
         observer.observe(el);
       });
-      observerRefValue = ref.current;
     }
-
-    return () => {
-      if (ref.current) {
-        if (observerRefValue) {
-          console.log(observerRefValue);
-
-          observerRefValue.forEach((el) => {
-            observer.unobserve(el);
-          });
-        }
-      }
-    };
   }, []);
 
   return (
@@ -82,6 +68,7 @@ const ArticleList = ({
                     alt="article cover image"
                     fill
                     className="object-cover"
+                    priority={true}
                   />
                 </div>
               )}
@@ -90,7 +77,7 @@ const ArticleList = ({
                   {article.title}
                 </h2>
                 <p className="text-center text-[14px]">
-                  作者: {article.authorName}
+                  author: {article.authorName}
                 </p>
                 <p className="bg-[#FFD89C] text-black font-mono  tracking-[1px] px-2 py-1 rounded-3xl w-fit text-[10px] sm:text-[12px] border-2 shadow-[-3px_3px] shadow-black border-black font-bold absolute top-[-16px] right-[5px]">
                   {article.category}

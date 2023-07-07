@@ -9,6 +9,7 @@ import {
   getDocs,
   onSnapshot,
   DocumentData,
+  Timestamp,
 } from "firebase/firestore";
 import { db } from "@/utils/firebase";
 import { AuthContext } from "@/context/AuthContext";
@@ -16,10 +17,11 @@ import Button from "@/components/button/Button";
 import Image from "next/image";
 import { HiPaperAirplane } from "react-icons/hi";
 import { PiFinnTheHumanFill } from "react-icons/pi";
+import { timeAgo } from "@/utils/func";
 
 type ArticleComment = {
   comment: string;
-  createdAt: string;
+  createdAt: Timestamp;
   userName: string;
   userId: string;
   userAvatar: string;
@@ -30,7 +32,10 @@ const Comment = ({ articleId }: { articleId: string }) => {
   const [newComment, setNewComment] = useState<string>("");
   const [comments, setComments] = useState<ArticleComment[]>([]);
 
+  console.log(comments);
+
   const CommentRef = collection(db, "articles", articleId, "comments");
+  // const now = new Date();
 
   const handleSubmitComment = async () => {
     if (!newComment) return;
@@ -50,12 +55,14 @@ const Comment = ({ articleId }: { articleId: string }) => {
     const q = query(CommentRef, orderBy("createdAt", "desc"));
     const commentsData: ArticleComment[] = [];
     const docData = (doc: DocumentData) => {
+      console.log(doc.data());
+
       return {
         comment: doc.data().comment,
         userName: doc.data().userName,
         userId: doc.data().userId,
         userAvatar: doc.data().userAvatar,
-        createdAt: doc.data().createdAt?.toDate().toLocaleString() ?? "now",
+        createdAt: doc.data().createdAt,
       };
     };
 
@@ -85,15 +92,13 @@ const Comment = ({ articleId }: { articleId: string }) => {
     };
   }, []);
 
-  console.log(comments);
-
   return (
     <div
       className={`w-full max-w-[800px] flex flex-col justify-center gap-4 mt-[35px] bg-[#ebebeb] 
     border-2 rounded-2xl border-[#245953] p-5 shadow-[#245953] shadow-[-5px_5px]`}
     >
       <h1 className="w-fit mx-auto font-semibold text-[20px] tracking-[2px] indent-[2px]">
-        留言
+        Comment
       </h1>
       <div className="flex gap-2 justify-center items-center">
         <input
@@ -133,7 +138,9 @@ const Comment = ({ articleId }: { articleId: string }) => {
                     <p className="text-black text-[12px] sm:text-[14px]">
                       {comment.userName}
                       <span className="text-[8px] sm:text-[10px] ml-2">
-                        {comment.createdAt}
+                        {comment.createdAt ?? false
+                          ? timeAgo(new Date(comment.createdAt.seconds * 1000))
+                          : "now"}
                       </span>
                     </p>
                     <p className="text-[14px] sm:text-[16px]">
@@ -146,7 +153,7 @@ const Comment = ({ articleId }: { articleId: string }) => {
           </div>
         ) : (
           <p className="w-fit mx-auto text-[14px] text-black tracking-[1px]">
-            目前還沒有人留言...快來當第一個留言的人！
+            No body comment yet... Maybe you can be the first!
           </p>
         )}
       </div>

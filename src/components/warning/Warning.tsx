@@ -8,7 +8,7 @@ type Props = {
   customCloseButton?: boolean;
 };
 
-const Alert = ({
+const Warning = ({
   children,
   customLayout,
   time,
@@ -41,7 +41,7 @@ const Alert = ({
       >
         {!customCloseButton && (
           <span
-            className="absolute top-0 right-[10px] text-white hover:cursor-pointer"
+            className="absolute top-[10px] right-[20px] text-black hover:cursor-pointer"
             onClick={() => handleCloseWarning()}
           >
             x
@@ -53,4 +53,4 @@ const Alert = ({
   );
 };
 
-export default Alert;
+export default Warning;

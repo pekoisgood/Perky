@@ -8,7 +8,7 @@ import js from "highlight.js/lib/languages/javascript";
 import ts from "highlight.js/lib/languages/typescript";
 import html from "highlight.js/lib/languages/xml";
 import { lowlight } from "lowlight";
-import "@/app/article/postArticle/style.css";
+import "@/app/article/postArticle/textEditor/style.css";
 
 lowlight.registerLanguage("html", html);
 lowlight.registerLanguage("css", css);

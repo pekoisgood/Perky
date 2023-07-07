@@ -29,7 +29,11 @@ const Page = () => {
   const { user } = useContext(AuthContext);
   const [articles, setArticles] = useState<Article[]>([]);
 
+  console.log("arts", articles);
+
   useEffect(() => {
+    console.log(user.id);
+
     const getArticle = async () => {
       const savedArticles: Article[] = [];
       const articleIds: string[] = [];
@@ -42,11 +46,33 @@ const Page = () => {
         articleIds.push(doc.id);
       });
 
-      if (!(articleIds.length > 0)) return;
-      for (let i = 0; i < articleIds.length; i++) {
+      console.log(articleIds.length);
+
+      // if (!(articleIds.length > 0)) return;
+      // // const articles = async () => {articleIds.map((a, i) => {
+      // //   const res: DocumentData = await getDoc(
+      // //     doc(db, "articles", articleIds[i])
+      // //   );
+      // //   console.log(res.data());
+      // //   console.log(savedArticles);
+      // //   console.log(articleIds[i]);
+
+      // //   return {
+      // //     id: res.id,
+      // //     authorName: res.data().authorName,
+      // //     title: res.data().title,
+      // //     content: res.data().content,
+      // //     image: res.data().image,
+      // //   }
+      // })}
+      for (let i = 0; i < articleIds.length; i += 1) {
+        console.log("i", i);
+
         const res: DocumentData = await getDoc(
           doc(db, "articles", articleIds[i])
         );
+        console.log(res.data());
+        console.log(articleIds[i]);
         savedArticles.push({
           id: res.id,
           authorName: res.data().authorName,
@@ -54,22 +80,25 @@ const Page = () => {
           content: res.data().content,
           image: res.data().image,
         });
+
+        console.log(savedArticles);
       }
 
       setArticles(savedArticles);
     };
-    if (!user.id) return;
+
+    if (user.id === "") return;
     getArticle();
   }, [user.id]);
 
   return (
-    <div className="h-full w-full flex flex-col items-center mt-5 gap-3">
-      <h2 className="mx-auto w-fit text-[28px] font-semibold tracking-[6px] indent-[6px] mb-[50px]">
-        我的收藏好文
+    <div className="h-full w-full flex flex-col items-center gap-3">
+      <h2 className="mx-auto w-fit text-[28px] font-semibold tracking-[6px] indent-[6px]">
+        Saved Articles
       </h2>
-      <div className="columns-2 md:columns-3 gap-2 w-full px-3">
-        {articles.length > 0 ? (
-          articles.map((article: Article, index: number) => {
+      {articles.length > 0 ? (
+        <div className="columns-2 md:columns-3 gap-2 w-full px-3 mt-[50px]">
+          {articles.map((article: Article, index: number) => {
             return (
               <motion.div
                 initial={{
@@ -97,7 +126,7 @@ const Page = () => {
                       width={400}
                       height={300}
                       className="object-cover h-full"
-                      loading="lazy"
+                      priority={true}
                     />
                   </div>
                   <p className="font-semibold text-[18px]">{article.title}</p>
@@ -107,17 +136,16 @@ const Page = () => {
                 </Link>
               </motion.div>
             );
-          })
-        ) : (
-          <>
-            <p>還沒有任何收藏的貼文...</p>
-
-            <Link href="/">
-              <Button>立馬尋找好文</Button>
-            </Link>
-          </>
-        )}
-      </div>
+          })}
+        </div>
+      ) : (
+        <div className="flex flex-col w-full h-full items-center gap-2 mt-[50px]">
+          <p className="text-[#245953]">There is no article saved yet...</p>
+          <Link href="/">
+            <Button>Let&apos;s go find some stunning articles!</Button>
+          </Link>
+        </div>
+      )}
     </div>
   );
 };

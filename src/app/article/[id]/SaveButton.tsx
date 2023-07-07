@@ -36,9 +36,10 @@ const SaveButton = ({ articleId, count }: Prop) => {
 
     if (isSaved && articleId) {
       await deleteDoc(doc(db, "users", user.id, "savedArticles", articleId));
+      console.log("ccc", count);
 
       await updateDoc(articleSavedCountRef, {
-        savedCount: count - 1,
+        savedCount: count,
       });
 
       setIsSaved(false);
@@ -88,7 +89,7 @@ const SaveButton = ({ articleId, count }: Prop) => {
         hover:cursor-pointer focus:scale-95`}
         onClick={handleSaveArticle}
       >
-        {isLoading ? (
+        {!isLoading ? (
           isSaved ? (
             <BsBookmarkHeartFill size={30} className="text-[#EB455F]" />
           ) : (

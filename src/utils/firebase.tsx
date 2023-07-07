@@ -44,12 +44,18 @@ export const signInWithGoogle = async () => {
     const name = user.displayName;
 
     const userRef = collection(db, "users");
-    const isUserExist = query(userRef, where("userId", "==", userId));
+    const q = query(userRef, where("userId", "==", userId));
+
+    const userDoc = await getDocs(q);
+    let isUserExist;
+    userDoc.forEach((userDoc) => {
+      isUserExist = userDoc.data();
+    });
 
     if (!isUserExist) {
       await setDoc(doc(db, "users", userId), {
-        userId,
-        name,
+        userId: userId,
+        name: name,
         createdAt: serverTimestamp(),
       });
     }

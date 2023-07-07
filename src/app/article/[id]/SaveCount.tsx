@@ -10,7 +10,6 @@ type Props = {
 
 const SaveCount = ({ articleId }: Props) => {
   const [count, setCount] = useState<number>(0);
-  console.log(count);
 
   useEffect(() => {
     const unsub = onSnapshot(
@@ -24,7 +23,7 @@ const SaveCount = ({ articleId }: Props) => {
       unsub();
     };
   }, []);
-  return <p className="text-[13px] sm:text-[16px]">收藏數：{count}</p>;
+  return <p className="text-[13px] sm:text-[16px]">Saved: {count}</p>;
 };
 
 export default SaveCount;
