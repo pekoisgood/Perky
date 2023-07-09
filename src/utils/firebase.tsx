@@ -5,6 +5,8 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   signOut,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
 } from "firebase/auth";
 import {
   getFirestore,
@@ -35,6 +37,7 @@ export const db = getFirestore(app);
 export const storage = getStorage();
 export const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
+
 export const signInWithGoogle = async () => {
   try {
     const result = await signInWithPopup(auth, provider);
@@ -42,6 +45,7 @@ export const signInWithGoogle = async () => {
     const user = result.user;
     const userId = user.uid;
     const name = user.displayName;
+    const email = user.email;
 
     const userRef = collection(db, "users");
     const q = query(userRef, where("userId", "==", userId));
@@ -56,6 +60,7 @@ export const signInWithGoogle = async () => {
       await setDoc(doc(db, "users", userId), {
         userId: userId,
         name: name,
+        email: email,
         createdAt: serverTimestamp(),
       });
     }
@@ -99,6 +104,48 @@ export async function getRecord(
   result.forEach((doc) => data.push(doc.data()));
 
   return data;
+}
+
+export async function signUpWithEmail(email: string, password: string) {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    const user = userCredential.user;
+    return user;
+    // ...
+  } catch (error) {
+    // const errorCode = error.code;
+    // const errorMessage = error.message;
+    return error;
+    // ...
+  }
+  // createUserWithEmailAndPassword(auth, email, password)
+  //   .then((userCredential) => {
+  //     const user = userCredential.user;
+  //     return user;
+  //   })
+  //   .catch((error) => {
+  //     const errorCode = error.code;
+  //     const errorMessage = error.message;
+  //     return { errorCode, errorMessage };
+  //   });
+}
+
+export function signInWithEmail(email: string, password: string) {
+  signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      // Signed in
+      const user = userCredential.user;
+      return user;
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      return { errorCode, errorMessage };
+    });
 }
 
 export type Article = {

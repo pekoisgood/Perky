@@ -219,7 +219,7 @@ const MeetingView = () => {
         </>
       ) : (
         <div className="w-full h-full flex flex-col gap-3 justify-center items-center text-white">
-          {user.avatar !== " " ? (
+          {user.avatar !== "" ? (
             <Image
               src={user.avatar}
               alt="user avatar"

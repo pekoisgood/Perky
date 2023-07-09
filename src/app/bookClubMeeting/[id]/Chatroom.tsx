@@ -178,7 +178,7 @@ const Chatroom = ({
                 className="flex gap-1 w-fit mr-auto justify-start items-center"
                 key={index}
               >
-                {message.avatar !== " " ? (
+                {message.avatar !== "" ? (
                   <Image
                     src={message.avatar}
                     alt="user avatar"

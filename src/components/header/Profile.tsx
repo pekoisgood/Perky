@@ -16,7 +16,7 @@ const Profile = () => {
       >
         {isLogin ? (
           <>
-            {user.avatar !== " " ? (
+            {user.avatar !== "" ? (
               <Image
                 src={user.avatar}
                 alt="user avatar"

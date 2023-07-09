@@ -5,6 +5,8 @@ import { collection, getDocs } from "firebase/firestore";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { HiSearch } from "react-icons/hi";
+import { IoClose } from "react-icons/io5";
+import Button from "../button/Button";
 
 type SearchOutput = {
   id: string;
@@ -65,40 +67,43 @@ const Search = () => {
       </div>
       {isSearching && (
         <div
-          className={`w-screen h-screen absolute top-0 left-0 bg-slate-50/40 flex flex-col justify-center items-center`}
+          className={`w-screen h-screen absolute top-0 left-0 flex flex-col justify-center items-center backdrop-blur-md overscroll-contain`}
         >
-          <div className="w-[] flex flex-col gap-4 bg-slate-200 p-3 rounded-lg">
+          <div className="w-[50vw] max-w-[600px] flex flex-col items-center p-3 rounded-lg border-2 border-black h-[50vh] bg-white/70">
             <button
               onClick={() => setIsSearching(false)}
               className="w-fit text-red-500 ml-auto block"
             >
-              close
+              <IoClose size={20} />
             </button>
-            <div className="flex gap-2">
+            <div className="flex items-center gap-2 w-[90%]">
               <input
-                className="border-[1px] border-slate-500 rounded-md p-2"
+                className="text-[20px] outline-none border-2 w-full border-dashed border-[#245953] rounded-md p-2 h-[35px] focus:border-solid"
+                placeholder="what are you looking for...?"
                 onChange={(e) => setSearchInput(e.target.value.toLowerCase())}
               />
               <Link
                 href={`/articles?search=${searchInput}`}
-                className="bg-slate-500 p-1 rounded-lg"
                 onClick={() => setIsSearching(false)}
               >
-                search
+                <Button customLayout="h-[35px] flex justify-center items-center">
+                  <HiSearch size={30} />
+                </Button>
               </Link>
             </div>
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-2 w-[90%] justify-start mt-[10px] overflow-scroll overscroll-contain">
               {searchResult.length > 0 &&
                 searchResult.map((tag: Tag) => {
                   return (
-                    <div key={tag.id} className="border-[1px] border-slate-500">
-                      <Link
-                        href={`/articles?tag=${tag.name}`}
-                        onClick={() => setIsSearching(false)}
-                      >
+                    <Link
+                      key={tag.id}
+                      href={`/articles?tag=${tag.name}`}
+                      onClick={() => setIsSearching(false)}
+                    >
+                      <div className="text-[20px] rounded-xl text-medium py-1 pl-[10px] hover:bg-[#eeeeee30] hover:translate-y-[-2px] hover:duration-75">
                         {tag.name}
-                      </Link>
-                    </div>
+                      </div>
+                    </Link>
                   );
                 })}
             </div>

@@ -28,7 +28,7 @@ const ArticleSnippet = ({ article }: { article: string }) => {
   });
 
   return (
-    <div className="line-clamp-2">
+    <div className="line-clamp-2 text-[13px]">
       {editor?.getText()}
       <span>...</span>
     </div>

@@ -24,6 +24,9 @@ module.exports = {
         custom: "2px 3px 2px 6px",
         tag: "2px 2px 2px 7px",
       },
+      scale: {
+        flip: "-1",
+      },
       keyframes: {
         boucing: {
           "from, to ": { transform: "scale(1, 1)" },
@@ -64,8 +67,5 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    require("@tailwindcss/typography"),
-    require("@tailwindcss/line-clamp"),
-  ],
+  plugins: [require("@tailwindcss/typography")],
 };

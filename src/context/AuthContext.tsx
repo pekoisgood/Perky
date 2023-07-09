@@ -10,17 +10,23 @@ type User = {
   avatar: string;
 };
 
+// type isLoginState = boolean | null;
+
 type Auth = {
   isLogin: boolean | null;
   logIn: () => void;
   logOut: () => void;
   user: User;
+  setUser: any;
+  setIsLogin: any;
 };
 
 export const AuthContext = createContext<Auth>({
   isLogin: false,
   logIn: () => {},
   logOut: () => {},
+  setIsLogin: () => {},
+  setUser: () => {},
   user: {
     name: "",
     avatar: "",
@@ -56,7 +62,13 @@ export const AuthContextProvider = ({
   }, []);
 
   const logIn = async () => {
+    // if(method === "GOOGLE"){
     const result = await signInWithGoogle();
+
+    // }eles{
+
+    // }
+
     if (!result) return;
     setIsLogin(true);
     router.replace("/profile/analysis");
@@ -67,8 +79,18 @@ export const AuthContextProvider = ({
     setIsLogin(false);
   };
 
+  // const signInWithEmailAndPassword = async (
+  //   email: string,
+  //   password: string
+  // ) => {
+  //   const userInfo = await signInWithEmail(email, password);
+  //   console.log(userInfo);
+  // };
+
   return (
-    <AuthContext.Provider value={{ isLogin, logIn, logOut, user }}>
+    <AuthContext.Provider
+      value={{ isLogin, logIn, logOut, user, setIsLogin, setUser }}
+    >
       {children}
     </AuthContext.Provider>
   );
