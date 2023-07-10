@@ -74,7 +74,7 @@ const TodayBookClub = () => {
                 <Link
                   href={`/bookClubMeeting/${bookClub.roomId}`}
                   key={index}
-                  className="border-2 border-black bg-[#245953] text-white p-1 rounded-xl max-w-[200px] hover:translate-y-[-3px] duration-75"
+                  className="border-2 border-black bg-[#245953] text-white p-1 rounded-xl max-w-[200px] hover:translate-y-[-3px] duration-100"
                 >
                   <div className="border-dashed border-2 border-white rounded-lg p-3">
                     <p className="text-[16px] lg:text-[18px]">

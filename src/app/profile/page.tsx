@@ -5,7 +5,6 @@ import LineChart from "./analysis/LineChart";
 import ArticleRecord from "./articleRecord/ArticleRecord";
 import TodayBookClub from "./bookClub/TodayBookClub";
 import SavedArticle from "./savedArticle/SavedArticle";
-import sittingWomanHoldingLegs from "../../assets/image/woman-sitting-holding-both-legs.svg";
 
 export const dashBoardTitleClass =
   "font-medium text-[20px] tracking-[2px] mb-[20px] text-center lg:text-start";
@@ -35,13 +34,6 @@ const Page = async () => {
         <div className="basis-1/3 h-full flex mx-auto justify-center items-center lg:max-w-[300px]">
           <LineChart />
         </div>
-        <Image
-          src={sittingWomanHoldingLegs}
-          alt="woman sitting holding both legs"
-          width={200}
-          height={500}
-          className="scale-x-flip w-[150px] lg:w-[200px] absolute bottom-[-36px] right-0 md:right-[44px] rotate-[5deg] lg:z-0"
-        />
       </div>
     </div>
   );

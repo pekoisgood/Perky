@@ -2,6 +2,7 @@ import React from "react";
 import ProfileSidebar from "./ProfileSidebar";
 import Auth from "./Auth";
 import stylishManWithCap from "../../assets/image/stylish-man-with-cap.svg";
+import sittingWomanHoldingLegs from "../../assets/image/woman-sitting-holding-both-legs.svg";
 import Image from "next/image";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
@@ -29,6 +30,13 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             />
           </div>
           {children}
+          <Image
+            src={sittingWomanHoldingLegs}
+            alt="woman sitting holding both legs"
+            width={200}
+            height={500}
+            className="scale-x-flip w-[150px] lg:w-[200px] absolute bottom-[-36px] right-0 md:right-[44px] rotate-[5deg] lg:z-0"
+          />
         </div>
       </div>
       <Auth />
