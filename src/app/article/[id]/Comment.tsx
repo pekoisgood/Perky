@@ -77,8 +77,6 @@ const Comment = ({ articleId }: { articleId: string }) => {
     const unsub = onSnapshot(CommentRef, (snapshot) => {
       snapshot.docChanges().forEach((change) => {
         if (change.type === "added") {
-          // console.log(change.doc.data().createdAt);
-
           setComments((prev) => {
             return [docData(change.doc), ...prev];
           });

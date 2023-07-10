@@ -53,8 +53,6 @@ export const calenderSlice = createSlice({
       };
     },
     handleSelectDate: (state, actions) => {
-      console.log(actions);
-
       switch (actions.payload.type) {
         case "UPDATE":
           return {

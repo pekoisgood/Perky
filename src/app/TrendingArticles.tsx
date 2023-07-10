@@ -63,7 +63,7 @@ const TrendingArticles = () => {
   }, []);
 
   return (
-    <div className="relative flex flex-col h-[calc(100vh-120px)] border-t-2 border-black px-[10px] lg:px-0 z-0">
+    <div className="relative flex flex-col h-[calc(100vh-120px)] border-t-2 border-black px-[10px] mx-[10px] xl:px-0 z-0">
       <h2 className="w-fit h-fit px-2 py-1 bg-black text-white tracking-[1px] font-medium z-10">
         Trending Articles
       </h2>

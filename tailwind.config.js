@@ -58,12 +58,16 @@ module.exports = {
           from: { opacity: 0 },
           to: { opacity: 1 },
         },
+        damping: {
+          // "from": {}
+        },
       },
       animation: {
         wiggle: "wiggle 2s infinite",
         skeleton: "loading-skeleton 1s linear infinite",
         typing: "typing 9s steps(5, end) infinite",
         appear: "appear 1s linear",
+        damping: "appear 2s cubic-bezier(0.42, 0, 0.3, 1.09)",
       },
     },
   },

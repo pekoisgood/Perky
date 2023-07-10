@@ -11,8 +11,8 @@ const UserProfile = () => {
   if (!user) return <></>;
   return (
     <>
-      <div className="rounded-full border-4 border-[#1A4D2E] w-[150px] h-[150px] object-cover overflow-hidden">
-        {user.avatar !== " " ? (
+      <div className="rounded-full border-[1px] border-black w-[100px] h-[100px] md:w-[150px] md:h-[150px] object-cover overflow-hidden">
+        {user.avatar !== "" ? (
           <Image
             src={user.avatar}
             alt="user's avatar"
@@ -20,11 +20,13 @@ const UserProfile = () => {
             height={150}
           />
         ) : (
-          <PiFinnTheHumanFill size={40} />
+          <PiFinnTheHumanFill
+            size={30}
+            className="w-full h-full flex justify-center items-center"
+          />
         )}
       </div>
-      <p>用戶名：{user.name}</p>
-      <p>id : {user.id}</p>
+      <p className="mt-5">{user.name}</p>
     </>
   );
 };

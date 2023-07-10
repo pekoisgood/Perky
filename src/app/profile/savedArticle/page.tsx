@@ -17,25 +17,22 @@ import ArticleSnippet from "@/app/ArticleSnippet";
 import Image from "next/image";
 import Button from "@/components/button/Button";
 
-type Article = {
+export type SavedArticle = {
   title: string;
   id: string;
   authorName: string;
   content: string;
   image: string;
+  category: string;
 };
 
 const Page = () => {
   const { user } = useContext(AuthContext);
-  const [articles, setArticles] = useState<Article[]>([]);
-
-  console.log("arts", articles);
+  const [articles, setArticles] = useState<SavedArticle[] | null>(null);
 
   useEffect(() => {
-    console.log(user.id);
-
     const getArticle = async () => {
-      const savedArticles: Article[] = [];
+      const savedArticles: SavedArticle[] = [];
       const articleIds: string[] = [];
       const q = query(
         collection(db, "users", user.id, "savedArticles"),
@@ -47,41 +44,23 @@ const Page = () => {
       });
 
       console.log(articleIds.length);
+      if (articleIds.length === 0) {
+        setArticles([]);
+        return;
+      }
 
-      // if (!(articleIds.length > 0)) return;
-      // // const articles = async () => {articleIds.map((a, i) => {
-      // //   const res: DocumentData = await getDoc(
-      // //     doc(db, "articles", articleIds[i])
-      // //   );
-      // //   console.log(res.data());
-      // //   console.log(savedArticles);
-      // //   console.log(articleIds[i]);
-
-      // //   return {
-      // //     id: res.id,
-      // //     authorName: res.data().authorName,
-      // //     title: res.data().title,
-      // //     content: res.data().content,
-      // //     image: res.data().image,
-      // //   }
-      // })}
       for (let i = 0; i < articleIds.length; i += 1) {
-        console.log("i", i);
-
         const res: DocumentData = await getDoc(
           doc(db, "articles", articleIds[i])
         );
-        console.log(res.data());
-        console.log(articleIds[i]);
         savedArticles.push({
           id: res.id,
           authorName: res.data().authorName,
           title: res.data().title,
           content: res.data().content,
           image: res.data().image,
+          category: res.data().category,
         });
-
-        console.log(savedArticles);
       }
 
       setArticles(savedArticles);
@@ -92,13 +71,15 @@ const Page = () => {
   }, [user.id]);
 
   return (
-    <div className="h-full w-full flex flex-col items-center gap-3">
-      <h2 className="mx-auto w-fit text-[28px] font-semibold tracking-[6px] indent-[6px]">
+    <div className="w-full mt-[20px] relative">
+      <h1 className="sticky top-[20px] right-[43%] translate-x-[50%] bg-white/60 mx-auto w-fit text-[28px] font-bold tracking-[4px] rounded-full px-5 mb-[30px]">
         Saved Articles
-      </h2>
-      {articles.length > 0 ? (
+      </h1>
+      {articles === null ? (
+        <p>Loading...</p>
+      ) : articles.length > 0 ? (
         <div className="columns-2 md:columns-3 gap-2 w-full px-3 mt-[50px]">
-          {articles.map((article: Article, index: number) => {
+          {articles.map((article: SavedArticle, index: number) => {
             return (
               <motion.div
                 initial={{
@@ -113,7 +94,7 @@ const Page = () => {
                   duration: 1,
                 }}
                 key={index}
-                className="rounded-xl p-1 block hover:translate-y-[-10px] hover:duration-100 bg-[#1B9C85] mb-3 break-inside-avoid"
+                className="rounded-xl p-1 block hover:translate-y-[-10px] hover:duration-100 bg-[#245953] mb-3 break-inside-avoid"
               >
                 <Link
                   href={`/article/${article.id}`}
@@ -129,8 +110,10 @@ const Page = () => {
                       priority={true}
                     />
                   </div>
-                  <p className="font-semibold text-[18px]">{article.title}</p>
-                  <p className="text-white pl-1 text-[12px]">
+                  <p className="font-semibold text-[18px] text-white tracking-[1px]">
+                    {article.title}
+                  </p>
+                  <p className="text-[#eee] pl-1 text-[12px]">
                     <ArticleSnippet article={article.content} />
                   </p>
                 </Link>

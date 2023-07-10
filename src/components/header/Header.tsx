@@ -16,7 +16,7 @@ const Header = () => {
           alt="Perky logo"
           className="text-orange-300"
         />
-        <div className="inline-block w-[78px] tracking-[2px]">
+        <div className="inline-block w-[82px] tracking-[2px]">
           <h1 className="font-bold text-[25px] overflow-hidden animate-typing border-r-[1px] border-black">
             Perky
           </h1>
@@ -27,7 +27,7 @@ const Header = () => {
           <HiOutlineDocumentAdd size={30} />
         </Link>
         <Search />
-        <div className="group relative">
+        <div className="group">
           <Profile />
         </div>
       </div>

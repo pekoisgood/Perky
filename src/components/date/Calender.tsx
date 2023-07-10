@@ -79,7 +79,7 @@ const Calender = () => {
       <div className="border-2 border-solid border-[#245953] bg-white w-[300px] lg:w-[500px] p-[10px] lg:px-6 lg:py-10 rounded-2xl shadow-[-5px_10px] shadow-[#245953]">
         <div className="flex gap-3 justify-center mb-5 items-center">
           <p
-            className="mr-auto bg-[#245953] py-1 px-2 rounded-xl text-[#F7D060] text-[16px] lg:text-[20px] hover:cursor-pointer hover:bg-[#F7D060] hover:text-[#245953]"
+            className="mr-auto bg-[#245953] py-1 px-2 rounded-xl text-white text-[16px] lg:text-[20px] hover:cursor-pointer hover:bg-[#F7D060] hover:text-[#245953]"
             onClick={() => {
               dispatch(hadlePrevMonth());
             }}
@@ -91,7 +91,7 @@ const Calender = () => {
           </p>
           <p className="font-bold text-[20px] lg:text-[25px]">{date.year}</p>
           <p
-            className="ml-auto bg-[#245953] py-1 px-2 rounded-xl text-[#F7D060] text-[16px] lg:text-[20px] hover:cursor-pointer hover:bg-[#F7D060] hover:text-[#245953]"
+            className="ml-auto bg-[#245953] py-1 px-2 rounded-xl text-white text-[16px] lg:text-[20px] hover:cursor-pointer hover:bg-[#F7D060] hover:text-[#245953]"
             onClick={() => {
               dispatch(handleNexMonth());
             }}
@@ -118,7 +118,7 @@ const Calender = () => {
               <p
                 data-value={Number(d)}
                 className={`
-                  w-[35px] h-[35px] rounded-full text-center leading-[35px]
+                  w-[35px] h-[35px] rounded-full text-center leading-[36px]
                   ${
                     d
                       ? date.date && date.date === d

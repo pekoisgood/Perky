@@ -1,60 +1,29 @@
 "use client";
-import { AuthContext } from "@/context/AuthContext";
+import { useAppSelector } from "@/redux/hooks";
 import LineChart from "./LineChart";
-import { Article, BookClub } from "@/utils/firebase";
-import { useContext, useEffect, useState } from "react";
+
+const descClass = `text-[20px] font-medium list-[circle]`;
 
 const Page = () => {
-  const { user } = useContext(AuthContext);
-  const [articleRecourdCreatedTime, setArticleRecourdCreatedTime] = useState(
-    []
-  );
-  const [bookClubRecordCreatedTime, setBookClubRecordCreatedTime] = useState(
-    []
-  );
-
-  useEffect(() => {
-    const getRecord = async () => {
-      try {
-        const articleRecordReq = await fetch(
-          `/api/analysis/article?id=${user.id}`
-        );
-        const articleRecord = await articleRecordReq.json();
-        const articleRecourdCreatedTime = articleRecord.map(
-          (article: Article) => new Date(article.createdAt.seconds * 1000)
-        );
-        setArticleRecourdCreatedTime(articleRecourdCreatedTime);
-
-        const bookClubRecordReq = await fetch(
-          `/api/analysis/bookClub?id=${user.id}`
-        );
-        const bookClubRecord = await bookClubRecordReq.json();
-        const bookClubRecordCreatedTime = bookClubRecord.map(
-          (bookClub: BookClub) => new Date(bookClub.time.seconds * 1000)
-        );
-        setBookClubRecordCreatedTime(bookClubRecordCreatedTime);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    if (!user.id) return;
-    getRecord();
-  }, [user.id]);
+  const records = useAppSelector((state) => state.analysis.value);
+  console.log(records);
 
   return (
-    <div className="h-full max-w-[600px] mx-auto">
-      <h1 className="mx-auto w-fit text-[28px] font-semibold tracking-[6px] indent-[6px] mb-[30px]">
+    <div className="mt-[20px] w-full mx-auto relative">
+      <h1 className="sticky top-[20px] right-[43%] translate-x-[50%] bg-white/60 mx-auto w-fit text-[28px] font-bold tracking-[4px] rounded-full px-5 mb-[30px]">
         Analysis
       </h1>
-      <LineChart
-        articleCreatedAtRecord={articleRecourdCreatedTime}
-        bookClubTimeRecord={bookClubRecordCreatedTime}
-      />
-      <div className="flex flex-col gap-3 pt-[20px] w-fit mx-auto text-center">
-        <p>Total posts this week : {articleRecourdCreatedTime.length}</p>
-        <p>Total book club this week : {bookClubRecordCreatedTime.length}</p>
+      <div className="flex flex-col items-center h-full max-h-[70%] mt-[20px]">
+        <LineChart height={"h-full"} width={"w-full"} />
       </div>
+      <ul className="flex flex-col gap-3 pt-[20px] w-fit mx-auto">
+        <li className={descClass}>
+          Total posts this week : {records?.records.length}
+        </li>
+        <li className={descClass}>
+          Total book club joined this week : {records?.bookClubs.length}
+        </li>
+      </ul>
     </div>
   );
 };

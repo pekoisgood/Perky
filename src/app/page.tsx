@@ -14,6 +14,10 @@ export const categories = [
   "Others",
 ];
 
+export const categoryClass = `w-fit bg-[#FFD89C] text-bold font-mono py-1 px-3 text-black
+shadow-[-3px_3px] shadow-black rounded-2xl border-2 border-black
+`;
+
 export default async function Home() {
   const headersData = headers();
   const protocol = headersData.get("x-forwarded-proto");
@@ -40,9 +44,9 @@ export default async function Home() {
                 <Link
                   href={`/articles?category=${category}`}
                   key={category}
-                  className={`w-fit bg-[#FFD89C] text-bold font-mono py-1 px-3 text-black
-                shadow-[-3px_3px] shadow-black rounded-2xl border-2 border-black
-                hover:cursor-pointer hover:animate-wiggle`}
+                  className={
+                    categoryClass + " hover:cursor-pointer hover:animate-wiggle"
+                  }
                 >
                   {category}
                 </Link>

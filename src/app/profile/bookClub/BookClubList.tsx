@@ -30,56 +30,59 @@ type bookClub = {
   createdAt: Timestamp;
 };
 
+const container = {
+  hidden: {
+    opacity: 0,
+  },
+  show: {
+    opacity: 1,
+  },
+  transition: {
+    type: "ease",
+    stiffness: 120,
+    delayChildren: 1,
+    staggerChildren: 0.5,
+  },
+};
+
+const child = {
+  hidden: {
+    opacity: 0,
+  },
+  show: {
+    opacity: 1,
+    x: [500, -100, 0, 10, 0],
+  },
+  transition: {
+    type: "tween",
+    ease: "linear",
+    stiffness: 150,
+    duration: 2,
+  },
+};
+
 const BookClubList = () => {
   const { user } = useContext(AuthContext);
   const date = useAppSelector((state) => state.calender.value);
   const [bookClubs, setBookClubs] = useState<bookClub[] | []>([]);
   const [isPreviewNote, setIsPreviewNote] = useState<boolean>(false);
-  const [note, setNote] = useState<string>("");
+  const [note, setNote] = useState<string | null>(null);
 
   const getNote = async (bookClubId: string) => {
+    setIsPreviewNote(true);
     const result = await getDoc(
       doc(db, "users", user.id, "bookClubNotes", bookClubId)
     );
     const note = await result!.data();
     if (!note) {
-      alert("尚未有筆記！");
+      setNote("");
       return;
     }
+
     setNote(note.note);
-    setIsPreviewNote(true);
   };
 
-  const container = {
-    hidden: {
-      opacity: 0,
-    },
-    show: {
-      opacity: 1,
-    },
-    transition: {
-      type: "ease",
-      stiffness: 120,
-      delayChildren: 1,
-      staggerChildren: 0.5,
-    },
-  };
-
-  const child = {
-    hidden: {
-      opacity: 0,
-    },
-    show: {
-      opacity: 1,
-      x: [500, -100, 0, 10, 0],
-    },
-    transition: {
-      type: "tween",
-      ease: "linear",
-      stiffness: 150,
-      duration: 2,
-    },
-  };
+  console.log("note: ", note);
 
   useEffect(() => {
     const getBookClubList = async () => {
@@ -136,7 +139,7 @@ const BookClubList = () => {
 
   return (
     <motion.div
-      className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 mx-auto mt-4"
+      className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 mt-4"
       initial="hidden"
       animate="show"
       variants={container}
@@ -148,10 +151,10 @@ const BookClubList = () => {
               key={index}
               variants={child}
               whileHover={{ y: -10 }}
-              className="p-1 border-solid rounded-xl bg-[#1B9C85] text-white"
+              className="p-1 border-solid rounded-xl bg-[#245953] text-white"
             >
               <div className="flex flex-col p-4 gap-2 justify-center items-center border-dashed border-2 border-white rounded-lg">
-                <h3 className="text-[16px] text-black text-bold">
+                <h3 className="text-[16px] text-white font-bold">
                   {bookClub.name}
                 </h3>
                 <p className="text-[12px]">
@@ -178,27 +181,32 @@ const BookClubList = () => {
                     Note
                   </div>
                 </div>
-                {isPreviewNote && note && (
-                  <div className="border-2 border-[#1B9C85] rounded-lg absolute top-0 left-0 w-[200%] h-[300%] p-3 overflow-y-scroll bg-[#F0EB8D]/95 flex flex-col items-center justify-center">
-                    <button
-                      className="absolute top-[10px] right-[15px] text-black"
-                      onClick={() => setIsPreviewNote(false)}
-                    >
-                      <IoMdClose size={20} className="text-[#1B9C85]" />
-                    </button>
-
-                    <ReactMarkdown
-                      remarkPlugins={[remarkGfm]}
-                      className={`w-full prose p-0`}
-                    >
-                      {note}
-                    </ReactMarkdown>
-                  </div>
+                {isPreviewNote && note === "" && (
+                  <p className="text-[12px] text-red-400">
+                    You didn't take note!
+                  </p>
                 )}
               </div>
             </motion.div>
           );
         })}
+
+      {isPreviewNote && note && (
+        <div className="absolute top-0 left-0 w-full h-full backdrop-blur-sm">
+          <div
+            className={`flex flex-col px-[20px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[400px] h-[400px] 
+          bg-white/90 backdrop-blur-md rounded-xl border-[#245953] border-2 shadow-md overflow-y-scroll`}
+          >
+            <button
+              className="w-fit ml-auto text-red-500 mt-[10px]"
+              onClick={() => setIsPreviewNote(false)}
+            >
+              x
+            </button>
+            <ReactMarkdown>{note}</ReactMarkdown>
+          </div>
+        </div>
+      )}
     </motion.div>
   );
 };

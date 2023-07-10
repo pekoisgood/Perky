@@ -1,21 +1,32 @@
 "use client";
 import { AuthContext } from "@/context/AuthContext";
 import Image from "next/image";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import Link from "next/link";
-import { PiFinnTheHumanFill } from "react-icons/pi";
+import { MdOutlineDataThresholding } from "react-icons/md";
+import { FiBookmark } from "react-icons/fi";
+import {
+  PiBooksDuotone,
+  PiFinnTheHumanFill,
+  PiFilesBold,
+} from "react-icons/pi";
+import { RxDashboard } from "react-icons/rx";
+
+const linkClass = `flex items-center gap-2 hover:translate-y-[-2px] duration-100`;
+const titleClass = ``;
 
 const Profile = () => {
   const { user, isLogin, logOut } = useContext(AuthContext);
+  const [showList, setShowList] = useState(false);
 
   return (
     <>
-      <Link
-        href={`${isLogin ? "/profile/analysis" : "/auth"}`}
-        className="rounded-full flex items-center justify-center w-[40px] h-[40px] object-contain overflow-hidden"
-      >
-        {isLogin ? (
-          <>
+      {isLogin ? (
+        <>
+          <div
+            onClick={() => setShowList((prev) => !prev)}
+            className="rounded-full flex items-center justify-center w-[40px] h-[40px] object-contain overflow-hidden hover:cursor-pointer"
+          >
             {user.avatar !== "" ? (
               <Image
                 src={user.avatar}
@@ -26,20 +37,63 @@ const Profile = () => {
             ) : (
               <PiFinnTheHumanFill />
             )}
-          </>
-        ) : (
-          <p>Login</p>
-        )}
-      </Link>
-      {isLogin && (
-        <div className="hidden group-hover:flex group-hover:flex-col justify-center items-center bg-amber-100 rounded-lg p-2 absolute top-[100%] right-0 w-[150px]">
-          <div
-            className="w-full p-1 hover:bg-orange-200 text-center hover:cursor-pointer"
-            onClick={logOut}
-          >
-            Logout
           </div>
-        </div>
+        </>
+      ) : (
+        <Link href="/auth">Login</Link>
+      )}
+      {showList && (
+        <>
+          <div className="absolute top-[55px] right-[28px] flex flex-col w-0 h-0 boder-l-[15px] border-l-transparent border-r-[15px] border-r-transparent border-b-[15px] border-b-[#245953] rotate-[135deg]" />
+          <div className="border-[#245953] border-2 absolute top-[61px] right-[15px] flex flex-col gap-2 justify-center items-center bg-white/70 rounded-lg py-2 px-5">
+            <Link
+              href="/profile"
+              className={linkClass}
+              onClick={() => setShowList(false)}
+            >
+              <RxDashboard size={20} />
+              <p className={titleClass}>Dashboard</p>
+            </Link>
+            <Link
+              href="/profile/analysis"
+              className={linkClass}
+              onClick={() => setShowList(false)}
+            >
+              <MdOutlineDataThresholding size={20} />
+              <p className={titleClass}>Analysis</p>
+            </Link>
+            <Link
+              href="/profile/articleRecord"
+              className={linkClass}
+              onClick={() => setShowList(false)}
+            >
+              <PiFilesBold size={20} />
+              <p className={titleClass}>Article Record</p>
+            </Link>
+            <Link
+              href="/profile/savedArticle"
+              className={linkClass}
+              onClick={() => setShowList(false)}
+            >
+              <FiBookmark size={20} />
+              <p className={titleClass}>Saved Articles</p>
+            </Link>
+            <Link
+              href="/profile/bookClub"
+              className={linkClass}
+              onClick={() => setShowList(false)}
+            >
+              <PiBooksDuotone size={20} />
+              <p className={titleClass}>Book Club</p>
+            </Link>
+            <p
+              className="h-fit mt-[20px] text-[#245953] bg-white px-2 border-2 border-[#245953] rounded-lg font-medium hover:bg-[#245953] hover:text-white hover:cursor-pointer"
+              onClick={logOut}
+            >
+              Logout
+            </p>
+          </div>
+        </>
       )}
     </>
   );

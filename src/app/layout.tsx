@@ -7,7 +7,7 @@ import { AuthContextProvider } from "@/context/AuthContext";
 import Header from "../components/header/Header";
 
 const poppins = Poppins({
-  weight: ["400", "700", "500", "800"],
+  weight: ["400", "500", "600", "700", "800"],
   subsets: ["latin"],
 });
 

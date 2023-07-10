@@ -8,6 +8,7 @@ type User = {
   id: string;
   name: string;
   avatar: string;
+  email: string;
 };
 
 // type isLoginState = boolean | null;
@@ -31,6 +32,7 @@ export const AuthContext = createContext<Auth>({
     name: "",
     avatar: "",
     id: "",
+    email: "",
   },
 });
 
@@ -40,17 +42,23 @@ export const AuthContextProvider = ({
   children: React.ReactNode;
 }) => {
   const [isLogin, setIsLogin] = useState<null | boolean>(null);
-  const [user, setUser] = useState<User>({ name: "", id: "", avatar: "" });
+  const [user, setUser] = useState<User>({
+    name: "",
+    id: "",
+    avatar: "",
+    email: "",
+  });
   const router = useRouter();
 
   useEffect(() => {
     const checkAuthStatus = async () => {
       onAuthStateChanged(auth, (user) => {
-        if (user && user.displayName && user.photoURL) {
+        if (user && user.displayName && user.photoURL && user.email) {
           setUser({
             name: user.displayName,
             id: user.uid,
             avatar: user.photoURL,
+            email: user.email,
           });
           setIsLogin(true);
         } else {

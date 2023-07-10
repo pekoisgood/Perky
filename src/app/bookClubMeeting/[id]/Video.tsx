@@ -24,19 +24,17 @@ const Video = ({ roomId }: Props) => {
   if (!roomId || !API_KEY) return <></>;
 
   return (
-    <div className="h-full w-full ml-2">
-      <MeetingProvider
-        config={{
-          meetingId: roomId,
-          micEnabled: true,
-          webcamEnabled: true,
-          name: "張孟潔's Org",
-        }}
-        token={API_KEY}
-      >
-        <MeetingView />
-      </MeetingProvider>
-    </div>
+    <MeetingProvider
+      config={{
+        meetingId: roomId,
+        micEnabled: true,
+        webcamEnabled: true,
+        name: "張孟潔's Org",
+      }}
+      token={API_KEY}
+    >
+      <MeetingView />
+    </MeetingProvider>
   );
 };
 

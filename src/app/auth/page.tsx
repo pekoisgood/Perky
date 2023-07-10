@@ -20,6 +20,7 @@ import {
 import laughingLady from "../../assets/image/laughing-lady.svg";
 import sittingWoman from "../../assets/image/sitting-woman.svg";
 import Image from "next/image";
+import googleLogo from "./google.png";
 
 type User = {
   email: string;
@@ -43,8 +44,8 @@ const sloganClass =
   "text-[60px] sm:text-[30px] md:text-[50px] lg:text-[70px] xl:text-[90px] font-extrabold tracking-[3px] text-[#245953] z-0";
 
 const Page = () => {
-  const { setIsLogin, setUser } = useContext(AuthContext);
-  const [login, setLogin] = useState(false);
+  const { setIsLogin, logIn, setUser } = useContext(AuthContext);
+  const [loginPage, setLoginPage] = useState(true);
   const [userInput, setUserInput] = useState<User>({
     email: "demo@gmail.com",
     password: "demo123",
@@ -129,16 +130,119 @@ const Page = () => {
   };
 
   return (
-    <div className="relative min-h-[calc(100vh-60px)] w-screen max-w-[1210px] mx-auto flex gap-4 justify-center items-center px-[20px]">
-      <div className="w-[60%] max-w-fit sm:static absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] sm:translate-x-0 sm:translate-y-0">
-        <h1 className={`${sloganClass}`}>
-          Learn
-          <br /> Together,
-        </h1>
-        <h1 className={`${sloganClass}`}>
-          Empower
-          <br /> One Another.
-        </h1>
+    <>
+      <Image
+        src={sittingWoman}
+        alt="sitting woman"
+        width={200}
+        height={300}
+        className="absolute right-[20px] bottom-0 scale-x-flip"
+      />
+      <div className="relative min-h-[calc(100vh-60px)] w-screen max-w-[1210px] mx-auto flex gap-4 justify-center items-center px-[20px]">
+        <div className="w-[60%] max-w-fit sm:static absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] sm:translate-x-0 sm:translate-y-0">
+          <h1 className={`${sloganClass}`}>
+            Learn
+            <br /> Together,
+          </h1>
+          <h1 className={`${sloganClass}`}>
+            Empower
+            <br /> One Another.
+          </h1>
+        </div>
+
+        {loginPage ? (
+          <form className={formClass} onSubmit={(e) => handleLogin(e)}>
+            <h2 className={titleClass}>Login</h2>
+            <div className="w-full">
+              <div>
+                <label className={labelClass}>Email</label>
+                <input
+                  type="text"
+                  className={inputClass}
+                  value={userInput.email}
+                  onChange={(e) =>
+                    setUserInput((prev) => {
+                      return { ...prev, email: e.target.value };
+                    })
+                  }
+                />
+              </div>
+              <div className="mt-[10px]">
+                <label className={labelClass}>Password</label>
+                <input
+                  type="text"
+                  className={inputClass}
+                  value={userInput.password}
+                  onChange={(e) =>
+                    setUserInput((prev) => {
+                      return { ...prev, password: e.target.value };
+                    })
+                  }
+                />
+              </div>
+            </div>
+            <button type="submit" className={buttonClass}>
+              Login
+            </button>
+            <hr />
+            <div className="bg-white rounded-[5px] border-[1px] border-[#888] shadow-gray-400 shadow-md px-5 py-2 flex gap-1">
+              <Image
+                src={googleLogo}
+                width={24}
+                height={24}
+                alt="google logo"
+              />
+              <button onClick={logIn}>Sign in with google</button>
+            </div>
+            <p
+              className="hover:cursor-pointer text-[#245953] text-[12px]"
+              onClick={() => setLoginPage(false)}
+            >
+              Does not have an accout ? Sign Up
+            </p>
+          </form>
+        ) : (
+          <form className={formClass} onSubmit={(e) => handleSignUp(e)}>
+            <h2 className={titleClass}>Sign Up</h2>
+            <div className="w-full">
+              <div>
+                <label className={labelClass}>Email</label>
+                <input
+                  type="text"
+                  className={inputClass}
+                  value={userInput.email}
+                  onChange={(e) =>
+                    setUserInput((prev) => {
+                      return { ...prev, email: e.target.value };
+                    })
+                  }
+                />
+              </div>
+              <div className="mt-[10px]">
+                <label className={labelClass}>Password</label>
+                <input
+                  type="text"
+                  className={inputClass}
+                  value={userInput.password}
+                  onChange={(e) =>
+                    setUserInput((prev) => {
+                      return { ...prev, password: e.target.value };
+                    })
+                  }
+                />
+              </div>
+            </div>
+            <button type="submit" className={buttonClass}>
+              Sign Up
+            </button>
+            <p
+              className="hover:cursor-pointer text-[#245953] text-[12px]"
+              onClick={() => setLoginPage(true)}
+            >
+              Have an accout ? Login
+            </p>
+          </form>
+        )}
       </div>
       <Image
         src={laughingLady}
@@ -147,97 +251,7 @@ const Page = () => {
         height={300}
         className="absolute left-0 bottom-0"
       />
-      <Image
-        src={sittingWoman}
-        alt="sitting woman"
-        width={200}
-        height={300}
-        className="absolute right-[20px] bottom-0 scale-x-flip"
-      />
-      {login ? (
-        <form className={formClass} onSubmit={(e) => handleLogin(e)}>
-          <h2 className={titleClass}>Login</h2>
-          <div className="w-full">
-            <div>
-              <label className={labelClass}>Email</label>
-              <input
-                type="text"
-                className={inputClass}
-                value={userInput.email}
-                onChange={(e) =>
-                  setUserInput((prev) => {
-                    return { ...prev, email: e.target.value };
-                  })
-                }
-              />
-            </div>
-            <div className="mt-[10px]">
-              <label className={labelClass}>Password</label>
-              <input
-                type="text"
-                className={inputClass}
-                value={userInput.password}
-                onChange={(e) =>
-                  setUserInput((prev) => {
-                    return { ...prev, password: e.target.value };
-                  })
-                }
-              />
-            </div>
-          </div>
-          <button type="submit" className={buttonClass}>
-            Login
-          </button>
-          <p
-            className="hover:cursor-pointer text-[#245953] text-[12px]"
-            onClick={() => setLogin(false)}
-          >
-            Does not have an accout ? Sign Up
-          </p>
-        </form>
-      ) : (
-        <form className={formClass} onSubmit={(e) => handleSignUp(e)}>
-          <h2 className={titleClass}>Sign Up</h2>
-          <div className="w-full">
-            <div>
-              <label className={labelClass}>Email</label>
-              <input
-                type="text"
-                className={inputClass}
-                value={userInput.email}
-                onChange={(e) =>
-                  setUserInput((prev) => {
-                    return { ...prev, email: e.target.value };
-                  })
-                }
-              />
-            </div>
-            <div className="mt-[10px]">
-              <label className={labelClass}>Password</label>
-              <input
-                type="text"
-                className={inputClass}
-                value={userInput.password}
-                onChange={(e) =>
-                  setUserInput((prev) => {
-                    return { ...prev, password: e.target.value };
-                  })
-                }
-              />
-            </div>
-          </div>
-          <button type="submit" className={buttonClass}>
-            Sign Up
-          </button>
-          <p
-            className="hover:cursor-pointer text-[#245953] text-[12px]"
-            onClick={() => setLogin(true)}
-          >
-            Have an accout ? Login
-          </p>
-        </form>
-      )}
-    </div>
+    </>
   );
 };
 

@@ -1,5 +1,6 @@
 "use client";
-import React from "react";
+
+import React, { useEffect, useState, useContext } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -21,9 +22,15 @@ ChartJS.register(
   Tooltip,
   Legend
 );
+import { Article, BookClub } from "@/utils/firebase";
+import { AuthContext } from "@/context/AuthContext";
+import { useAppDispatch } from "@/redux/hooks";
+import { setAnalysis } from "@/redux/slice/analysisSlice";
 
 const options = {
   responsive: true,
+  maintainAspectRatio: false,
+
   plugins: {
     legend: {
       position: "top" as const,
@@ -34,26 +41,32 @@ const options = {
   },
 };
 
-const Page = ({
-  articleCreatedAtRecord,
-  bookClubTimeRecord,
-}: {
-  articleCreatedAtRecord: Date[];
-  bookClubTimeRecord: Date[];
-}) => {
+const Page = ({ width, height }: { width?: string; height?: string }) => {
+  const { user } = useContext(AuthContext);
+  const [articleRecourdCreatedTime, setArticleRecourdCreatedTime] = useState(
+    []
+  );
+  const [bookClubRecordCreatedTime, setBookClubRecordCreatedTime] = useState(
+    []
+  );
+
+  const dispatch = useAppDispatch();
+
   const today = new Date();
   const weekAgo: Date = new Date(today.setDate(today.getDate() - 6));
 
-  function filterWeeklyRecord(record: Date[]) {
+  const filterWeeklyRecord = (record: Date[]) => {
     return record.filter((time) => time > weekAgo);
-  }
+  };
 
   const filteredWeeklyArticleRecord = filterWeeklyRecord(
-    articleCreatedAtRecord
+    articleRecourdCreatedTime
   );
-  const filteredWeeklyBookClubRecord = filterWeeklyRecord(bookClubTimeRecord);
+  const filteredWeeklyBookClubRecord = filterWeeklyRecord(
+    bookClubRecordCreatedTime
+  );
 
-  function getDateLabel() {
+  const getDateLabel = () => {
     let dateLabels = [];
     let month = weekAgo.getMonth() + 1;
     let date = weekAgo.getDate();
@@ -70,11 +83,11 @@ const Page = ({
       dateLabels.push(`${month}/${date}`);
     }
     return dateLabels;
-  }
+  };
 
   const labels = getDateLabel();
 
-  function caculateCountPerDay(filteredRecord: Date[]) {
+  const caculateCountPerDay = (filteredRecord: Date[]) => {
     let dataSet = [];
     for (let i = 0; i < labels.length; i++) {
       const labelDay = labels[i];
@@ -92,7 +105,7 @@ const Page = ({
       dataSet.push(count);
     }
     return dataSet;
-  }
+  };
 
   const data = {
     labels,
@@ -114,8 +127,48 @@ const Page = ({
     ],
   };
 
+  useEffect(() => {
+    const getRecord = async () => {
+      try {
+        const articleRecordReq = await fetch(
+          `/api/analysis/article?id=${user.id}`
+        );
+        const articleRecord = await articleRecordReq.json();
+        const articleRecourdCreatedTime = articleRecord.map(
+          (article: Article) => new Date(article.createdAt.seconds * 1000)
+        );
+        setArticleRecourdCreatedTime(articleRecourdCreatedTime);
+
+        const bookClubRecordReq = await fetch(
+          `/api/analysis/bookClub?id=${user.id}`
+        );
+        const bookClubRecord = await bookClubRecordReq.json();
+        const bookClubRecordCreatedTime = bookClubRecord.map(
+          (bookClub: BookClub) => new Date(bookClub.time.seconds * 1000)
+        );
+        setBookClubRecordCreatedTime(bookClubRecordCreatedTime);
+
+        dispatch(
+          setAnalysis({
+            bookClubs: bookClubRecord,
+            records: articleRecord,
+          })
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (!user.id) return;
+    getRecord();
+  }, [user.id]);
+
   return (
-    <div className="h-[70%] max-h-[400px] max-w-[600px] flex flex-col items-center justify-center">
+    <div
+      className={`${width ? width : "w-full"} ${
+        height ? height : "h-[auto]"
+      } relative max-w-[600px] flex flex-col items-center justify-center`}
+    >
       <Line options={options} data={data} width={300} height={200} />
     </div>
   );

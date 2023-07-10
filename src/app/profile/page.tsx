@@ -1,9 +1,48 @@
+// import ProfileSidebar from "./ProfileSidebar";
+import Image from "next/image";
 import UserProfile from "./UserProfile";
+import LineChart from "./analysis/LineChart";
+import ArticleRecord from "./articleRecord/ArticleRecord";
+import TodayBookClub from "./bookClub/TodayBookClub";
+import SavedArticle from "./savedArticle/SavedArticle";
+import sittingWomanHoldingLegs from "../../assets/image/woman-sitting-holding-both-legs.svg";
 
-const Page = () => {
+export const dashBoardTitleClass =
+  "font-medium text-[20px] tracking-[2px] mb-[20px] text-center lg:text-start";
+
+const Page = async () => {
   return (
-    <div className="flex flex-col h-full gap-3 justify-center items-center">
-      <UserProfile />
+    <div className="h-full w-full flex lg:flex-row flex-col gap-2 overflow-y-scroll pb-[40px] lg:pd-0">
+      <div className="grow flex flex-col gap-2 relative">
+        <div className="grow flex flex-col gap-2">
+          <div className="basis-1/2 m-3 bg-white rounded-2xl p-5 shadow-sm flex flex-col items-center overflow-y-scroll">
+            <TodayBookClub />
+          </div>
+          <div className="flex basis-1/2 gap-2 md:w-[auto]">
+            <div className="basis-1/2 m-3 bg-white rounded-2xl p-5 shadow-sm">
+              <ArticleRecord />
+            </div>
+            <div className="basis-1/2 m-3 bg-white rounded-2xl p-5 shadow-sm">
+              <SavedArticle />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="basis-1/4 flex flex-col gap-2">
+        <div className="basis-1/3 flex-col justify-center items-center hidden lg:flex">
+          <UserProfile />
+        </div>
+        <div className="basis-1/3 h-full flex mx-auto justify-center items-center lg:max-w-[300px]">
+          <LineChart />
+        </div>
+        <Image
+          src={sittingWomanHoldingLegs}
+          alt="woman sitting holding both legs"
+          width={200}
+          height={500}
+          className="scale-x-flip w-[150px] lg:w-[200px] absolute bottom-[-36px] right-0 md:right-[44px] rotate-[5deg] lg:z-0"
+        />
+      </div>
     </div>
   );
 };

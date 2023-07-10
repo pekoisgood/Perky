@@ -175,7 +175,7 @@ const Chatroom = ({
               </div>
             ) : (
               <div
-                className="flex gap-1 w-fit mr-auto justify-start items-center"
+                className="flex gap-1 w-fit min-w-[32px] mr-auto justify-start items-center"
                 key={index}
               >
                 {message.avatar !== "" ? (
@@ -214,7 +214,7 @@ const Chatroom = ({
             type="submit"
             className="scale-100 hover:scale-105 focus:scale-95"
           >
-            <HiPaperAirplane size={20} />
+            <HiPaperAirplane size={20} className="rotate-90" />
           </button>
         </div>
       </form>
