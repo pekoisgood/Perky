@@ -8,6 +8,7 @@ import ArticleSnippet from "@/app/ArticleSnippet";
 import Image from "next/image";
 import { Articles, setRecord } from "@/redux/slice/articleRecordSlice";
 import { useAppDispatch } from "@/redux/hooks";
+import ProfileArticleSkeleton from "@/components/skeleton/ProfileArticleSkeleton";
 
 const Page = () => {
   const { user } = useContext(AuthContext);
@@ -50,7 +51,11 @@ const Page = () => {
         </div>
       </Link>
       {articleRecord === null ? (
-        <p>Loading</p>
+        <div className="columns-2 md:columns-3 gap-x-5 overflow-y-scroll pb-5">
+          <ProfileArticleSkeleton />
+          <ProfileArticleSkeleton />
+          <ProfileArticleSkeleton />
+        </div>
       ) : articleRecord.length > 0 ? (
         <div className="columns-2 md:columns-3 gap-x-5 overflow-y-scroll pb-5">
           {articleRecord.map((article) => {

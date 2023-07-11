@@ -20,6 +20,9 @@ import { dashBoardTitleClass } from "../page";
 import { categoryClass } from "@/app/page";
 import Link from "next/link";
 import Button from "@/components/button/Button";
+import DashboardArticleSkeleton from "@/components/skeleton/DashboardArticleSkeleton";
+import { motion } from "framer-motion";
+import { easeAppearContainer } from "../articleRecord/ArticleRecord";
 
 const ArticleRecord = () => {
   const savedArticles = useAppSelector((state) => state.savedArticle.value);
@@ -73,14 +76,25 @@ const ArticleRecord = () => {
     <>
       <h4 className={dashBoardTitleClass}>Saved Article</h4>
       {savedArticles === null ? (
-        <p>Loading...</p>
+        <div className="flex flex-col gap-3 h-[82%]">
+          <DashboardArticleSkeleton />
+          <DashboardArticleSkeleton />
+          <DashboardArticleSkeleton />
+          <DashboardArticleSkeleton />
+          <DashboardArticleSkeleton />
+        </div>
       ) : savedArticles.length > 0 ? (
-        <div className="flex flex-col gap-3">
+        <motion.div
+          initial="hidden"
+          animate="show"
+          variants={easeAppearContainer}
+          className="flex flex-col gap-3"
+        >
           {savedArticles.slice(0, 5).map((article, index) => {
             return (
               <div
                 key={index}
-                className="flex md:flex-row flex-col gap-1 border-b-[1px] border-[#eee] py-2"
+                className="w-full flex md:flex-row flex-col gap-1 border-b-[1px] border-[#eee] py-2"
               >
                 <p
                   className={`basis-1/12 h-fit text-[12px] px-[4px] py-[2px] cursor-default ${categoryClass}`}
@@ -94,10 +108,10 @@ const ArticleRecord = () => {
               </div>
             );
           })}
-        </div>
+        </motion.div>
       ) : (
         <div className="flex flex-col justify-center items-center">
-          <p>No saved articles...</p>
+          <p className="text-[#245953]">No saved articles...</p>
           <Link href="/">
             <Button>Go to find some awesome articles!!</Button>
           </Link>

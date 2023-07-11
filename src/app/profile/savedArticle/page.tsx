@@ -16,6 +16,7 @@ import { motion } from "framer-motion";
 import ArticleSnippet from "@/app/ArticleSnippet";
 import Image from "next/image";
 import Button from "@/components/button/Button";
+import ProfileArticleSkeleton from "@/components/skeleton/ProfileArticleSkeleton";
 
 export type SavedArticle = {
   title: string;
@@ -76,7 +77,11 @@ const Page = () => {
         Saved Articles
       </h1>
       {articles === null ? (
-        <p>Loading...</p>
+        <div className="columns-2 md:columns-3 gap-2 w-full px-3 mt-[50px]">
+          <ProfileArticleSkeleton />
+          <ProfileArticleSkeleton />
+          <ProfileArticleSkeleton />
+        </div>
       ) : articles.length > 0 ? (
         <div className="columns-2 md:columns-3 gap-2 w-full px-3 mt-[50px]">
           {articles.map((article: SavedArticle, index: number) => {

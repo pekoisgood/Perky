@@ -18,7 +18,6 @@ import {
   getDoc,
 } from "firebase/firestore";
 import laughingLady from "../../assets/image/laughing-lady.svg";
-import sittingWoman from "../../assets/image/sitting-woman.svg";
 import Image from "next/image";
 import googleLogo from "./google.png";
 import Background from "@/app/auth/Background";

@@ -16,6 +16,10 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "@/context/AuthContext";
 import { dashBoardTitleClass } from "../page";
 import Link from "next/link";
+import Button from "@/components/button/Button";
+import BookClubSkeleton from "@/components/skeleton/BookClubSkeleton";
+import { motion } from "framer-motion";
+import { easeAppearContainer } from "../articleRecord/ArticleRecord";
 
 const TodayBookClub = () => {
   const { user } = useContext(AuthContext);
@@ -44,7 +48,10 @@ const TodayBookClub = () => {
       );
 
       const result = await getDocs(bookClubRef);
-      if (result.size === 0) return;
+      if (result.size === 0) {
+        setTodayBookClub([]);
+        return;
+      }
 
       const bookClubs: BookClub[] = [];
       console.log(result);
@@ -64,10 +71,19 @@ const TodayBookClub = () => {
     <>
       <h4 className={dashBoardTitleClass}>Today&apos;s Book Club</h4>
       {todayBookClub === null ? (
-        <p>Loading...</p>
+        <div className="w-full h-full flex flex-wrap gap-2 justify-center items-center">
+          <BookClubSkeleton />
+          <BookClubSkeleton />
+          <BookClubSkeleton />
+        </div>
       ) : todayBookClub.length > 0 ? (
         <>
-          <div className="w-full h-full flex flex-col flex-wrap gap-2 justify-center items-center">
+          <motion.div
+            initial="hidden"
+            animate="show"
+            variants={easeAppearContainer}
+            className="w-full h-full flex flex-wrap gap-2 justify-center items-center"
+          >
             {todayBookClub === null && <p className="">Loading</p>}
             {todayBookClub.map((bookClub, index) => {
               return (
@@ -87,13 +103,30 @@ const TodayBookClub = () => {
                 </Link>
               );
             })}
-          </div>
-          <p className="text-[#245953] font-medium mt-auto pt-[20px]">
+          </motion.div>
+          <motion.p
+            initial="hidden"
+            animate="show"
+            variants={easeAppearContainer}
+            className="text-[#245953] font-medium mt-auto pt-[20px]"
+          >
             Remeber to joing the meeting!
-          </p>
+          </motion.p>
         </>
       ) : (
-        <p>No Book Club Today...</p>
+        <motion.div
+          initial="hidden"
+          animate="show"
+          variants={easeAppearContainer}
+          className="font-medium flex flex-col gap-3 justify-center items-center"
+        >
+          <p className="text-[#245953]">No Book Club Today...</p>
+          <Button>
+            <Link href="/profile/bookClub/createBookClub">
+              Go to create one!
+            </Link>
+          </Button>
+        </motion.div>
       )}
     </>
   );

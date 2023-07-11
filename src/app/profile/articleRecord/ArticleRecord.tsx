@@ -9,6 +9,22 @@ import { dashBoardTitleClass } from "../page";
 import { categoryClass } from "@/app/page";
 import Link from "next/link";
 import Button from "@/components/button/Button";
+import DashboardArticleSkeleton from "@/components/skeleton/DashboardArticleSkeleton";
+import { motion } from "framer-motion";
+
+export const easeAppearContainer = {
+  hidden: {
+    opacity: 0,
+  },
+  show: {
+    opacity: 1,
+  },
+  transition: {
+    type: "ease",
+    stiffness: 110,
+    duration: 1,
+  },
+};
 
 const ArticleRecord = () => {
   const articleRecords = useAppSelector((state) => state.articleRecord.value);
@@ -35,9 +51,20 @@ const ArticleRecord = () => {
     <>
       <h4 className={dashBoardTitleClass}>Article Record</h4>
       {articleRecords === null ? (
-        <p>Loading...</p>
+        <div className="flex flex-col gap-3 h-[82%]">
+          <DashboardArticleSkeleton />
+          <DashboardArticleSkeleton />
+          <DashboardArticleSkeleton />
+          <DashboardArticleSkeleton />
+          <DashboardArticleSkeleton />
+        </div>
       ) : articleRecords.length > 0 ? (
-        <div className="flex flex-col gap-3">
+        <motion.div
+          initial="hidden"
+          animate="show"
+          variants={easeAppearContainer}
+          className="flex flex-col gap-3"
+        >
           {articleRecords.slice(0, 5).map((article, index) => {
             return (
               <div
@@ -53,10 +80,10 @@ const ArticleRecord = () => {
               </div>
             );
           })}
-        </div>
+        </motion.div>
       ) : (
-        <div className="flex flex-col justify-center items-center text-[#245953]">
-          <p>No post articles...</p>
+        <div className="flex flex-col justify-center items-center">
+          <p className="text-[#245953]">No post articles...</p>
           <Link href="/article/postArticle">
             <Button>Go to post your first article!!</Button>
           </Link>

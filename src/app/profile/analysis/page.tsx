@@ -6,7 +6,6 @@ const descClass = `text-[20px] font-medium list-[circle]`;
 
 const Page = () => {
   const records = useAppSelector((state) => state.analysis.value);
-  console.log(records);
 
   return (
     <div className="mt-[20px] w-full mx-auto relative">
