@@ -60,12 +60,12 @@ const TodayBookClub = () => {
     getBookClubList();
   }, [user.id]);
 
-  if (todayBookClub === null) return <p>Loading...</p>;
-
   return (
     <>
       <h4 className={dashBoardTitleClass}>Today&apos;s Book Club</h4>
-      {todayBookClub.length > 0 ? (
+      {todayBookClub === null ? (
+        <p>Loading...</p>
+      ) : todayBookClub.length > 0 ? (
         <>
           <div className="w-full h-full flex flex-col flex-wrap gap-2 justify-center items-center">
             {todayBookClub === null && <p className="">Loading</p>}

@@ -29,7 +29,11 @@ export default function RootLayout({
         <ReduxProvider>
           <AuthContextProvider>
             <Header />
-            <div className="pt-[60px] w-full h-full translate-z-0 bg-[#fefae059]">
+            <div className="pt-[60px] w-full h-full translate-z-0">
+              <section className="fixed top-0 bottom-0 left-0 right-0 w-full pt-[60px]">
+                <div className="absolute top-[calc(100%-240px)] left-0 bg-[#E5E0FF] w-[400px] h-[400px] rounded-[59%_41%_43%_57%/37%_55%_45%_63%]" />
+                <div className="absolute top-0 right-0 bg-[#E9EDC9] w-[500px] h-[400px] rounded-[52%_48%_60%_40%/59%_51%_49%_41%]" />
+              </section>
               {children}
             </div>
           </AuthContextProvider>
@@ -38,3 +42,4 @@ export default function RootLayout({
     </html>
   );
 }
+// bg-[#fefae059]

@@ -131,13 +131,6 @@ const Page = () => {
 
   return (
     <>
-      <Image
-        src={sittingWoman}
-        alt="sitting woman"
-        width={200}
-        height={300}
-        className="absolute right-[20px] bottom-0 scale-x-flip"
-      />
       <div className="relative min-h-[calc(100vh-60px)] w-screen max-w-[1210px] mx-auto flex gap-4 justify-center items-center px-[20px]">
         <div className="w-[60%] max-w-fit sm:static absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] sm:translate-x-0 sm:translate-y-0">
           <h1 className={`${sloganClass}`}>

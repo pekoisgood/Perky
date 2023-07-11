@@ -1,5 +1,3 @@
-// import ProfileSidebar from "./ProfileSidebar";
-import Image from "next/image";
 import UserProfile from "./UserProfile";
 import LineChart from "./analysis/LineChart";
 import ArticleRecord from "./articleRecord/ArticleRecord";

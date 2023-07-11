@@ -8,6 +8,7 @@ import Image from "next/image";
 import ArticleSnippet from "./ArticleSnippet";
 import monster from "../assets/image/monster.svg";
 import beanieMan from "../assets/image/guy-with-beanie.svg";
+import TrendingArticleSkeleton from "@/components/skeleton/TrendingArticleSkeleton";
 
 interface TrendingArticle {
   title: string;
@@ -63,14 +64,14 @@ const TrendingArticles = () => {
   }, []);
 
   return (
-    <div className="relative flex flex-col h-[calc(100vh-120px)] border-t-2 border-black px-[10px] mx-[10px] xl:px-0 z-0">
-      <h2 className="w-fit h-fit px-2 py-1 bg-black text-white tracking-[1px] font-medium z-10">
+    <div className="relative flex flex-col h-[calc(100vh-120px)] w-full shadow-lg border-t-2 border-black bg-gradient-to-t from-white to-[#FCF8E8] z-0">
+      <h2 className="w-fit h-fit px-2 py-1 bg-black text-white tracking-[1px] font-medium z-10 ">
         Trending Articles
       </h2>
-      <div className="bg-white/20">
+      <div>
         <Image
           src={monster}
-          alt=""
+          alt="monster"
           width={200}
           height={300}
           className="absolute top-0 right-0 rotate-180 opacity-40"
@@ -84,68 +85,72 @@ const TrendingArticles = () => {
         height={300}
         className={`absolute top-[calc(100vh-380px)] left-0 z-0 opacity-40`}
       />
-      <motion.div
-        initial="hidden"
-        animate="show"
-        variants={container}
-        className="flex flex-wrap md:justify-between h-[92%] gap-[10px] [&>*:nth-child(2)]:border-none z-10"
-      >
-        {articles.map((article, index) => {
-          if (index === 0) {
-            return (
-              <Link
-                href={`article/${article.id}`}
-                key={index}
-                className="flex gap-[20px] w-full h-[70%] mt-auto border-b-[1px] border-[#d1d5db] pb-[30px]"
-              >
-                <Image
-                  src={article.image}
-                  alt="cover image"
-                  width={400}
-                  height={200}
-                  className="object-cover min-w-[50vw] rounded-xl border-[#245953] border-2 shadow-[-10px_10px] shadow-[#0000003b]"
-                  priority={true}
-                />
-                <div className="flex flex-col gap-[10px]">
-                  <p className={categoryClass}>{article.category}</p>
-                  <h3 className="text-[30px] sm:text-[40px] font-bold">
-                    {article.title}
-                  </h3>
-                  <p className="text-[12px]">{article.authorName}</p>
-                  <p className="mt-auto text-[14px]">
-                    <ArticleSnippet article={article.content} />
-                  </p>
-                </div>
-              </Link>
-            );
-          } else {
-            return (
-              <Link
-                href={`article/${article.id}`}
-                key={index}
-                className="flex gap-[10px] w-[23%] h-[23%] md:h-[16%] border-l-[1px] border-[#d1d5db] pl-[14px] mt-[20px]"
-              >
-                <div className="flex flex-col gap-[10px] h-full">
-                  <p className={`text-[10px] ${categoryClass}`}>
-                    {article.category}
-                  </p>
-                  <h4 className="font-bold text-[13px] sm:text-[15px]">
-                    {article.title}
-                  </h4>
-                </div>
-                <Image
-                  src={article.image}
-                  alt="cover image"
-                  width={120}
-                  height={50}
-                  priority={true}
-                  className="h-[100%] rounded-xl object-cover object-center ml-auto hidden lg:flex border-[#245953] border-2 shadow-[-3px_3px] shadow-[#0000003b]"
-                />
-              </Link>
-            );
-          }
-        })}
-      </motion.div>
+      {articles.length > 0 ? (
+        <motion.div
+          initial="hidden"
+          animate="show"
+          variants={container}
+          className="flex flex-wrap md:justify-between h-[92%] gap-[10px] max-w-[1280px] mx-auto [&>*:nth-child(2)]:border-none z-10"
+        >
+          {articles.map((article, index) => {
+            if (index === 0) {
+              return (
+                <Link
+                  href={`article/${article.id}`}
+                  key={index}
+                  className="flex gap-[20px] w-full h-[70%] mt-auto border-b-[1px] border-[#d1d5db] pb-[30px] hover:translate-y-[-3px]"
+                >
+                  <Image
+                    src={article.image}
+                    alt="cover image"
+                    width={400}
+                    height={200}
+                    className="object-cover min-w-[50vw] rounded-xl border-[#245953] border-2 shadow-[-10px_10px] shadow-[#0000003b]"
+                    priority={true}
+                  />
+                  <div className="flex flex-col gap-[10px]">
+                    <p className={categoryClass}>{article.category}</p>
+                    <h3 className="text-[30px] sm:text-[40px] font-bold">
+                      {article.title}
+                    </h3>
+                    <p className="text-[12px]">{article.authorName}</p>
+                    <p className="mt-auto text-[14px]">
+                      <ArticleSnippet article={article.content} />
+                    </p>
+                  </div>
+                </Link>
+              );
+            } else {
+              return (
+                <Link
+                  href={`article/${article.id}`}
+                  key={index}
+                  className="flex gap-[10px] w-[23%] h-[23%] md:h-[16%] border-l-[1px] border-[#d1d5db] pl-[14px] mt-[20px] hover:translate-y-[-3px]"
+                >
+                  <div className="flex flex-col gap-[10px] h-full">
+                    <p className={`text-[10px] ${categoryClass}`}>
+                      {article.category}
+                    </p>
+                    <h4 className="font-bold text-[13px] sm:text-[15px]">
+                      {article.title}
+                    </h4>
+                  </div>
+                  <Image
+                    src={article.image}
+                    alt="cover image"
+                    width={120}
+                    height={50}
+                    priority={true}
+                    className="h-[100%] rounded-xl object-cover object-center ml-auto hidden lg:flex border-[#245953] border-2 shadow-[-3px_3px] shadow-[#0000003b]"
+                  />
+                </Link>
+              );
+            }
+          })}
+        </motion.div>
+      ) : (
+        <TrendingArticleSkeleton />
+      )}
     </div>
   );
 };

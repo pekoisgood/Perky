@@ -11,6 +11,7 @@ import {
   PiFilesBold,
 } from "react-icons/pi";
 import { RxDashboard } from "react-icons/rx";
+import { redirect } from "next/navigation";
 
 const linkClass = `flex items-center gap-2 hover:translate-y-[-2px] duration-100`;
 const titleClass = ``;
@@ -18,6 +19,12 @@ const titleClass = ``;
 const Profile = () => {
   const { user, isLogin, logOut } = useContext(AuthContext);
   const [showList, setShowList] = useState(false);
+
+  const handleLogout = () => {
+    logOut();
+    setShowList(false);
+    redirect("/");
+  };
 
   return (
     <>
@@ -88,7 +95,7 @@ const Profile = () => {
             </Link>
             <p
               className="h-fit mt-[20px] text-[#245953] bg-white px-2 border-2 border-[#245953] rounded-lg font-medium hover:bg-[#245953] hover:text-white hover:cursor-pointer"
-              onClick={logOut}
+              onClick={handleLogout}
             >
               Logout
             </p>

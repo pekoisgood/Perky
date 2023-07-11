@@ -69,12 +69,12 @@ const ArticleRecord = () => {
     getArticle();
   }, [user.id]);
 
-  if (savedArticles === null) return <>Loading...</>;
-
   return (
     <>
       <h4 className={dashBoardTitleClass}>Saved Article</h4>
-      {savedArticles.length > 0 ? (
+      {savedArticles === null ? (
+        <p>Loading...</p>
+      ) : savedArticles.length > 0 ? (
         <div className="flex flex-col gap-3">
           {savedArticles.slice(0, 5).map((article, index) => {
             return (

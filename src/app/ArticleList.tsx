@@ -58,7 +58,7 @@ const ArticleList = ({
             href={`/article/${article.id}`}
             key={article.id}
             ref={(el: HTMLAnchorElement) => (ref.current[index] = el)}
-            className="w-[100%] lg:w-[48%] p-4 pt-6 flex justify-between items-start gap-3 border-b-2 border-[#d1d5db] min-h-[140px] translate-x-[200px] hover:translate-y-[-10px] hover:duration-150"
+            className="w-[100%] lg:w-[48%] p-4 pt-6 flex justify-between items-start gap-3 border-b-[1px] border-[#d1d5db] min-h-[140px] translate-x-[200px] hover:translate-y-[-10px] hover:duration-150"
           >
             <div className="flex flex-col gap-4 w-full h-full relative">
               {article.image && (

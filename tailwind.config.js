@@ -38,10 +38,6 @@ module.exports = {
           "0%, 100%": { transform: "rotate(-3deg)" },
           "50%": { transform: "rotate(3deg)" },
         },
-        "loaing-skeleton": {
-          from: { "background-color": "hsl(200, 20%, 80%)" },
-          to: { "background-color": "hsl(200, 20%, 95%)" },
-        },
         typing: {
           "from,to": { width: "0" },
           "0%, 20%, 40%, 60%, 80%, 100%": {
@@ -58,13 +54,21 @@ module.exports = {
           from: { opacity: 0 },
           to: { opacity: 1 },
         },
-        damping: {
-          // "from": {}
+        skeleton: {
+          "0%": {
+            "background-position": "100% 50%",
+          },
+          "50%": {
+            "background-position": "0% 50%",
+          },
+          "100%": {
+            " background-position": "100% 50%",
+          },
         },
       },
       animation: {
         wiggle: "wiggle 2s infinite",
-        skeleton: "loading-skeleton 1s linear infinite",
+        skeleton: "skeleton 4s ease infinite",
         typing: "typing 9s steps(5, end) infinite",
         appear: "appear 1s linear",
         damping: "appear 2s cubic-bezier(0.42, 0, 0.3, 1.09)",
