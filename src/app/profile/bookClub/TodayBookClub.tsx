@@ -12,14 +12,15 @@ import {
   where,
 } from "firebase/firestore";
 import { useContext, useEffect, useState } from "react";
-// import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { AuthContext } from "@/context/AuthContext";
-import { dashBoardTitleClass } from "../page";
 import Link from "next/link";
 import Button from "@/components/button/Button";
 import BookClubSkeleton from "@/components/skeleton/BookClubSkeleton";
 import { motion } from "framer-motion";
 import { easeAppearContainer } from "../articleRecord/ArticleRecord";
+
+const dashBoardTitleClass =
+  "font-medium text-[20px] tracking-[2px] mb-[20px] text-center lg:text-start";
 
 const TodayBookClub = () => {
   const { user } = useContext(AuthContext);

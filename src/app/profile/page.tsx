@@ -4,9 +4,6 @@ import ArticleRecord from "./articleRecord/ArticleRecord";
 import TodayBookClub from "./bookClub/TodayBookClub";
 import SavedArticle from "./savedArticle/SavedArticle";
 
-export const dashBoardTitleClass =
-  "font-medium text-[20px] tracking-[2px] mb-[20px] text-center lg:text-start";
-
 const Page = async () => {
   return (
     <div className="h-full w-full flex lg:flex-row flex-col gap-2 overflow-y-scroll pb-[40px] lg:pd-0">

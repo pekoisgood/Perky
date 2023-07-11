@@ -5,12 +5,14 @@ import React, { useEffect, useContext } from "react";
 import { useAppDispatch } from "@/redux/hooks";
 import { Articles, setRecord } from "@/redux/slice/articleRecordSlice";
 import { AuthContext } from "@/context/AuthContext";
-import { dashBoardTitleClass } from "../page";
 import { categoryClass } from "@/app/page";
 import Link from "next/link";
 import Button from "@/components/button/Button";
 import DashboardArticleSkeleton from "@/components/skeleton/DashboardArticleSkeleton";
 import { motion } from "framer-motion";
+
+const dashBoardTitleClass =
+  "font-medium text-[20px] tracking-[2px] mb-[20px] text-center lg:text-start";
 
 export const easeAppearContainer = {
   hidden: {

@@ -83,9 +83,8 @@ const SaveButton = ({ articleId, count }: Prop) => {
 
   return (
     <>
-      <abbr
-        title={`${isSaved ? "已收藏此篇貼文" : "收藏此貼文"}`}
-        className={`fixed bottom-0 right-[20px] md:absolute md:top-0 md:right-0  p-2 bg-white/50 rounded-full z-10
+      <p
+        className={`fixed bottom-0 right-[20px] md:absolte md:top-0 md:right-0 h-fit w-fit p-2 bg-white/50 rounded-full z-10
         hover:cursor-pointer focus:scale-95`}
         onClick={handleSaveArticle}
       >
@@ -98,7 +97,7 @@ const SaveButton = ({ articleId, count }: Prop) => {
         ) : (
           <BsBookmark size={30} />
         )}
-      </abbr>
+      </p>
       {showWarning && (
         <Warning time={0} customCloseButton={true}>
           <div className="flex flex-col gap-2 items-center justify-center">

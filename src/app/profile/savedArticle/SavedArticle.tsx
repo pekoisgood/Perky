@@ -16,13 +16,15 @@ import {
 import { db } from "@/utils/firebase";
 import { setSavedArticle } from "@/redux/slice/savedArticle";
 import { SavedArticle } from "./page";
-import { dashBoardTitleClass } from "../page";
 import { categoryClass } from "@/app/page";
 import Link from "next/link";
 import Button from "@/components/button/Button";
 import DashboardArticleSkeleton from "@/components/skeleton/DashboardArticleSkeleton";
 import { motion } from "framer-motion";
 import { easeAppearContainer } from "../articleRecord/ArticleRecord";
+
+const dashBoardTitleClass =
+  "font-medium text-[20px] tracking-[2px] mb-[20px] text-center lg:text-start";
 
 const ArticleRecord = () => {
   const savedArticles = useAppSelector((state) => state.savedArticle.value);

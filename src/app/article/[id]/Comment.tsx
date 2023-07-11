@@ -151,7 +151,7 @@ const Comment = ({ articleId }: { articleId: string }) => {
           </div>
         ) : (
           <p className="w-fit mx-auto text-[14px] text-black tracking-[1px]">
-            No body comment yet... Maybe you can be the first!
+            There&apos;s no comment... Maybe you can be the first one!
           </p>
         )}
       </div>
