@@ -8,7 +8,6 @@ import ArticleSnippet from "@/app/ArticleSnippet";
 import Image from "next/image";
 import { Articles, setRecord } from "@/redux/slice/articleRecordSlice";
 import { useAppDispatch } from "@/redux/hooks";
-import { useParams } from "next/navigation";
 
 const Page = () => {
   const { user } = useContext(AuthContext);

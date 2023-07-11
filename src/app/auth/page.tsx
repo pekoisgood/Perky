@@ -21,6 +21,7 @@ import laughingLady from "../../assets/image/laughing-lady.svg";
 import sittingWoman from "../../assets/image/sitting-woman.svg";
 import Image from "next/image";
 import googleLogo from "./google.png";
+import Background from "@/app/auth/Background";
 
 type User = {
   email: string;
@@ -28,7 +29,7 @@ type User = {
 };
 
 const formClass =
-  "relative w-[40%] min-w-[500px] min-h-[500px] p-5 backdrop-filter backdrop-blur-[2px] bg-white/90 border-2 border-[#245953] shadow-lg rounded-xl flex flex-col justify-between items-center gap-[10px] z-10";
+  "relative w-[40%] min-w-[350px] lg:min-w-[500px] min-h-[500px] p-5 backdrop-filter backdrop-blur-[2px] bg-white/90 border-2 border-[#245953] shadow-lg rounded-xl flex flex-col justify-between items-center gap-[10px] z-10";
 
 const inputClass =
   "text-[20px] outline-none border-2 w-full bg-transparent border-dashed border-[#245953] rounded-md p-2 h-[35px] focus:border-solid placeholder:text-[#245953]";
@@ -63,7 +64,6 @@ const Page = () => {
         userInput.password
       );
       const user = userCredential.user;
-      console.log(user);
       const userId = user.uid;
       const email = user.email;
       setUser({
@@ -148,6 +148,9 @@ const Page = () => {
             Empower
             <br /> One Another.
           </h1>
+        </div>
+        <div className="fixed top-0 bottom-0 left-0 right-0">
+          <Background />
         </div>
 
         {loginPage ? (

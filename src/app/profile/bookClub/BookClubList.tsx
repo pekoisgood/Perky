@@ -17,10 +17,8 @@ import { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import { useAppSelector } from "@/redux/hooks";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
-import remarkGfm from "remark-gfm";
 import { AuthContext } from "@/context/AuthContext";
 import { motion } from "framer-motion";
-import { IoMdClose } from "react-icons/io";
 
 type bookClub = {
   id: string;
