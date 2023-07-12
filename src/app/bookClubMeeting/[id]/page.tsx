@@ -69,6 +69,8 @@ const Page = () => {
     name: "",
     roomId: "",
   });
+  const [text, setText] = useState<string>("");
+  const [code, setCode] = useState<string>("console.log('hello world')");
 
   const param = useParams();
   const bookClubId = param.id;
@@ -199,7 +201,13 @@ const Page = () => {
             variants={sidebarFunctionContainerMotion}
             className="bg-[#eeeeeed6] rounded-2xl p-3 overflow-y-scroll w-[320px] mr-2"
           >
-            <Side sidebarFunction={sidebarFunction} />
+            <Side
+              sidebarFunction={sidebarFunction}
+              text={text}
+              setText={setText}
+              code={code}
+              setCode={setCode}
+            />
           </motion.div>
         )}
       </div>

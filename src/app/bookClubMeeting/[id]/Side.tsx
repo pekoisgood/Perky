@@ -5,15 +5,17 @@ import CodeEditor from "./CodeEditor";
 
 type Props = {
   sidebarFunction: string;
+  text: string;
+  code: string;
+  setText: any;
+  setCode: any;
 };
 
 const sidebarFunctions = ["CHATROOM", "NOTE", "CODE EDITOR"];
 
-const Side = ({ sidebarFunction }: Props) => {
-  const [text, setText] = useState<string>("");
+const Side = ({ sidebarFunction, text, setText, code, setCode }: Props) => {
   const [newMessage, setNewMessage] = useState<string>("");
   const [isPreview, setIsPreview] = useState<boolean>(false);
-  const [code, setCode] = useState<string>("console.log('hello world')");
 
   const getSideBarFunction = () => {
     if (sidebarFunction === sidebarFunctions[0]) {

@@ -61,6 +61,8 @@ const ParticipantView = ({
     // }
   }, []);
 
+  console.log(isLocal);
+
   return (
     <>
       {/* // 這裡一定要設定 h-full 不然下面那個 height 如果是 % 會無法作用！！ */}
@@ -83,13 +85,13 @@ const ParticipantView = ({
               }}
               className="rounded-3xl overflow-hidden w-fit max-w-[1150px] mx-auto max-h-[calc(100vh-200px)] "
             />
-            <p
+            {/* <p
               className={`absolute bottom-3 right-[50%] translate-x-[50%] ${
                 presenterId ? "text-[12px]" : "text-[18px]"
               }`}
             >
-              {user.name}
-            </p>
+              {isLocal && user.name}
+            </p> */}
           </>
         ) : (
           <div
@@ -111,7 +113,7 @@ const ParticipantView = ({
                 className="rounded-full border-[1px] border-white text-white"
               />
             )}
-            <p className="text-white text-[12px]">{isLocal && user.name}</p>
+            {/* <p className="text-white text-[12px]">{isLocal && user.name}</p> */}
           </div>
         )}
       </div>

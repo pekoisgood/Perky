@@ -139,7 +139,9 @@ export default function CodeEditor({ code, setCode }: Props) {
         </select>
         <button
           onClick={handleRunCode}
-          className={`bg-orange-100 rounded-lg p-[5px]
+          className={`bg-orange-100 rounded-lg px-[5px] h-[27px] ${
+            isRunning && "text-[12px]"
+          }
         `}
         >
           {isRunning ? "running" : <VscDebugStart />}
