@@ -7,8 +7,8 @@ import ReactPlayer from "react-player";
 import { AuthContext } from "@/context/AuthContext";
 import Image from "next/image";
 import { PiFinnTheHumanFill } from "react-icons/pi";
-import { doc } from "firebase/firestore";
-import { db } from "@/utils/firebase";
+// import { doc } from "firebase/firestore";
+// import { db } from "@/utils/firebase";
 
 type Props = {
   participantId: string;
