@@ -2,8 +2,8 @@
 
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import React, { useState, useContext } from "react";
-import { setDoc, doc } from "firebase/firestore";
+import React, { useState, useContext, useEffect } from "react";
+import { setDoc, doc, getDoc } from "firebase/firestore";
 import { db } from "@/utils/firebase";
 import { AuthContext } from "@/context/AuthContext";
 import { useParams } from "next/navigation";
@@ -32,6 +32,23 @@ const Note = ({
     });
     setProcessing(true);
   };
+
+  useEffect(() => {
+    async function getNote() {
+      const result = await getDoc(
+        doc(db, "users", user.id, "bookClubNotes", bookClubId)
+      );
+      const note = await result!.data();
+
+      if (!note) {
+        setText("");
+        return;
+      }
+
+      setText(note.note);
+    }
+    getNote();
+  }, []);
 
   return (
     <div className="h-full relative flex flex-col gap-2">
