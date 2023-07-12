@@ -113,7 +113,7 @@ const Page = () => {
   }, [bookClub.guest]);
 
   return (
-    <div className="flex flex-col gap max-w-[600px] w-[60%]">
+    <div className="flex flex-col gap max-w-[600px] w-[60%] mt-[20px] mx-auto">
       <h1 className="mx-auto w-fit text-[28px] font-semibold tracking-[6px] indent-[6px] mb-[30px]">
         New Book Club
       </h1>
