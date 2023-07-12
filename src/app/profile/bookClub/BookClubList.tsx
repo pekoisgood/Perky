@@ -29,6 +29,11 @@ type BookClubItem = {
   createdAt: Timestamp;
 };
 
+type Note = {
+  id: string;
+  note: string;
+};
+
 const container = {
   hidden: {
     opacity: 0,
@@ -50,7 +55,7 @@ const child = {
   },
   show: {
     opacity: 1,
-    x: [500, -100, 0, 10, 0],
+    x: [500, -35, 0, 10, 0],
   },
   transition: {
     type: "tween",
@@ -65,20 +70,25 @@ const BookClubList = () => {
   const date = useAppSelector((state) => state.calender.value);
   const [bookClubs, setBookClubs] = useState<BookClubItem[] | null>(null);
   const [isPreviewNote, setIsPreviewNote] = useState<boolean>(false);
-  const [note, setNote] = useState<string | null>(null);
+  const [note, setNote] = useState<Note | null>(null);
 
   const getNote = async (bookClubId: string) => {
     setIsPreviewNote(true);
+
     const result = await getDoc(
       doc(db, "users", user.id, "bookClubNotes", bookClubId)
     );
     const note = await result!.data();
+
     if (!note) {
-      setNote("");
+      setNote({
+        id: bookClubId,
+        note: "",
+      });
       return;
     }
 
-    setNote(note.note);
+    setNote({ id: bookClubId, note: note.note });
   };
 
   useEffect(() => {
@@ -141,7 +151,7 @@ const BookClubList = () => {
   return (
     <>
       <motion.div
-        className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 mt-4"
+        className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 mt-4 w-full relative"
         initial="hidden"
         animate="show"
         variants={container}
@@ -159,7 +169,7 @@ const BookClubList = () => {
                 key={index}
                 variants={child}
                 whileHover={{ y: -10 }}
-                className="p-1 border-solid rounded-xl bg-[#245953] text-white"
+                className="p-1 border-solid rounded-xl bg-[#245953] text-white w-fit mx-auto md:w-full"
               >
                 <div className="flex flex-col p-4 gap-2 justify-center items-center border-dashed border-2 border-white rounded-lg">
                   <h3 className="text-[16px] text-white font-bold">
@@ -189,34 +199,38 @@ const BookClubList = () => {
                       Note
                     </div>
                   </div>
-                  {isPreviewNote && note === "" && (
-                    <p className="text-[12px] text-red-400">
-                      You didn&apos;t take note!
-                    </p>
-                  )}
                 </div>
               </motion.div>
             );
           })
         ) : (
-          <p className="w-full col-span-2 text-[#245953] font-medium">
+          <p className="w-full col-span-2 text-[#245953] text-center md:text-start font-medium">
             No book club this day... Go join one!
           </p>
         )}
 
         {isPreviewNote && note && (
-          <div className="absolute top-0 left-0 w-full h-full backdrop-blur-sm">
+          <div className="absolute top-0 left-0 w-full h-full">
             <div
-              className={`flex flex-col px-[20px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[400px] h-[400px] 
+              className={`flex flex-col px-[20px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-full h-full
           bg-white/90 backdrop-blur-md rounded-xl border-[#245953] border-2 shadow-md overflow-y-scroll`}
             >
               <button
-                className="w-fit ml-auto text-red-500 mt-[10px]"
-                onClick={() => setIsPreviewNote(false)}
+                className="w-fit ml-auto mt-[10px]"
+                onClick={() => {
+                  setIsPreviewNote(false);
+                  setNote(null);
+                }}
               >
                 x
               </button>
-              <ReactMarkdown>{note}</ReactMarkdown>
+              {note.note === "" ? (
+                <p className="text-[12px] text-red-400">
+                  You didn&apos;t take note!
+                </p>
+              ) : (
+                <ReactMarkdown>{note.note}</ReactMarkdown>
+              )}
             </div>
           </div>
         )}

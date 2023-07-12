@@ -74,7 +74,7 @@ const Calender = () => {
       initial="hidden"
       animate="show"
       variants={containerVariant}
-      className="w-fit min-h-[500px]"
+      className="w-fit"
     >
       <div className="border-2 border-solid border-[#245953] bg-white w-[300px] lg:w-[500px] p-[10px] lg:px-6 lg:py-10 rounded-2xl shadow-[-5px_10px] shadow-[#245953]">
         <div className="flex gap-3 justify-center mb-5 items-center">
@@ -118,12 +118,12 @@ const Calender = () => {
               <p
                 data-value={Number(d)}
                 className={`
-                  w-[35px] h-[35px] rounded-full text-center leading-[36px]
+                  w-[35px] h-[35px] rounded-full text-center leading-[36px] hover:cursor-pointer
                   ${
                     d
                       ? date.date && date.date === d
                         ? "text-white bg-[#FF6D60]"
-                        : "hover:bg-[#FF6D60] hover:text-white hover:cursor-pointer"
+                        : "hover:bg-[#FF6D60] hover:text-white "
                       : ""
                   }`}
                 onClick={(e) => {

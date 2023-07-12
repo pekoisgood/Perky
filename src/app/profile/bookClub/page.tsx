@@ -9,11 +9,11 @@ const Page = () => {
   const date = useAppSelector((state) => state.calender.value);
 
   return (
-    <div className="relative w-full mt-[20px]">
+    <div className="relative w-full mt-[20px] mx-5 md:mx-0">
       <h1 className="sticky top-[20px] right-[50%] translate-x-[50%] bg-white/60 mx-auto w-fit text-[28px] font-bold tracking-[4px] rounded-full px-5 mb-[30px]">
         Book Club
       </h1>
-      <div className="flex sm:flex-row flex-col justify-start sm:pl-5 gap-10 h-[89%] w-full max-w-[1200px] mx-auto">
+      <div className="flex sm:flex-row flex-col justify-start items-center sm:items-start sm:pl-5 gap-10 h-[89%] w-full max-w-[1200px] mx-auto">
         <Calender />
         <div className="flex flex-col sm:items-start items-center h-[75%] w-full">
           <p className="w-fit text-[18px] md:text-[20px] font-semibold">
