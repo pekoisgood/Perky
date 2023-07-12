@@ -27,33 +27,37 @@ export default function Home() {
   const [articles, setArticles] = useState<Article[]>([]);
 
   useEffect(() => {
-    let nextPaging = 0;
+    let nextPaging: null | number = 0;
     let isFetching = false;
 
     const fetchArticles = async () => {
       isFetching = true;
       setIsLoading(true);
+      console.log("fetchh!!!");
 
       const articlesReq = await fetch(`/api/articles?paging=${nextPaging}`);
       const articles = await articlesReq.json();
+      console.log(articles);
 
+      if (articles.data.length === 0) {
+        nextPaging = null;
+        console.log("return!");
+
+        return;
+      } else {
+        if (nextPaging !== null) nextPaging += 1;
+      }
       setArticles((prev) => {
         return [...prev, ...articles.data];
       });
       isFetching = false;
       setIsLoading(false);
-
-      if (articles.length === 0) {
-        nextPaging === null;
-        return;
-      } else {
-        nextPaging += 1;
-      }
     };
 
     async function scrollHandler() {
       if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
         console.log("next", nextPaging);
+        console.log("fetc: ", isFetching);
 
         if (nextPaging === null) return;
         if (isFetching) return;

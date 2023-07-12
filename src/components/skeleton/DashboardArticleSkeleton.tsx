@@ -7,7 +7,9 @@ const DashboardArticleSkeleton = () => {
   return (
     <div className="w-full rounded-lg p-2 basis-1/5 flex gap-2">
       <p className={`${categoryClass} ${skeletonAnimation}`} />
-      <p className={`w-full rounded-full bg-slate-100 ${skeletonAnimation}`} />
+      <p
+        className={`w-full rounded-full bg-slate-100 shadow-[-3px_3px] shadow-[#0000003b] ${skeletonAnimation}`}
+      />
     </div>
   );
 };

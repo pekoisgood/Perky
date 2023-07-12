@@ -40,6 +40,8 @@ export async function GET(req: Request) {
     );
     const documentSnapshots = await getDocs(next);
     documentSnapshots.forEach((doc) => {
+      console.log(doc.data());
+
       data.push({ id: doc.id, ...doc.data() });
     });
   }

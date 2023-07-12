@@ -87,7 +87,7 @@ const Page = () => {
         await setDoc(doc(db, "users", userId), {
           userId: userId,
           email: email,
-          name: `user-${userInput.email}`,
+          name: userInput.email,
           createdAt: serverTimestamp(),
         });
       }

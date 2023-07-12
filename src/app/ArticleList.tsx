@@ -67,8 +67,9 @@ const ArticleList = ({
                   <Image
                     src={article.image}
                     alt="article cover image"
-                    fill
-                    className="object-cover"
+                    width={500}
+                    height={300}
+                    className="object-cover w-full h-full"
                     priority={true}
                   />
                 </div>

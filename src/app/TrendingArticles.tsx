@@ -25,8 +25,6 @@ const container = {
   show: {
     opacity: 1,
     transition: {
-      delay: 0.8,
-      delayChildren: 1,
       staggerChildren: 0.5,
     },
   },
@@ -85,6 +83,8 @@ const TrendingArticles = () => {
         height={300}
         className={`absolute top-[calc(100vh-380px)] left-0 z-0 opacity-40`}
       />
+      {/* <TrendingArticleSkeleton /> */}
+
       {articles.length > 0 ? (
         <motion.div
           initial="hidden"
@@ -110,7 +110,7 @@ const TrendingArticles = () => {
                   />
                   <div className="flex flex-col gap-[10px]">
                     <p className={categoryClass}>{article.category}</p>
-                    <h3 className="text-[30px] sm:text-[40px] font-bold">
+                    <h3 className="text-[30px] sm:text-[40px] font-bold line-clamp-5">
                       {article.title}
                     </h3>
                     <p className="text-[12px]">{article.authorName}</p>
@@ -131,7 +131,7 @@ const TrendingArticles = () => {
                     <p className={`text-[10px] ${categoryClass}`}>
                       {article.category}
                     </p>
-                    <h4 className="font-bold text-[13px] sm:text-[15px]">
+                    <h4 className="font-bold text-[13px] sm:text-[15px] line-clamp-3">
                       {article.title}
                     </h4>
                   </div>
