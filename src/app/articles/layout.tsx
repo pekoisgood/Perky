@@ -1,7 +1,15 @@
 import React from "react";
 import Link from "next/link";
 import TrendingArticles from "../TrendingArticles";
-import { categories } from "../page";
+
+const categories = [
+  "Android",
+  "Backend",
+  "Frontend",
+  "IOS",
+  "Leetcode",
+  "Others",
+];
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -13,7 +21,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       >
         <div className="flex flex-col w-[150px] items-center gap-5 mt-[40px]">
           <h2 className={`text-center text-[20px] font-medium`}>Category</h2>
-          {categories.sort().map((category) => {
+          {categories.map((category) => {
             return (
               <Link
                 href={`/articles?category=${category}`}

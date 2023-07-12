@@ -9,7 +9,7 @@ import sittingBoy from "../assets/image/people/boy-sitting-on-legs.svg";
 import { Article } from "@/utils/firebase";
 import ArticleListSkeleton from "@/components/skeleton/ArticleListSkeleton";
 
-export const categories = [
+const categories = [
   "Frontend",
   "Backend",
   "IOS",
