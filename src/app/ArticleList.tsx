@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Article } from "@/utils/firebase";
@@ -15,12 +15,17 @@ const ArticleList = ({
 }) => {
   const ref = useRef<HTMLAnchorElement[]>([]);
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const [isFirstLoading, setIsFirstLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(
         (entry) => {
           if (entry.isIntersecting) {
+            if (isFirstLoading) {
+              setIsFirstLoading(false);
+              return;
+            }
             entry.target.classList.remove("translate-x-[200px]");
             entry.target.classList.remove("opacity-0");
             entry.target.classList.add("translate-x-0");
@@ -44,13 +49,13 @@ const ArticleList = ({
         observer.observe(el);
       });
     }
-  }, []);
+  }, [isFirstLoading]);
 
   return (
     <div
       className={`h-full ${
         customLayout ? customLayout : "w-full"
-      } flex flex-wrap gap-8 justify-center min-h-[150px] mt-[10px]`}
+      } flex flex-wrap gap-8 min-h-[150px] mt-[10px]`}
       ref={containerRef}
     >
       {articles.map((article: Article, index: number) => {
@@ -59,7 +64,9 @@ const ArticleList = ({
             href={`/article/${article.id}`}
             key={article.id}
             ref={(el: HTMLAnchorElement) => (ref.current[index] = el)}
-            className="w-[100%] lg:w-[48%] p-4 pt-6 flex justify-between items-start gap-3 border-b-[1px] border-[#d1d5db] min-h-[140px] translate-x-[200px] hover:translate-y-[-10px] hover:duration-150"
+            className={`w-[100%] lg:w-[48%] p-4 pt-6 flex justify-between items-start gap-3 border-b-[1px] border-[#d1d5db] min-h-[140px] ${
+              isFirstLoading && "translate-x-0"
+            } hover:translate-y-[-10px] hover:duration-150`}
           >
             <div className="flex flex-col gap-4 w-full h-full relative">
               {article.image && (
@@ -85,7 +92,7 @@ const ArticleList = ({
                   {article.category}
                 </p>
                 <ArticleSnippet article={article.content} />
-                <div className="flex gap-2 items-center justify-center flex-wrap mt-auto">
+                <div className="flex gap-2 items-center flex-wrap mt-auto">
                   {article.tags &&
                     article.tags.map((tag: string, index: number) => {
                       return (

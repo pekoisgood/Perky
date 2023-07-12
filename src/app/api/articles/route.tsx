@@ -32,6 +32,7 @@ export async function GET(req: Request) {
       data.push({ id: doc.id, ...doc.data() });
     });
   } else {
+    // FIXME: next paging 拿不到
     const next = query(
       articleRef,
       orderBy("createdAt", "desc"),

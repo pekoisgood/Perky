@@ -13,7 +13,7 @@ import {
 import { RxDashboard } from "react-icons/rx";
 import { redirect } from "next/navigation";
 
-const linkClass = `flex items-center gap-2 hover:translate-y-[-2px] duration-100`;
+const linkClass = `flex items-center gap-2 hover:text-[#245953] duration-100`;
 const titleClass = ``;
 
 const Profile = () => {
@@ -32,7 +32,7 @@ const Profile = () => {
         <>
           <div
             onClick={() => setShowList((prev) => !prev)}
-            className="rounded-full flex items-center justify-center w-[40px] h-[40px] object-contain overflow-hidden hover:cursor-pointer"
+            className="rounded-full border-[1px] border-white flex items-center justify-center w-[40px] h-[40px] object-contain overflow-hidden hover:cursor-pointer"
           >
             {user.avatar !== "" ? (
               <Image
@@ -52,7 +52,7 @@ const Profile = () => {
       {showList && (
         <>
           <div className="absolute top-[55px] right-[28px] flex flex-col w-0 h-0 boder-l-[15px] border-l-transparent border-r-[15px] border-r-transparent border-b-[15px] border-b-[#245953] rotate-[135deg]" />
-          <div className="border-[#245953] border-2 absolute top-[61px] right-[15px] flex flex-col gap-2 justify-center items-center bg-white/70 rounded-lg py-2 px-5">
+          <div className="border-[#245953] border-2 absolute top-[61px] right-[15px] flex flex-col gap-2 bg-white rounded-lg py-2 px-5">
             <Link
               href="/profile"
               className={linkClass}
@@ -94,7 +94,7 @@ const Profile = () => {
               <p className={titleClass}>Book Club</p>
             </Link>
             <p
-              className="h-fit mt-[20px] text-[#245953] bg-white px-2 border-2 border-[#245953] rounded-lg font-medium hover:bg-[#245953] hover:text-white hover:cursor-pointer"
+              className="h-fit w-fit mx-auto mt-[20px] px-2 bg-[#245953] text-white border-2 border-[#245953] rounded-lg font-medium hover:text-[#245953] hover:bg-white hover:cursor-pointer"
               onClick={handleLogout}
             >
               Logout

@@ -36,7 +36,7 @@ const ProfileSidebar = () => {
 
   const [activePage, setActivePage] = useState(getTab());
   const linkClass = (index: number) => {
-    return `flex gap-2 items-center hover:translate-y-[-3px] duration-100 lg:pl-[15px] z-10 ${
+    return `flex gap-2 items-center hover:text-[#245953] duration-100 lg:pl-[15px] z-10 ${
       activePage === tabs[index] &&
       "bg-[#245953] text-white lg:text-[#245953] rounded-full p-1 lg:bg-transparent lg:pr-0 lg:py-0 lg:border-r-2 lg:rounded-none border-[#245953]"
     }`;

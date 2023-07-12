@@ -15,7 +15,6 @@ export default function CodeEditor({ code, setCode }: Props) {
   const [output, setOutput] = useState<string>("");
   const [isRunning, setIsRunning] = useState(false);
   const [language, setLanguage] = useState<string>("Javascript");
-  console.log(code);
 
   const langueges: string[] = [
     "Javascript",
@@ -140,8 +139,7 @@ export default function CodeEditor({ code, setCode }: Props) {
         </select>
         <button
           onClick={handleRunCode}
-          className={`bg-orange-100 rounded-lg
-          ${isRunning ? "animate-bounce p-[3px]" : "p-[5px]"}
+          className={`bg-orange-100 rounded-lg p-[5px]
         `}
         >
           {isRunning ? "running" : <VscDebugStart />}

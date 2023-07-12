@@ -1,6 +1,5 @@
 import React from "react";
 import Link from "next/link";
-import TrendingArticles from "../TrendingArticles";
 
 const categories = [
   "Android",
@@ -35,10 +34,6 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             );
           })}
         </div>
-        <h2 className={`text-center text-[20px] font-medium mt-[60px]`}>
-          Tredning Articles
-        </h2>
-        <TrendingArticles />
       </div>
       <div className="lg:min-w-[100%-300px] md:min-w-[100%-210px] w-full">
         {children}
