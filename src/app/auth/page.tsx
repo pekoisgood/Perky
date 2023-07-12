@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "@/context/AuthContext";
 import {
   createUserWithEmailAndPassword,
@@ -19,8 +19,9 @@ import {
 } from "firebase/firestore";
 import laughingLady from "../../assets/image/people/laughing-lady.svg";
 import Image from "next/image";
-import googleLogo from "./google.png";
+import googleLogo from "../../assets/image/backgroundIcon/google.gif";
 import Background from "@/app/auth/Background";
+import { useRouter } from "next/navigation";
 import { redirect } from "next/navigation";
 
 type User = {
@@ -45,17 +46,19 @@ const sloganClass =
   "text-[60px] sm:text-[30px] md:text-[50px] lg:text-[70px] xl:text-[90px] font-extrabold tracking-[3px] text-[#245953] z-0";
 
 const Page = () => {
-  const { setIsLogin, logIn, setUser } = useContext(AuthContext);
+  const { setIsLogin, logIn, setUser, isLogin } = useContext(AuthContext);
   const [loginPage, setLoginPage] = useState(true);
   const [userInput, setUserInput] = useState<User>({
     email: "demo@gmail.com",
     password: "demo123",
   });
+  const [isLoginFail, setIsLoginFail] = useState<boolean | null>(null);
 
-  const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
+  const router = useRouter();
+
+  const handleNativeSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!userInput || !userInput.email || !userInput.password) return;
-    console.log("log");
 
     try {
       const userCredential = await createUserWithEmailAndPassword(
@@ -91,13 +94,14 @@ const Page = () => {
     } catch (error) {
       console.log(error);
       setIsLogin(false);
+      setIsLoginFail(true);
       return;
     }
     setIsLogin(true);
     return;
   };
 
-  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleNativeLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!userInput || !userInput.email || !userInput.password) return;
 
@@ -108,7 +112,6 @@ const Page = () => {
         userInput.password
       );
       const user = userCredential.user;
-      console.log(user);
       const userId = user.uid;
       const email = user.email;
 
@@ -123,13 +126,18 @@ const Page = () => {
       });
     } catch (error) {
       console.log(error);
+      setIsLoginFail(true);
       setIsLogin(false);
       return;
     }
     setIsLogin(true);
-    redirect("/profile");
+    router.replace("/profile");
     return;
   };
+
+  useEffect(() => {
+    if (isLogin) redirect("/profile");
+  }, [isLogin]);
 
   return (
     <>
@@ -149,7 +157,7 @@ const Page = () => {
         </div>
 
         {loginPage ? (
-          <form className={formClass} onSubmit={(e) => handleLogin(e)}>
+          <form className={formClass} onSubmit={(e) => handleNativeLogin(e)}>
             <h2 className={titleClass}>Login</h2>
             <div className="w-full">
               <div>
@@ -158,49 +166,61 @@ const Page = () => {
                   type="text"
                   className={inputClass}
                   value={userInput.email}
-                  onChange={(e) =>
+                  onChange={(e) => {
+                    setIsLoginFail(null);
                     setUserInput((prev) => {
                       return { ...prev, email: e.target.value };
-                    })
-                  }
+                    });
+                  }}
                 />
               </div>
               <div className="mt-[10px]">
                 <label className={labelClass}>Password</label>
                 <input
-                  type="text"
+                  type="password"
                   className={inputClass}
                   value={userInput.password}
-                  onChange={(e) =>
+                  onChange={(e) => {
+                    setIsLoginFail(null);
                     setUserInput((prev) => {
                       return { ...prev, password: e.target.value };
-                    })
-                  }
+                    });
+                  }}
                 />
               </div>
+              {isLoginFail && (
+                <p className="text-red-400 text-[14px]">
+                  Email and Password does not match... Please try again.
+                </p>
+              )}
             </div>
+
             <button type="submit" className={buttonClass}>
               Login
             </button>
+
             <hr />
-            <div className="bg-white rounded-[5px] border-[1px] border-[#888] shadow-gray-400 shadow-md px-5 py-2 flex gap-1">
+            <div className="bg-white rounded-[5px] border-[1px] border-[#888] shadow-gray-400 shadow-md px-3 py-2 flex gap-1">
               <Image
                 src={googleLogo}
-                width={24}
-                height={24}
+                width={40}
+                height={40}
                 alt="google logo"
               />
               <button onClick={logIn}>Sign in with google</button>
             </div>
             <p
               className="hover:cursor-pointer text-[#245953] text-[12px]"
-              onClick={() => setLoginPage(false)}
+              onClick={() => {
+                setIsLoginFail(null);
+                setLoginPage(false);
+              }}
             >
               Does not have an accout ? Sign Up
             </p>
           </form>
         ) : (
-          <form className={formClass} onSubmit={(e) => handleSignUp(e)}>
+          <form className={formClass} onSubmit={(e) => handleNativeSignUp(e)}>
             <h2 className={titleClass}>Sign Up</h2>
             <div className="w-full">
               <div>
@@ -229,13 +249,21 @@ const Page = () => {
                   }
                 />
               </div>
+              {isLoginFail && (
+                <p className="text-red-400 text-[14px]">
+                  Email already used... Please try another.
+                </p>
+              )}
             </div>
             <button type="submit" className={buttonClass}>
               Sign Up
             </button>
             <p
               className="hover:cursor-pointer text-[#245953] text-[12px]"
-              onClick={() => setLoginPage(true)}
+              onClick={() => {
+                setIsLoginFail(null);
+                setLoginPage(true);
+              }}
             >
               Have an accout ? Login
             </p>

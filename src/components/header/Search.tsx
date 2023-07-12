@@ -69,10 +69,10 @@ const Search = () => {
         <div
           className={`w-screen h-screen absolute top-0 left-0 flex flex-col justify-center items-center backdrop-blur-md overscroll-contain`}
         >
-          <div className="w-[50vw] max-w-[600px] flex flex-col items-center p-3 rounded-lg border-2 border-black h-[50vh] bg-white/70">
+          <div className="w-[50vw] max-w-[600px] flex flex-col items-center p-3 rounded-lg border-2 border-black h-[50vh] bg-gradient-to-t from-white to-[#FCF8E8]">
             <button
               onClick={() => setIsSearching(false)}
-              className="w-fit text-red-500 ml-auto block"
+              className="w-fit ml-auto block"
             >
               <IoClose size={20} />
             </button>

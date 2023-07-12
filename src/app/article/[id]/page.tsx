@@ -20,7 +20,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
   );
   const article = await req.json();
 
-  if (!article.content) {
+  if (!article) {
     return <Warning>Article Not Found...</Warning>;
   }
 

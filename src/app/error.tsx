@@ -1,5 +1,10 @@
 "use client";
 
+import Button from "@/components/button/Button";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import spookyMan from "../assets/image/people/spooky-man.svg";
+
 export default function Error({
   error,
   reset,
@@ -7,10 +12,25 @@ export default function Error({
   error: Error;
   reset: () => void;
 }) {
+  const router = useRouter();
+
   return (
-    <div>
-      <h2>Something went wrong! {error.message}</h2>
-      <button onClick={() => reset()}>Try again</button>
+    <div className="relative flex flex-col gap-5 justify-center items-center w-full h-[calc(100vh-60px)] z-10">
+      <p className="text-[30px] text-[#245953] font-bold">
+        Something went wrong!
+      </p>
+      <p className="text-[100px] text-[#245953] font-extrabold font-mono">
+        {error.name}
+      </p>
+      <Button handleOnClick={() => reset()}>Try again</Button>
+      <Button handleOnClick={() => router.replace("/")}>Go to home page</Button>
+      <Image
+        src={spookyMan}
+        alt="spooky man"
+        width={300}
+        height={300}
+        className="absolute bottom-0 left-[40px]"
+      />
     </div>
   );
 }

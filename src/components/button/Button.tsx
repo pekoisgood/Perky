@@ -6,7 +6,7 @@ const Button = ({
   customLayout,
 }: {
   children: React.ReactNode;
-  handleOnClick?: () => Promise<void>;
+  handleOnClick?: () => Promise<void> | void;
   customLayout?: string;
 }) => {
   return (
