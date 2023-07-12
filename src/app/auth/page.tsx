@@ -200,14 +200,14 @@ const Page = () => {
             </button>
 
             <hr />
-            <div className="bg-white rounded-[5px] border-[1px] border-[#888] shadow-gray-400 shadow-md px-3 py-2 flex gap-1">
+            <div className="bg-white rounded-[5px] border-[1px] border-[#888] shadow-gray-400 shadow-md px-3 py-2 flex items-center gap-1 hover:cursor-pointer">
               <Image
                 src={googleLogo}
                 width={40}
                 height={40}
                 alt="google logo"
               />
-              <button onClick={logIn}>Sign in with google</button>
+              <div onClick={logIn}>Sign in with google</div>
             </div>
             <p
               className="hover:cursor-pointer text-[#245953] text-[12px]"

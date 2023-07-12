@@ -149,6 +149,10 @@ const Background = () => {
   useEffect(() => {
     if (!window) return;
     window.addEventListener("mousemove", parallax);
+
+    return () => {
+      window.removeEventListener("mousemove", parallax);
+    };
   }, []);
 
   return (

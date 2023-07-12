@@ -7,6 +7,7 @@ import Comment from "./Comment";
 import { PiFinnTheHumanFill } from "react-icons/pi";
 import SaveCount from "./SaveCount";
 import Warning from "@/components/warning/Warning";
+import Button from "@/components/button/Button";
 
 const Page = async ({ params }: { params: { id: string } }) => {
   const articleId = params.id;
@@ -20,8 +21,17 @@ const Page = async ({ params }: { params: { id: string } }) => {
   );
   const article = await req.json();
 
-  if (!article) {
-    return <Warning>Article Not Found...</Warning>;
+  if (!article.content) {
+    return (
+      <Warning time={0}>
+        <div className="flex flex-col gap-3">
+          <p className="text-[30px] font-bold">Article not found...</p>
+          <Link href="/">
+            <Button customLayout="font-medium">Back to home page</Button>
+          </Link>
+        </div>
+      </Warning>
+    );
   }
 
   const publishDate = `${new Date(

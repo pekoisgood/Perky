@@ -114,9 +114,9 @@ const TrendingArticles = () => {
                       {article.title}
                     </h3>
                     <p className="text-[12px]">{article.authorName}</p>
-                    <p className="mt-auto text-[14px]">
+                    <div className="mt-auto text-[14px]">
                       <ArticleSnippet article={article.content} />
-                    </p>
+                    </div>
                   </div>
                 </Link>
               );

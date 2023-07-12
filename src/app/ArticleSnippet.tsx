@@ -27,12 +27,7 @@ const ArticleSnippet = ({ article }: { article: string }) => {
     editable: false,
   });
 
-  return (
-    <div className="line-clamp-2 text-[13px]">
-      {editor?.getText()}
-      <span>...</span>
-    </div>
-  );
+  return <div className="line-clamp-2 text-[13px]">{editor?.getText()}</div>;
 };
 
 export default ArticleSnippet;
