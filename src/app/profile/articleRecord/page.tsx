@@ -57,12 +57,12 @@ const Page = () => {
           <ProfileArticleSkeleton />
         </div>
       ) : articleRecord.length > 0 ? (
-        <div className="columns-2 md:columns-3 gap-x-5 overflow-y-scroll pb-5">
+        <div className="columns-2 md:columns-3 gap-x-5 overflow-y-scroll pt-[10px] pb-5">
           {articleRecord.map((article) => {
             return (
               <Link
                 href={`/article/${article.id}`}
-                className="rounded-xl p-1 block hover:translate-y-[-10px] hover:duration-100 bg-[#245953] break-inside-avoid mb-5"
+                className="rounded-xl p-1 block hover:translate-y-[-10px] hover:duration-150 bg-[#245953] break-inside-avoid mb-5 shadow-md"
                 key={article.id}
               >
                 <motion.div

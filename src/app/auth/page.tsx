@@ -17,10 +17,11 @@ import {
   doc,
   getDoc,
 } from "firebase/firestore";
-import laughingLady from "../../assets/image/laughing-lady.svg";
+import laughingLady from "../../assets/image/people/laughing-lady.svg";
 import Image from "next/image";
 import googleLogo from "./google.png";
 import Background from "@/app/auth/Background";
+import { redirect } from "next/navigation";
 
 type User = {
   email: string;
@@ -109,13 +110,14 @@ const Page = () => {
       const user = userCredential.user;
       console.log(user);
       const userId = user.uid;
+      const email = user.email;
 
       const userRef = doc(db, "users", userId);
       const result = getDoc(userRef);
       console.log(result);
 
       setUser({
-        name: "`user-${email}`",
+        name: `user-${email}`,
         id: userId,
         avatar: "",
       });
@@ -125,6 +127,7 @@ const Page = () => {
       return;
     }
     setIsLogin(true);
+    redirect("/profile");
     return;
   };
 

@@ -3,7 +3,7 @@ import Image from "next/image";
 import { headers } from "next/dist/client/components/headers";
 import TrendingArticles from "./TrendingArticles";
 import ArticleList from "./ArticleList";
-import sittingBoy from "../assets/image/boy-sitting-on-legs.svg";
+import sittingBoy from "../assets/image/people/boy-sitting-on-legs.svg";
 
 export const categories = [
   "Frontend",

@@ -6,8 +6,8 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import ArticleSnippet from "./ArticleSnippet";
-import monster from "../assets/image/monster.svg";
-import beanieMan from "../assets/image/guy-with-beanie.svg";
+import monster from "../assets/image/people/monster.svg";
+import beanieMan from "../assets/image/people/guy-with-beanie.svg";
 import TrendingArticleSkeleton from "@/components/skeleton/TrendingArticleSkeleton";
 
 interface TrendingArticle {
@@ -98,7 +98,7 @@ const TrendingArticles = () => {
                 <Link
                   href={`article/${article.id}`}
                   key={index}
-                  className="flex gap-[20px] w-full h-[70%] mt-auto border-b-[1px] border-[#d1d5db] pb-[30px] hover:translate-y-[-3px]"
+                  className="flex gap-[20px] w-full h-[70%] mt-auto border-b-[1px] border-[#d1d5db] pb-[30px] hover:translate-y-[-3px] hover:duration-100"
                 >
                   <Image
                     src={article.image}
@@ -125,7 +125,7 @@ const TrendingArticles = () => {
                 <Link
                   href={`article/${article.id}`}
                   key={index}
-                  className="flex gap-[10px] w-[23%] h-[23%] md:h-[16%] border-l-[1px] border-[#d1d5db] pl-[14px] mt-[20px] hover:translate-y-[-3px]"
+                  className="flex gap-[10px] w-[23%] h-[23%] md:h-[16%] border-l-[1px] border-[#d1d5db] pl-[14px] mt-[20px] hover:translate-y-[-3px] hover:duration-100"
                 >
                   <div className="flex flex-col gap-[10px] h-full">
                     <p className={`text-[10px] ${categoryClass}`}>

@@ -1,8 +1,8 @@
 import React from "react";
 import ProfileSidebar from "./ProfileSidebar";
 import Auth from "./Auth";
-import stylishManWithCap from "../../assets/image/stylish-man-with-cap.svg";
-import sittingWomanHoldingLegs from "../../assets/image/woman-sitting-holding-both-legs.svg";
+import stylishManWithCap from "../../assets/image/people/stylish-man-with-cap.svg";
+import sittingWomanHoldingLegs from "../../assets/image/people/woman-sitting-holding-both-legs.svg";
 import Image from "next/image";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
@@ -16,13 +16,17 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         </div>
         <div className="w-full h-[50px] border-b-2 border-black bg-slate-50 rounded-t-xl" />
         <div className="flex gap-2 h-[94%] pb-[40px] lg:pb-0 bg-[#FCF8E8]/30">
-          {/* <section className="fixed top-0 bottom-0 left-0 right-0 w-full pt-[60px]">
-            <div className="absolute top-[calc(100%-240px)] left-0 bg-[#E5E0FF] w-[400px] h-[400px] rounded-[59%_41%_43%_57%/37%_55%_45%_63%]" />
-            <div className="absolute top-0 right-0 bg-[#E9EDC9] w-[500px] h-[400px] rounded-[52%_48%_60%_40%/59%_51%_49%_41%]" />
-          </section> */}
+          <Image
+            src={sittingWomanHoldingLegs}
+            alt="woman sitting holding both legs"
+            width={200}
+            height={500}
+            className="scale-x-flip w-[150px] lg:w-[200px] absolute bottom-[-36px] right-0 md:right-[44px] rotate-[5deg] lg:z-0"
+          />
+
           <div
-            className={`h-[101%] flex lg:flex-col gap-4 lg:pr-[15px] lg:pt-[25px] fixed top-[calc(100%-60px)] left-[50%] translate-x-[-50%] z-10
-            lg:sticky lg:top-0 lg:left-0 lg:bottom-0 lg:min-w-[200px] lg:translate-x-0 shadow-md bg-white`}
+            className={`flex gap-4 fixed top-[calc(100%-60px)] left-[50%] translate-x-[-50%] z-10 px-3 rounded-full
+            lg:h-[101%] lg:flex-col lg:pr-[15px] lg:pl-0 lg:pt-[25px] lg:sticky lg:top-0 lg:left-0 lg:bottom-0 lg:min-w-[200px] lg:translate-x-0 shadow-md lg:bg-white lg:rounded-none`}
           >
             <ProfileSidebar />
             <Image
@@ -34,13 +38,6 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             />
           </div>
           {children}
-          <Image
-            src={sittingWomanHoldingLegs}
-            alt="woman sitting holding both legs"
-            width={200}
-            height={500}
-            className="scale-x-flip w-[150px] lg:w-[200px] absolute bottom-[-36px] right-0 md:right-[44px] rotate-[5deg] lg:z-0"
-          />
         </div>
       </div>
       <Auth />

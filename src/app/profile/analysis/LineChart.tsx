@@ -69,7 +69,7 @@ const Page = ({ width, height }: { width?: string; height?: string }) => {
   const getDateLabel = () => {
     let dateLabels = [];
     let month = weekAgo.getMonth() + 1;
-    let date = weekAgo.getDate();
+    let date = weekAgo.getDate() - 1;
     for (let i = 0; i < 7; i++) {
       const lastDayOfMonth = getDayPerMonth(
         weekAgo.getMonth() + 1,

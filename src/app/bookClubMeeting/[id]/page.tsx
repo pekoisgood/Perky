@@ -18,6 +18,8 @@ import { db } from "@/utils/firebase";
 import { useParams } from "next/navigation";
 import { CgDetailsMore } from "react-icons/cg";
 import { AuthContext } from "@/context/AuthContext";
+import Image from "next/image";
+import curlyHairMan from "../../../assets/image/people/curly-hair-man-holding-smartphone.svg";
 
 type BookClub = {
   name: string;
@@ -130,6 +132,13 @@ const Page = () => {
           `}
         >
           <Video roomId={bookClub.roomId} />
+          <Image
+            src={curlyHairMan}
+            alt="curly hair man"
+            width={200}
+            height={300}
+            className="absolute top-[calc(100%-60px)] left-0"
+          />
         </div>
         <div
           className={`sm:hidden absolute right-4 bottom-[21px] bg-orange-100 p-1 rounded-lg 

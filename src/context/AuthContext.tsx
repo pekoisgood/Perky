@@ -79,7 +79,7 @@ export const AuthContextProvider = ({
 
     if (!result) return;
     setIsLogin(true);
-    router.replace("/profile/analysis");
+    router.replace("/profile");
   };
 
   const logOut = async () => {

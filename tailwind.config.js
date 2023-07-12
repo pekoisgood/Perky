@@ -68,7 +68,7 @@ module.exports = {
       },
       animation: {
         wiggle: "wiggle 2s infinite",
-        skeleton: "skeleton 4s ease infinite",
+        skeleton: "skeleton 5s ease infinite",
         typing: "typing 9s steps(5, end) infinite",
         appear: "appear 1s linear",
         damping: "appear 2s cubic-bezier(0.42, 0, 0.3, 1.09)",

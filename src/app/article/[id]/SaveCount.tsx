@@ -23,7 +23,7 @@ const SaveCount = ({ articleId }: Props) => {
       unsub();
     };
   }, []);
-  return <p className="text-[13px] sm:text-[16px]">Saved: {count}</p>;
+  return <p className="text-[13px] sm:text-[16px]">Saved : {count}</p>;
 };
 
 export default SaveCount;

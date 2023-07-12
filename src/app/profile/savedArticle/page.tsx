@@ -73,7 +73,7 @@ const Page = () => {
 
   return (
     <div className="w-full mt-[20px] relative">
-      <h1 className="sticky top-[20px] right-[43%] translate-x-[50%] bg-white/60 mx-auto w-fit text-[28px] font-bold tracking-[4px] rounded-full px-5 mb-[30px]">
+      <h1 className="sticky top-[20px] right-[42%] translate-x-[50%] bg-white/60 mx-auto w-fit text-[28px] font-bold tracking-[4px] rounded-full px-5 mb-[30px]">
         Saved Articles
       </h1>
       {articles === null ? (
@@ -99,7 +99,7 @@ const Page = () => {
                   duration: 1,
                 }}
                 key={index}
-                className="rounded-xl p-1 block hover:translate-y-[-10px] hover:duration-100 bg-[#245953] mb-3 break-inside-avoid"
+                className="rounded-xl p-1 block shadow-md hover:translate-y-[-10px] hover:duration-150 bg-[#245953] mb-3 break-inside-avoid"
               >
                 <Link
                   href={`/article/${article.id}`}
@@ -111,7 +111,7 @@ const Page = () => {
                       alt="cover image"
                       width={400}
                       height={300}
-                      className="object-cover h-full"
+                      className="object-cover h-full w-full"
                       priority={true}
                     />
                   </div>
@@ -127,7 +127,7 @@ const Page = () => {
           })}
         </div>
       ) : (
-        <div className="flex flex-col w-full h-full items-center gap-2 mt-[50px]">
+        <div className="flex flex-col w-full h-full items-center gap-2 mt-[50px] font-medium">
           <p className="text-[#245953]">There is no article saved yet...</p>
           <Link href="/">
             <Button>Let&apos;s go find some stunning articles!</Button>

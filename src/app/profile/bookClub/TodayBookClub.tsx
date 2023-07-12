@@ -119,7 +119,7 @@ const TodayBookClub = () => {
           initial="hidden"
           animate="show"
           variants={easeAppearContainer}
-          className="font-medium flex flex-col gap-3 justify-center items-center"
+          className="font-medium flex flex-col gap-2 justify-center items-center"
         >
           <p className="text-[#245953]">No Book Club Today...</p>
           <Button>

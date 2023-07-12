@@ -84,7 +84,7 @@ const ArticleRecord = () => {
           })}
         </motion.div>
       ) : (
-        <div className="flex flex-col justify-center items-center">
+        <div className="flex flex-col gap-2 justify-center items-center font-medium">
           <p className="text-[#245953]">No post articles...</p>
           <Link href="/article/postArticle">
             <Button>Go to post your first article!!</Button>

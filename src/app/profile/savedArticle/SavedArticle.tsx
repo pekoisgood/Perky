@@ -112,7 +112,7 @@ const ArticleRecord = () => {
           })}
         </motion.div>
       ) : (
-        <div className="flex flex-col justify-center items-center">
+        <div className="flex flex-col gap-2 justify-center items-center font-medium">
           <p className="text-[#245953]">No saved articles...</p>
           <Link href="/">
             <Button>Go to find some awesome articles!!</Button>
