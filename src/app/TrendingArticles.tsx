@@ -83,14 +83,12 @@ const TrendingArticles = () => {
         height={300}
         className={`absolute top-[calc(100vh-380px)] left-0 z-0 opacity-40`}
       />
-      {/* <TrendingArticleSkeleton /> */}
-
       {articles.length > 0 ? (
         <motion.div
           initial="hidden"
           animate="show"
           variants={container}
-          className="flex flex-wrap md:justify-between h-[92%] gap-[10px] max-w-[1280px] mx-auto [&>*:nth-child(2)]:border-none z-10"
+          className="flex flex-wrap md:justify-between h-[92%] gap-[10px] px-[20px] max-w-[1280px] mx-auto [&>*:nth-child(2)]:border-none z-10"
         >
           {articles.map((article, index) => {
             if (index === 0) {
@@ -105,7 +103,7 @@ const TrendingArticles = () => {
                     alt="cover image"
                     width={400}
                     height={200}
-                    className="object-cover max-w-[800px] rounded-xl border-[#245953] border-2 shadow-[-10px_10px] shadow-[#0000003b]"
+                    className="object-cover w-[50vw] max-w-[800px] rounded-xl border-[#245953] border-2 shadow-[-10px_10px] shadow-[#0000003b]"
                     priority={true}
                   />
                   <div className="flex flex-col gap-[10px]">

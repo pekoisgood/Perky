@@ -67,6 +67,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
               width={800}
               height={400}
               priority={true}
+              className="w-full h-full max-h-[500px]"
             />
           ) : (
             <PiFinnTheHumanFill size={30} />

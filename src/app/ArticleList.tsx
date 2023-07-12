@@ -51,6 +51,8 @@ const ArticleList = ({
     }
   }, [isFirstLoading]);
 
+  console.log(articles[0].image);
+
   return (
     <div
       className={`h-full ${

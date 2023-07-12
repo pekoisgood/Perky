@@ -21,7 +21,7 @@ const ArticleSkeleton = () => {
       />
 
       <div
-        className={`w-full h-[600px] rounded-2xl border-2 border-dashed border-[#eee] shadow-[#929090] shadow-[-7px_7px] ${skeletonAnimation}`}
+        className={`w-full h-[500px] rounded-2xl border-2 border-dashed border-[#eee] shadow-[#929090] shadow-[-7px_7px] ${skeletonAnimation}`}
       />
       <div className="flex flex-col gap-3 mt-[20px] w-full">
         <p className={contentClass} />
