@@ -16,12 +16,15 @@ import {
 import { db } from "@/utils/firebase";
 import { setSavedArticle } from "@/redux/slice/savedArticle";
 import { SavedArticle } from "./page";
-import { categoryClass } from "@/app/page";
 import Link from "next/link";
 import Button from "@/components/button/Button";
 import DashboardArticleSkeleton from "@/components/skeleton/DashboardArticleSkeleton";
 import { motion } from "framer-motion";
 import { easeAppearContainer } from "../articleRecord/ArticleRecord";
+
+const categoryClass = `w-fit bg-[#FFD89C] text-bold font-mono py-1 px-3 text-black
+shadow-[-3px_3px] shadow-black rounded-2xl border-2 border-black
+`;
 
 const dashBoardTitleClass =
   "font-medium text-[20px] tracking-[2px] mb-[20px] text-center lg:text-start";

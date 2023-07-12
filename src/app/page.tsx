@@ -18,7 +18,7 @@ export const categories = [
   "Others",
 ];
 
-export const categoryClass = `w-fit bg-[#FFD89C] text-bold font-mono py-1 px-3 text-black
+const categoryClass = `w-fit bg-[#FFD89C] text-bold font-mono py-1 px-3 text-black
 shadow-[-3px_3px] shadow-black rounded-2xl border-2 border-black
 `;
 
