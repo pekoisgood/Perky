@@ -168,4 +168,5 @@ export type BookClub = {
   createdAt: Timestamp;
   attendees: string[];
   guest: string[];
+  id?: string;
 };

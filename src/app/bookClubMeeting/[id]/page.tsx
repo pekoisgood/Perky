@@ -98,8 +98,11 @@ const Page = () => {
 
     const addAttendee = async () => {
       if (!user.id) return;
+      console.log(bookClubId);
 
       const result: DocumentData = await getDoc(bookClubRef);
+      console.log(result.data());
+
       if (result.data().attendees.includes(user.id)) {
         console.log("return!!");
         return;

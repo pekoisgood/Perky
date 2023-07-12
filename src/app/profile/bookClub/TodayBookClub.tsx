@@ -59,7 +59,7 @@ const TodayBookClub = () => {
 
       result.forEach((doc: DocumentData) => {
         console.log("result: ", doc.data());
-        bookClubs.push(doc.data());
+        bookClubs.push({ id: doc.id, ...doc.data() });
       });
       console.log(bookClubs);
 
@@ -89,7 +89,7 @@ const TodayBookClub = () => {
             {todayBookClub.map((bookClub, index) => {
               return (
                 <Link
-                  href={`/bookClubMeeting/${bookClub.roomId}`}
+                  href={`/bookClubMeeting/${bookClub.id}`}
                   key={index}
                   className="border-2 border-black bg-[#245953] text-white p-1 rounded-xl max-w-[200px] hover:translate-y-[-3px] duration-100"
                 >

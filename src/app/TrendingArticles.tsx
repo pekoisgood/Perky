@@ -105,7 +105,7 @@ const TrendingArticles = () => {
                     alt="cover image"
                     width={400}
                     height={200}
-                    className="object-cover min-w-[800px] rounded-xl border-[#245953] border-2 shadow-[-10px_10px] shadow-[#0000003b]"
+                    className="object-cover max-w-[800px] rounded-xl border-[#245953] border-2 shadow-[-10px_10px] shadow-[#0000003b]"
                     priority={true}
                   />
                   <div className="flex flex-col gap-[10px]">
@@ -125,7 +125,7 @@ const TrendingArticles = () => {
                 <Link
                   href={`article/${article.id}`}
                   key={index}
-                  className="flex gap-[10px] w-[23%] h-[23%] md:h-[16%] border-l-[1px] border-[#d1d5db] pl-[14px] mt-[20px] hover:translate-y-[-3px] hover:duration-100"
+                  className="flex gap-[10px] w-[23%] h-[23%] md:h-[18%] border-l-[1px] border-[#d1d5db] pl-[14px] hover:translate-y-[-3px] hover:duration-100"
                 >
                   <div className="flex flex-col gap-[10px] h-full">
                     <p className={`text-[10px] ${categoryClass}`}>

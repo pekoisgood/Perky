@@ -11,7 +11,7 @@ const UserProfile = () => {
   if (!user) return <></>;
   return (
     <>
-      <div className="rounded-full border-[1px] border-black w-[100px] h-[100px] md:w-[150px] md:h-[150px] object-cover overflow-hidden">
+      <div className="flex justify-center items-center rounded-full border-[1px] border-black w-[100px] h-[100px] md:w-[150px] md:h-[150px] object-cover overflow-hidden">
         {user.avatar !== "" ? (
           <Image
             src={user.avatar}
@@ -20,10 +20,7 @@ const UserProfile = () => {
             height={150}
           />
         ) : (
-          <PiFinnTheHumanFill
-            size={30}
-            className="w-full h-full flex justify-center items-center"
-          />
+          <PiFinnTheHumanFill size={30} className="w-[90%] h-[90%]" />
         )}
       </div>
       <p className="mt-5">{user.name}</p>

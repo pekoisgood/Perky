@@ -7,6 +7,8 @@ import ReactPlayer from "react-player";
 import { AuthContext } from "@/context/AuthContext";
 import Image from "next/image";
 import { PiFinnTheHumanFill } from "react-icons/pi";
+import { doc } from "firebase/firestore";
+import { db } from "@/utils/firebase";
 
 type Props = {
   participantId: string;
@@ -52,6 +54,13 @@ const ParticipantView = ({
     }
   }, [micStream, micOn]);
 
+  useEffect(() => {
+    // function(){
+    //   const ref = doc(db, 'bookClubs', bookClubId);
+    // const
+    // }
+  }, []);
+
   return (
     <>
       {/* // 這裡一定要設定 h-full 不然下面那個 height 如果是 % 會無法作用！！ */}
@@ -84,20 +93,25 @@ const ParticipantView = ({
           </>
         ) : (
           <div
-            className={`flex flex-col ${presenterId ? "w-[100px]" : "w-full"}`}
+            className={`flex flex-col items-center ${
+              presenterId ? "w-[100px]" : "w-full"
+            }`}
           >
-            {user.avatar !== " " ? (
+            {user.avatar !== "" ? (
               <Image
                 src={user.avatar}
                 alt="avatar"
                 width={40}
                 height={40}
-                className="rounded-full overflow-hidden"
+                className="rounded-full overflow-hidden border-[1px] border-white"
               />
             ) : (
-              <PiFinnTheHumanFill />
+              <PiFinnTheHumanFill
+                size={40}
+                className="rounded-full border-[1px] border-white text-white"
+              />
             )}
-            <p className="text-white text-[12px]">{user.name}</p>
+            <p className="text-white text-[12px]">{isLocal && user.name}</p>
           </div>
         )}
       </div>

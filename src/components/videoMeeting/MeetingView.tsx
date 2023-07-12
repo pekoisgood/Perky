@@ -249,7 +249,7 @@ const MeetingView = () => {
               className="rounded-full overflow-hidden"
             />
           ) : (
-            <PiFinnTheHumanFill />
+            <PiFinnTheHumanFill size={100} />
           )}
           <p>{user.name}</p>
           <motion.button
