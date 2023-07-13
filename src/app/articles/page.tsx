@@ -37,7 +37,13 @@ const Page = async ({
         {search && `搜尋結果 : ${search}`}
       </h2>
       <div className="h-full grow p-3 pt-5 flex flex-col items-center gap-3">
-        {articles && <ArticleList articles={articles} customLayout="w-full" />}
+        {articles.length > 0 ? (
+          <ArticleList articles={articles} customLayout="w-full" />
+        ) : (
+          <p className="text-[#245953] font-medium text-center w-fit mx-auto">
+            Found no articles related to {search}...
+          </p>
+        )}
       </div>
     </div>
   );

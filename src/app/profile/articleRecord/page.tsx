@@ -34,7 +34,7 @@ const Page = () => {
 
   return (
     <div className="w-full relative mt-[20px]">
-      <h1 className="sticky top-[20px] right-[50%] translate-x-[50%] bg-white/60 mx-auto w-fit text-[28px] font-bold tracking-[4px] rounded-full px-5 mb-[30px]">
+      <h1 className="sticky top-[20px] left-[50%] translate-x-[-50%] bg-white/60 w-fit text-[28px] font-bold tracking-[4px] rounded-full px-5 mb-[30px]">
         Article Record
       </h1>
       <Link

@@ -51,7 +51,7 @@ const ArticleList = ({
     }
   }, [isFirstLoading]);
 
-  console.log(articles[0].image);
+  console.log(articles);
 
   return (
     <div
@@ -61,6 +61,7 @@ const ArticleList = ({
       ref={containerRef}
     >
       {articles.map((article: Article, index: number) => {
+        if (!article.image) return;
         return (
           <Link
             href={`/article/${article.id}`}

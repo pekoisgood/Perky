@@ -61,7 +61,10 @@ const Search = () => {
     <div className="group">
       <div
         className="hover:cursor-pointer"
-        onClick={() => setIsSearching(true)}
+        onClick={() => {
+          setIsSearching(true);
+          setSearchInput("");
+        }}
       >
         <HiSearch size={30} />
       </div>

@@ -9,7 +9,7 @@ const Page = () => {
 
   return (
     <div className="mt-[20px] w-full mx-auto relative">
-      <h1 className="sticky top-[20px] right-[43%] translate-x-[50%] bg-white/60 mx-auto w-fit text-[28px] font-bold tracking-[4px] rounded-full px-5 mb-[30px]">
+      <h1 className="sticky top-[20px] left-[50%] translate-x-[-50%] bg-white/60 w-fit text-[28px] font-bold tracking-[4px] rounded-full px-5 mb-[30px]">
         Analysis
       </h1>
       <div className="flex flex-col items-center h-full max-h-[70%] mt-[20px]">

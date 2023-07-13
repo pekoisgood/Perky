@@ -111,7 +111,7 @@ const TodayBookClub = () => {
             variants={easeAppearContainer}
             className="text-[#245953] font-medium mt-auto pt-[20px]"
           >
-            Remeber to joing the meeting!
+            Remeber to join the meeting!
           </motion.p>
         </>
       ) : (

@@ -45,8 +45,6 @@ export async function GET(req: Request) {
       });
     });
   } else if (search) {
-    const capitalizedSearch = capitalize(search);
-
     const result = await getDocs(
       query(articleRef, orderBy("createdAt", "desc"))
     );
@@ -59,15 +57,13 @@ export async function GET(req: Request) {
 
     data = data.filter(
       (article) =>
-        article.title.includes(capitalizedSearch) ||
-        article.content.includes(capitalizedSearch) ||
-        article.content.includes(capitalizedSearch)
+        article.title.includes(search.toLowerCase()) ||
+        article.content.includes(search.toLowerCase()) ||
+        article.userName.includes(search.toLowerCase())
     );
   } else {
     return;
   }
-
-  console.log(data);
 
   return NextResponse.json(data);
 }

@@ -53,12 +53,14 @@ export const AuthContextProvider = ({
   useEffect(() => {
     const checkAuthStatus = async () => {
       onAuthStateChanged(auth, (user) => {
-        if (user && user.displayName && user.photoURL && user.email) {
+        console.log("Check user!!!");
+
+        if (user) {
           setUser({
-            name: user.displayName,
+            name: user.displayName ?? user.email ?? "",
             id: user.uid,
-            avatar: user.photoURL,
-            email: user.email,
+            avatar: user.photoURL ?? "",
+            email: user.email ?? "",
           });
           setIsLogin(true);
         } else {
@@ -70,12 +72,7 @@ export const AuthContextProvider = ({
   }, []);
 
   const logIn = async () => {
-    // if(method === "GOOGLE"){
     const result = await signInWithGoogle();
-
-    // }eles{
-
-    // }
 
     if (!result) return;
     setIsLogin(true);

@@ -54,9 +54,12 @@ const ArticleRecord = () => {
         const res: DocumentData = await getDoc(
           doc(db, "articles", articleIds[i])
         );
-        // console.log(articleIds[i]);
+        console.log("i", i, articleIds[i]);
 
-        // console.log(res.data());
+        console.log("data", res.data());
+
+        // if (res.data) {
+        console.log("===========push==========");
 
         savedArticles.push({
           id: res.id,
@@ -66,6 +69,7 @@ const ArticleRecord = () => {
           image: res.data().image,
           category: res.data().category,
         });
+        // }
       }
 
       console.log("...", savedArticles);

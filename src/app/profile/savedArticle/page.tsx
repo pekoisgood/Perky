@@ -54,6 +54,8 @@ const Page = () => {
         const res: DocumentData = await getDoc(
           doc(db, "articles", articleIds[i])
         );
+        console.log(i, articleIds[i], res.data());
+
         savedArticles.push({
           id: res.id,
           authorName: res.data().authorName,
@@ -73,7 +75,7 @@ const Page = () => {
 
   return (
     <div className="w-full mt-[20px] relative">
-      <h1 className="sticky top-[20px] right-[42%] translate-x-[50%] bg-white/60 mx-auto w-fit text-[28px] font-bold tracking-[4px] rounded-full px-5 mb-[30px]">
+      <h1 className="sticky top-[20px] left-[50%] translate-x-[-50%] bg-white/60 w-fit text-[28px] font-bold tracking-[4px] rounded-full px-5 mb-[30px]">
         Saved Articles
       </h1>
       {articles === null ? (
