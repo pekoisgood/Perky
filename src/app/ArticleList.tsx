@@ -51,8 +51,6 @@ const ArticleList = ({
     }
   }, [isFirstLoading]);
 
-  console.log(articles);
-
   return (
     <div
       className={`h-full ${
@@ -65,7 +63,7 @@ const ArticleList = ({
         return (
           <Link
             href={`/article/${article.id}`}
-            key={article.id}
+            key={index}
             ref={(el: HTMLAnchorElement) => (ref.current[index] = el)}
             className={`w-[100%] lg:w-[48%] p-4 pt-6 flex justify-between items-start gap-3 border-b-[1px] border-[#d1d5db] min-h-[140px] ${
               isFirstLoading && "translate-x-0"

@@ -55,10 +55,8 @@ export const AuthContextProvider = ({
     const checkAuthStatus = async () => {
       onAuthStateChanged(auth, (user) => {
         console.log("Check user!!!");
-        // let userId = "";
 
         if (user) {
-          // userId = user.uid;
           setUser((prev) => {
             return {
               ...prev,
@@ -71,7 +69,6 @@ export const AuthContextProvider = ({
           setIsLogin(false);
         }
       });
-      console.log(user.id);
 
       if (user.id) {
         const userRef = doc(db, "users", user.id);
@@ -88,7 +85,6 @@ export const AuthContextProvider = ({
 
       setIsLogin(true);
     };
-    // console.log(user);
 
     checkAuthStatus();
   }, [user.id]);

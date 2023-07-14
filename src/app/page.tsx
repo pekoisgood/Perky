@@ -27,39 +27,31 @@ export default function Home() {
   const [articles, setArticles] = useState<Article[]>([]);
 
   useEffect(() => {
-    let nextPaging: null | number = 0;
     let isFetching = false;
+    let total = 0;
+    let articlesCount = 0;
+    let lastId = "0";
 
     const fetchArticles = async () => {
       isFetching = true;
       setIsLoading(true);
-      console.log("fetchh!!!");
 
-      const articlesReq = await fetch(`/api/articles?paging=${nextPaging}`);
-      const articles = await articlesReq.json();
-      console.log(articles);
+      const articlesReq = await fetch(`/api/articles?lastId=${lastId}`);
+      const articlesRes = await articlesReq.json();
+      total = articlesRes.totalCount;
 
-      if (articles.data.length === 0) {
-        nextPaging = null;
-        console.log("return!");
-
-        return;
-      } else {
-        if (nextPaging !== null) nextPaging += 1;
-      }
       setArticles((prev) => {
-        return [...prev, ...articles.data];
+        return [...prev, ...articlesRes.data];
       });
+      articlesCount += articlesRes.data.length;
+      lastId = articlesRes.data[articlesRes.data.length - 1].id;
       isFetching = false;
       setIsLoading(false);
     };
 
     async function scrollHandler() {
       if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-        console.log("next", nextPaging);
-        console.log("fetc: ", isFetching);
-
-        if (nextPaging === null) return;
+        if (total && articlesCount === total) return;
         if (isFetching) return;
 
         fetchArticles();

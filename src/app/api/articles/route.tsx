@@ -6,48 +6,47 @@ import {
   query,
   limit,
   startAfter,
+  getDoc,
+  doc,
+  getCountFromServer,
 } from "firebase/firestore";
 import { db } from "@/utils/firebase";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
-  const paging = Number(searchParams.get("paging"));
-
+  const lastId = searchParams.get("lastId");
   const articleRef = collection(db, "articles");
-  // const q = query(articleRef, orderBy("createdAt", "desc"), limit(10));
-  // const result = await getDocs(q);
+  const articleCollectionSnapShot = await getCountFromServer(articleRef);
+
   let data: DocumentData[] = [];
 
-  // result.forEach((doc) => {
-  //   data.push({ id: doc.id, ...doc.data() });
-  // });
-  if (paging === undefined) {
-    return NextResponse.json({ message: "No paging provided" });
-  }
-  if (paging === 0) {
+  if (lastId === "0") {
     const first = query(articleRef, orderBy("createdAt", "desc"), limit(10));
     const documentSnapshots = await getDocs(first);
     documentSnapshots.forEach((doc) => {
       data.push({ id: doc.id, ...doc.data() });
     });
-  } else {
-    // FIXME: next paging 拿不到
-    console.log("page: ", paging);
+  }
+
+  if (lastId !== "0" && lastId) {
+    const lastArticle = await getDoc(doc(articleRef, lastId));
 
     const next = query(
-      articleRef,
+      collection(db, "articles"),
       orderBy("createdAt", "desc"),
-      startAfter(10 * paging - 1),
+      startAfter(lastArticle),
       limit(10)
     );
+
     const documentSnapshots = await getDocs(next);
     documentSnapshots.forEach((doc) => {
-      console.log(doc.data());
-
       data.push({ id: doc.id, ...doc.data() });
     });
   }
 
-  return NextResponse.json({ data });
+  return NextResponse.json({
+    data: data,
+    totalCount: articleCollectionSnapShot.data().count,
+  });
 }

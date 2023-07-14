@@ -10,7 +10,7 @@ export default function Error({ reset }: { reset: () => void }) {
 
   return (
     <div className="relative flex flex-col gap-5 justify-center items-center w-full h-[calc(100vh-60px)] z-10">
-      <p className="text-[100px] text-[#245953] font-extrabold font-mono">
+      <p className="text-[60px] text-[#245953] font-extrabold font-mono">
         Something went wrong!
       </p>
       <Button handleOnClick={() => reset()}>Try again</Button>
