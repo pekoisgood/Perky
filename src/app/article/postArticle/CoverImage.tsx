@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+
 const buttonClass = `w-fit h-fit bg-[#245953] text-white px-3 py-1
 border-2 border-black rounded-2xl shadow-black shadow-[3px_3px]
 hover:cursor-pointer hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-none duration-100`;

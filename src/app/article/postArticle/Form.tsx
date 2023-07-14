@@ -22,6 +22,7 @@ import Warning from "@/components/warning/Warning";
 import { PiWarningFill } from "react-icons/pi";
 import Link from "next/link";
 import Button from "@/components/button/Button";
+import { compressImage } from "@/utils/compressImage";
 
 const postStatus = {
   PENDING: "Pending",
@@ -94,30 +95,6 @@ const Form = ({ image }: { image: File | null }) => {
         })}
       </ul>
     );
-  };
-
-  const compressImage = async (
-    file: File,
-    { quality = 1, type = file.type }
-  ) => {
-    const imageBitmap = await createImageBitmap(file);
-
-    const canvas = document.createElement("canvas");
-    canvas.width = imageBitmap.width;
-    canvas.height = imageBitmap.height;
-    const ctx = canvas.getContext("2d");
-    ctx?.drawImage(imageBitmap, 0, 0);
-
-    // turn into Blob
-    const blob: Blob | null = await new Promise((resolve) =>
-      canvas.toBlob(resolve, type, quality)
-    );
-
-    if (!blob) return;
-    // Turn Blob into File
-    return new File([blob], file.name, {
-      type: blob.type,
-    });
   };
 
   const handleSubmitArticle = async () => {

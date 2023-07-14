@@ -18,12 +18,13 @@ const UserProfile = () => {
             alt="user's avatar"
             width={150}
             height={150}
+            className="w-full h-full object-cover"
           />
         ) : (
           <PiFinnTheHumanFill size={30} className="w-[90%] h-[90%]" />
         )}
       </div>
-      <p className="mt-5">{user.name}</p>
+      <p className="mt-2">{user.name}</p>
     </>
   );
 };

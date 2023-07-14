@@ -1,8 +1,9 @@
 "use client";
 import React, { createContext, useEffect, useState } from "react";
-import { auth, signInWithGoogle, firebaseSignOut } from "@/utils/firebase";
+import { auth, signInWithGoogle, firebaseSignOut, db } from "@/utils/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";
+import { DocumentData, doc, getDoc } from "firebase/firestore";
 
 type User = {
   id: string;
@@ -54,27 +55,58 @@ export const AuthContextProvider = ({
     const checkAuthStatus = async () => {
       onAuthStateChanged(auth, (user) => {
         console.log("Check user!!!");
+        // let userId = "";
 
         if (user) {
-          setUser({
-            name: user.displayName ?? user.email ?? "",
-            id: user.uid,
-            avatar: user.photoURL ?? "",
-            email: user.email ?? "",
+          // userId = user.uid;
+          setUser((prev) => {
+            return {
+              ...prev,
+              id: user.uid,
+              email: user.email ?? "",
+              avatar: user.photoURL ?? "",
+            };
           });
-          setIsLogin(true);
         } else {
           setIsLogin(false);
         }
       });
+      console.log(user.id);
+
+      if (user.id) {
+        const userRef = doc(db, "users", user.id);
+        const result: DocumentData = await getDoc(userRef);
+
+        setUser((prev) => {
+          return {
+            ...prev,
+            name: result.data().name,
+            avatar: result.data().avatar ?? "",
+          };
+        });
+      }
+
+      setIsLogin(true);
     };
+    // console.log(user);
+
     checkAuthStatus();
-  }, []);
+  }, [user.id]);
 
   const logIn = async () => {
     const result = await signInWithGoogle();
 
     if (!result) return;
+    const userRef = doc(db, "users", user.id);
+    const userInfo: DocumentData = await getDoc(userRef);
+
+    setUser((prev) => {
+      return {
+        ...prev,
+        name: userInfo.data().name,
+        avatar: userInfo.data().avatar ?? "",
+      };
+    });
     setIsLogin(true);
     router.replace("/profile");
   };
@@ -83,14 +115,6 @@ export const AuthContextProvider = ({
     await firebaseSignOut();
     setIsLogin(false);
   };
-
-  // const signInWithEmailAndPassword = async (
-  //   email: string,
-  //   password: string
-  // ) => {
-  //   const userInfo = await signInWithEmail(email, password);
-  //   console.log(userInfo);
-  // };
 
   return (
     <AuthContext.Provider

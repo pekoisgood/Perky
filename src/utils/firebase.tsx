@@ -46,6 +46,7 @@ export const signInWithGoogle = async () => {
     const userId = user.uid;
     const name = user.displayName;
     const email = user.email;
+    const avatar = user.photoURL;
 
     const userRef = collection(db, "users");
     const q = query(userRef, where("userId", "==", userId));
@@ -61,6 +62,7 @@ export const signInWithGoogle = async () => {
         userId: userId,
         name: name,
         email: email,
+        avatar: avatar,
         createdAt: serverTimestamp(),
       });
     }

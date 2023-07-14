@@ -16,6 +16,7 @@ import {
   serverTimestamp,
   doc,
   getDoc,
+  DocumentData,
 } from "firebase/firestore";
 import laughingLady from "../../assets/image/people/laughing-lady.svg";
 import Image from "next/image";
@@ -116,13 +117,13 @@ const Page = () => {
       const email = user.email;
 
       const userRef = doc(db, "users", userId);
-      const result = getDoc(userRef);
-      console.log(result);
+      const userInfo: DocumentData = await getDoc(userRef);
 
       setUser({
-        name: `user-${email}`,
+        name: userInfo.data().name,
         id: userId,
-        avatar: "",
+        avatar: userInfo.data().avatar ?? "",
+        email: email,
       });
     } catch (error) {
       console.log(error);

@@ -6,7 +6,7 @@ import { MdOutlineDataThresholding } from "react-icons/md";
 import { FiBookmark } from "react-icons/fi";
 import { PiBooksDuotone, PiFilesBold } from "react-icons/pi";
 import { RxDashboard } from "react-icons/rx";
-// import { IoSettingsOutline } from "react-icons/io5";
+import { IoSettingsOutline } from "react-icons/io5";
 import { usePathname } from "next/navigation";
 
 const titleClass = ` hidden lg:flex text-[16px] lg:text-[18px] font-medium`;
@@ -36,9 +36,9 @@ const ProfileSidebar = () => {
 
   const [activePage, setActivePage] = useState(getTab());
   const linkClass = (index: number) => {
-    return `flex gap-2 items-center hover:text-[#245953] duration-100 lg:pl-[15px] z-10 ${
+    return `flex gap-2 items-center hover:text-[#245953] duration-100 lg:pl-[15px] z-10 lg:bg-white/70 ${
       activePage === tabs[index] &&
-      "bg-[#245953] text-white lg:text-[#245953] rounded-full p-1 lg:bg-transparent lg:pr-0 lg:py-0 lg:border-r-2 lg:rounded-none border-[#245953]"
+      "bg-[#245953] text-white lg:text-[#245953] rounded-full p-1 lg:bg-white/70 lg:pr-0 lg:py-0 lg:border-r-2 lg:rounded-none border-[#245953]"
     }`;
   };
 
@@ -84,14 +84,14 @@ const ProfileSidebar = () => {
         <PiBooksDuotone size={25} />
         <p className={titleClass}>Book Club</p>
       </Link>
-      {/* <Link
+      <Link
         href="/profile/bookClub"
         className={linkClass(5)}
         onClick={() => setActivePage(tabs[5])}
       >
         <p className={titleClass}>Setting</p>
         <IoSettingsOutline size={25} />
-      </Link> */}
+      </Link>
     </>
   );
 };

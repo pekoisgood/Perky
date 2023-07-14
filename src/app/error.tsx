@@ -5,22 +5,13 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import spookyMan from "../assets/image/people/spooky-man.svg";
 
-export default function Error({
-  error,
-  reset,
-}: {
-  error: Error;
-  reset: () => void;
-}) {
+export default function Error({ reset }: { reset: () => void }) {
   const router = useRouter();
 
   return (
     <div className="relative flex flex-col gap-5 justify-center items-center w-full h-[calc(100vh-60px)] z-10">
-      <p className="text-[30px] text-[#245953] font-bold">
-        Something went wrong!
-      </p>
       <p className="text-[100px] text-[#245953] font-extrabold font-mono">
-        {error.name}
+        Something went wrong!
       </p>
       <Button handleOnClick={() => reset()}>Try again</Button>
       <Button handleOnClick={() => router.replace("/")}>Go to home page</Button>

@@ -33,6 +33,8 @@ export async function GET(req: Request) {
     });
   } else {
     // FIXME: next paging 拿不到
+    console.log("page: ", paging);
+
     const next = query(
       articleRef,
       orderBy("createdAt", "desc"),

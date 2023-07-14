@@ -32,7 +32,7 @@ const Profile = () => {
         <>
           <div
             onClick={() => setShowList((prev) => !prev)}
-            className="rounded-full border-[1px] border-white flex items-center justify-center w-[40px] h-[40px] object-contain overflow-hidden hover:cursor-pointer"
+            className="rounded-full border-[1px] border-white flex items-center justify-center w-[40px] h-[40px] overflow-hidden hover:cursor-pointer"
           >
             {user.avatar !== "" ? (
               <Image
@@ -40,6 +40,7 @@ const Profile = () => {
                 alt="user avatar"
                 width={50}
                 height={50}
+                className="h-full w-full object-cover"
               />
             ) : (
               <PiFinnTheHumanFill />
