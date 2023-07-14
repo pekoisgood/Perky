@@ -24,11 +24,16 @@ import googleLogo from "../../assets/image/backgroundIcon/google.gif";
 import Background from "@/app/auth/Background";
 import { useRouter } from "next/navigation";
 import { redirect } from "next/navigation";
+import Error from "next/error";
 
 type User = {
   email: string;
   password: string;
 };
+
+interface CustomError extends Error {
+  code: string;
+}
 
 const formClass =
   "relative w-[40%] min-w-[350px] lg:min-w-[500px] min-h-[500px] p-5 backdrop-filter backdrop-blur-[2px] bg-white/90 border-2 border-[#245953] shadow-lg rounded-xl flex flex-col justify-between items-center gap-[10px] z-10";
@@ -53,7 +58,7 @@ const Page = () => {
     email: "demo@gmail.com",
     password: "demo123",
   });
-  const [isLoginFail, setIsLoginFail] = useState<boolean | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const router = useRouter();
 
@@ -93,9 +98,8 @@ const Page = () => {
         });
       }
     } catch (error) {
-      console.log(error);
       setIsLogin(false);
-      setIsLoginFail(true);
+      setErrorMessage((error as CustomError).code.split("/")[1]);
       return;
     }
     setIsLogin(true);
@@ -126,8 +130,7 @@ const Page = () => {
         email: email,
       });
     } catch (error) {
-      console.log(error);
-      setIsLoginFail(true);
+      setErrorMessage((error as CustomError).code.split("/")[1]);
       setIsLogin(false);
       return;
     }
@@ -168,7 +171,7 @@ const Page = () => {
                   className={inputClass}
                   value={userInput.email}
                   onChange={(e) => {
-                    setIsLoginFail(null);
+                    setErrorMessage(null);
                     setUserInput((prev) => {
                       return { ...prev, email: e.target.value };
                     });
@@ -182,17 +185,15 @@ const Page = () => {
                   className={inputClass}
                   value={userInput.password}
                   onChange={(e) => {
-                    setIsLoginFail(null);
+                    setErrorMessage(null);
                     setUserInput((prev) => {
                       return { ...prev, password: e.target.value };
                     });
                   }}
                 />
               </div>
-              {isLoginFail && (
-                <p className="text-red-400 text-[14px]">
-                  Email and Password does not match... Please try again.
-                </p>
+              {errorMessage && (
+                <p className="text-red-400 text-[14px] mt-2">{errorMessage}</p>
               )}
             </div>
 
@@ -213,7 +214,7 @@ const Page = () => {
             <p
               className="hover:cursor-pointer text-[#245953] text-[12px]"
               onClick={() => {
-                setIsLoginFail(null);
+                setErrorMessage(null);
                 setLoginPage(false);
               }}
             >
@@ -250,10 +251,8 @@ const Page = () => {
                   }
                 />
               </div>
-              {isLoginFail && (
-                <p className="text-red-400 text-[14px]">
-                  Email already used... Please try another.
-                </p>
+              {errorMessage && (
+                <p className="text-red-400 text-[14px] mt-2">{errorMessage}</p>
               )}
             </div>
             <button type="submit" className={buttonClass}>
@@ -262,7 +261,7 @@ const Page = () => {
             <p
               className="hover:cursor-pointer text-[#245953] text-[12px]"
               onClick={() => {
-                setIsLoginFail(null);
+                setErrorMessage(null);
                 setLoginPage(true);
               }}
             >
