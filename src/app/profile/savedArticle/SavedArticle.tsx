@@ -48,7 +48,6 @@ const ArticleRecord = () => {
         articleIds.push(doc.id);
       });
 
-      // console.log("id: ", articleIds);
       if (!articleIds) return;
       for (let i = 0; i < articleIds.length; i += 1) {
         const res: DocumentData = await getDoc(
@@ -83,7 +82,7 @@ const ArticleRecord = () => {
 
   return (
     <>
-      <h4 className={dashBoardTitleClass}>Saved Article</h4>
+      <h4 className={dashBoardTitleClass}>Recent Saved Article</h4>
       {savedArticles === null ? (
         <div className="flex flex-col gap-3 h-[82%]">
           <DashboardArticleSkeleton />
@@ -101,7 +100,8 @@ const ArticleRecord = () => {
         >
           {savedArticles.slice(0, 5).map((article, index) => {
             return (
-              <div
+              <Link
+                href={`/article/${article.id}`}
                 key={index}
                 className="w-full flex md:flex-row flex-col gap-1 border-b-[1px] border-[#eee] py-2"
               >
@@ -114,7 +114,7 @@ const ArticleRecord = () => {
                   {article.title}
                   <span className="ml-2 text-[12px]">{article.authorName}</span>
                 </p>
-              </div>
+              </Link>
             );
           })}
         </motion.div>

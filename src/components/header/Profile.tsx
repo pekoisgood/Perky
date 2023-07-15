@@ -12,6 +12,7 @@ import {
 } from "react-icons/pi";
 import { RxDashboard } from "react-icons/rx";
 import { redirect } from "next/navigation";
+import { IoSettingsOutline } from "react-icons/io5";
 
 const linkClass = `flex items-center gap-2 hover:text-[#245953] duration-100`;
 const titleClass = ``;
@@ -93,6 +94,14 @@ const Profile = () => {
             >
               <PiBooksDuotone size={20} />
               <p className={titleClass}>Book Club</p>
+            </Link>
+            <Link
+              href="/profile/setting"
+              className={linkClass}
+              onClick={() => setShowList(false)}
+            >
+              <IoSettingsOutline size={25} />
+              <p className={titleClass}>Setting</p>
             </Link>
             <p
               className="h-fit w-fit mx-auto mt-[20px] px-2 bg-[#245953] text-white border-2 border-[#245953] rounded-lg font-medium hover:text-[#245953] hover:bg-white hover:cursor-pointer"

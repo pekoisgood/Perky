@@ -107,17 +107,19 @@ const Page = () => {
         />
       );
     }
+
     if (user.avatar) {
       return (
         <Image
           src={user.avatar}
           alt="user avatar"
-          width={50}
-          height={50}
+          width={120}
+          height={120}
           className={`rounded-full overflow-hidden object-cover h-full w-full`}
         />
       );
     }
+
     return (
       <PiFinnTheHumanFill
         size={120}
@@ -138,36 +140,40 @@ const Page = () => {
         <BsPencilSquare
           size={25}
           className="absolute top-[50%] translate-y-[-50%] right-[-35px] cursor-pointer"
-          onClick={() => setIsModifying(true)}
+          onClick={() => setIsModifying((prev) => !prev)}
         />
       </div>
 
       <div className="flex flex-col items-center gap-5">
+        <div
+          className={`relative border-2 border-[#245953] rounded-full w-[120px] h-[120px] overflow-hidden
+          ${isModifying ? "border-dashed" : " boder-solid"}
+        `}
+        >
+          {getUploadAvatar()}
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => e.target.files && setImage(e.target.files[0])}
+            className={`${
+              isModifying ? "flex" : "hidden"
+            } opacity-0 absolute top-0 left-0 w-full h-full cursor-pointer`}
+          />
+        </div>
         {isModifying ? (
-          <>
-            <div className="relative border-2 border-[#245953] border-dashed rounded-full w-[120px] h-[120px] overflow-hidden">
-              {getUploadAvatar()}
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => e.target.files && setImage(e.target.files[0])}
-                className={`opacity-0 absolute top-0 left-0 w-full h-full cursor-pointer`}
-              />
-            </div>
-            <div className="py-1">
-              <label>Name: </label>
-              <input
-                value={name}
-                className={inputClass}
-                onChange={(e) => {
-                  isModifying && setName(e.target.value);
-                }}
-              />
-            </div>
-          </>
+          <div className="py-1">
+            <label>Name: </label>
+            <input
+              value={name}
+              className={inputClass}
+              onChange={(e) => {
+                isModifying && setName(e.target.value);
+              }}
+            />
+          </div>
         ) : (
           <>
-            {user.avatar !== "" ? (
+            {/* {user.avatar !== "" ? (
               <Image
                 src={user.avatar}
                 alt="user avatar"
@@ -180,7 +186,7 @@ const Page = () => {
                 size={120}
                 className={`flex items-center justify-center bg-white rounded-full border-black border-[1px]`}
               />
-            )}
+            )} */}
             <p>Name: {user.name}</p>
           </>
         )}

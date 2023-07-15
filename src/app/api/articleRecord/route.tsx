@@ -17,7 +17,7 @@ export async function GET(req: Request) {
   const queryArticles = query(
     articleRef,
     where("authorUserId", "==", userId),
-    orderBy("createdAt")
+    orderBy("createdAt", "desc")
   );
   const result = await getDocs(queryArticles);
   let data: DocumentData[] = [];

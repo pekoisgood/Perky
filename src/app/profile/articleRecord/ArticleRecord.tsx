@@ -54,7 +54,7 @@ const ArticleRecord = () => {
   }, [user.id]);
   return (
     <>
-      <h4 className={dashBoardTitleClass}>Article Record</h4>
+      <h4 className={dashBoardTitleClass}>Recent Article Record</h4>
       {articleRecords === null ? (
         <div className="flex flex-col gap-3 h-[82%]">
           <DashboardArticleSkeleton />
@@ -72,7 +72,8 @@ const ArticleRecord = () => {
         >
           {articleRecords.slice(0, 5).map((article, index) => {
             return (
-              <div
+              <Link
+                href={`/article/${article.id}`}
                 key={index}
                 className="flex md:flex-row flex-col gap-1 border-b-[1px] border-[#eee] py-2"
               >
@@ -82,7 +83,7 @@ const ArticleRecord = () => {
                   {article.category}
                 </p>
                 <p className={`text-[14px] lg:16px`}>{article.title}</p>
-              </div>
+              </Link>
             );
           })}
         </motion.div>
