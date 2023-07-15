@@ -8,7 +8,7 @@ const Auth = () => {
   const { isLogin } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  console.log(isLogin);
+  // console.log(isLogin);
 
   useEffect(() => {
     if (isLogin === null) {
@@ -21,7 +21,7 @@ const Auth = () => {
   useEffect(() => {
     if (isLoading) return;
     if (isLogin === false) {
-      console.log("redirect to auth");
+      // console.log("redirect to auth");
 
       redirect("/auth");
     }
