@@ -54,6 +54,9 @@ export const signInWithGoogle = async () => {
     const userDoc = await getDocs(q);
     let isUserExist;
     userDoc.forEach((userDoc) => {
+      console.log(userDoc.data());
+      // GOOGLE sign in fail , 一直顯示 firebase doc reference error, doc reference should have even but got one....
+      //  FirebaseError: Invalid document reference. Document references must have an even number of segments, but users has 1.
       isUserExist = userDoc.data();
     });
 
@@ -66,7 +69,6 @@ export const signInWithGoogle = async () => {
         createdAt: serverTimestamp(),
       });
     }
-
     return result;
   } catch (error) {
     console.log(error);

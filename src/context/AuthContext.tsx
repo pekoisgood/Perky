@@ -58,8 +58,11 @@ export const AuthContextProvider = ({
     const checkAuthStatus = async () => {
       onAuthStateChanged(auth, (user) => {
         console.log("Check user!!!");
+        console.log("check: ", user);
+
         if (!user) {
           setIsLogin(false);
+          return;
         }
       });
 
@@ -90,8 +93,11 @@ export const AuthContextProvider = ({
     const result = await signInWithGoogle();
 
     if (!result) return;
+    console.log("login", user.id);
+
     const userRef = doc(db, "users", user.id);
     const userInfo: DocumentData = await getDoc(userRef);
+    // 是因為70 行 user.id 一直拿不到拉幹
 
     setUser((prev) => {
       return {
