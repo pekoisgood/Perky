@@ -97,6 +97,8 @@ const Page = () => {
           createdAt: serverTimestamp(),
         });
       }
+
+      console.log("sign up !!");
     } catch (error) {
       setIsLogin(false);
       setErrorMessage((error as CustomError).code.split("/")[1]);
@@ -141,6 +143,7 @@ const Page = () => {
 
   useEffect(() => {
     if (isLogin) redirect("/profile");
+    console.log("redirect to profile!");
   }, [isLogin]);
 
   return (
