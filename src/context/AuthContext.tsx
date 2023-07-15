@@ -58,25 +58,17 @@ export const AuthContextProvider = ({
     const checkAuthStatus = async () => {
       onAuthStateChanged(auth, (user) => {
         console.log("Check user!!!");
-
-        if (user) {
-          setUser((prev) => {
-            return {
-              ...prev,
-              id: user.uid,
-              email: user.email ?? "",
-              avatar: user.photoURL ?? "",
-            };
-          });
-        } else {
+        if (!user) {
           setIsLogin(false);
         }
       });
 
-      if (user.id) {
-        const userRef = doc(db, "users", user.id);
-        const result: DocumentData = await getDoc(userRef);
+      console.log("auth context: ", user.id);
 
+      const userRef = doc(db, "users", user.id);
+      const result: DocumentData = await getDoc(userRef);
+
+      if (result.data()) {
         console.log("get user info", result.data());
 
         setUser((prev) => {
