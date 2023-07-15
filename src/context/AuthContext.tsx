@@ -52,6 +52,9 @@ export const AuthContextProvider = ({
   const router = useRouter();
 
   useEffect(() => {
+    console.log("this is authContext...");
+
+    if (isLogin) return;
     const checkAuthStatus = async () => {
       onAuthStateChanged(auth, (user) => {
         console.log("Check user!!!");
@@ -73,6 +76,8 @@ export const AuthContextProvider = ({
       if (user.id) {
         const userRef = doc(db, "users", user.id);
         const result: DocumentData = await getDoc(userRef);
+
+        console.log("get user info", result.data());
 
         setUser((prev) => {
           return {

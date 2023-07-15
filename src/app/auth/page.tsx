@@ -97,6 +97,8 @@ const Page = () => {
           createdAt: serverTimestamp(),
         });
       }
+      router.push("/profile");
+      setIsLogin(true);
 
       console.log("sign up !!");
     } catch (error) {
@@ -104,7 +106,6 @@ const Page = () => {
       setErrorMessage((error as CustomError).code.split("/")[1]);
       return;
     }
-    setIsLogin(true);
     return;
   };
 
