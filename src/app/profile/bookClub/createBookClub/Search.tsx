@@ -5,12 +5,14 @@ import React, { useEffect, useState } from "react";
 type User = {
   name: string;
   userId: string;
+  email: string;
 };
 
 type CreateBookClub = {
   title: string;
   date: string;
-  time: string;
+  hour: string;
+  minute: string;
   guest: string[];
 };
 
@@ -45,6 +47,7 @@ const Search = ({ bookClub, setBookClub, setShowInvationError }: Props) => {
       result.forEach((doc) => {
         allUsers.push({
           name: doc.data().name,
+          email: doc.data().email,
           userId: doc.id,
         });
         setUsers(allUsers);
@@ -64,10 +67,11 @@ const Search = ({ bookClub, setBookClub, setShowInvationError }: Props) => {
           setIsSearching(true);
           setShowInvationError(false);
         }}
+        // onBlur={() => setIsSearching(false)}
         onChange={(e) => setSearchName(e.target.value)}
       />
       {isSearching === true && searchName !== "" && (
-        <div className="flex flex-col gap-2 absolute top-[44px] left-0 w-full h-fit bg-slate-100/50 rounded-lg p-4 max-h-[200px] overflow-scroll">
+        <div className="flex flex-col gap-2 absolute top-[44px] left-0 w-full h-fit bg-slate-100/90 rounded-lg p-4 max-h-[200px] overflow-scroll">
           {users
             .filter((user) =>
               user.name.toLowerCase().includes(searchName.toLowerCase())
@@ -76,7 +80,7 @@ const Search = ({ bookClub, setBookClub, setShowInvationError }: Props) => {
               return (
                 <p
                   key={user.userId}
-                  onClick={() => handleAddGuest(user.userId)}
+                  onClick={() => handleAddGuest(user.name + `(${user.email})`)}
                   className=" text-slate-800 hover:cursor-pointer"
                 >
                   {user.name}
