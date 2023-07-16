@@ -77,6 +77,7 @@ const Page = () => {
       const email = user.email;
       setUser({
         name: email,
+        email,
         id: userId,
         avatar: "",
       });
