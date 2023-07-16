@@ -52,38 +52,36 @@ export const AuthContextProvider = ({
   const router = useRouter();
 
   useEffect(() => {
-    console.log("this is authContext...");
+    console.log("=========this is authContext...==========");
+    console.log("login status: ", isLogin);
+    console.log("user state: ", user);
 
-    if (isLogin) return;
     const checkAuthStatus = async () => {
-      onAuthStateChanged(auth, (user) => {
-        console.log("Check user!!!");
-        console.log("check: ", user);
+      onAuthStateChanged(auth, async (user) => {
+        console.log("check: ", user?.uid);
 
         if (!user) {
+          console.log("user not login!!");
           setIsLogin(false);
           return;
         }
-      });
 
-      console.log("auth context: ", user.id);
-
-      const userRef = doc(db, "users", user.id);
-      const result: DocumentData = await getDoc(userRef);
-
-      if (result.data()) {
+        const userRef = doc(db, "users", user.uid);
+        const result: DocumentData = await getDoc(userRef);
         console.log("get user info", result.data());
 
-        setUser((prev) => {
-          return {
-            ...prev,
-            name: result.data().name,
-            avatar: result.data().avatar ?? "",
-          };
-        });
-      }
+        if (result.data()) {
+          setUser((prev) => {
+            return {
+              ...prev,
+              name: result.data().name,
+              avatar: result.data().avatar ?? "",
+            };
+          });
+        }
 
-      setIsLogin(true);
+        setIsLogin(true);
+      });
     };
 
     checkAuthStatus();
@@ -93,18 +91,20 @@ export const AuthContextProvider = ({
     const result = await signInWithGoogle();
 
     if (!result) return;
-    console.log("login", user.id);
+    // console.log("google login: ", user.id);
+    // console.log(result.user.uid);
 
-    const userRef = doc(db, "users", user.id);
+    const userRef = doc(db, "users", result.user.uid);
     const userInfo: DocumentData = await getDoc(userRef);
     // 是因為70 行 user.id 一直拿不到拉幹
 
-    setUser((prev) => {
-      return {
-        ...prev,
-        name: userInfo.data().name,
-        avatar: userInfo.data().avatar ?? "",
-      };
+    console.log(userInfo.data());
+
+    setUser({
+      email: userInfo.data().email ?? result.user.email,
+      id: result.user.uid,
+      name: userInfo.data().name ?? result.user.displayName,
+      avatar: userInfo.data().avatar ?? result.user.photoURL,
     });
     setIsLogin(true);
     router.replace("/profile");
