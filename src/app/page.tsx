@@ -86,7 +86,8 @@ export default function Home() {
                   href={`/articles?category=${category}`}
                   key={category}
                   className={
-                    categoryClass + " hover:cursor-pointer hover:animate-wiggle"
+                    categoryClass +
+                    " hover:cursor-pointer hover:animate-wiggle z-10 relative"
                   }
                 >
                   {category}
@@ -98,7 +99,7 @@ export default function Home() {
               alt="boy sitting on legs"
               width={200}
               height={300}
-              className={`absolute bottom-0 left-0 scale-150`}
+              className={`absolute bottom-0 left-0 scale-150 z-0`}
             />
           </div>
           <div className="lg:min-w-[100%-300px] md:min-w-[100%-210px] w-full overflow-hidden">

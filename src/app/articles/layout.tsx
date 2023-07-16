@@ -29,7 +29,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                 key={category}
                 className={`w-fit bg-[#FFD89C] text-bold font-mono py-1 px-3 
                 shadow-[-3px_3px] shadow-black rounded-2xl border-2 border-black 
-                hover:cursor-pointer hover:animate-wiggle`}
+                hover:cursor-pointer hover:animate-wiggle z-10 relative`}
               >
                 {category}
               </Link>
@@ -40,7 +40,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             alt="boy sitting on legs"
             width={200}
             height={300}
-            className={`absolute bottom-0 left-0 scale-125`}
+            className={`absolute bottom-0 left-0 scale-125 z-1`}
           />
         </div>
       </div>
