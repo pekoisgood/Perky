@@ -10,8 +10,8 @@ const Page = () => {
   return (
     <div className="mt-[20px] w-full mx-auto relative">
       <h1
-        className={`sticky top-[20px] left-[50%] translate-x-[-50%] bg-white/60 w-fit text-[28px] font-bold tracking-[4px] rounded-full px-5 mb-[30px]
-        lg:left-[calc(50%-200px)] lg:right-0 lg:translate-x-[50%]
+        className={`sticky top-[20px] right-[50%] left-[50%] translate-x-[-50%] bg-white/60 w-fit text-[28px] font-bold tracking-[4px] rounded-full px-5 mb-[30px]
+       lg:left-[50%] lg:translate-x-0
       `}
       >
         Analysis
