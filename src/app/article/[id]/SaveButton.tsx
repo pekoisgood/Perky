@@ -112,9 +112,9 @@ const SaveButton = ({ articleId, count }: Prop) => {
             >
               x
             </p>
-            <p>尚未登入</p>
+            <p>You need to login to save this aticle...</p>
             <Link href="/auth">
-              <Button>點我去登入會員！</Button>
+              <Button>Click me to login!</Button>
             </Link>
           </div>
         </Warning>

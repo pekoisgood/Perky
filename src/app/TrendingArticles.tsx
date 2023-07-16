@@ -30,7 +30,7 @@ const container = {
   },
 };
 
-const categoryClass = `w-fit bg-[#FFD89C] font-semibold font-mono py-1 px-2 text-black
+const categoryClass = `w-fit h-fit sm:h-auto bg-[#FFD89C] font-semibold font-mono py-1 px-2 text-black
           rounded-2xl border-2 border-black text-[12px] shadow-black shadow-[-3px_3px]`;
 
 const TrendingArticles = () => {
@@ -62,7 +62,7 @@ const TrendingArticles = () => {
   }, []);
 
   return (
-    <div className="relative flex flex-col h-[calc(100vh-120px)] w-full shadow-lg border-t-2 border-black bg-gradient-to-t from-white to-[#FCF8E8] z-0">
+    <div className="relative flex flex-col sm:h-[calc(100vh-120px)] w-full pb-[15px] sm:pb-0 shadow-lg border-t-2 border-black bg-gradient-to-t from-white to-[#FCF8E8] z-0">
       <h2 className="w-fit h-fit px-2 py-1 bg-black text-white tracking-[1px] font-medium z-10 ">
         Trending Articles
       </h2>
@@ -88,7 +88,7 @@ const TrendingArticles = () => {
           initial="hidden"
           animate="show"
           variants={container}
-          className="flex flex-wrap md:justify-between h-[92%] gap-[15px] px-[20px] max-w-[1280px] mx-auto [&>*:nth-child(2)]:border-none z-10"
+          className="flex flex-wrap md:justify-between h-[92%] gap-[15px] px-[20px] max-w-[1280px] mx-auto sm:[&>*:nth-child(2)]:border-none  z-10"
         >
           {articles.map((article, index) => {
             if (index === 0) {
@@ -96,22 +96,26 @@ const TrendingArticles = () => {
                 <Link
                   href={`article/${article.id}`}
                   key={index}
-                  className="flex gap-[20px] w-full h-[70%] mt-auto border-b-[1px] border-[#d1d5db] pb-[30px] hover:translate-y-[-3px] hover:duration-100"
+                  className="flex flex-col sm:flex-row gap-[10px] sm:gap-[20px] w-full h-[70%] mt-auto border-b-[1px] border-[#d1d5db] pb-[30px] pt-[10px] sm:pt-0 hover:translate-y-[-3px] hover:duration-100"
                 >
                   <Image
                     src={article.image}
                     alt="cover image"
-                    width={400}
-                    height={200}
-                    className="object-cover min-w-[50vw] max-w-[800px] rounded-xl border-[#245953] border-2 shadow-[-10px_10px] shadow-[#0000003b]"
+                    width={800}
+                    height={400}
+                    className="basis-1/2 w-full sm:w-[50vw] object-cover max-w-[800px] rounded-xl border-black border-2 shadow-[-10px_10px] shadow-[#0000003b]"
                     priority={true}
                   />
                   <div className="flex flex-col gap-[10px]">
-                    <p className={categoryClass}>{article.category}</p>
+                    <p className={`mt-[10px] sm:mt-0 ${categoryClass}`}>
+                      {article.category}
+                    </p>
                     <h3 className="text-[30px] sm:text-[40px] font-bold line-clamp-5">
                       {article.title}
                     </h3>
-                    <p className="text-[12px]">{article.authorName}</p>
+                    <p className="text-[14px] font-medium">
+                      {article.authorName}
+                    </p>
                     <div className="mt-auto text-[14px]">
                       <ArticleSnippet article={article.content} />
                     </div>
@@ -123,10 +127,10 @@ const TrendingArticles = () => {
                 <Link
                   href={`article/${article.id}`}
                   key={index}
-                  className="flex gap-[10px] w-[23%] h-[23%] md:h-[18%] border-l-[1px] border-[#d1d5db] pl-[14px] hover:translate-y-[-3px] hover:duration-100"
+                  className="flex gap-[10px] w-full sm:w-[23%] h-[23%] md:h-[18%] border-b-[1px] sm:border-b-0 sm:border-l-[1px] border-[#d1d5db] pl-[14px] hover:translate-y-[-3px] hover:duration-100"
                 >
-                  <div className="flex flex-col gap-[10px] h-full">
-                    <p className={`text-[10px] ${categoryClass}`}>
+                  <div className="flex flex-row items-center sm:items-start sm:flex-col pb-[10px] sm:pb-0 gap-[10px] h-full">
+                    <p className={`text-[10px]  ${categoryClass}`}>
                       {article.category}
                     </p>
                     <h4 className="font-bold text-[13px] sm:text-[15px] line-clamp-3">
@@ -139,7 +143,7 @@ const TrendingArticles = () => {
                     width={120}
                     height={50}
                     priority={true}
-                    className="h-[100%] rounded-xl object-cover object-center ml-auto hidden lg:flex border-[#245953] border-2 shadow-[-3px_3px] shadow-[#0000003b]"
+                    className="h-[100%] rounded-xl object-cover object-center ml-auto hidden lg:flex border-black border-2 shadow-[-3px_3px] shadow-[#0000003b]"
                   />
                 </Link>
               );

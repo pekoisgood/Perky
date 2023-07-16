@@ -86,7 +86,7 @@ const ArticleList = ({
                 <h2 className="font-bold text-[24px] tracking-[1px] text-center indent-[1px] break-words hyphens-auto">
                   {article.title}
                 </h2>
-                <p className="text-center text-[13px] line-clamp-1">
+                <p className="text-center text-[14px] font-medium line-clamp-1">
                   author: {article.authorName}
                 </p>
                 <p className="bg-[#FFD89C] text-black font-mono tracking-[1px] px-2 py-1 rounded-3xl w-fit text-[10px] sm:text-[12px] border-2 shadow-[-2px_2px] shadow-black border-black font-bold absolute top-[-16px] right-[5px]">
