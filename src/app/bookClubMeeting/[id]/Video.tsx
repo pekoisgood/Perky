@@ -8,7 +8,7 @@ const MeetingProvider = dynamic(
   () =>
     import("@videosdk.live/react-sdk").then((module) => module.MeetingProvider),
   {
-    ssr: false, // 關閉伺服器端渲染
+    ssr: false,
   }
 );
 const MeetingView = dynamic(

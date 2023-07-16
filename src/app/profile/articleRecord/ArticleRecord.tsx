@@ -87,7 +87,9 @@ const ArticleRecord = () => {
                 >
                   {article.category}
                 </p>
-                <p className={`text-[14px] lg:16px`}>{article.title}</p>
+                <p className={`text-[14px] lg:16px break-words hyphens-auto`}>
+                  {article.title}
+                </p>
               </Link>
             );
           })}

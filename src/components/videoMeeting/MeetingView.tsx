@@ -246,14 +246,14 @@ const MeetingView = () => {
               alt="user avatar"
               width={100}
               height={100}
-              className="rounded-full overflow-hidden"
+              className="rounded-full overflow-hidden object-cover w-[100px] h-[100px] border-2 border-white"
             />
           ) : (
             <PiFinnTheHumanFill size={100} />
           )}
           <p>{user.name}</p>
           <motion.button
-            className={`rounded-3xl bg-[#9575DE] border-2 border-white text-white text-bold text-[20px] tacking-[1px]
+            className={`rounded-3xl bg-[#245953] border-2 border-white text-white text-bold text-[20px] tacking-[1px]
             py-[5px] px-[14px] mx-auto w-fit hover:cursor-pointer hover:scale-110 hover:duration-75`}
             onClick={joinMeeting}
             whileHover={{

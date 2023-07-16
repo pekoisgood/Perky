@@ -89,7 +89,7 @@ const Page = () => {
                       priority={true}
                     />
                   </div>
-                  <p className="font-semibold text-[18px] text-white">
+                  <p className="font-semibold text-[18px] text-white break-words hyphens-auto">
                     {article.title[0].toUpperCase() + article.title.slice(1)}
                   </p>
                   <div className="text-[#eee] pl-1 text-[12px]">

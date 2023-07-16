@@ -118,9 +118,11 @@ const ArticleRecord = () => {
                 >
                   {article.category}
                 </p>
-                <p className={`text-[14px] lg:16px`}>
+                <p className={`text-[14px] lg:16px break-words hyphens-auto`}>
                   {article.title}
-                  <span className="ml-2 text-[12px]">{article.authorName}</span>
+                  <span className="ml-2 text-[12px] break-words hyphens-auto">
+                    {article.authorName}
+                  </span>
                 </p>
               </Link>
             );

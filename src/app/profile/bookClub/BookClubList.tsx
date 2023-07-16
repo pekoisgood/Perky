@@ -208,33 +208,32 @@ const BookClubList = () => {
             No book club this day... Go join one!
           </p>
         )}
-
-        {isPreviewNote && note && (
-          <div className="absolute top-0 left-0 w-full h-full">
-            <div
-              className={`flex flex-col px-[20px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-full h-full
-          bg-white/90 backdrop-blur-md rounded-xl border-[#245953] border-2 shadow-md overflow-y-scroll`}
-            >
-              <button
-                className="w-fit ml-auto mt-[10px]"
-                onClick={() => {
-                  setIsPreviewNote(false);
-                  setNote(null);
-                }}
-              >
-                x
-              </button>
-              {note.note === "" ? (
-                <p className="text-[12px] text-red-400">
-                  You didn&apos;t take note!
-                </p>
-              ) : (
-                <ReactMarkdown>{note.note}</ReactMarkdown>
-              )}
-            </div>
-          </div>
-        )}
       </motion.div>
+      {isPreviewNote && note && (
+        <div className="absolute top-0 left-0 w-full h-full">
+          <div
+            className={`flex flex-col px-[20px] absolute top-[49%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-full h-[99%]
+          bg-white/90 backdrop-blur-md rounded-xl border-[#245953] border-2 shadow-md overflow-y-scroll z-[21]`}
+          >
+            <button
+              className="w-fit ml-auto mt-[10px]"
+              onClick={() => {
+                setIsPreviewNote(false);
+                setNote(null);
+              }}
+            >
+              x
+            </button>
+            {note.note === "" ? (
+              <p className="text-[12px] text-red-400">
+                You didn&apos;t take note!
+              </p>
+            ) : (
+              <ReactMarkdown>{note.note}</ReactMarkdown>
+            )}
+          </div>
+        </div>
+      )}
     </>
   );
 };
