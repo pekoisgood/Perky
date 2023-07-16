@@ -37,6 +37,9 @@ const ArticleRecord = () => {
 
   useEffect(() => {
     const getArticle = async () => {
+      console.log("get saved articles!!");
+      console.log("saved article user id", user.id);
+
       const savedArticles: SavedArticle[] = [];
       const articleIds: string[] = [];
       const q = query(
@@ -45,6 +48,8 @@ const ArticleRecord = () => {
       );
       const result = await getDocs(q);
       result.forEach((doc) => {
+        // console.log(doc);
+
         articleIds.push(doc.id);
       });
 
@@ -77,8 +82,11 @@ const ArticleRecord = () => {
     };
 
     if (user.id === "") return;
+
+    console.log("get article ", user);
+
     getArticle();
-  }, [user.id]);
+  }, [user, dispatch]);
 
   return (
     <>

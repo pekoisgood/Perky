@@ -70,15 +70,14 @@ export const AuthContextProvider = ({
         const result: DocumentData = await getDoc(userRef);
         console.log("get user info", result.data());
 
-        if (result.data()) {
-          setUser((prev) => {
-            return {
-              ...prev,
-              name: result.data().name,
-              avatar: result.data().avatar ?? "",
-            };
-          });
-        }
+        // if (user.email) {
+        setUser({
+          email: user.email ?? "",
+          id: user.uid,
+          name: result.data().name ?? user.displayName ?? user.email,
+          avatar: result.data().avatar ?? "",
+        });
+        // }
 
         setIsLogin(true);
       });

@@ -39,7 +39,11 @@ const ArticleRecord = () => {
 
   useEffect(() => {
     const getArticleRecord = async () => {
+      console.log("get articles record!!", user.id);
+
       if (user.id) {
+        console.log("user id ok and get articles!!");
+
         const req = await fetch(`/api/articleRecord?id=${user.id}`);
         const myArticles: Articles[] = await req.json();
         if (!myArticles) {
@@ -51,7 +55,8 @@ const ArticleRecord = () => {
     };
 
     getArticleRecord();
-  }, [user.id]);
+  }, [user, dispatch]);
+
   return (
     <>
       <h4 className={dashBoardTitleClass}>Recent Article Record</h4>
