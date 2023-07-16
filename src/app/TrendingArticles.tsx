@@ -88,7 +88,7 @@ const TrendingArticles = () => {
           initial="hidden"
           animate="show"
           variants={container}
-          className="flex flex-wrap md:justify-between h-[92%] gap-[10px] px-[20px] max-w-[1280px] mx-auto [&>*:nth-child(2)]:border-none z-10"
+          className="flex flex-wrap md:justify-between h-[92%] gap-[15px] px-[20px] max-w-[1280px] mx-auto [&>*:nth-child(2)]:border-none z-10"
         >
           {articles.map((article, index) => {
             if (index === 0) {

@@ -8,7 +8,7 @@ const textClass = `w-full rounded-lg shadow-[-2px_2px] shadow-[#0000003b] ${skel
 const TrendingArticleSkeleton = () => {
   return (
     <>
-      <div className="relative flex flex-wrap md:justify-between h-[92%] gap-[10px] max-w-[1280px] w-full mx-auto [&>*:nth-child(2)]:border-none z-100">
+      <div className="relative flex flex-wrap md:justify-between h-[92%] gap-[10px] max-w-[1280px] w-full mx-auto [&>*:nth-child(2)]:border-none z-100 px-[20px]">
         <div className="flex gap-[20px] w-full h-[70%] mt-auto border-b-[1px] border-[#d1d5db] pb-[30px]">
           <div
             className={` min-w-[50vw] rounded-xl shadow-[-10px_10px] shadow-[#0000003b] ${skeletonAnimation}`}

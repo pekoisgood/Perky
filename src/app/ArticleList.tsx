@@ -83,10 +83,10 @@ const ArticleList = ({
                 </div>
               )}
               <div className="flex flex-col gap-2 h-[calc(100%-300px)]">
-                <h2 className="font-bold text-[24px] tracking-[1px] text-center indent-[1px]">
+                <h2 className="font-bold text-[24px] tracking-[1px] text-center indent-[1px] break-words hyphens-auto">
                   {article.title}
                 </h2>
-                <p className="text-center text-[13px]">
+                <p className="text-center text-[13px] line-clamp-1">
                   author: {article.authorName}
                 </p>
                 <p className="bg-[#FFD89C] text-black font-mono tracking-[1px] px-2 py-1 rounded-3xl w-fit text-[10px] sm:text-[12px] border-2 shadow-[-2px_2px] shadow-black border-black font-bold absolute top-[-16px] right-[5px]">
@@ -99,7 +99,7 @@ const ArticleList = ({
                       return (
                         <p
                           key={index}
-                          className="px-2 py-1 bg-[#245953] text-white rounded-md w-fit text-[12px]"
+                          className="px-2 py-1 bg-[#245953] text-white rounded-md w-fit text-[12px] break-words hyphens-auto"
                         >
                           # {tag}
                         </p>

@@ -1,5 +1,7 @@
 import React from "react";
 import Link from "next/link";
+import sittingBoy from "../../assets/image/people/boy-sitting-on-legs.svg";
+import Image from "next/image";
 
 const categories = [
   "Android",
@@ -18,7 +20,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         lg:min-w-[300px] md:min-w-[210px] hidden md:flex flex-col h-screen
     pb-[60px] pt-[30px] items-center overflow-y-scroll`}
       >
-        <div className="flex flex-col w-[150px] items-center gap-5 mt-[40px]">
+        <div className="flex flex-col w-[150px] h-full items-center gap-5 mt-[40px] relative">
           <h2 className={`text-center text-[20px] font-medium`}>Category</h2>
           {categories.map((category) => {
             return (
@@ -33,6 +35,13 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
               </Link>
             );
           })}
+          <Image
+            src={sittingBoy}
+            alt="boy sitting on legs"
+            width={200}
+            height={300}
+            className={`absolute bottom-0 left-0 scale-125`}
+          />
         </div>
       </div>
       <div className="lg:min-w-[100%-300px] md:min-w-[100%-210px] w-full">

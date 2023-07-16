@@ -17,7 +17,6 @@ export async function GET(req: Request) {
   const category = searchParams.get("category");
   let data: DocumentData[] = [];
   const articleRef = collection(db, "articles");
-  console.log(category);
 
   if (category) {
     const q = query(
