@@ -19,8 +19,7 @@ const Page = ({ article }: { article: string }) => {
   const editor = useEditor({
     editorProps: {
       attributes: {
-        class:
-          "prose dark:prose-invert prose-md focus:outline-none p-3 rounded-lg mx-auto",
+        class: "prose prose-md focus:outline-none p-3 rounded-lg mx-auto",
       },
     },
     extensions: [

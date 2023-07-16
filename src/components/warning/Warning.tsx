@@ -33,7 +33,7 @@ const Warning = ({
   return (
     <div
       ref={ref}
-      className={`fixed top-0 bottom-0 right-0 left-0 w-screen h-screen backdrop-blur-sm z-10`}
+      className={`fixed top-0 bottom-0 right-0 left-0 w-screen h-screen backdrop-blur-sm z-50`}
     >
       <div
         className={`${customLayout} fixed top-[50%] right-[50%] translate-x-[50%] translate-y-[-50%] p-10 flex items-center justify-center

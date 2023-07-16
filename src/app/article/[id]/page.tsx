@@ -4,7 +4,6 @@ import SaveButton from "./SaveButton";
 import Link from "next/link";
 import { headers } from "next/dist/client/components/headers";
 import Comment from "./Comment";
-import { PiFinnTheHumanFill } from "react-icons/pi";
 import SaveCount from "./SaveCount";
 import Warning from "@/components/warning/Warning";
 import Button from "@/components/button/Button";
@@ -59,18 +58,16 @@ const Page = async ({ params }: { params: { id: string } }) => {
           <p>{publishDate}</p>
         </div>
         <SaveCount articleId={articleId} />
-        <div className="w-full h-fit object-cover mx-auto overflow-hidden rounded-2xl border-2 border-dashed border-[#245953] shadow-[#245953] shadow-[-7px_7px]">
-          {article.image !== "" ? (
+        <div className="w-full h-fit mx-auto overflow-hidden rounded-2xl border-2 border-dashed border-[#245953] shadow-[#245953] shadow-[-7px_7px]">
+          {article.image && (
             <Image
               src={article.image}
               alt="cover image of this article"
               width={800}
               height={400}
               priority={true}
-              className="w-full h-full max-h-[500px]"
+              className="w-full h-[500px] object-cover"
             />
-          ) : (
-            <PiFinnTheHumanFill size={30} />
           )}
         </div>
 

@@ -18,6 +18,8 @@ import Image from "next/image";
 import { HiPaperAirplane } from "react-icons/hi";
 import { PiFinnTheHumanFill } from "react-icons/pi";
 import { timeAgo } from "@/utils/func";
+import Warning from "@/components/warning/Warning";
+import Link from "next/link";
 
 type ArticleComment = {
   comment: string;
@@ -28,17 +30,20 @@ type ArticleComment = {
 };
 
 const Comment = ({ articleId }: { articleId: string }) => {
-  const { user } = useContext(AuthContext);
+  const { user, isLogin } = useContext(AuthContext);
   const [newComment, setNewComment] = useState<string>("");
   const [comments, setComments] = useState<ArticleComment[]>([]);
-
-  console.log(comments);
+  const [showNotLoginWarning, setShowNotLoginWarning] = useState(false);
 
   const CommentRef = collection(db, "articles", articleId, "comments");
-  // const now = new Date();
 
-  const handleSubmitComment = async () => {
+  const handleSubmitComment = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (!newComment) return;
+    if (!isLogin) {
+      setShowNotLoginWarning(true);
+      return;
+    }
 
     await addDoc(CommentRef, {
       comment: newComment,
@@ -98,7 +103,10 @@ const Comment = ({ articleId }: { articleId: string }) => {
       <h1 className="w-fit mx-auto font-semibold text-[20px] tracking-[2px] indent-[2px]">
         Comment
       </h1>
-      <div className="flex gap-2 justify-center items-center">
+      <form
+        onSubmit={(e) => handleSubmitComment(e)}
+        className="flex gap-2 justify-center items-center"
+      >
         <input
           type="text"
           value={newComment}
@@ -107,11 +115,11 @@ const Comment = ({ articleId }: { articleId: string }) => {
         />
         <Button
           customLayout="h-[42px] w-[42px] flex items-center justify-center rotate-90 shadow-[2px_2px]"
-          handleOnClick={handleSubmitComment}
+          // handleOnClick={handleSubmitComment}
         >
           <HiPaperAirplane size={35} />
         </Button>
-      </div>
+      </form>
       <div className="flex flex-col gap-2">
         {comments.length > 0 ? (
           <div className="flex flex-col gap-3">
@@ -127,21 +135,21 @@ const Comment = ({ articleId }: { articleId: string }) => {
                       alt="avatar"
                       width={30}
                       height={30}
-                      className="rounded-full overflow-hidden"
+                      className="rounded-full overflow-hidden min-w-[30px] h-[30px] object-cover"
                     />
                   ) : (
-                    <PiFinnTheHumanFill size={30} />
+                    <PiFinnTheHumanFill size={30} className="min-w-[30px]" />
                   )}
                   <div className="flex flex-col gap-1">
-                    <p className="text-black text-[12px] sm:text-[14px]">
+                    <p className="text-black text-[12px] sm:text-[14px] font-semibold">
                       {comment.userName}
-                      <span className="text-[8px] sm:text-[10px] ml-2">
+                      <span className="text-[8px] sm:text-[10px] ml-2 font-normal">
                         {comment.createdAt ?? false
                           ? timeAgo(new Date(comment.createdAt.seconds * 1000))
                           : "now"}
                       </span>
                     </p>
-                    <p className="text-[14px] sm:text-[16px]">
+                    <p className="text-[16px] sm:text-[18px] break-words hyphens-auto">
                       {comment.comment}
                     </p>
                   </div>
@@ -155,6 +163,14 @@ const Comment = ({ articleId }: { articleId: string }) => {
           </p>
         )}
       </div>
+      {showNotLoginWarning && (
+        <Warning time={0} customLayout="flex flex-col gap-3 items-center">
+          <p>You have to login to comment on this article!</p>
+          <Button>
+            <Link href="/auth">Go to Login</Link>
+          </Button>
+        </Warning>
+      )}
     </div>
   );
 };

@@ -13,7 +13,7 @@ const Header = () => {
   const { isLogin } = useContext(AuthContext);
 
   return (
-    <div className="fixed w-full top-0 left-0 right-0 bg-white h-[60px] flex items-center px-4 shadow-sm z-50">
+    <div className="fixed w-full top-0 left-0 right-0 bg-white h-[60px] flex items-center px-4 shadow-sm z-[100]">
       <Link href="/" className="flex items-center gap-2 px-4 py-1 rounded-3xl">
         <Image
           src={logo}

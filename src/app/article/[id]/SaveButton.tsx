@@ -77,7 +77,11 @@ const SaveButton = ({ articleId, count }: Prop) => {
         setIsSaved(false);
       }
     };
-    if (isLoading) return;
+
+    console.log(user.id);
+
+    if (isLoading || !user.id) return;
+
     checkSavedArticle();
   }, [user.id, articleId, isLoading]);
 
@@ -85,7 +89,7 @@ const SaveButton = ({ articleId, count }: Prop) => {
     <>
       <p
         className={`order-2 fixed bottom-0 right-[20px] h-fit w-fit p-2 bg-white/50 rounded-full z-20
-         lg:top-[100px] lg:right-0 lg:sticky lg:self-start lg:bg-transparent
+         lg:top-[100px] lg:right-0 lg:sticky lg:self-start
         hover:cursor-pointer focus:scale-95`}
         onClick={handleSaveArticle}
       >

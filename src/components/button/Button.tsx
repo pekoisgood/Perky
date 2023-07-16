@@ -12,7 +12,7 @@ const Button = ({
   customLayout?: string;
 }) => {
   return (
-    <div
+    <button
       className={`${
         customLayout && customLayout
       } w-fit bg-orange-100 p-1 mb-[3px]
@@ -25,7 +25,7 @@ const Button = ({
       }}
     >
       {children}
-    </div>
+    </button>
   );
 };
 
