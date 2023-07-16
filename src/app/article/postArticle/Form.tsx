@@ -218,7 +218,7 @@ const Form = ({ image }: { image: File | null }) => {
         >
           <option value="Frontend">Frontend</option>
           <option value="Backend">Backend</option>
-          <option value="IOS">IOS</option>
+          <option value="iOS">iOS</option>
           <option value="Android">Android</option>
           <option value="Others">Others</option>
         </select>

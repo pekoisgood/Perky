@@ -5,14 +5,14 @@ const categories = [
   "Android",
   "Backend",
   "Frontend",
-  "IOS",
+  "iOS",
   "Leetcode",
   "Others",
 ];
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="flex h-full w-full pt-5 relative gap-6">
+    <div className="flex h-full w-full max-w-[1280px] mx-auto pt-5 relative">
       <div
         className={`sticky top-0 right-0 
         lg:min-w-[300px] md:min-w-[210px] hidden md:flex flex-col h-screen
@@ -29,7 +29,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                 shadow-[-3px_3px] shadow-black rounded-2xl border-2 border-black 
                 hover:cursor-pointer hover:animate-wiggle`}
               >
-                # {category}
+                {category}
               </Link>
             );
           })}

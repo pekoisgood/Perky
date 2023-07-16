@@ -1,7 +1,6 @@
 import React from "react";
 import { headers } from "next/dist/client/components/headers";
 import ArticleList from "@/app/ArticleList";
-import { capitalize } from "@/utils/func";
 
 const Page = async ({
   searchParams,
@@ -27,16 +26,26 @@ const Page = async ({
   const articles = await categoryArticlesReq.json();
 
   return (
-    <div className="flex flex-col justify-center items-center w-full max-w-[850px] mt-[60px]">
-      <h2
-        className={`text-[25px] tracking-[1px] w-fit mx-auto font-bold 
-      bg-[#FFD89C] text-bold font-mono shadow-[-3px_3px] shadow-black py-1 px-3 rounded-2xl border-2 border-black
+    <div className="flex flex-col justify-center items-center w-full mt-[60px]">
+      {category && (
+        <h2
+          className={`text-[25px] tracking-[1px] w-fit mx-auto font-bold 
+      bg-[#FFD89C] text-bold font-mono shadow-[-3px_3px] shadow-black py-1 px-3 rounded-full border-2 border-black
       `}
-      >
-        {category && capitalize(category)} {tag && tag}
-        {search && `搜尋結果 : ${search}`}
-      </h2>
-      <div className="h-full grow p-3 pt-5 flex flex-col items-center gap-3">
+        >
+          {category}
+        </h2>
+      )}
+      {(search || tag) && (
+        <h2
+          className={`text-[25px] tracking-[1px] w-fit mx-auto font-bold 
+      text-bold font-mono py-1 px-3 rounded-full
+      `}
+        >
+          {`搜尋結果 : ${search || tag}`}
+        </h2>
+      )}
+      <div className="h-full w-full grow p-3 pt-5 flex flex-col items-center gap-3">
         {articles.length > 0 ? (
           <ArticleList articles={articles} customLayout="w-full" />
         ) : (

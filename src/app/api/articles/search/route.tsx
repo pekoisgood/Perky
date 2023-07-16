@@ -17,11 +17,12 @@ export async function GET(req: Request) {
   const category = searchParams.get("category");
   let data: DocumentData[] = [];
   const articleRef = collection(db, "articles");
+  console.log(category);
 
   if (category) {
     const q = query(
       articleRef,
-      where("category", "==", capitalize(category)),
+      where("category", "==", category),
       orderBy("createdAt", "desc")
     );
     const result = await getDocs(q);

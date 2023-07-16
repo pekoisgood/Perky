@@ -65,7 +65,7 @@ const ArticleList = ({
             href={`/article/${article.id}`}
             key={index}
             ref={(el: HTMLAnchorElement) => (ref.current[index] = el)}
-            className={`w-[100%] lg:w-[48%] p-4 pt-6 flex justify-between items-start gap-3 border-b-[1px] border-[#d1d5db] min-h-[140px] ${
+            className={`w-[100%] lg:w-[47%] p-4 pt-6 flex justify-between items-start gap-3 border-b-[1px] border-[#d1d5db] min-h-[140px] ${
               isFirstLoading && "translate-x-0"
             } hover:translate-y-[-10px] hover:duration-150`}
           >
@@ -89,7 +89,7 @@ const ArticleList = ({
                 <p className="text-center text-[13px]">
                   author: {article.authorName}
                 </p>
-                <p className="bg-[#FFD89C] text-black font-mono  tracking-[1px] px-2 py-1 rounded-3xl w-fit text-[10px] sm:text-[12px] border-2 shadow-[-2px_2px] shadow-black border-black font-bold absolute top-[-16px] right-[5px]">
+                <p className="bg-[#FFD89C] text-black font-mono tracking-[1px] px-2 py-1 rounded-3xl w-fit text-[10px] sm:text-[12px] border-2 shadow-[-2px_2px] shadow-black border-black font-bold absolute top-[-16px] right-[5px]">
                   {article.category}
                 </p>
                 <ArticleSnippet article={article.content} />
