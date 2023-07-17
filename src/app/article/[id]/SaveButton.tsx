@@ -104,14 +104,14 @@ const SaveButton = ({ articleId, count }: Prop) => {
         )}
       </p>
       {showWarning && (
-        <Warning time={0} customCloseButton={true}>
+        <Warning time={0} customHandleCloseButton={() => setShowWarning(false)}>
           <div className="flex flex-col gap-2 items-center justify-center">
-            <p
+            {/* <p
               className="absolute top-0 right-[10px] text-black hover:cursor-pointer"
               onClick={() => setShowWarning(false)}
             >
               x
-            </p>
+            </p> */}
             <p>You need to login to save this aticle...</p>
             <Link href="/auth">
               <Button>Click me to login!</Button>

@@ -39,7 +39,7 @@ const Page = () => {
 
       const compressedFile: any = await compressImage(file, {
         quality: 0.5,
-        type: "image/jpeg",
+        type: "image/png",
       });
       dataTransfer.items.add(compressedFile);
 
@@ -56,10 +56,6 @@ const Page = () => {
         }
       );
       try {
-        console.log("set avatar...");
-        console.log(user.id);
-        console.log(imageUrl);
-
         await updateDoc(userRef, {
           avatar: imageUrl,
         });
@@ -77,8 +73,6 @@ const Page = () => {
 
     if (name !== user.name || !name) {
       try {
-        console.log("set name...");
-
         await updateDoc(userRef, {
           name: name,
         });

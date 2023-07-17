@@ -8,7 +8,6 @@ import {
   DocumentData,
   orderBy,
 } from "firebase/firestore";
-import { capitalize } from "@/utils/func";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
@@ -30,12 +29,7 @@ export async function GET(req: Request) {
       data.push({ id: doc.id, ...doc.data() });
     });
   } else if (tag) {
-    const capitalizedTag = capitalize(tag);
-
-    const q = query(
-      articleRef,
-      where("tags", "array-contains", capitalizedTag)
-    );
+    const q = query(articleRef, where("tags", "array-contains", tag));
     const result = await getDocs(q);
 
     result.forEach((doc) => {
