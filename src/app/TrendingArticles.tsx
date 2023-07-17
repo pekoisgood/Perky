@@ -103,7 +103,7 @@ const TrendingArticles = () => {
                     alt="cover image"
                     width={800}
                     height={400}
-                    className="basis-1/2 w-full sm:w-[50vw] object-cover max-w-[800px] rounded-xl border-black border-2 shadow-[-10px_10px] shadow-[#0000003b]"
+                    className="basis-1/2 w-full sm:min-w-[60%] object-cover rounded-xl border-black border-2 shadow-[-10px_10px] shadow-[#0000003b]"
                     priority={true}
                   />
                   <div className="flex flex-col gap-[10px]">

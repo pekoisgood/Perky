@@ -5,6 +5,7 @@ export type Article = {
   content: string;
   category: string;
   tags: string[];
+  // showImage: boolean;
 };
 
 type InitialStateValue = {
@@ -17,6 +18,7 @@ const initailState = {
     content: "",
     category: "Frontend",
     tags: [],
+    // showImage: true,
   } as Article,
 } as InitialStateValue;
 
@@ -54,8 +56,19 @@ export const postArticleSlice = createSlice({
       }
     },
     handlePostArticle: () => {
+      // state.value.showImage = false;
+      // setTimeout(() => {
+      //     console.log("=======set======");
+      //   state.value.showImage = true;
+      // }, 3000);
       return initailState;
     },
+    // handleShowImage: () => {
+    //   return {
+    //     ...initailState,
+    //     showImage: true,
+    //   };
+    // },
   },
 });
 

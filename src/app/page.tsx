@@ -8,6 +8,7 @@ import ArticleList from "./ArticleList";
 import sittingBoy from "../assets/image/people/boy-sitting-on-legs.svg";
 import { Article } from "@/utils/firebase";
 import ArticleListSkeleton from "@/components/skeleton/ArticleListSkeleton";
+// import { useAppSelector } from "@/redux/hooks";
 
 const categories = [
   "Frontend",
@@ -25,9 +26,12 @@ shadow-[-3px_3px] shadow-black rounded-2xl border-2 border-black
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [articles, setArticles] = useState<Article[]>([]);
-  const [showImage, setShowImage] = useState(false);
+  // const [showImage, setShowImage] = useState(true);
+  // const showImage = useAppSelector(
+  //   (state) => state.postArticle.value.showImage
+  // );
 
-  console.log("page: ", showImage);
+  // console.log("page: ", showImage);
 
   useEffect(() => {
     let isFetching = false;
@@ -68,11 +72,11 @@ export default function Home() {
     if (!window) return;
     window.addEventListener("scroll", scrollHandler);
 
-    setTimeout(() => {
-      console.log("=======set======");
+    // setTimeout(() => {
+    //   console.log("=======set======");
 
-      setShowImage(true);
-    }, 3000);
+    //   setShowImage(true);
+    // }, 3000);
 
     return () => {
       window.removeEventListener("scroll", scrollHandler);
@@ -116,7 +120,7 @@ export default function Home() {
           <div className="lg:min-w-[100%-300px] md:min-w-[100%-210px] w-full overflow-hidden">
             {articles && articles.length > 0 && (
               <ArticleList
-                showImage={showImage}
+                // showImage={showImage}
                 articles={articles}
                 customLayout="md:justify-start pl-[0]"
               />
