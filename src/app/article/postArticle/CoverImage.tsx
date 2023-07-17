@@ -18,7 +18,7 @@ const CoverImage = ({
         <label className={buttonClass + " mr-3"}>
           <input
             type="file"
-            accept="image/*"
+            accept="image/jpge"
             className="hidden"
             onChange={(e) => e.target.files && setImage(e.target.files[0])}
           />

@@ -153,7 +153,7 @@ const Page = () => {
           {getUploadAvatar()}
           <input
             type="file"
-            accept="image/*"
+            accept="image/jpeg"
             onChange={(e) => e.target.files && setImage(e.target.files[0])}
             className={`${
               isModifying ? "flex" : "hidden"
