@@ -51,6 +51,9 @@ const ArticleList = ({
       console.log(ref.current);
 
       ref.current.forEach((el) => {
+        console.log("el: ", el);
+
+        if (!el) return;
         observer.observe(el);
       });
     }
