@@ -48,10 +48,10 @@ const ArticleList = ({
       );
     });
     if (ref.current && window) {
-      console.log(ref.current);
+      // console.log(ref.current);
 
       ref.current.forEach((el) => {
-        console.log("el: ", el);
+        // console.log("el: ", el);
 
         if (!el) return;
         observer.observe(el);
@@ -59,6 +59,7 @@ const ArticleList = ({
     }
   }, [isFirstLoading, articles]);
   // console.log("showImage", showImage);
+  console.log(articles);
 
   return (
     <div

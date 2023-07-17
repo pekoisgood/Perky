@@ -27,6 +27,9 @@ const ArticleSnippet = ({ article }: { article: string }) => {
     editable: false,
   });
 
+  console.log(article);
+  console.log(editor);
+
   return (
     <div className="line-clamp-2 text-[13px] break-words hyphens-auto">
       {editor?.getText()}
