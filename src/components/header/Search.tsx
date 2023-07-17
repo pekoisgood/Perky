@@ -57,8 +57,6 @@ const Search = () => {
     }
   }, [searchInput, tags]);
 
-  console.log("isSearching", isSearching);
-
   return (
     <div className="group">
       <div

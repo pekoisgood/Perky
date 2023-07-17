@@ -42,6 +42,7 @@ export default function Home() {
     const fetchArticles = async () => {
       isFetching = true;
       setIsLoading(true);
+      console.log("fetch!")
 
       const articlesReq = await fetch(`/api/articles?lastId=${lastId}`);
       const articlesRes = await articlesReq.json();

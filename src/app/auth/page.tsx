@@ -139,7 +139,7 @@ const Page = () => {
       return;
     }
     setIsLogin(true);
-    router.replace("/profile");
+    router.push("/profile");
     return;
   };
 
@@ -280,7 +280,7 @@ const Page = () => {
         alt="laughing lady"
         width={200}
         height={300}
-        className="absolute left-0 bottom-0 z-10"
+        className="absolute left-0 bottom-0 z-1"
       />
     </>
   );

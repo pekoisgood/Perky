@@ -48,12 +48,14 @@ const ArticleList = ({
       );
     });
     if (ref.current && window) {
+      console.log(ref.current);
+
       ref.current.forEach((el) => {
         observer.observe(el);
       });
     }
-  }, [isFirstLoading]);
-  console.log("showImage", showImage);
+  }, [isFirstLoading, articles]);
+  // console.log("showImage", showImage);
 
   return (
     <div
