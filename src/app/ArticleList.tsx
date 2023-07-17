@@ -10,9 +10,11 @@ import loading from "../assets/image/backgroundIcon/loading-carga.gif";
 const ArticleList = ({
   articles,
   customLayout,
+  showImage,
 }: {
   articles: Article[];
   customLayout?: string;
+  showImage?: boolean;
 }) => {
   const ref = useRef<HTMLAnchorElement[]>([]);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -51,6 +53,7 @@ const ArticleList = ({
       });
     }
   }, [isFirstLoading]);
+  console.log("showImage", showImage);
 
   return (
     <div
@@ -71,22 +74,63 @@ const ArticleList = ({
             } hover:translate-y-[-10px] hover:duration-150`}
           >
             <div className="flex flex-col gap-4 w-full h-full relative">
-              {article.image && (
+              {
                 <div className="w-full h-[300px] mx-auto object-cover object-center overflow-hidden relative rounded-2xl border-2 border-black shadow-[-10px_10px] shadow-[#0000003b]">
-                  <Image
-                    src={article.image || loading}
-                    alt="article cover image"
-                    width={500}
-                    height={300}
-                    className={`${
-                      article.image
-                        ? "object-cover w-full h-full"
-                        : "flex justify-center items-center"
-                    }`}
-                    priority={true}
-                  />
+                  {showImage !== undefined ? (
+                    index === 0 ? (
+                      showImage ? (
+                        <Image
+                          src={article.image || loading}
+                          alt="article cover image"
+                          width={500}
+                          height={300}
+                          className={`${
+                            article.image
+                              ? "object-cover w-full h-full"
+                              : "mx-auto object-contain h-full w-auto"
+                          }`}
+                          priority={true}
+                        />
+                      ) : (
+                        <Image
+                          src={loading}
+                          alt="article cover loading image"
+                          width={500}
+                          height={300}
+                          className={`mx-auto object-contain h-full w-auto`}
+                          priority={true}
+                        />
+                      )
+                    ) : (
+                      <Image
+                        src={article.image || loading}
+                        alt="article cover image"
+                        width={500}
+                        height={300}
+                        className={`${
+                          article.image
+                            ? "object-cover w-full h-full"
+                            : "flex justify-center items-center"
+                        }`}
+                        priority={true}
+                      />
+                    )
+                  ) : (
+                    <Image
+                      src={article.image || loading}
+                      alt="article cover image"
+                      width={500}
+                      height={300}
+                      className={`${
+                        article.image
+                          ? "object-cover w-full h-full"
+                          : "flex justify-center items-center"
+                      }`}
+                      priority={true}
+                    />
+                  )}
                 </div>
-              )}
+              }
               <div className="flex flex-col gap-2 h-[calc(100%-300px)]">
                 <h2 className="font-bold text-[24px] tracking-[1px] text-center indent-[1px] break-words hyphens-auto">
                   {article.title}

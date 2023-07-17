@@ -25,6 +25,7 @@ shadow-[-3px_3px] shadow-black rounded-2xl border-2 border-black
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [articles, setArticles] = useState<Article[]>([]);
+  const [showImage, setShowImage] = useState(false);
 
   useEffect(() => {
     let isFetching = false;
@@ -62,6 +63,10 @@ export default function Home() {
     if (!window) return;
     window.addEventListener("scroll", scrollHandler);
 
+    setTimeout(() => {
+      setShowImage(true);
+    }, 1000);
+
     return () => {
       window.removeEventListener("scroll", scrollHandler);
     };
@@ -70,7 +75,6 @@ export default function Home() {
   return (
     <div className="w-full mx-auto">
       <TrendingArticles />
-
       <div className="relative max-w-[1280px] mx-[10px] lg:mx-auto border-t-2 border-black mt-[20px]">
         <h2 className="w-fit px-2 py-1 bg-black text-white tracking-[1px] font-medium">
           Recent Articles
@@ -87,7 +91,7 @@ export default function Home() {
                   key={category}
                   className={
                     categoryClass +
-                    " hover:cursor-pointer hover:animate-wiggle z-10 relative"
+                    "hover:cursor-pointer hover:animate-wiggle z-10 relative"
                   }
                 >
                   {category}
@@ -105,6 +109,7 @@ export default function Home() {
           <div className="lg:min-w-[100%-300px] md:min-w-[100%-210px] w-full overflow-hidden">
             {articles && articles.length > 0 && (
               <ArticleList
+                showImage={showImage}
                 articles={articles}
                 customLayout="md:justify-start pl-[0]"
               />
