@@ -7,6 +7,7 @@ type Props = {
   time?: number;
   customCloseButton?: boolean;
   customBg?: string;
+  customHandleCloseButton?: () => void;
 };
 
 const Warning = ({
@@ -15,10 +16,15 @@ const Warning = ({
   time,
   customCloseButton = false,
   customBg,
+  customHandleCloseButton,
 }: Props) => {
   const ref = useRef<HTMLDivElement | null>(null);
 
   const handleCloseWarning = () => {
+    if (customHandleCloseButton) {
+      customHandleCloseButton();
+      return;
+    }
     ref.current?.classList.add("hidden");
   };
   useEffect(() => {

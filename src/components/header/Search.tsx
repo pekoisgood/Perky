@@ -57,6 +57,8 @@ const Search = () => {
     }
   }, [searchInput, tags]);
 
+  console.log("isSearching", isSearching);
+
   return (
     <div className="group">
       <div
@@ -71,6 +73,7 @@ const Search = () => {
       {isSearching && (
         <Warning
           time={0}
+          customHandleCloseButton={() => setIsSearching(false)}
           customLayout="fixed top-[50%] right-[50%] translate-x-[50%] translate-y-[-50%] p-10 flex items-center
            rounded-xl bg-[white] text-black w-[50vw] max-w-[600px] h-[50vh] flex flex-col shadow-[-5px_5px_3px] shadow-[#3c3b3b]"
           customBg="fixed top-0 bottom-0 right-0 left-0 w-screen h-screen bg-black/20"
