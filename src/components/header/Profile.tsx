@@ -27,8 +27,7 @@ const Profile = () => {
   const handleLogout = () => {
     logOut();
     setShowList(false);
-    console.log("pushhh");
-    router.push("/auth");
+    router.push("/");
   };
 
   return (
