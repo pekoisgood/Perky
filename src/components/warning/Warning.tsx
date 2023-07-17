@@ -42,6 +42,7 @@ const Warning = ({
     // bg-black/30
     <div
       ref={ref}
+      onClick={handleCloseWarning}
       className={`${
         customBg
           ? customBg
@@ -49,6 +50,7 @@ const Warning = ({
       } `}
     >
       <div
+        onClick={(e) => e.stopPropagation()}
         className={`${
           customLayout
             ? customLayout
@@ -59,7 +61,7 @@ const Warning = ({
         {!customCloseButton && (
           <span
             className="absolute top-[10px] right-[20px] text-black hover:cursor-pointer"
-            onClick={() => handleCloseWarning()}
+            onClick={handleCloseWarning}
           >
             x
           </span>
