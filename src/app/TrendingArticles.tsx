@@ -133,7 +133,7 @@ const TrendingArticles = () => {
                     <p className={`text-[10px]  ${categoryClass}`}>
                       {article.category}
                     </p>
-                    <h4 className="font-bold text-[13px] sm:text-[15px] line-clamp-3">
+                    <h4 className="font-bold text-[13px] sm:text-[15px] line-clamp-5">
                       {article.title}
                     </h4>
                   </div>

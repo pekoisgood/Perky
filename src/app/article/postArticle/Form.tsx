@@ -224,6 +224,7 @@ const Form = ({ image }: { image: File | null }) => {
           <option value="Backend">Backend</option>
           <option value="iOS">iOS</option>
           <option value="Android">Android</option>
+          <option value="Leetcode">Leetcode</option>
           <option value="Others">Others</option>
         </select>
       </div>
@@ -273,11 +274,11 @@ const Form = ({ image }: { image: File | null }) => {
         <Warning time={0}>
           <div className="flex flex-col gap-3 items-center justify-center">
             <p>Article Post Success!</p>
-            <Button customLayout="shadow-[3px_3px] px-2">
-              <Link href="/" className="text-black">
+            <Link href="/" className="text-black">
+              <Button customLayout="shadow-[3px_3px] px-2">
                 Back to Home page
-              </Link>
-            </Button>
+              </Button>
+            </Link>
           </div>
         </Warning>
       )}
