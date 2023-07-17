@@ -169,7 +169,7 @@ const BookClubList = () => {
                 key={index}
                 variants={child}
                 whileHover={{ y: -10 }}
-                className="p-1 border-solid rounded-xl bg-[#245953] text-white w-fit mx-auto md:w-full"
+                className="p-1 border-solid rounded-xl bg-[#245953] text-white w-fit h-fit mx-auto md:w-full"
               >
                 <div className="flex flex-col p-4 gap-2 justify-center items-center border-dashed border-2 border-white rounded-lg">
                   <h3 className="text-[16px] text-white font-bold">

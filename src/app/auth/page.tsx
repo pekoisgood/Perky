@@ -214,7 +214,7 @@ const Page = () => {
                 height={40}
                 alt="google logo"
               />
-              <div onClick={logIn}>Sign in with google</div>
+              <div onClick={logIn}>Login in with google</div>
             </div>
             <p
               className="hover:cursor-pointer text-[#245953] text-[12px]"

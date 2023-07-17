@@ -81,9 +81,7 @@ const Note = ({
         </ReactMarkdown>
       )}
       <div className="flex items-center gap-2 w-fit ml-auto mt-[5px]">
-        {processing && (
-          <p className="text-[12px] text-[#EB455F]">儲存成功 ! </p>
-        )}
+        {processing && <p className="text-[12px] text-[#EB455F]">saved ! </p>}
         <button
           className="p-2 bg-[#EB455F] text-white text-[13px] rounded-md active:translate-y-[2px] drop-shadow-lg"
           onClick={saveNote}
