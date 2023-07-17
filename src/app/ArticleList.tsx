@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Article } from "@/utils/firebase";
 import ArticleSnippet from "./ArticleSnippet";
+import loading from "../assets/image/backgroundIcon/loading-carga.gif";
 
 const ArticleList = ({
   articles,
@@ -73,11 +74,15 @@ const ArticleList = ({
               {article.image && (
                 <div className="w-full h-[300px] mx-auto object-cover object-center overflow-hidden relative rounded-2xl border-2 border-black shadow-[-10px_10px] shadow-[#0000003b]">
                   <Image
-                    src={article.image}
+                    src={article.image || loading}
                     alt="article cover image"
                     width={500}
                     height={300}
-                    className="object-cover w-full h-full"
+                    className={`${
+                      article.image
+                        ? "object-cover w-full h-full"
+                        : "flex justify-center items-center"
+                    }`}
                     priority={true}
                   />
                 </div>
