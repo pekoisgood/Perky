@@ -4,14 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import Profile from "./Profile";
 import Search from "./Search";
-import { HiOutlineDocumentAdd } from "react-icons/hi";
 import logo from "./coding.png";
-import { AuthContext } from "@/context/AuthContext";
-import { useContext } from "react";
+import PostArticle from "./PostArticle";
 
 const Header = () => {
-  const { isLogin } = useContext(AuthContext);
-
   return (
     <div className="fixed w-full top-0 left-0 right-0 bg-white h-[60px] flex items-center px-4 shadow-sm z-[100]">
       <Link href="/" className="flex items-center gap-2 px-4 py-1 rounded-3xl">
@@ -29,9 +25,7 @@ const Header = () => {
         </div>
       </Link>
       <div className="w-fit ml-auto flex items-center gap-3">
-        <Link href={isLogin ? "/article/postArticle" : ""} className="w-fit">
-          <HiOutlineDocumentAdd size={30} />
-        </Link>
+        <PostArticle />
         <Search />
         <div className="group">
           <Profile />

@@ -60,7 +60,7 @@ const Comment = ({ articleId }: { articleId: string }) => {
     const q = query(CommentRef, orderBy("createdAt", "desc"));
     const commentsData: ArticleComment[] = [];
     const docData = (doc: DocumentData) => {
-      console.log(doc.data());
+      // console.log(doc.data());
 
       return {
         comment: doc.data().comment,
@@ -113,10 +113,7 @@ const Comment = ({ articleId }: { articleId: string }) => {
           className="w-[95%] h-[42px] p-2 border-[1px] border-[#245953] rounded-md focus:border-2 outline-none"
           onChange={(e) => setNewComment(e.target.value)}
         />
-        <Button
-          customLayout="h-[42px] w-[42px] flex items-center justify-center rotate-90 shadow-[2px_2px]"
-          // handleOnClick={handleSubmitComment}
-        >
+        <Button customLayout="h-[42px] w-[42px] flex items-center justify-center rotate-90 shadow-[2px_2px]">
           <HiPaperAirplane size={35} />
         </Button>
       </form>
@@ -164,10 +161,17 @@ const Comment = ({ articleId }: { articleId: string }) => {
         )}
       </div>
       {showNotLoginWarning && (
-        <Warning time={0} customLayout="flex flex-col gap-3 items-center">
+        <Warning
+          time={0}
+          customLayout="flex flex-col gap-3 items-center fixed top-[50%] right-[50%] translate-x-[50%] translate-y-[-50%] p-10 justify-center
+          border-2 border-black rounded-xl bg-[white] text-black font-bold w-fit h-fit"
+          customHandleCloseButton={() => setShowNotLoginWarning(false)}
+        >
           <p>You have to login to comment on this article!</p>
           <Button>
-            <Link href="/auth">Go to Login</Link>
+            <Link href="/auth" onClick={() => setShowNotLoginWarning(false)}>
+              Go to Login
+            </Link>
           </Button>
         </Warning>
       )}
