@@ -59,7 +59,7 @@ const ArticleList = ({
     }
   }, [isFirstLoading, articles]);
   // console.log("showImage", showImage);
-  console.log(articles);
+  // console.log(articles);
 
   return (
     <div
