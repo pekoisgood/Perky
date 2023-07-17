@@ -27,6 +27,8 @@ export default function Home() {
   const [articles, setArticles] = useState<Article[]>([]);
   const [showImage, setShowImage] = useState(false);
 
+  console.log("page: ", showImage);
+
   useEffect(() => {
     let isFetching = false;
     let total = 0;
@@ -52,6 +54,9 @@ export default function Home() {
 
     async function scrollHandler() {
       if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+        console.log("total", total);
+        console.log("lastId", lastId);
+
         if (total && articlesCount === total) return;
         if (isFetching) return;
 
@@ -64,8 +69,10 @@ export default function Home() {
     window.addEventListener("scroll", scrollHandler);
 
     setTimeout(() => {
+      console.log("=======set======");
+
       setShowImage(true);
-    }, 1000);
+    }, 3000);
 
     return () => {
       window.removeEventListener("scroll", scrollHandler);

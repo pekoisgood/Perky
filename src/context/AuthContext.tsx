@@ -52,23 +52,23 @@ export const AuthContextProvider = ({
   const router = useRouter();
 
   useEffect(() => {
-    console.log("=========this is authContext...==========");
-    console.log("login status: ", isLogin);
-    console.log("user state: ", user);
+    // console.log("=========this is authContext...==========");
+    // console.log("login status: ", isLogin);
+    // console.log("user state: ", user);
 
     const checkAuthStatus = async () => {
       onAuthStateChanged(auth, async (user) => {
-        console.log("check: ", user?.uid);
+        // console.log("check: ", user?.uid);
 
         if (!user) {
-          console.log("user not login!!");
+          // console.log("user not login!!");
           setIsLogin(false);
           return;
         }
 
         const userRef = doc(db, "users", user.uid);
         const result: DocumentData = await getDoc(userRef);
-        console.log("get user info", result.data());
+        // console.log("get user info", result.data());
 
         // if (user.email) {
         setUser({
@@ -97,7 +97,7 @@ export const AuthContextProvider = ({
     const userInfo: DocumentData = await getDoc(userRef);
     // 是因為70 行 user.id 一直拿不到拉幹
 
-    console.log(userInfo.data());
+    // console.log(userInfo.data());
 
     setUser({
       email: userInfo.data().email ?? result.user.email,
