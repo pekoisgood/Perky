@@ -61,8 +61,6 @@ const ParticipantView = ({
     // }
   }, []);
 
-  console.log(isLocal);
-
   return (
     <>
       {/* // 這裡一定要設定 h-full 不然下面那個 height 如果是 % 會無法作用！！ */}
@@ -105,7 +103,7 @@ const ParticipantView = ({
                 alt="avatar"
                 width={40}
                 height={40}
-                className="rounded-full overflow-hidden border-[1px] border-white"
+                className="rounded-full overflow-hidden border-[1px] border-white w-[40px] h-[40px] object-cover"
               />
             ) : (
               <PiFinnTheHumanFill

@@ -210,7 +210,7 @@ const BookClubList = () => {
         )}
       </motion.div>
       {isPreviewNote && note && (
-        <div className="absolute top-0 left-0 w-full h-full">
+        <div className="absolute top-0 left-0 w-full h-fit">
           <div
             className={`flex flex-col px-[20px] absolute top-[49%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-full h-[99%]
           bg-white/90 backdrop-blur-md rounded-xl border-[#245953] border-2 shadow-md overflow-y-scroll z-[21]`}

@@ -123,7 +123,7 @@ export default function CodeEditor({ code, setCode }: Props) {
   };
 
   return (
-    <div className="m-1 rounded-xl h-[89%]">
+    <div className="m-1 rounded-xl h-full">
       <div className="flex justify-between mb-3">
         <select
           className="border-[1px] border-slate-400 rounded-lg"
@@ -147,24 +147,25 @@ export default function CodeEditor({ code, setCode }: Props) {
           {isRunning ? "running" : <VscDebugStart />}
         </button>
       </div>
+      <div className="h-[90%] overflow-y-scroll">
+        <div className="h-[84%] rounded-t-lg overflow-hidden">
+          <CodeMirror
+            value={code}
+            height="100%"
+            extensions={getExtensionLanguage()}
+            theme={vscodeDark}
+            className="h-full"
+            id="editor"
+            onChange={(editor) => {
+              setCode(editor);
+            }}
+          />
+        </div>
 
-      <div className="h-[90%] rounded-t-lg overflow-hidden">
-        <CodeMirror
-          value={code}
-          height="100%"
-          extensions={getExtensionLanguage()}
-          theme={vscodeDark}
-          className="h-full"
-          id="editor"
-          onChange={(editor) => {
-            setCode(editor);
-          }}
-        />
-      </div>
-
-      <div className="min-h-[calc(100%-600px)] p-2 mb-2 bg-black text-white rounded-b-lg border-white border-dashed border-t-[1px]">
-        <h2 className="m-0">output :</h2>
-        <div className="w-full overflow-y-scroll">{output}</div>
+        <div className="h-[16%] p-2 mb-2 bg-black text-white rounded-b-lg border-white border-dashed border-t-[1px] overflow-y-scroll">
+          <h2 className="m-0">output :</h2>
+          <div className="w-full overflow-y-scroll">{output}</div>
+        </div>
       </div>
     </div>
   );

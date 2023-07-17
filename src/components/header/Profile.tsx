@@ -33,7 +33,7 @@ const Profile = () => {
         <>
           <div
             onClick={() => setShowList((prev) => !prev)}
-            className="rounded-full border-[1px] border-white flex items-center justify-center w-[40px] h-[40px] overflow-hidden hover:cursor-pointer"
+            className="rounded-full border-[1px] border-black flex items-center justify-center w-[40px] h-[40px] overflow-hidden hover:cursor-pointer"
           >
             {user.avatar !== "" ? (
               <Image
