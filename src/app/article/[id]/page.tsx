@@ -51,9 +51,12 @@ const Page = async ({ params }: { params: { id: string } }) => {
         <div className="flex gap-3 items-center text-[13px] sm:text-[16px] text-[#245953]">
           <p>{article.authorName}</p>
           <span className="w-[5px] h-[5px] rounded-full bg-[#00000088] " />
-          <p className="bg-[#FFD89C] text-black tracking-[1px] px-2 py-1 rounded-3xl w-fit text-[10px] sm:text-[12px] border-2 border-black font-bold">
+          <Link
+            href={`/articles?category=${article.category}`}
+            className="bg-[#FFD89C] text-black tracking-[1px] px-2 py-1 rounded-3xl w-fit text-[10px] sm:text-[12px] border-2 border-black font-bold"
+          >
             {article.category}
-          </p>
+          </Link>
           <span className="w-[5px] h-[5px] rounded-full bg-[#00000088] " />
           <p>{publishDate}</p>
         </div>

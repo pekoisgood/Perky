@@ -42,7 +42,7 @@ export default function Home() {
     const fetchArticles = async () => {
       isFetching = true;
       setIsLoading(true);
-      console.log("fetch!")
+      console.log("fetch!");
 
       const articlesReq = await fetch(`/api/articles?lastId=${lastId}`);
       const articlesRes = await articlesReq.json();
@@ -58,7 +58,10 @@ export default function Home() {
     };
 
     async function scrollHandler() {
-      if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+      if (
+        window.innerHeight + window.scrollY >=
+        document.body.offsetHeight - 100
+      ) {
         console.log("total", total);
         console.log("lastId", lastId);
 
