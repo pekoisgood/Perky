@@ -132,10 +132,13 @@ const Comment = ({ articleId }: { articleId: string }) => {
                       alt="avatar"
                       width={30}
                       height={30}
-                      className="rounded-full overflow-hidden min-w-[30px] h-[30px] object-cover"
+                      className="rounded-full overflow-hidden min-w-[30px] h-[30px] object-cover border-[1px] border-black"
                     />
                   ) : (
-                    <PiFinnTheHumanFill size={30} className="min-w-[30px]" />
+                    <PiFinnTheHumanFill
+                      size={30}
+                      className="min-w-[30px] border-[1px] border-black rounded-full"
+                    />
                   )}
                   <div className="flex flex-col gap-1">
                     <p className="text-black text-[12px] sm:text-[14px] font-semibold">

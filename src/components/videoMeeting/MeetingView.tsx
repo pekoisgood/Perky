@@ -15,6 +15,7 @@ import { PiFinnTheHumanFill } from "react-icons/pi";
 import Image from "next/image";
 import { AuthContext } from "@/context/AuthContext";
 import { motion } from "framer-motion";
+import { useAppSelector } from "@/redux/hooks";
 
 type PresenterId = null | string;
 
@@ -58,6 +59,8 @@ const MeetingView = () => {
   const [isWebCamOn, setIsWebCamOn] = useState<boolean>(true);
   const [presenterId, setPresenterId] = useState<string>("");
   const [participantIds, setParticipantIds] = useState<string[]>([]);
+
+  const guests = useAppSelector((state) => state.bookClubMeeting.value);
 
   const { join, participants, enableScreenShare, disableScreenShare } =
     useMeeting({
@@ -137,6 +140,8 @@ const MeetingView = () => {
     setPresenterId("");
   };
 
+  console.log(guests);
+
   return (
     <div className="flex flex-col h-full w-full">
       {joined ? (
@@ -196,7 +201,7 @@ const MeetingView = () => {
               ${isMicOn ? "bg-slate-200" : "bg-red-400"}
               `}
               onClick={handleToggleMic}
-              title={isMicOn ? "Right now is mic on" : "Mic off"}
+              title={isMicOn ? "Right now mic is on" : "Mic off"}
             >
               {isMicOn ? (
                 <BsFillMicFill size={25} />

@@ -119,7 +119,7 @@ const Page = () => {
     const data = {
       name: bookClub.title,
       time,
-      guest: bookClub.guest.map((guest) => guest.id),
+      guest: [...bookClub.guest.map((guest) => guest.id), user.id],
       host: user.id,
       createdAt: serverTimestamp(),
       roomId,

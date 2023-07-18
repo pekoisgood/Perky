@@ -6,6 +6,7 @@ import { authReducer } from "./slice/authSlice";
 import { articleRecordReducer } from "./slice/articleRecordSlice";
 import { savedArticleReducer } from "./slice/savedArticle";
 import { analysisReducer } from "./slice/analysisSlice";
+import { bookClubMeetingReducer } from "./slice/bookClubMeetingSlice";
 
 export const store = configureStore({
   reducer: {
@@ -15,6 +16,7 @@ export const store = configureStore({
     articleRecord: articleRecordReducer,
     savedArticle: savedArticleReducer,
     analysis: analysisReducer,
+    bookClubMeeting: bookClubMeetingReducer,
   },
 });
 

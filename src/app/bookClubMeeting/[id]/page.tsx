@@ -18,6 +18,8 @@ import { db } from "@/utils/firebase";
 import { useParams } from "next/navigation";
 import { CgDetailsMore } from "react-icons/cg";
 import { AuthContext } from "@/context/AuthContext";
+import { useAppDispatch } from "@/redux/hooks";
+import { setBookClubMeetingGuest } from "@/redux/slice/bookClubMeetingSlice";
 
 type BookClub = {
   name: string;
@@ -73,6 +75,8 @@ const Page = () => {
   const param = useParams();
   const bookClubId = param.id;
 
+  const dispatch = useAppDispatch();
+
   const handleClickSidebar = (sidebarFunc: string) => {
     setIsShowSidebar(true);
     setshowhiddenSidebarMenu(false);
@@ -93,12 +97,25 @@ const Page = () => {
           name: result.data().name,
           roomId: result.data().roomId,
         });
+        const guestList = result.data().guest;
+
+        for (let i = 0; i < guestList.length; i++) {
+          const guestRef = doc(db, "users", guestList[i]);
+          const userInfo: DocumentData = await getDoc(guestRef);
+          dispatch(
+            setBookClubMeetingGuest({
+              name: userInfo.data().name,
+              avatar: userInfo.data().avatar,
+              id: userInfo.id,
+            })
+          );
+        }
       }
     };
 
     const addAttendee = async () => {
       if (!user.id) return;
-      console.log(bookClubId);
+      // console.log(bookClubId);
 
       const result: DocumentData = await getDoc(bookClubRef);
       console.log(result.data());

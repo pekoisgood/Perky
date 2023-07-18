@@ -1,12 +1,13 @@
 "use client";
 
 import React from "react";
-import { useRef, useMemo, useEffect, useContext } from "react";
+import { useRef, useMemo, useEffect } from "react";
 import { useParticipant } from "@videosdk.live/react-sdk";
 import ReactPlayer from "react-player";
-import { AuthContext } from "@/context/AuthContext";
+// import { AuthContext } from "@/context/AuthContext";
 import Image from "next/image";
 import { PiFinnTheHumanFill } from "react-icons/pi";
+import { useAppSelector } from "@/redux/hooks";
 // import { doc } from "firebase/firestore";
 // import { db } from "@/utils/firebase";
 
@@ -23,9 +24,10 @@ const ParticipantView = ({
   isMicOn,
   isCamOn,
 }: Props) => {
-  const { user } = useContext(AuthContext);
+  // const { user } = useContext(AuthContext);
+  const guest = useAppSelector((state) => state.bookClubMeeting.value);
   const micRef = useRef<HTMLAudioElement | null>(null);
-  const { webcamStream, micStream, webcamOn, micOn, isLocal } =
+  const { webcamStream, micStream, webcamOn, micOn, isLocal, displayName } =
     useParticipant(participantId);
 
   const videoStream = useMemo(() => {
@@ -61,6 +63,10 @@ const ParticipantView = ({
     // }
   }, []);
 
+  const user = guest.find((guest) => guest.id === participantId);
+  console.log(user, participantId);
+  // console.log(participantId);
+
   return (
     <>
       {/* // 這裡一定要設定 h-full 不然下面那個 height 如果是 % 會無法作用！！ */}
@@ -83,13 +89,13 @@ const ParticipantView = ({
               }}
               className="rounded-3xl overflow-hidden w-fit max-w-[1150px] mx-auto max-h-[calc(100vh-200px)] "
             />
-            {/* <p
+            <p
               className={`absolute bottom-3 right-[50%] translate-x-[50%] ${
                 presenterId ? "text-[12px]" : "text-[18px]"
               }`}
             >
-              {isLocal && user.name}
-            </p> */}
+              {displayName}
+            </p>
           </>
         ) : (
           <div
@@ -97,7 +103,7 @@ const ParticipantView = ({
               presenterId ? "w-[100px]" : "w-full"
             }`}
           >
-            {user.avatar !== "" ? (
+            {user && user.avatar !== "" ? (
               <Image
                 src={user.avatar}
                 alt="avatar"
@@ -111,7 +117,7 @@ const ParticipantView = ({
                 className="rounded-full border-[1px] border-white text-white"
               />
             )}
-            {/* <p className="text-white text-[12px]">{isLocal && user.name}</p> */}
+            <p className="text-white text-[12px]">{displayName}</p>
           </div>
         )}
       </div>

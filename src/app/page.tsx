@@ -26,12 +26,6 @@ shadow-[-3px_3px] shadow-black rounded-2xl border-2 border-black
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [articles, setArticles] = useState<Article[]>([]);
-  // const [showImage, setShowImage] = useState(true);
-  // const showImage = useAppSelector(
-  //   (state) => state.postArticle.value.showImage
-  // );
-
-  // console.log("page: ", showImage);
 
   useEffect(() => {
     let isFetching = false;

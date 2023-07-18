@@ -1,4 +1,6 @@
+import { AuthContext } from "@/context/AuthContext";
 import dynamic from "next/dynamic";
+import { useContext } from "react";
 
 type Props = {
   roomId: string;
@@ -19,6 +21,7 @@ const MeetingView = dynamic(
 );
 
 const Video = ({ roomId }: Props) => {
+  const { user } = useContext(AuthContext);
   const API_KEY = process.env.NEXT_PUBLIC_VIDEO_SDK_API_KEY;
 
   if (!roomId || !API_KEY) return <></>;
@@ -29,7 +32,8 @@ const Video = ({ roomId }: Props) => {
         meetingId: roomId,
         micEnabled: true,
         webcamEnabled: true,
-        name: "張孟潔's Org",
+        participantId: user.id,
+        name: user.name,
       }}
       token={API_KEY}
     >
