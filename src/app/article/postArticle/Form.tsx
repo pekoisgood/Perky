@@ -118,7 +118,7 @@ const Form = ({ image }: { image: File | null }) => {
       }
 
       const compressedFile: any = await compressImage(file, {
-        quality: 0.5,
+        quality: 0.3,
         type: "image/jpeg",
       });
       dataTransfer.items.add(compressedFile);

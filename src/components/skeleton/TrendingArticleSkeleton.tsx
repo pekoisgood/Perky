@@ -37,7 +37,7 @@ const TrendingArticleSkeleton = () => {
           return (
             <div
               key={index}
-              className="flex gap-[10px] w-[23%] h-[23%] md:h-[16%] border-l-[1px] border-[#d1d5db] pl-[14px] mt-[20px]"
+              className="flex sm:flex-row flex-col gap-[10px] w-[23%] h-[23%] md:h-[16%] border-l-[1px] border-[#d1d5db] pl-[14px] mt-[20px]"
             >
               <div className="basis-2/3 flex flex-col justify-evenly gap-[7px] grow">
                 <p
