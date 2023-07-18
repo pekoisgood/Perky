@@ -62,7 +62,7 @@ const ArticleRecord = () => {
 
         console.log("data", res.data());
 
-        // if (res.data) {
+        // if (!res.data) {
         console.log("===========push==========");
 
         savedArticles.push({

@@ -5,20 +5,18 @@ import Link from "next/link";
 import Image from "next/image";
 import { Article } from "@/utils/firebase";
 import ArticleSnippet from "./ArticleSnippet";
-import loading from "../assets/image/backgroundIcon/loading-carga.gif";
 
 const ArticleList = ({
   articles,
   customLayout,
-  showImage,
 }: {
   articles: Article[];
   customLayout?: string;
-  showImage?: boolean;
 }) => {
   const ref = useRef<HTMLAnchorElement[]>([]);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [isFirstLoading, setIsFirstLoading] = useState<boolean>(true);
+  const [isImageReady, setIsImageReady] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -48,18 +46,12 @@ const ArticleList = ({
       );
     });
     if (ref.current && window) {
-      // console.log(ref.current);
-
       ref.current.forEach((el) => {
-        // console.log("el: ", el);
-
         if (!el) return;
         observer.observe(el);
       });
     }
   }, [isFirstLoading, articles]);
-  // console.log("showImage", showImage);
-  // console.log(articles);
 
   return (
     <div
@@ -82,48 +74,32 @@ const ArticleList = ({
             <div className="flex flex-col gap-4 w-full h-full relative">
               {
                 <div className="w-full h-[300px] mx-auto object-cover object-center overflow-hidden relative rounded-2xl border-2 border-black shadow-[-10px_10px] shadow-[#0000003b]">
-                  {showImage !== undefined ? (
-                    index === 0 ? (
-                      showImage ? (
-                        <Image
-                          src={article.image || loading}
-                          alt="article cover image"
-                          width={500}
-                          height={300}
-                          className={`${
-                            article.image
-                              ? "object-cover w-full h-full"
-                              : "mx-auto object-contain h-full w-auto"
-                          }`}
-                          priority={true}
-                        />
-                      ) : (
-                        <Image
-                          src={loading}
-                          alt="article cover loading image"
-                          width={500}
-                          height={300}
-                          className={`mx-auto object-contain h-full w-auto`}
-                          priority={true}
-                        />
-                      )
-                    ) : (
+                  {index === 0 ? (
+                    <>
+                      {!isImageReady && (
+                        <div className="w-full animate-bounce absolute top-[50%] text-center translate-y-[50%]">
+                          Loading...
+                        </div>
+                      )}
                       <Image
-                        src={article.image || loading}
+                        src={article.image}
                         alt="article cover image"
                         width={500}
                         height={300}
                         className={`${
                           article.image
                             ? "object-cover w-full h-full"
-                            : "flex justify-center items-center"
+                            : "mx-auto object-contain h-full w-auto"
                         }`}
                         priority={true}
+                        onLoad={() => {
+                          setIsImageReady(true);
+                        }}
                       />
-                    )
+                    </>
                   ) : (
                     <Image
-                      src={article.image || loading}
+                      src={article.image}
                       alt="article cover image"
                       width={500}
                       height={300}

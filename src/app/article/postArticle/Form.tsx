@@ -3,7 +3,6 @@ import TextEditor from "./textEditor/TextEditor";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import {
   handlePostArticle,
-  // handleShowImage,
   handleUpdateArticle,
 } from "@/redux/slice/postArticleSlice";
 import { storage } from "@/utils/firebase";
@@ -151,10 +150,14 @@ const Form = ({ image }: { image: File | null }) => {
         userName: user.name,
       });
 
+      console.log("post article...");
+
       dispatch(handlePostArticle());
       // setTimeout(() => {
+      //   console.log("showImage!!");
+
       //   dispatch(handleShowImage());
-      // }, 3000);
+      // }, 20000);
       setIsProcessing(postStatus.SUCCESS);
 
       for (let i = 0; i < postArticle.tags.length; i++) {
