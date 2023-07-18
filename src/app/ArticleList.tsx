@@ -55,7 +55,7 @@ const ArticleList = ({
 
   return (
     <div
-      className={`h-full ${
+      className={`h-auto ${
         customLayout ? customLayout : "w-full"
       } flex flex-wrap gap-8 min-h-[150px] mt-[10px]`}
       ref={containerRef}
