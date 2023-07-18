@@ -17,7 +17,12 @@ type CreateBookClub = {
   date: string;
   hour: string;
   minute: string;
-  guest: string[];
+  guest: Guest[];
+};
+
+type Guest = {
+  name: string;
+  id: string;
 };
 
 const getMonth = () => {
@@ -52,7 +57,7 @@ const Page = () => {
     setBookClub((prev) => {
       return {
         ...prev,
-        guest: prev.guest.filter((userId) => userId !== userIdTobeRomved),
+        guest: prev.guest.filter((guest) => guest.id !== userIdTobeRomved),
       };
     });
   };
@@ -114,7 +119,7 @@ const Page = () => {
     const data = {
       name: bookClub.title,
       time,
-      guest: bookClub.guest,
+      guest: bookClub.guest.map((guest) => guest.id),
       host: user.id,
       createdAt: serverTimestamp(),
       roomId,
@@ -224,16 +229,16 @@ const Page = () => {
         </div>
         <div className="flex gap-2 flex-wrap items-center w-full">
           <p>Invited Friend : </p>
-          {bookClub.guest.map((userId) => {
+          {bookClub.guest.map((user) => {
             return (
               <div
-                key={userId}
+                key={user.id}
                 className="px-2 py-1 bg-orange-300 text-black border-[1px] border-black rounded-md flex gap-3 items-center "
               >
-                <p className="text-black">{userId}</p>
+                <p className="text-black">{user.name}</p>
                 <span
                   className="hover:cursor-pointer"
-                  onClick={() => handleRemoveGuest(userId)}
+                  onClick={() => handleRemoveGuest(user.id)}
                 >
                   <IoMdClose />
                 </span>

@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { HiSearch } from "react-icons/hi";
 import Button from "../button/Button";
 import Warning from "../warning/Warning";
+import { useRouter } from "next/navigation";
 
 type SearchOutput = {
   id: string;
@@ -23,6 +24,8 @@ const Search = () => {
   const [searchInput, setSearchInput] = useState<string>("");
   const [searchResult, setSearchResult] = useState<SearchOutput[]>([]);
   const [tags, setTags] = useState<SearchOutput[]>([]);
+
+  const router = useRouter();
 
   useEffect(() => {
     const getTags = async () => {
@@ -82,14 +85,17 @@ const Search = () => {
               placeholder="what are you looking for...?"
               onChange={(e) => setSearchInput(e.target.value.toLowerCase())}
             />
-            <Link
-              href={`/articles?search=${searchInput}`}
-              onClick={() => setIsSearching(false)}
+            <div
+              onClick={() => {
+                if (!searchInput) return;
+                setIsSearching(false);
+                router.push(`/articles?search=${searchInput}`);
+              }}
             >
               <Button customLayout="h-[35px] flex justify-center items-center">
                 <HiSearch size={30} />
               </Button>
-            </Link>
+            </div>
           </div>
           <div className="flex flex-col gap-2 w-[90%] justify-start mt-[10px] overflow-scroll overscroll-contain">
             {searchResult.length > 0 &&

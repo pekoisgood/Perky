@@ -8,12 +8,17 @@ type User = {
   email: string;
 };
 
+type Guest = {
+  name: string;
+  id: string;
+};
+
 type CreateBookClub = {
   title: string;
   date: string;
   hour: string;
   minute: string;
-  guest: string[];
+  guest: Guest[];
 };
 
 type Props = {
@@ -27,16 +32,17 @@ const Search = ({ bookClub, setBookClub, setShowInvationError }: Props) => {
   const [searchName, setSearchName] = useState<string>("");
   const [users, setUsers] = useState<User[]>([]);
 
-  const handleAddGuest = (id: string) => {
+  const handleAddGuest = (id: string, name: string) => {
     setIsSearching(false);
     setSearchName("");
-    if (bookClub.guest.find((userId: string) => userId === id)) {
+    if (bookClub.guest.find((guest) => guest.id === id)) {
       setShowInvationError(true);
       return;
     }
     setBookClub((prev) => {
-      return { ...prev, guest: [...prev.guest, id] };
+      return { ...prev, guest: [...prev.guest, { name, id }] };
     });
+    return;
   };
 
   useEffect(() => {
@@ -61,13 +67,13 @@ const Search = ({ bookClub, setBookClub, setShowInvationError }: Props) => {
     <div className="relative">
       <input
         type="text"
+        value={searchName}
         placeholder="User Name..."
         className="w-full outline-none px-3 py-2 border-dashed border-2 border-[#245953] rounded-2xl focus:border-solid"
         onClick={() => {
           setIsSearching(true);
           setShowInvationError(false);
         }}
-        // onBlur={() => setIsSearching(false)}
         onChange={(e) => setSearchName(e.target.value)}
       />
       {isSearching === true && searchName !== "" && (
@@ -80,7 +86,9 @@ const Search = ({ bookClub, setBookClub, setShowInvationError }: Props) => {
               return (
                 <p
                   key={user.userId}
-                  onClick={() => handleAddGuest(user.name + `(${user.email})`)}
+                  onClick={() =>
+                    handleAddGuest(user.userId, user.name + `(${user.email})`)
+                  }
                   className=" text-slate-800 hover:cursor-pointer"
                 >
                   {user.name}
