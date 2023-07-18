@@ -91,6 +91,18 @@ const BookClubList = () => {
     setNote({ id: bookClubId, note: note.note });
   };
 
+  const getTime = (time: Timestamp) => {
+    const date = new Date(time.seconds * 1000);
+    const hour = date.getHours();
+    const minute = date.getMinutes();
+
+    return `${date.getFullYear()} / ${
+      date.getMonth() + 1
+    } / ${date.getDate()} ${hour < 10 ? `0${hour}` : hour}:${
+      minute < 10 ? `0${minute}` : minute
+    }`;
+  };
+
   useEffect(() => {
     const getBookClubList = async () => {
       setBookClubs([]);
@@ -175,9 +187,7 @@ const BookClubList = () => {
                   <h3 className="text-[16px] text-white font-bold">
                     {bookClub.name}
                   </h3>
-                  <p className="text-[12px]">
-                    {bookClub.time.toDate().toLocaleString()}
-                  </p>
+                  <p className="text-[14px]">{getTime(bookClub.time)}</p>
                   <div className="flex gap-2 justify-center text-black">
                     <Link
                       href={

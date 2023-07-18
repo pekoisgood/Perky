@@ -3,6 +3,7 @@
 import { BookClub, db } from "@/utils/firebase";
 import {
   DocumentData,
+  Timestamp,
   and,
   collection,
   getDocs,
@@ -25,6 +26,18 @@ const dashBoardTitleClass =
 const TodayBookClub = () => {
   const { user } = useContext(AuthContext);
   const [todayBookClub, setTodayBookClub] = useState<BookClub[] | null>(null);
+
+  const getTime = (time: Timestamp) => {
+    const date = new Date(time.seconds * 1000);
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const hour = date.getHours();
+    const minute = date.getMinutes();
+
+    return `${date.getFullYear()}/${month < 10 ? `0${month}` : month}/${
+      day < 10 ? `0${day}` : day
+    } ${hour < 10 ? `0${hour}` : hour}:${minute < 10 ? `0${minute}` : minute}`;
+  };
 
   useEffect(() => {
     const getBookClubList = async () => {
@@ -98,7 +111,7 @@ const TodayBookClub = () => {
                       {bookClub.name}
                     </p>
                     <p className="text-[12px] lg:text-[14px]">
-                      {new Date(bookClub.time.seconds * 1000).toLocaleString()}
+                      {getTime(bookClub.time)}
                     </p>
                   </div>
                 </Link>
