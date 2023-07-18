@@ -71,7 +71,7 @@ const ArticleList = ({
               isFirstLoading && "translate-x-0"
             } hover:translate-y-[-10px] hover:duration-150`}
           >
-            <div className="flex flex-col gap-4 w-full h-fit relative">
+            <div className="flex flex-col gap-4 w-full h-full relative">
               {
                 <div className="w-full h-[300px] mx-auto object-cover object-center overflow-hidden relative rounded-2xl border-2 border-black shadow-[-10px_10px] shadow-[#0000003b]">
                   {index === 0 ? (

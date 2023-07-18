@@ -46,6 +46,7 @@ const TrendingArticleSkeleton = () => {
                 <p className={`${textClass} h-[20px]`} />
                 <p className={`${textClass} h-[20px]`} />
                 <p className={`${textClass} h-[20px]`} />
+                <p className={`${textClass} h-[20px]`} />
               </div>
               <div
                 className={`h-[100%] basis-1/2 rounded-xl ml-auto hidden lg:flex shadow-[#0000003b] shadow-[-3px_3px] ${skeletonAnimation}`}

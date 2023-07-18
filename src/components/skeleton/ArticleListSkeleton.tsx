@@ -16,6 +16,7 @@ const ArticleListSkeleton = () => {
 
         <div className="flex flex-col gap-3 h-[calc(100%-300px)]">
           <h2 className={`${textClass} h-[30px]`} />
+          <h2 className={`${textClass} h-[30px]`} />
           <p className={`w-[90px] mx-auto ${textClass} h-[15px]`} />
           <p className={`${textClass} h-[15px] w-full`} />
           <p className={`${textClass} h-[15px] w-full`} />

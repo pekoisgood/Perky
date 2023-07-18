@@ -7,6 +7,7 @@ import Comment from "./Comment";
 import SaveCount from "./SaveCount";
 import Warning from "@/components/warning/Warning";
 import Button from "@/components/button/Button";
+import { Timestamp } from "firebase/firestore";
 
 const Page = async ({ params }: { params: { id: string } }) => {
   const articleId = params.id;
@@ -33,11 +34,15 @@ const Page = async ({ params }: { params: { id: string } }) => {
     );
   }
 
-  const publishDate = `${new Date(
-    article.createdAt.seconds * 1000
-  ).getFullYear()} / ${
-    new Date(article.createdAt.seconds * 1000).getMonth() + 1
-  } / ${new Date(article.createdAt.seconds * 1000).getDate()}`;
+  const getTime = (time: Timestamp) => {
+    const date = new Date(time.seconds * 1000);
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+
+    return `${date.getFullYear()}/${month < 10 ? `0${month}` : month}/${
+      day < 10 ? `0${day}` : day
+    }`;
+  };
 
   return (
     <div className="flex w-full max-w-[800px] mx-auto">
@@ -58,7 +63,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
             {article.category}
           </Link>
           <span className="w-[5px] h-[5px] rounded-full bg-[#00000088] " />
-          <p>{publishDate}</p>
+          <p>{getTime(article.createdAt)}</p>
         </div>
         <SaveCount articleId={articleId} />
         <div className="w-full h-fit mx-auto overflow-hidden rounded-2xl border-2 border-dashed border-[#245953] shadow-[#245953] shadow-[-7px_7px]">
