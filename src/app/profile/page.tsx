@@ -12,7 +12,7 @@ const Page = async () => {
           <div className="basis-1/2 m-3 bg-white rounded-2xl p-5 shadow-lg flex flex-col items-center overflow-y-scroll">
             <TodayBookClub />
           </div>
-          <div className="flex basis-1/2 gap-2 md:w-[auto]">
+          <div className="flex flex-col sm:flex-row basis-1/2 gap-2 md:w-[auto]">
             <div className="basis-1/2 m-3 bg-white rounded-2xl p-5 shadow-lg min-h-[400px]">
               <ArticleRecord />
             </div>

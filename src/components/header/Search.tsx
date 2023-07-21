@@ -81,6 +81,7 @@ const Search = () => {
         >
           <div className="flex items-center gap-2 w-[90%]">
             <input
+              value={searchInput}
               className="text-[20px] outline-none border-2 w-full border-dashed border-[#245953] rounded-md p-2 h-[35px] focus:border-solid"
               placeholder="what are you looking for...?"
               onChange={(e) => setSearchInput(e.target.value.toLowerCase())}

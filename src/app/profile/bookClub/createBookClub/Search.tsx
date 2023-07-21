@@ -76,7 +76,7 @@ const Search = ({ bookClub, setBookClub, setShowInvationError }: Props) => {
         }}
         onChange={(e) => setSearchName(e.target.value)}
       />
-      {isSearching === true && searchName !== "" && (
+      {isSearching && searchName !== "" && (
         <div className="flex flex-col gap-2 absolute top-[44px] left-0 w-full h-fit bg-slate-100/90 rounded-lg p-4 max-h-[200px] overflow-scroll">
           {users
             .filter((user) =>

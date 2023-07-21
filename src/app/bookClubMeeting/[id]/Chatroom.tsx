@@ -51,7 +51,7 @@ const Chatroom = ({
       createdAt: serverTimestamp(),
       user: user.name,
       userId: user.id,
-      Avatar: user.avatar,
+      avatar: user.avatar,
       room: roomId,
     });
 
@@ -120,9 +120,9 @@ const Chatroom = ({
                   <Image
                     src={message.avatar}
                     alt="user avatar"
-                    width={25}
-                    height={25}
-                    className="rounded-full overflow-hidden h-fit w-[32px] object-cover"
+                    width={32}
+                    height={32}
+                    className="rounded-full border-[1px] border-black overflow-hidden h-[32px] w-[32px] object-cover"
                   />
                 ) : (
                   <PiFinnTheHumanFill />

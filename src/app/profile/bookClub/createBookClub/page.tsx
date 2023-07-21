@@ -1,7 +1,7 @@
 "use client";
 
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
-import React, { useState, useRef, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { fetchMeetingId } from "@/utils/videoSdk";
 import { db } from "@/utils/firebase";
 import { AuthContext } from "@/context/AuthContext";
@@ -46,7 +46,6 @@ const Page = () => {
   });
   const [showInvationError, setShowInvationError] = useState(false);
   const [isValidForm, setIsValidForm] = useState<boolean | null>(null);
-  const guestRef = useRef<HTMLInputElement | null>(null);
 
   const time = new Date(
     bookClub.date + " " + bookClub.hour + ":" + bookClub.minute
@@ -132,11 +131,6 @@ const Page = () => {
     return;
   };
 
-  useEffect(() => {
-    if (!guestRef || !guestRef.current) return;
-    guestRef.current.value = "";
-  }, [bookClub.guest]);
-
   console.log(bookClub);
 
   return (
@@ -148,6 +142,7 @@ const Page = () => {
         <div className="flex items-center gap-3">
           <label className="w-fit">Title : </label>
           <input
+            value={bookClub.title}
             type="text"
             className="outline-none grow px-3 py-2 border-dashed border-2 border-[#245953] rounded-2xl focus:border-solid"
             onChange={(e) =>
@@ -185,7 +180,7 @@ const Page = () => {
               })
             }
           >
-            {new Array(25).fill("").map((_, index) => {
+            {new Array(24).fill("").map((_, index) => {
               return (
                 <option key={index} value={index < 10 ? "0" + index : index}>
                   {index < 10 ? "0" + index : index}

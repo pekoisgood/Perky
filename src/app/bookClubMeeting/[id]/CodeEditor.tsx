@@ -16,7 +16,7 @@ export default function CodeEditor({ code, setCode }: Props) {
   const [isRunning, setIsRunning] = useState(false);
   const [language, setLanguage] = useState<string>("Javascript");
 
-  const langueges: string[] = [
+  const languages: string[] = [
     "Javascript",
     "Java",
     "Python",
@@ -129,7 +129,7 @@ export default function CodeEditor({ code, setCode }: Props) {
           className="border-[1px] border-slate-400 rounded-lg"
           onChange={(e) => setLanguage(e.target.value)}
         >
-          {langueges.map((lan, index) => {
+          {languages.map((lan, index) => {
             return (
               <option key={index} value={lan}>
                 {lan}
