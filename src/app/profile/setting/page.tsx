@@ -10,7 +10,7 @@ import { compressImage } from "@/utils/compressImage";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { db, storage } from "@/utils/firebase";
 import { doc, updateDoc } from "firebase/firestore";
-import { User } from "firebase/auth";
+import { User } from "@/context/AuthContext";
 
 const Page = () => {
   const { user, setUser } = useContext(AuthContext);
@@ -37,10 +37,11 @@ const Page = () => {
         // TODO: not an image
       }
 
-      const compressedFile: any = await compressImage(file, {
+      const compressedFile: File | undefined = await compressImage(file, {
         quality: 0.5,
         type: "image/png",
       });
+      if (!compressedFile) return;
       dataTransfer.items.add(compressedFile);
 
       // TODO: store the file

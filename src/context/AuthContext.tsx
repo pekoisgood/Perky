@@ -1,11 +1,16 @@
 "use client";
-import React, { createContext, useEffect, useState } from "react";
+import React, {
+  SetStateAction,
+  createContext,
+  useEffect,
+  useState,
+} from "react";
 import { auth, signInWithGoogle, firebaseSignOut, db } from "@/utils/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { DocumentData, doc, getDoc } from "firebase/firestore";
 
-type User = {
+export type User = {
   id: string;
   name: string;
   avatar: string;
@@ -19,8 +24,8 @@ type Auth = {
   logIn: () => void;
   logOut: () => void;
   user: User;
-  setUser: any;
-  setIsLogin: any;
+  setUser: React.Dispatch<SetStateAction<User>>;
+  setIsLogin: React.Dispatch<SetStateAction<boolean | null>>;
 };
 
 export const AuthContext = createContext<Auth>({

@@ -7,7 +7,7 @@ interface Prop {
       language: string;
     };
   };
-  updateAttributes: any;
+  updateAttributes: ({ language }: { language: string }) => void;
   extension: Extension;
 }
 

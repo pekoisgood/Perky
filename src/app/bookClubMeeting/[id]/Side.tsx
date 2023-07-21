@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import Chatroom from "./Chatroom";
 import Note from "./Note";
 import CodeEditor from "./CodeEditor";
@@ -7,8 +7,8 @@ type Props = {
   sidebarFunction: string;
   text: string;
   code: string;
-  setText: any;
-  setCode: any;
+  setText: React.Dispatch<SetStateAction<string>>;
+  setCode: React.Dispatch<SetStateAction<string>>;
 };
 
 const sidebarFunctions = ["CHATROOM", "NOTE", "CODE EDITOR"];

@@ -108,21 +108,19 @@ const Form = ({ image }: { image: File | null }) => {
     }
     if (image && user.id && user.name) {
       const file = image;
-
-      // We'll store the files in this data transfer object
       const dataTransfer = new DataTransfer();
 
       if (!file.type.startsWith("image")) {
-        // TODO: not an image
+        return;
       }
 
-      const compressedFile: any = await compressImage(file, {
+      const compressedFile: File | undefined = await compressImage(file, {
         quality: 0.3,
         type: "image/jpeg",
       });
+      if (!compressedFile) return;
       dataTransfer.items.add(compressedFile);
 
-      // TODO: store the file
       const compressedImage = dataTransfer.files[0];
 
       const storageRef = ref(storage, `${user.id}-${compressedImage.name}`);
@@ -153,11 +151,6 @@ const Form = ({ image }: { image: File | null }) => {
       console.log("post article...");
 
       dispatch(handlePostArticle());
-      // setTimeout(() => {
-      //   console.log("showImage!!");
-
-      //   dispatch(handleShowImage());
-      // }, 20000);
       setIsProcessing(postStatus.SUCCESS);
 
       for (let i = 0; i < postArticle.tags.length; i++) {
