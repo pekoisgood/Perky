@@ -3,12 +3,14 @@
 import { useAppSelector } from "@/redux/hooks";
 import React, { useEffect, useContext } from "react";
 import { useAppDispatch } from "@/redux/hooks";
-import { Articles, setRecord } from "@/redux/slice/articleRecordSlice";
+import { setRecord } from "@/redux/slice/articleRecordSlice";
 import { AuthContext } from "@/context/AuthContext";
 import Link from "next/link";
 import Button from "@/components/button/Button";
 import DashboardArticleSkeleton from "@/components/skeleton/DashboardArticleSkeleton";
 import { motion } from "framer-motion";
+
+import { Article } from "@/utils/types/types";
 
 const categoryClass = `w-fit bg-[#FFD89C] text-bold font-mono py-1 px-3 text-black
 shadow-[-3px_3px] shadow-black rounded-2xl border-2 border-black
@@ -45,7 +47,7 @@ const ArticleRecord = () => {
         console.log("user id ok and get articles!!");
 
         const req = await fetch(`/api/articleRecord?id=${user.id}`);
-        const myArticles: Articles[] = await req.json();
+        const myArticles: Article[] = await req.json();
         if (!myArticles) {
           return;
         }

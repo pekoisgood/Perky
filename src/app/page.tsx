@@ -6,7 +6,7 @@ import Image from "next/image";
 import TrendingArticles from "./TrendingArticles";
 import ArticleList from "./ArticleList";
 import sittingBoy from "../assets/image/people/boy-sitting-on-legs.svg";
-import { Article } from "@/utils/firebase/firebase";
+import { Article } from "@/utils/types/types";
 import ArticleListSkeleton from "@/components/skeleton/ArticleListSkeleton";
 
 const categories = [

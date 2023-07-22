@@ -15,7 +15,7 @@ import {
 } from "firebase/firestore";
 import { db } from "@/utils/firebase/firebase";
 import { setSavedArticle } from "@/redux/slice/savedArticle";
-import { SavedArticle } from "./page";
+import { SavedArticle } from "@/utils/types/types";
 import Link from "next/link";
 import Button from "@/components/button/Button";
 import DashboardArticleSkeleton from "@/components/skeleton/DashboardArticleSkeleton";

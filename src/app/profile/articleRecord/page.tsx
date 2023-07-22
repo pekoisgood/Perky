@@ -6,20 +6,22 @@ import { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import ArticleSnippet from "@/app/ArticleSnippet";
 import Image from "next/image";
-import { Articles, setRecord } from "@/redux/slice/articleRecordSlice";
+import { setRecord } from "@/redux/slice/articleRecordSlice";
 import { useAppDispatch } from "@/redux/hooks";
 import ProfileArticleSkeleton from "@/components/skeleton/ProfileArticleSkeleton";
 
+import { Article } from "@/utils/types/types";
+
 const Page = () => {
   const { user } = useContext(AuthContext);
-  const [articleRecord, setArticleRecord] = useState<Articles[] | null>(null);
+  const [articleRecord, setArticleRecord] = useState<Article[] | null>(null);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     const getArticleRecord = async () => {
       if (user.id) {
         const req = await fetch(`/api/articleRecord?id=${user.id}`);
-        const myArticles: Articles[] = await req.json();
+        const myArticles: Article[] = await req.json();
         if (!myArticles) {
           setArticleRecord([]);
           return;
