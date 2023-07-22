@@ -13,7 +13,7 @@ import {
   orderBy,
   query,
 } from "firebase/firestore";
-import { db } from "@/utils/firebase";
+import { db } from "@/utils/firebase/firebase";
 import { setSavedArticle } from "@/redux/slice/savedArticle";
 import { SavedArticle } from "./page";
 import Link from "next/link";
@@ -48,8 +48,6 @@ const ArticleRecord = () => {
       );
       const result = await getDocs(q);
       result.forEach((doc) => {
-        // console.log(doc);
-
         articleIds.push(doc.id);
       });
 
@@ -58,12 +56,6 @@ const ArticleRecord = () => {
         const res: DocumentData = await getDoc(
           doc(db, "articles", articleIds[i])
         );
-        console.log("i", i, articleIds[i]);
-
-        console.log("data", res.data());
-
-        // if (!res.data) {
-        console.log("===========push==========");
 
         savedArticles.push({
           id: res.id,
@@ -73,7 +65,6 @@ const ArticleRecord = () => {
           image: res.data().image,
           category: res.data().category,
         });
-        // }
       }
 
       console.log("...", savedArticles);

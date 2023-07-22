@@ -1,11 +1,3 @@
-export function capitalize(tag: string) {
-  const splitTagStrings = tag.split(" ");
-  const capitalizedTag = splitTagStrings.map((string) => {
-    return string[0].toUpperCase() + string.slice(1);
-  });
-  return capitalizedTag.reduce((acc, cur) => acc + " " + cur);
-}
-
 const MONTH_NAMES = [
   "January",
   "February",
@@ -20,7 +12,6 @@ const MONTH_NAMES = [
   "November",
   "December",
 ];
-new Date();
 
 function getFormattedDate(
   date: Date,
@@ -89,8 +80,8 @@ export function timeAgo(dateParam: Date) {
       timeHours < 10 ? "0" + timeHours : timeHours
     }:${timeMinutes < 10 ? "0" + timeMinutes : timeMinutes}`;
   } else if (isThisYear) {
-    return getFormattedDate(date, false, true); // 10. January at 10:20
+    return getFormattedDate(date, false, true);
   }
 
-  return getFormattedDate(date); // 10. January 2017. at 10:20
+  return getFormattedDate(date);
 }

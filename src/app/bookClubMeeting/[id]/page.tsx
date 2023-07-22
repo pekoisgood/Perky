@@ -14,7 +14,7 @@ import {
   getDoc,
   updateDoc,
 } from "firebase/firestore";
-import { db } from "@/utils/firebase";
+import { db } from "@/utils/firebase/firebase";
 import { useParams } from "next/navigation";
 import { CgDetailsMore } from "react-icons/cg";
 import { AuthContext } from "@/context/AuthContext";
@@ -115,7 +115,6 @@ const Page = () => {
 
     const addAttendee = async () => {
       if (!user.id) return;
-      // console.log(bookClubId);
 
       const result: DocumentData = await getDoc(bookClubRef);
       console.log(result.data());
@@ -132,7 +131,7 @@ const Page = () => {
 
     addAttendee();
     getBookClubInfo();
-  }, []);
+  }, [user.id, bookClubId, dispatch]);
 
   return (
     <div className="relative flex flex-col h-full pt-[10px] border-dashed border-2 border-white">

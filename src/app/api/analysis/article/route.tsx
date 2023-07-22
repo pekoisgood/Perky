@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getRecord } from "@/utils/firebase";
+import { getRecord } from "@/utils/firebase/firebase";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);

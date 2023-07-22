@@ -17,7 +17,6 @@ const CoverImage = ({
       <div className="flex">
         <label className={buttonClass + " mr-3"}>
           <input
-            // value={image?}
             type="file"
             accept="image/jpeg"
             className="hidden"

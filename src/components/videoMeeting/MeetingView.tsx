@@ -66,7 +66,6 @@ const MeetingView = () => {
     useMeeting({
       onPresenterChanged,
       onParticipantJoined,
-      // onMeetingLeft,
       onParticipantLeft,
     });
 
@@ -102,10 +101,6 @@ const MeetingView = () => {
     setIsMicOn(true);
     setIsWebCamOn(true);
   };
-
-  // function onMeetingLeft() {
-  //   console.log("onMeetingLeft");
-  // }
 
   function onParticipantLeft(participant: Participant) {
     const remainParticipants = participantIds.filter(

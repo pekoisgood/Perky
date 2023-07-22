@@ -6,9 +6,9 @@ import React, { useContext, useState } from "react";
 import { PiFinnTheHumanFill } from "react-icons/pi";
 import { BsPencilSquare } from "react-icons/bs";
 import Save from "@/components/button/Save";
-import { compressImage } from "@/utils/compressImage";
+import { compressImage } from "@/utils/compressImage/compressImage";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { db, storage } from "@/utils/firebase";
+import { db, storage } from "@/utils/firebase/firebase";
 import { doc, updateDoc } from "firebase/firestore";
 import { User } from "@/context/AuthContext";
 
@@ -30,11 +30,10 @@ const Page = () => {
     const userRef = doc(db, "users", user.id);
 
     if (file) {
-      // We'll store the files in this data transfer object
       const dataTransfer = new DataTransfer();
 
       if (!file.type.startsWith("image")) {
-        // TODO: not an image
+        return;
       }
 
       const compressedFile: File | undefined = await compressImage(file, {
@@ -44,7 +43,6 @@ const Page = () => {
       if (!compressedFile) return;
       dataTransfer.items.add(compressedFile);
 
-      // TODO: store the file
       const compressedImage = dataTransfer.files[0];
 
       const storageRef = ref(storage, `${user.id}-${compressedImage.name}`);

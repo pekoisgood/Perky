@@ -6,7 +6,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { auth, db } from "@/utils/firebase";
+import { auth, db } from "@/utils/firebase/firebase";
 import {
   collection,
   query,

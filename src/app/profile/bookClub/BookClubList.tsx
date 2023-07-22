@@ -1,6 +1,6 @@
 "use client";
 
-import { db } from "@/utils/firebase";
+import { db } from "@/utils/firebase/firebase";
 import {
   Timestamp,
   and,

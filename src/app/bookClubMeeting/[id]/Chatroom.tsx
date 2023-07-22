@@ -10,7 +10,7 @@ import {
   onSnapshot,
   Timestamp,
 } from "firebase/firestore";
-import { db } from "@/utils/firebase";
+import { db } from "@/utils/firebase/firebase";
 import { AuthContext } from "@/context/AuthContext";
 import { useParams } from "next/navigation";
 import { HiPaperAirplane } from "react-icons/hi";

@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Article } from "@/utils/firebase";
+import { Article } from "@/utils/firebase/firebase";
 import ArticleSnippet from "./ArticleSnippet";
 
 const ArticleList = ({

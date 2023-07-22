@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { db } from "@/utils/firebase";
+import { db } from "@/utils/firebase/firebase";
 import { DocumentData, doc, onSnapshot } from "firebase/firestore";
 
 type Props = {

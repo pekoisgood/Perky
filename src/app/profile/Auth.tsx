@@ -21,8 +21,6 @@ const Auth = () => {
   useEffect(() => {
     if (isLoading) return;
     if (isLogin === false) {
-      // console.log("redirect to auth");
-
       redirect("/auth");
     }
   }, [isLoading, isLogin]);

@@ -39,7 +39,6 @@ const Warning = ({
   }, []);
 
   return (
-    // bg-black/30
     <div
       ref={ref}
       onClick={handleCloseWarning}

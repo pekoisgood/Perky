@@ -42,4 +42,3 @@ export default function RootLayout({
     </html>
   );
 }
-// bg-[#fefae059]

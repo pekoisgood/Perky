@@ -2,8 +2,8 @@
 
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import React, { useState, useContext } from "react";
-import { fetchMeetingId } from "@/utils/videoSdk";
-import { db } from "@/utils/firebase";
+import { fetchMeetingId } from "@/utils/bookClubs/videoSdk";
+import { db } from "@/utils/firebase/firebase";
 import { AuthContext } from "@/context/AuthContext";
 import { IoMdClose } from "react-icons/io";
 import { PiWarningFill } from "react-icons/pi";

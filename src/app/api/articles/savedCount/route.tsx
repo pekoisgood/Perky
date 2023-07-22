@@ -6,7 +6,7 @@ import {
   query,
   limit,
 } from "firebase/firestore";
-import { db } from "@/utils/firebase";
+import { db } from "@/utils/firebase/firebase";
 import { NextResponse } from "next/server";
 
 export const revalidate = "force-cache";

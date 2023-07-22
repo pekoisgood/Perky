@@ -46,14 +46,14 @@ const ScreenShareView = ({
       {screenShareOn && presenterId === participantId && (
         <div className="h-full max-h-[calc(100vh-290px)] relative">
           <ReactPlayer
-            playsinline // very very imp prop
+            playsinline
             playIcon={<></>}
             pip={false}
             light={false}
             controls={false}
             muted={true}
             playing={true}
-            url={mediaStream} // passing mediastream here
+            url={mediaStream}
             height={"100%"}
             width={"100%"}
             onError={(err) => {

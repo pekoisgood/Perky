@@ -1,4 +1,4 @@
-import { db } from "@/utils/firebase";
+import { db } from "@/utils/firebase/firebase";
 import { collection, getDocs } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 

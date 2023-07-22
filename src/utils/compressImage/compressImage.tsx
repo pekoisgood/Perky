@@ -10,13 +10,11 @@ export const compressImage = async (
   const ctx = canvas.getContext("2d");
   ctx?.drawImage(imageBitmap, 0, 0);
 
-  // turn into Blob
   const blob: Blob | null = await new Promise((resolve) =>
     canvas.toBlob(resolve, type, quality)
   );
 
   if (!blob) return;
-  // Turn Blob into File
   return new File([blob], file.name, {
     type: blob.type,
   });

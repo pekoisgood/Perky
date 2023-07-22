@@ -4,7 +4,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import React, { useState, useContext, useEffect } from "react";
 import { setDoc, doc, getDoc } from "firebase/firestore";
-import { db } from "@/utils/firebase";
+import { db } from "@/utils/firebase/firebase";
 import { AuthContext } from "@/context/AuthContext";
 import { useParams } from "next/navigation";
 

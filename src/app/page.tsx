@@ -6,9 +6,8 @@ import Image from "next/image";
 import TrendingArticles from "./TrendingArticles";
 import ArticleList from "./ArticleList";
 import sittingBoy from "../assets/image/people/boy-sitting-on-legs.svg";
-import { Article } from "@/utils/firebase";
+import { Article } from "@/utils/firebase/firebase";
 import ArticleListSkeleton from "@/components/skeleton/ArticleListSkeleton";
-// import { useAppSelector } from "@/redux/hooks";
 
 const categories = [
   "Frontend",
@@ -56,9 +55,6 @@ export default function Home() {
         window.innerHeight + window.scrollY >=
         document.body.offsetHeight - 100
       ) {
-        console.log("total", total);
-        console.log("lastId", lastId);
-
         if (total && articlesCount === total) return;
         if (isFetching) return;
 
@@ -69,12 +65,6 @@ export default function Home() {
     fetchArticles();
     if (!window) return;
     window.addEventListener("scroll", scrollHandler);
-
-    // setTimeout(() => {
-    //   console.log("=======set======");
-
-    //   setShowImage(true);
-    // }, 3000);
 
     return () => {
       window.removeEventListener("scroll", scrollHandler);
@@ -118,7 +108,6 @@ export default function Home() {
           <div className="lg:min-w-[100%-300px] md:min-w-[100%-210px] w-full overflow-hidden">
             {articles && articles.length > 0 && (
               <ArticleList
-                // showImage={showImage}
                 articles={articles}
                 customLayout="md:justify-start pl-[0]"
               />

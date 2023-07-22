@@ -2,14 +2,12 @@
 
 import React from "react";
 import { useRef, useMemo, useEffect } from "react";
+import Image from "next/image";
+
 import { useParticipant } from "@videosdk.live/react-sdk";
 import ReactPlayer from "react-player";
-// import { AuthContext } from "@/context/AuthContext";
-import Image from "next/image";
 import { PiFinnTheHumanFill } from "react-icons/pi";
 import { useAppSelector } from "@/redux/hooks";
-// import { doc } from "firebase/firestore";
-// import { db } from "@/utils/firebase";
 
 type Props = {
   participantId: string;
@@ -24,11 +22,12 @@ const ParticipantView = ({
   isMicOn,
   isCamOn,
 }: Props) => {
-  // const { user } = useContext(AuthContext);
   const guest = useAppSelector((state) => state.bookClubMeeting.value);
   const micRef = useRef<HTMLAudioElement | null>(null);
   const { webcamStream, micStream, webcamOn, micOn, isLocal, displayName } =
     useParticipant(participantId);
+
+  const user = guest.find((guest) => guest.id === participantId);
 
   const videoStream = useMemo(() => {
     if (webcamOn && webcamStream) {
@@ -56,26 +55,14 @@ const ParticipantView = ({
     }
   }, [micStream, micOn]);
 
-  useEffect(() => {
-    // function(){
-    //   const ref = doc(db, 'bookClubs', bookClubId);
-    // const
-    // }
-  }, []);
-
-  const user = guest.find((guest) => guest.id === participantId);
-  console.log(user, participantId);
-  // console.log(participantId);
-
   return (
     <>
-      {/* // 這裡一定要設定 h-full 不然下面那個 height 如果是 % 會無法作用！！ */}
       <div className={`h-fit max-h-full w-full relative`}>
         {webcamOn ? (
           <>
             <audio ref={micRef} autoPlay playsInline muted={isLocal} />
             <ReactPlayer
-              playsinline // very very imp prop
+              playsinline
               pip={false}
               light={false}
               controls={false}

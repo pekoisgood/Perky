@@ -1,6 +1,6 @@
 "use client";
 import { AuthContext } from "@/context/AuthContext";
-import { db } from "@/utils/firebase";
+import { db } from "@/utils/firebase/firebase";
 import {
   doc,
   serverTimestamp,
@@ -67,7 +67,6 @@ const SaveButton = ({ articleId, count }: Prop) => {
   useEffect(() => {
     const checkSavedArticle = async () => {
       const getArticle = await getDoc(
-        // user.id 可能還沒拿到...
         doc(db, "users", user.id, "savedArticles", articleId)
       );
       const isSaved = getArticle.data();
@@ -77,8 +76,6 @@ const SaveButton = ({ articleId, count }: Prop) => {
         setIsSaved(false);
       }
     };
-
-    console.log(user.id);
 
     if (isLoading || !user.id) return;
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { BookClub, db } from "@/utils/firebase";
+import { BookClub, db } from "@/utils/firebase/firebase";
 import {
   DocumentData,
   Timestamp,

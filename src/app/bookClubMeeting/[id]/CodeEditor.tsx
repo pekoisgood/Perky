@@ -104,7 +104,7 @@ export default function CodeEditor({ code, setCode }: Props) {
       const response = await fetch(url, { method: "GET", headers });
       const data = await response.json();
       if (!data.status) return;
-      let statusId: number = data.status.id;
+      const statusId: number = data.status.id;
 
       if (statusId === 1 || statusId === 2) {
         setTimeout(() => {

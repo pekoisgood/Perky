@@ -31,7 +31,6 @@ const firebaseConfig = {
   appId: "1:627741027334:web:4a3774abca3a01d1592787",
 };
 
-// Initialize Firebase
 export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const storage = getStorage();
@@ -54,9 +53,6 @@ export const signInWithGoogle = async () => {
     const userDoc = await getDocs(q);
     let isUserExist;
     userDoc.forEach((userDoc) => {
-      console.log(userDoc.data());
-      // GOOGLE sign in fail , 一直顯示 firebase doc reference error, doc reference should have even but got one....
-      //  FirebaseError: Invalid document reference. Document references must have an even number of segments, but users has 1.
       isUserExist = userDoc.data();
     });
 
@@ -93,11 +89,11 @@ export async function getRecord(
   userId: string,
   time: string
 ) {
-  const dateOffset = 24 * 60 * 60 * 1000 * 6; // 7days
+  const dateOffset = 24 * 60 * 60 * 1000 * 6;
   const today = new Date(new Date().toLocaleString().split(" ")[0]).getTime();
   const lastWeek = new Date(today - dateOffset);
 
-  let data: DocumentData[] = [];
+  const data: DocumentData[] = [];
   const articleRef = collection(db, category);
   const queryArticles = await query(
     articleRef,
@@ -119,29 +115,14 @@ export async function signUpWithEmail(email: string, password: string) {
     );
     const user = userCredential.user;
     return user;
-    // ...
   } catch (error) {
-    // const errorCode = error.code;
-    // const errorMessage = error.message;
     return error;
-    // ...
   }
-  // createUserWithEmailAndPassword(auth, email, password)
-  //   .then((userCredential) => {
-  //     const user = userCredential.user;
-  //     return user;
-  //   })
-  //   .catch((error) => {
-  //     const errorCode = error.code;
-  //     const errorMessage = error.message;
-  //     return { errorCode, errorMessage };
-  //   });
 }
 
 export function signInWithEmail(email: string, password: string) {
   signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
-      // Signed in
       const user = userCredential.user;
       return user;
     })

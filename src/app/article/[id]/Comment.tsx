@@ -11,13 +11,13 @@ import {
   DocumentData,
   Timestamp,
 } from "firebase/firestore";
-import { db } from "@/utils/firebase";
+import { db } from "@/utils/firebase/firebase";
 import { AuthContext } from "@/context/AuthContext";
 import Button from "@/components/button/Button";
 import Image from "next/image";
 import { HiPaperAirplane } from "react-icons/hi";
 import { PiFinnTheHumanFill } from "react-icons/pi";
-import { timeAgo } from "@/utils/func";
+import { timeAgo } from "@/utils/date/dateFc";
 import Warning from "@/components/warning/Warning";
 import Link from "next/link";
 
@@ -60,8 +60,6 @@ const Comment = ({ articleId }: { articleId: string }) => {
     const q = query(CommentRef, orderBy("createdAt", "desc"));
     const commentsData: ArticleComment[] = [];
     const docData = (doc: DocumentData) => {
-      // console.log(doc.data());
-
       return {
         comment: doc.data().comment,
         userName: doc.data().userName,

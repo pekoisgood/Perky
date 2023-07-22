@@ -22,7 +22,7 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-import { Article, BookClub } from "@/utils/firebase";
+import { Article, BookClub } from "@/utils/firebase/firebase";
 import { AuthContext } from "@/context/AuthContext";
 import { useAppDispatch } from "@/redux/hooks";
 import { setAnalysis } from "@/redux/slice/analysisSlice";

@@ -5,10 +5,10 @@ import {
   handlePostArticle,
   handleUpdateArticle,
 } from "@/redux/slice/postArticleSlice";
-import { storage } from "@/utils/firebase";
+import { storage } from "@/utils/firebase/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { AuthContext } from "@/context/AuthContext";
-import { db } from "@/utils/firebase";
+import { db } from "@/utils/firebase/firebase";
 import {
   DocumentData,
   collection,
@@ -22,7 +22,7 @@ import Warning from "@/components/warning/Warning";
 import { PiWarningFill } from "react-icons/pi";
 import Link from "next/link";
 import Button from "@/components/button/Button";
-import { compressImage } from "@/utils/compressImage";
+import { compressImage } from "@/utils/compressImage/compressImage";
 
 const postStatus = {
   PENDING: "Pending",
