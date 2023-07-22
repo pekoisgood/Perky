@@ -90,7 +90,7 @@ const ParticipantView = ({
               presenterId ? "w-[100px]" : "w-full"
             }`}
           >
-            {user && user.avatar !== "" ? (
+            {user?.avatar ? (
               <Image
                 src={user.avatar}
                 alt="avatar"
