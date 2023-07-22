@@ -5,8 +5,6 @@ import {
   handlePostArticle,
   handleUpdateArticle,
 } from "@/redux/slice/postArticleSlice";
-import { storage } from "@/utils/firebase/firebase";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db } from "@/utils/firebase/firebase";
 import {
   DocumentData,
@@ -21,7 +19,7 @@ import Warning from "@/components/warning/Warning";
 import { PiWarningFill } from "react-icons/pi";
 import Link from "next/link";
 import Button from "@/components/button/Button";
-import { compressImage } from "@/utils/compressImage/compressImage";
+import { getDownloadURLFromFireStore } from "@/utils/compressImage/compressImage";
 
 const postStatus = {
   PENDING: "Pending",
@@ -106,31 +104,7 @@ const Form = ({ image }: { image: File | null }) => {
       return;
     }
     if (image && user.id && user.name) {
-      const file = image;
-      const dataTransfer = new DataTransfer();
-
-      if (!file.type.startsWith("image")) {
-        return;
-      }
-
-      const compressedFile: File | undefined = await compressImage(file, {
-        quality: 0.3,
-        type: "image/jpeg",
-      });
-      if (!compressedFile) return;
-      dataTransfer.items.add(compressedFile);
-
-      const compressedImage = dataTransfer.files[0];
-
-      const storageRef = ref(storage, `${user.id}-${compressedImage.name}`);
-      await uploadBytes(storageRef, compressedImage);
-      const pathReference = ref(storage, `${user.id}-${compressedImage.name}`);
-
-      const imageUrl = await getDownloadURL(pathReference).then(
-        (downloadURL: string) => {
-          return downloadURL;
-        }
-      );
+      const imageUrl = await getDownloadURLFromFireStore(image, user.id);
 
       const articleRef = collection(db, "articles");
       await addDoc(articleRef, {
@@ -145,8 +119,6 @@ const Form = ({ image }: { image: File | null }) => {
         savedCount: 0,
         userName: user.name,
       });
-
-      console.log("post article...");
 
       dispatch(handlePostArticle());
       setIsProcessing(postStatus.SUCCESS);

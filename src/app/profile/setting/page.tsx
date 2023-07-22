@@ -5,12 +5,9 @@ import React, { useState } from "react";
 import { PiFinnTheHumanFill } from "react-icons/pi";
 import { BsPencilSquare } from "react-icons/bs";
 import Save from "@/components/button/Save";
-import { compressImage } from "@/utils/compressImage/compressImage";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { db, storage } from "@/utils/firebase/firebase";
+import { getDownloadURLFromFireStore } from "@/utils/compressImage/compressImage";
+import { db } from "@/utils/firebase/firebase";
 import { doc, updateDoc } from "firebase/firestore";
-
-import { User } from "@/utils/types/types";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setUser } from "@/redux/slice/authSlice";
 
@@ -31,39 +28,15 @@ const Page = () => {
 
   const handleSave = async () => {
     setIsModifying(false);
-    const file = image;
     const userRef = doc(db, "users", user.id);
 
-    if (file) {
-      const dataTransfer = new DataTransfer();
+    if (image) {
+      const imageUrl = await getDownloadURLFromFireStore(image, user.id);
 
-      if (!file.type.startsWith("image")) {
-        return;
-      }
-
-      const compressedFile: File | undefined = await compressImage(file, {
-        quality: 0.5,
-        type: "image/png",
-      });
-      if (!compressedFile) return;
-      dataTransfer.items.add(compressedFile);
-
-      const compressedImage = dataTransfer.files[0];
-
-      const storageRef = ref(storage, `${user.id}-${compressedImage.name}`);
-      await uploadBytes(storageRef, compressedImage);
-      const pathReference = ref(storage, `${user.id}-${compressedImage.name}`);
-
-      const imageUrl = await getDownloadURL(pathReference).then(
-        (downloadURL: string) => {
-          return downloadURL;
-        }
-      );
       try {
         await updateDoc(userRef, {
           avatar: imageUrl,
         });
-
         dispatch(setUser({ avatar: imageUrl }));
       } catch (error) {
         return;
