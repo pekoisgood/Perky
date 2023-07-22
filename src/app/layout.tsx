@@ -4,6 +4,7 @@ import React from "react";
 import ReduxProvider from "@/redux/provider";
 
 import Header from "../components/header/Header";
+import Auth from "../components/Auth/Auth";
 
 const poppins = Poppins({
   weight: ["400", "500", "600", "700", "800"],
@@ -32,7 +33,7 @@ export default function RootLayout({
               <div className="absolute top-[calc(100%-240px)] left-0 bg-[#E5E0FF] w-[400px] h-[400px] rounded-[59%_41%_43%_57%/37%_55%_45%_63%] z-0" />
               <div className="absolute top-0 right-0 bg-[#E9EDC9] w-[500px] h-[400px] rounded-[52%_48%_60%_40%/59%_51%_49%_41%] z-0" />
             </div>
-            {children}
+            <Auth>{children}</Auth>
           </div>
         </ReduxProvider>
       </body>
