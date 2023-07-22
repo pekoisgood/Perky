@@ -56,7 +56,7 @@ const Calender = () => {
   const week = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
 
   const getDate = (m: number, y: number) => {
-    let arr = [];
+    const arr = [];
     const prefixDate = new Date(`${m} 01, ${y}`).getDay();
     const dayPerMon = getDayPerMonth(m, y);
 

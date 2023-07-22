@@ -38,7 +38,7 @@ const TrendingArticles = () => {
 
   useEffect(() => {
     const getArticle = async () => {
-      let data: TrendingArticle[] = [];
+      const data: TrendingArticle[] = [];
       const q = query(
         collection(db, "articles"),
         orderBy("savedCount", "desc"),

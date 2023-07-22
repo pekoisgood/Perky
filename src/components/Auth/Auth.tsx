@@ -1,14 +1,31 @@
 "use client";
 
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setIsLogin, setUser } from "@/redux/slice/authSlice";
 import { auth, db } from "@/utils/firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { DocumentData, doc, getDoc } from "firebase/firestore";
-import React, { useEffect } from "react";
+import { redirect } from "next/navigation";
+import React, { useEffect, useState } from "react";
 
-const Auth = ({ children }: { children: React.ReactNode }) => {
+const Auth = ({
+  children,
+  isAuthNeeded = false,
+}: {
+  children: React.ReactNode;
+  isAuthNeeded?: boolean;
+}) => {
+  const isLogin = useAppSelector((state) => state.auth.value.isLogin);
   const dispatch = useAppDispatch();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    if (isLogin === null) {
+      setIsLoading(true);
+    } else {
+      setIsLoading(false);
+    }
+  }, [isLogin]);
 
   useEffect(() => {
     const checkAuthStatus = async () => {
@@ -31,8 +48,15 @@ const Auth = ({ children }: { children: React.ReactNode }) => {
       });
     };
 
+    if (isAuthNeeded) {
+      if (isLoading) return;
+      if (isLogin === false) {
+        redirect("/auth");
+      }
+    }
+
     checkAuthStatus();
-  }, [dispatch]);
+  }, [dispatch, isLoading, isLogin, isAuthNeeded]);
   return <>{children}</>;
 };
 
