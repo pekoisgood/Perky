@@ -2,6 +2,9 @@
 
 import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "@/context/AuthContext";
+import { useRouter, redirect } from "next/navigation";
+import Image from "next/image";
+
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -18,22 +21,12 @@ import {
   getDoc,
   DocumentData,
 } from "firebase/firestore";
-import laughingLady from "../../assets/image/people/laughing-lady.svg";
-import Image from "next/image";
-import googleLogo from "../../assets/image/backgroundIcon/google.gif";
+import { LoginUserInput } from "@/utils/types/types";
+import { CustomError } from "@/utils/types/types";
+
 import Background from "@/app/auth/Background";
-import { useRouter } from "next/navigation";
-import { redirect } from "next/navigation";
-import Error from "next/error";
-
-type User = {
-  email: string;
-  password: string;
-};
-
-interface CustomError extends Error {
-  code: string;
-}
+import laughingLady from "../../assets/image/people/laughing-lady.svg";
+import googleLogo from "../../assets/image/backgroundIcon/google.gif";
 
 const formClass =
   "relative w-[40%] min-w-[350px] lg:min-w-[500px] min-h-[500px] p-5 backdrop-filter backdrop-blur-[2px] bg-white/90 border-2 border-[#245953] shadow-lg rounded-xl flex flex-col justify-between items-center gap-[10px] z-10";
@@ -54,7 +47,7 @@ const sloganClass =
 const Page = () => {
   const { setIsLogin, logIn, setUser, isLogin } = useContext(AuthContext);
   const [loginPage, setLoginPage] = useState(true);
-  const [userInput, setUserInput] = useState<User>({
+  const [userInput, setUserInput] = useState<LoginUserInput>({
     email: "demo@gmail.com",
     password: "demo123",
   });
@@ -76,8 +69,8 @@ const Page = () => {
       const userId = user.uid;
       const email = user.email;
       setUser({
-        name: email,
-        email,
+        name: email!,
+        email: email!,
         id: userId,
         avatar: "",
       });
@@ -131,7 +124,7 @@ const Page = () => {
         name: userInfo.data().name,
         id: userId,
         avatar: userInfo.data().avatar ?? "",
-        email: email,
+        email: email!,
       });
     } catch (error) {
       setErrorMessage((error as CustomError).code.split("/")[1]);

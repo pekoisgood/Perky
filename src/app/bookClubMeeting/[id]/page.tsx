@@ -1,12 +1,14 @@
 "use client";
 
-import Video from "./Video";
-import Side from "./Side";
 import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "@/context/AuthContext";
+import { useParams } from "next/navigation";
+
 import { motion } from "framer-motion";
 import { IoIosChatboxes } from "react-icons/io";
 import { FaCode } from "react-icons/fa";
 import { PiNotepadBold } from "react-icons/pi";
+import { CgDetailsMore } from "react-icons/cg";
 import {
   DocumentData,
   arrayUnion,
@@ -14,17 +16,13 @@ import {
   getDoc,
   updateDoc,
 } from "firebase/firestore";
-import { db } from "@/utils/firebase/firebase";
-import { useParams } from "next/navigation";
-import { CgDetailsMore } from "react-icons/cg";
-import { AuthContext } from "@/context/AuthContext";
 import { useAppDispatch } from "@/redux/hooks";
 import { setBookClubMeetingGuest } from "@/redux/slice/bookClubMeetingSlice";
+import { db } from "@/utils/firebase/firebase";
+import { BookClubIdAndName } from "@/utils/types/types";
 
-type BookClub = {
-  name: string;
-  roomId: string;
-};
+import Video from "./Video";
+import Side from "./Side";
 
 const titleMotion = {
   hidden: {
@@ -65,7 +63,7 @@ const Page = () => {
   const [isShowSidebar, setIsShowSidebar] = useState<boolean>(false);
   const [showSidebarMenu, setshowhiddenSidebarMenu] = useState<boolean>(false);
   const [sidebarFunction, setSidebarFunction] = useState<string>("");
-  const [bookClub, setBookClub] = useState<BookClub>({
+  const [bookClub, setBookClub] = useState<BookClubIdAndName>({
     name: "",
     roomId: "",
   });

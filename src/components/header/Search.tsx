@@ -1,26 +1,18 @@
 "use client";
 
-import { db } from "@/utils/firebase/firebase";
-import { collection, getDocs } from "firebase/firestore";
-import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+
+import { collection, getDocs } from "firebase/firestore";
 import { HiSearch } from "react-icons/hi";
+import { db } from "@/utils/firebase/firebase";
+import { SearchOutput, Tag } from "@/utils/types/types";
 import Button from "../button/Button";
 import Warning from "../warning/Warning";
-import { useRouter } from "next/navigation";
-
-type SearchOutput = {
-  id: string;
-  name: string;
-};
-
-type Tag = {
-  id: string;
-  name: string;
-};
 
 const Search = () => {
-  const [isSearching, setIsSearching] = useState<Boolean>(false);
+  const [isSearching, setIsSearching] = useState<boolean>(false);
   const [searchInput, setSearchInput] = useState<string>("");
   const [searchResult, setSearchResult] = useState<SearchOutput[]>([]);
   const [tags, setTags] = useState<SearchOutput[]>([]);

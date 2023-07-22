@@ -22,10 +22,11 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-import { Article, BookClub } from "@/utils/firebase/firebase";
 import { AuthContext } from "@/context/AuthContext";
 import { useAppDispatch } from "@/redux/hooks";
 import { setAnalysis } from "@/redux/slice/analysisSlice";
+
+import { BookClubInfo, Article } from "@/utils/types/types";
 
 const options = {
   responsive: true,
@@ -67,7 +68,7 @@ const Page = ({ width, height }: { width?: string; height?: string }) => {
   );
 
   const getDateLabel = () => {
-    let dateLabels = [];
+    const dateLabels = [];
     let month = weekAgo.getMonth() + 1;
     let date = weekAgo.getDate() - 1;
     for (let i = 0; i < 7; i++) {
@@ -88,7 +89,7 @@ const Page = ({ width, height }: { width?: string; height?: string }) => {
   const labels = getDateLabel();
 
   const caculateCountPerDay = (filteredRecord: Date[]) => {
-    let dataSet = [];
+    const dataSet = [];
     for (let i = 0; i < labels.length; i++) {
       const labelDay = labels[i];
       let count = 0;
@@ -144,7 +145,7 @@ const Page = ({ width, height }: { width?: string; height?: string }) => {
         );
         const bookClubRecord = await bookClubRecordReq.json();
         const bookClubRecordCreatedTime = bookClubRecord.map(
-          (bookClub: BookClub) => new Date(bookClub.time.seconds * 1000)
+          (bookClub: BookClubInfo) => new Date(bookClub.time.seconds * 1000)
         );
         setBookClubRecordCreatedTime(bookClubRecordCreatedTime);
 

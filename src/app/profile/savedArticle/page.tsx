@@ -1,5 +1,9 @@
 "use client";
 import React, { useContext, useEffect, useState } from "react";
+import { AuthContext } from "@/context/AuthContext";
+import Link from "next/link";
+import Image from "next/image";
+
 import {
   DocumentData,
   collection,
@@ -9,23 +13,12 @@ import {
   orderBy,
   query,
 } from "firebase/firestore";
-import { db } from "@/utils/firebase/firebase";
-import Link from "next/link";
-import { AuthContext } from "@/context/AuthContext";
 import { motion } from "framer-motion";
 import ArticleSnippet from "@/app/ArticleSnippet";
-import Image from "next/image";
 import Button from "@/components/button/Button";
 import ProfileArticleSkeleton from "@/components/skeleton/ProfileArticleSkeleton";
-
-export type SavedArticle = {
-  title: string;
-  id: string;
-  authorName: string;
-  content: string;
-  image: string;
-  category: string;
-};
+import { db } from "@/utils/firebase/firebase";
+import { SavedArticle } from "@/utils/types/types";
 
 const Page = () => {
   const { user } = useContext(AuthContext);

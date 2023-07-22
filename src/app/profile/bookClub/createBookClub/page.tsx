@@ -1,29 +1,19 @@
 "use client";
 
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import React, { useState, useContext } from "react";
+import { AuthContext } from "@/context/AuthContext";
+import Link from "next/link";
+
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+
 import { fetchMeetingId } from "@/utils/bookClubs/videoSdk";
 import { db } from "@/utils/firebase/firebase";
-import { AuthContext } from "@/context/AuthContext";
+import { CreateBookClub } from "@/utils/types/types";
 import { IoMdClose } from "react-icons/io";
 import { PiWarningFill } from "react-icons/pi";
 import Button from "@/components/button/Button";
 import Warning from "../../../../components/warning/Warning";
-import Link from "next/link";
 import Search from "./Search";
-
-type CreateBookClub = {
-  title: string;
-  date: string;
-  hour: string;
-  minute: string;
-  guest: Guest[];
-};
-
-type Guest = {
-  name: string;
-  id: string;
-};
 
 const getMonth = () => {
   const thisMonth = new Date().getMonth() + 1;

@@ -1,5 +1,10 @@
 "use client";
 import React, { useContext, useEffect, useState } from "react";
+import { AuthContext } from "@/context/AuthContext";
+
+import Image from "next/image";
+import Link from "next/link";
+
 import {
   collection,
   serverTimestamp,
@@ -9,25 +14,14 @@ import {
   getDocs,
   onSnapshot,
   DocumentData,
-  Timestamp,
 } from "firebase/firestore";
-import { db } from "@/utils/firebase/firebase";
-import { AuthContext } from "@/context/AuthContext";
-import Button from "@/components/button/Button";
-import Image from "next/image";
 import { HiPaperAirplane } from "react-icons/hi";
 import { PiFinnTheHumanFill } from "react-icons/pi";
-import { timeAgo } from "@/utils/date/dateFc";
+import Button from "@/components/button/Button";
 import Warning from "@/components/warning/Warning";
-import Link from "next/link";
-
-type ArticleComment = {
-  comment: string;
-  createdAt: Timestamp;
-  userName: string;
-  userId: string;
-  userAvatar: string;
-};
+import { timeAgo } from "@/utils/date/dateFc";
+import { db } from "@/utils/firebase/firebase";
+import { ArticleComment } from "@/utils/types/types";
 
 const Comment = ({ articleId }: { articleId: string }) => {
   const { user, isLogin } = useContext(AuthContext);
@@ -91,7 +85,7 @@ const Comment = ({ articleId }: { articleId: string }) => {
     return () => {
       unsub();
     };
-  }, []);
+  }, [CommentRef]);
 
   return (
     <div

@@ -132,26 +132,3 @@ export function signInWithEmail(email: string, password: string) {
       return { errorCode, errorMessage };
     });
 }
-
-export type Article = {
-  authorName: string;
-  authorUserId: string;
-  content: string;
-  title: string;
-  id: string;
-  category: string;
-  tags: string[];
-  createdAt: Timestamp;
-  image: string;
-};
-
-export type BookClub = {
-  host: string;
-  name: string;
-  roomId: string;
-  time: Timestamp;
-  createdAt: Timestamp;
-  attendees: string[];
-  guest: string[];
-  id?: string;
-};

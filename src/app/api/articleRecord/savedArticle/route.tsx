@@ -15,7 +15,7 @@ export async function GET(req: Request) {
   const articleRef = collection(db, "users", userId, "savedArticles");
   const querySavedArticles = query(articleRef, orderBy("createdAt", "desc"));
   const result = await getDocs(querySavedArticles);
-  let data: DocumentData[] = [];
+  const data: DocumentData[] = [];
 
   result.forEach((doc) => {
     data.push(doc.data());

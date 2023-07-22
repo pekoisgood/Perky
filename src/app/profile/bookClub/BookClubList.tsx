@@ -1,6 +1,9 @@
 "use client";
 
-import { db } from "@/utils/firebase/firebase";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "@/context/AuthContext";
+import Link from "next/link";
+
 import {
   Timestamp,
   and,
@@ -13,26 +16,12 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { useContext, useEffect, useState } from "react";
-import Link from "next/link";
-import { useAppSelector } from "@/redux/hooks";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
-import { AuthContext } from "@/context/AuthContext";
 import { motion } from "framer-motion";
+import { db } from "@/utils/firebase/firebase";
+import { BookClubInfo, Note } from "@/utils/types/types";
 import BookClubSkeleton from "@/components/skeleton/BookClubSkeleton";
-
-type BookClubItem = {
-  id: string;
-  roomId: string;
-  name: string;
-  time: Timestamp;
-  createdAt: Timestamp;
-};
-
-type Note = {
-  id: string;
-  note: string;
-};
+import { useAppSelector } from "@/redux/hooks";
 
 const container = {
   hidden: {
@@ -68,7 +57,7 @@ const child = {
 const BookClubList = () => {
   const { user } = useContext(AuthContext);
   const date = useAppSelector((state) => state.calender.value);
-  const [bookClubs, setBookClubs] = useState<BookClubItem[] | null>(null);
+  const [bookClubs, setBookClubs] = useState<BookClubInfo[] | null>(null);
   const [isPreviewNote, setIsPreviewNote] = useState<boolean>(false);
   const [note, setNote] = useState<Note | null>(null);
 
@@ -144,7 +133,7 @@ const BookClubList = () => {
         setBookClubs([]);
         return;
       }
-      const bookClubs: BookClubItem[] = [];
+      const bookClubs: BookClubInfo[] = [];
 
       result.forEach((doc) => {
         bookClubs.push({

@@ -20,7 +20,7 @@ export async function GET(req: Request) {
     orderBy("createdAt", "desc")
   );
   const result = await getDocs(queryArticles);
-  let data: DocumentData[] = [];
+  const data: DocumentData[] = [];
 
   result.forEach((doc) => {
     data.push({ id: doc.id, ...doc.data() });

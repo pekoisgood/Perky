@@ -1,14 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-
-export type Article = {
-  title: string;
-  content: string;
-  category: string;
-  tags: string[];
-};
+import { postArticle } from "@/utils/types/types";
 
 type InitialStateValue = {
-  value: Article;
+  value: postArticle;
 };
 
 const initailState = {
@@ -17,7 +11,7 @@ const initailState = {
     content: "",
     category: "Frontend",
     tags: [],
-  } as Article,
+  } as postArticle,
 } as InitialStateValue;
 
 export const postArticleSlice = createSlice({

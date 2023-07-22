@@ -1,7 +1,8 @@
 "use client";
-import { useMeeting } from "@videosdk.live/react-sdk";
 import { useContext, useState } from "react";
+import { AuthContext } from "@/context/AuthContext";
 import dynamic from "next/dynamic";
+
 import {
   BsFillMicFill,
   BsFillMicMuteFill,
@@ -13,21 +14,11 @@ import { ImExit } from "react-icons/im";
 import { MdCallEnd } from "react-icons/md";
 import { PiFinnTheHumanFill } from "react-icons/pi";
 import Image from "next/image";
-import { AuthContext } from "@/context/AuthContext";
 import { motion } from "framer-motion";
+import { useMeeting } from "@videosdk.live/react-sdk";
 import { useAppSelector } from "@/redux/hooks";
+import { PresenterId, Participant } from "@/utils/types/types";
 
-type PresenterId = null | string;
-
-type Participant = {
-  displayName: string;
-  id: string;
-  micOn: boolean;
-  local: boolean;
-  mode: string;
-  quality: string;
-  webcamOn: boolean;
-};
 const ParticipantView = dynamic(() => import("./ParticipantView"), {
   ssr: false,
 });

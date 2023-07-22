@@ -15,21 +15,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { DocumentData, doc, getDoc } from "firebase/firestore";
 
-export type User = {
-  id: string;
-  name: string;
-  avatar: string;
-  email: string;
-};
-
-type Auth = {
-  isLogin: boolean | null;
-  logIn: () => void;
-  logOut: () => void;
-  user: User;
-  setUser: React.Dispatch<SetStateAction<User>>;
-  setIsLogin: React.Dispatch<SetStateAction<boolean | null>>;
-};
+import { User, Auth } from "@/utils/types/types";
 
 export const AuthContext = createContext<Auth>({
   isLogin: false,

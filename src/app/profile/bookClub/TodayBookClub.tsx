@@ -1,6 +1,6 @@
 "use client";
 
-import { BookClub, db } from "@/utils/firebase/firebase";
+import { db } from "@/utils/firebase/firebase";
 import {
   DocumentData,
   Timestamp,
@@ -20,12 +20,16 @@ import BookClubSkeleton from "@/components/skeleton/BookClubSkeleton";
 import { motion } from "framer-motion";
 import { easeAppearContainer } from "../articleRecord/ArticleRecord";
 
+import { BookClubInfo } from "@/utils/types/types";
+
 const dashBoardTitleClass =
   "font-medium text-[20px] tracking-[2px] mb-[20px] text-center lg:text-start";
 
 const TodayBookClub = () => {
   const { user } = useContext(AuthContext);
-  const [todayBookClub, setTodayBookClub] = useState<BookClub[] | null>(null);
+  const [todayBookClub, setTodayBookClub] = useState<BookClubInfo[] | null>(
+    null
+  );
 
   const getTime = (time: Timestamp) => {
     const date = new Date(time.seconds * 1000);
@@ -67,14 +71,11 @@ const TodayBookClub = () => {
         return;
       }
 
-      const bookClubs: BookClub[] = [];
-      console.log(result);
+      const bookClubs: BookClubInfo[] = [];
 
       result.forEach((doc: DocumentData) => {
-        console.log("result: ", doc.data());
         bookClubs.push({ id: doc.id, ...doc.data() });
       });
-      console.log(bookClubs);
 
       setTodayBookClub(bookClubs);
     };
