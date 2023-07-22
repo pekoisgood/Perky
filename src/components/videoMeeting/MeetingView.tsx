@@ -1,6 +1,5 @@
 "use client";
-import { useContext, useState } from "react";
-import { AuthContext } from "@/context/AuthContext";
+import { useState } from "react";
 import dynamic from "next/dynamic";
 
 import {
@@ -42,7 +41,6 @@ const profileMotion = {
 };
 
 const MeetingView = () => {
-  const { user } = useContext(AuthContext);
   const { toggleMic, toggleWebcam } = useMeeting();
   const { leave, end } = useMeeting();
   const [joined, setJoined] = useState<boolean>(false);
@@ -51,6 +49,7 @@ const MeetingView = () => {
   const [presenterId, setPresenterId] = useState<string>("");
   const [participantIds, setParticipantIds] = useState<string[]>([]);
 
+  const user = useAppSelector((state) => state.auth.value);
   const guests = useAppSelector((state) => state.bookClubMeeting.value);
 
   const { join, participants, enableScreenShare, disableScreenShare } =

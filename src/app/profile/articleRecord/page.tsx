@@ -1,20 +1,20 @@
 "use client";
 
-import { AuthContext } from "@/context/AuthContext";
 import Link from "next/link";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import ArticleSnippet from "@/app/ArticleSnippet";
 import Image from "next/image";
 import { setRecord } from "@/redux/slice/articleRecordSlice";
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import ProfileArticleSkeleton from "@/components/skeleton/ProfileArticleSkeleton";
 
 import { Article } from "@/utils/types/types";
 
 const Page = () => {
-  const { user } = useContext(AuthContext);
   const [articleRecord, setArticleRecord] = useState<Article[] | null>(null);
+
+  const user = useAppSelector((state) => state.auth.value);
   const dispatch = useAppDispatch();
 
   useEffect(() => {

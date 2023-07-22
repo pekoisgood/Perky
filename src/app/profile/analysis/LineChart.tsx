@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -22,8 +22,7 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-import { AuthContext } from "@/context/AuthContext";
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setAnalysis } from "@/redux/slice/analysisSlice";
 
 import { BookClubInfo, Article } from "@/utils/types/types";
@@ -43,7 +42,8 @@ const options = {
 };
 
 const Page = ({ width, height }: { width?: string; height?: string }) => {
-  const { user } = useContext(AuthContext);
+  const user = useAppSelector((state) => state.auth.value);
+
   const [articleRecourdCreatedTime, setArticleRecourdCreatedTime] = useState(
     []
   );

@@ -1,6 +1,6 @@
-import { AuthContext } from "@/context/AuthContext";
 import dynamic from "next/dynamic";
-import { useContext } from "react";
+
+import { useAppSelector } from "@/redux/hooks";
 
 type Props = {
   roomId: string;
@@ -21,7 +21,8 @@ const MeetingView = dynamic(
 );
 
 const Video = ({ roomId }: Props) => {
-  const { user } = useContext(AuthContext);
+  const user = useAppSelector((state) => state.auth.value);
+
   const API_KEY = process.env.NEXT_PUBLIC_VIDEO_SDK_API_KEY;
 
   if (!roomId || !API_KEY) return <></>;

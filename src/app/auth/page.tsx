@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useState, useContext, useEffect } from "react";
-import { AuthContext } from "@/context/AuthContext";
+import React, { useState, useEffect } from "react";
 import { useRouter, redirect } from "next/navigation";
 import Image from "next/image";
 
@@ -9,7 +8,12 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { auth, db } from "@/utils/firebase/firebase";
+import {
+  auth,
+  db,
+  getUserInfo,
+  signInWithGoogle,
+} from "@/utils/firebase/firebase";
 import {
   collection,
   query,
@@ -27,6 +31,8 @@ import { CustomError } from "@/utils/types/types";
 import Background from "@/app/auth/Background";
 import laughingLady from "../../assets/image/people/laughing-lady.svg";
 import googleLogo from "../../assets/image/backgroundIcon/google.gif";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { setIsLogin, setUser } from "@/redux/slice/authSlice";
 
 const formClass =
   "relative w-[40%] min-w-[350px] lg:min-w-[500px] min-h-[500px] p-5 backdrop-filter backdrop-blur-[2px] bg-white/90 border-2 border-[#245953] shadow-lg rounded-xl flex flex-col justify-between items-center gap-[10px] z-10";
@@ -45,7 +51,6 @@ const sloganClass =
   "text-[60px] sm:text-[30px] md:text-[50px] lg:text-[70px] xl:text-[90px] font-extrabold tracking-[3px] text-[#245953] relative";
 
 const Page = () => {
-  const { setIsLogin, logIn, setUser, isLogin } = useContext(AuthContext);
   const [loginPage, setLoginPage] = useState(true);
   const [userInput, setUserInput] = useState<LoginUserInput>({
     email: "demo@gmail.com",
@@ -53,6 +58,8 @@ const Page = () => {
   });
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.auth.value);
   const router = useRouter();
 
   const handleNativeSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -68,12 +75,16 @@ const Page = () => {
       const user = userCredential.user;
       const userId = user.uid;
       const email = user.email;
-      setUser({
-        name: email!,
-        email: email!,
-        id: userId,
-        avatar: "",
-      });
+
+      dispatch(
+        setUser({
+          name: email!,
+          email: email!,
+          id: userId,
+          avatar: "",
+        })
+      );
+
       const userRef = collection(db, "users");
       const q = query(userRef, where("userId", "==", userId));
 
@@ -92,11 +103,9 @@ const Page = () => {
         });
       }
       router.push("/profile");
-      setIsLogin(true);
-
-      console.log("sign up !!");
+      dispatch(setIsLogin(true));
     } catch (error) {
-      setIsLogin(false);
+      dispatch(setIsLogin(false));
       setErrorMessage((error as CustomError).code.split("/")[1]);
       return;
     }
@@ -120,26 +129,41 @@ const Page = () => {
       const userRef = doc(db, "users", userId);
       const userInfo: DocumentData = await getDoc(userRef);
 
-      setUser({
-        name: userInfo.data().name,
-        id: userId,
-        avatar: userInfo.data().avatar ?? "",
-        email: email!,
-      });
+      dispatch(
+        setUser({
+          name: userInfo.data().name,
+          id: userId,
+          avatar: userInfo.data().avatar ?? "",
+          email: email!,
+        })
+      );
     } catch (error) {
       setErrorMessage((error as CustomError).code.split("/")[1]);
-      setIsLogin(false);
+      dispatch(setIsLogin(false));
       return;
     }
-    setIsLogin(true);
     router.push("/profile");
     return;
   };
 
+  const handleGoogleSignIn = async () => {
+    const result = await signInWithGoogle();
+    if (!result) return;
+
+    const userInfo: DocumentData = await getUserInfo(result.user.uid);
+    dispatch(
+      setUser({
+        email: userInfo.data().email ?? result.user.email,
+        id: result.user.uid,
+        name: userInfo.data().name ?? result.user.displayName,
+        avatar: userInfo.data().avatar ?? result.user.photoURL,
+      })
+    );
+  };
+
   useEffect(() => {
-    if (isLogin) redirect("/profile");
-    console.log("redirect to profile!");
-  }, [isLogin]);
+    if (user.isLogin) redirect("/profile");
+  }, [user.isLogin]);
 
   return (
     <>
@@ -207,7 +231,7 @@ const Page = () => {
                 height={40}
                 alt="google logo"
               />
-              <div onClick={logIn}>Login in with google</div>
+              <div onClick={handleGoogleSignIn}>Login in with google</div>
             </div>
             <p
               className="hover:cursor-pointer text-[#245953] text-[12px]"

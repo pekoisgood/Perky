@@ -1,6 +1,5 @@
 "use client";
-import React, { useContext, useEffect, useState } from "react";
-import { AuthContext } from "@/context/AuthContext";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -19,10 +18,12 @@ import Button from "@/components/button/Button";
 import ProfileArticleSkeleton from "@/components/skeleton/ProfileArticleSkeleton";
 import { db } from "@/utils/firebase/firebase";
 import { SavedArticle } from "@/utils/types/types";
+import { useAppSelector } from "@/redux/hooks";
 
 const Page = () => {
-  const { user } = useContext(AuthContext);
   const [articles, setArticles] = useState<SavedArticle[] | null>(null);
+
+  const user = useAppSelector((state) => state.auth.value);
 
   useEffect(() => {
     const getArticle = async () => {

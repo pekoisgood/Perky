@@ -2,16 +2,16 @@
 
 import React, { useState } from "react";
 
-import { AuthContext } from "@/context/AuthContext";
-import { useContext } from "react";
 import { HiOutlineDocumentAdd } from "react-icons/hi";
 import Link from "next/link";
 import Warning from "../warning/Warning";
 import Button from "../button/Button";
+import { useAppSelector } from "@/redux/hooks";
 
 const PostArticle = () => {
-  const { isLogin } = useContext(AuthContext);
   const [showWarning, setShowWarning] = useState(false);
+
+  const isLogin = useAppSelector((state) => state.auth.value.isLogin);
 
   return (
     <>

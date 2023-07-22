@@ -1,10 +1,8 @@
 "use client";
 
-import { useAppSelector } from "@/redux/hooks";
-import React, { useEffect, useContext } from "react";
-import { useAppDispatch } from "@/redux/hooks";
+import React, { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setRecord } from "@/redux/slice/articleRecordSlice";
-import { AuthContext } from "@/context/AuthContext";
 import Link from "next/link";
 import Button from "@/components/button/Button";
 import DashboardArticleSkeleton from "@/components/skeleton/DashboardArticleSkeleton";
@@ -35,8 +33,8 @@ export const easeAppearContainer = {
 
 const ArticleRecord = () => {
   const articleRecords = useAppSelector((state) => state.articleRecord.value);
-  const { user } = useContext(AuthContext);
 
+  const user = useAppSelector((state) => state.auth.value);
   const dispatch = useAppDispatch();
 
   useEffect(() => {

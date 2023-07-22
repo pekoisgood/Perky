@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import TextEditor from "./textEditor/TextEditor";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import {
@@ -7,7 +7,6 @@ import {
 } from "@/redux/slice/postArticleSlice";
 import { storage } from "@/utils/firebase/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { AuthContext } from "@/context/AuthContext";
 import { db } from "@/utils/firebase/firebase";
 import {
   DocumentData,
@@ -35,12 +34,12 @@ border-2 border-black rounded-2xl shadow-black shadow-[3px_3px]
 hover:cursor-pointer hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-none duration-100`;
 
 const Form = ({ image }: { image: File | null }) => {
-  const { user } = useContext(AuthContext);
   const [isProcessing, setIsProcessing] = useState<string | null>(null);
   const tagRef = useRef<HTMLInputElement | null>(null);
 
   const dispatch = useAppDispatch();
   const postArticle = useAppSelector((state) => state.postArticle.value);
+  const user = useAppSelector((state) => state.auth.value);
 
   const handleTag = (action: string, tag?: string) => {
     if (action === "ADD") {
@@ -143,7 +142,6 @@ const Form = ({ image }: { image: File | null }) => {
         category: postArticle.category,
         tags: postArticle.tags,
         image: imageUrl,
-        userId: user.id,
         savedCount: 0,
         userName: user.name,
       });

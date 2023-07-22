@@ -1,8 +1,7 @@
 "use client";
 
-import { AuthContext } from "@/context/AuthContext";
 import Image from "next/image";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { PiFinnTheHumanFill } from "react-icons/pi";
 import { BsPencilSquare } from "react-icons/bs";
 import Save from "@/components/button/Save";
@@ -10,13 +9,19 @@ import { compressImage } from "@/utils/compressImage/compressImage";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { db, storage } from "@/utils/firebase/firebase";
 import { doc, updateDoc } from "firebase/firestore";
-import { User } from "@/context/AuthContext";
+
+import { User } from "@/utils/types/types";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { setUser } from "@/redux/slice/authSlice";
 
 const Page = () => {
-  const { user, setUser } = useContext(AuthContext);
+  const user = useAppSelector((state) => state.auth.value);
+
   const [isModifying, setIsModifying] = useState(false);
   const [image, setImage] = useState<File | null>(null);
   const [name, setName] = useState(user.name);
+
+  const dispatch = useAppDispatch();
 
   const inputClass = `outline-none grow px-2 w-[180px] ${
     isModifying
@@ -59,14 +64,9 @@ const Page = () => {
           avatar: imageUrl,
         });
 
-        setUser((prev: User) => {
-          return {
-            ...prev,
-            avatar: imageUrl,
-          };
-        });
+        dispatch(setUser({ avatar: imageUrl }));
       } catch (error) {
-        console.log(error);
+        return;
       }
     }
 
@@ -76,14 +76,9 @@ const Page = () => {
           name: name,
         });
 
-        setUser((prev: User) => {
-          return {
-            ...prev,
-            name: name,
-          };
-        });
+        dispatch(setUser({ name }));
       } catch (error) {
-        console.log(error);
+        return;
       }
     }
   };

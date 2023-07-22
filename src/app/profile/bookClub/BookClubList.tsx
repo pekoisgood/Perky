@@ -1,7 +1,6 @@
 "use client";
 
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "@/context/AuthContext";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 
 import {
@@ -55,11 +54,12 @@ const child = {
 };
 
 const BookClubList = () => {
-  const { user } = useContext(AuthContext);
-  const date = useAppSelector((state) => state.calender.value);
   const [bookClubs, setBookClubs] = useState<BookClubInfo[] | null>(null);
   const [isPreviewNote, setIsPreviewNote] = useState<boolean>(false);
   const [note, setNote] = useState<Note | null>(null);
+
+  const user = useAppSelector((state) => state.auth.value);
+  const date = useAppSelector((state) => state.calender.value);
 
   const getNote = async (bookClubId: string) => {
     setIsPreviewNote(true);

@@ -1,7 +1,6 @@
 "use client";
 
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "@/context/AuthContext";
+import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 
 import { motion } from "framer-motion";
@@ -16,7 +15,7 @@ import {
   getDoc,
   updateDoc,
 } from "firebase/firestore";
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setBookClubMeetingGuest } from "@/redux/slice/bookClubMeetingSlice";
 import { db } from "@/utils/firebase/firebase";
 import { BookClubIdAndName } from "@/utils/types/types";
@@ -59,7 +58,6 @@ const sidebarFunctionContainerMotion = {
 };
 
 const Page = () => {
-  const { user } = useContext(AuthContext);
   const [isShowSidebar, setIsShowSidebar] = useState<boolean>(false);
   const [showSidebarMenu, setshowhiddenSidebarMenu] = useState<boolean>(false);
   const [sidebarFunction, setSidebarFunction] = useState<string>("");
@@ -69,6 +67,8 @@ const Page = () => {
   });
   const [text, setText] = useState<string>("");
   const [code, setCode] = useState<string>("console.log('hello world')");
+
+  const user = useAppSelector((state) => state.auth.value);
 
   const param = useParams();
   const bookClubId = param.id;

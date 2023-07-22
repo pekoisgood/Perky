@@ -1,12 +1,12 @@
 "use client";
-import { AuthContext } from "@/context/AuthContext";
+import { useAppSelector } from "@/redux/hooks";
 import Image from "next/image";
-import React, { useContext } from "react";
 import { PiFinnTheHumanFill } from "react-icons/pi";
 
 const ProfileAvatar = () => {
-  const { user, isLogin } = useContext(AuthContext);
-  if (!isLogin) return <></>;
+  const user = useAppSelector((state) => state.auth.value);
+
+  if (!user.isLogin) return <></>;
   return (
     <div className="flex flex-col items-center gap-1">
       <div className="border-slate-500 border-[1px] rounded-full w-[80px] h-[80px] overflow-hidden object-cover">

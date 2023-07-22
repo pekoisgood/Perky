@@ -12,6 +12,7 @@ const initialState = {
     id: "",
     name: "",
     avatar: "",
+    email: "",
     isLogin: null,
   } as AuthRedux,
 } as InitialState;
@@ -20,28 +21,37 @@ export const authSlice = createSlice({
   name: "auth",
   initialState: initialState,
   reducers: {
-    logIn: (state, actions) => {
+    logout: () => {
       return {
         value: {
-          id: actions.payload.id,
-          name: actions.payload.name,
-          avatar: actions.payload.avatar,
+          ...initialState.value,
+          isLogin: false,
+        },
+      };
+    },
+    setUser: (state, actions) => {
+      const user = actions.payload;
+      const prev = state.value;
+      return {
+        value: {
+          id: user.id ?? prev.id,
+          name: user.name ?? prev.name,
+          avatar: user.avatar ?? prev.avatar,
+          email: user.email ?? prev.email,
           isLogin: true,
         },
       };
     },
-    logout: () => {
+    setIsLogin: (state, actions) => {
       return {
         value: {
-          id: "",
-          name: "",
-          avatar: "",
-          isLogin: false,
+          ...state.value,
+          isLogin: actions.payload,
         },
       };
     },
   },
 });
 
-export const { logIn, logout } = authSlice.actions;
+export const { logout, setUser, setIsLogin } = authSlice.actions;
 export const authReducer = authSlice.reducer;

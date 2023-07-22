@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useState, useContext } from "react";
-import { AuthContext } from "@/context/AuthContext";
+import React, { useState } from "react";
 import Link from "next/link";
 
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
@@ -14,6 +13,7 @@ import { PiWarningFill } from "react-icons/pi";
 import Button from "@/components/button/Button";
 import Warning from "../../../../components/warning/Warning";
 import Search from "./Search";
+import { useAppSelector } from "@/redux/hooks";
 
 const getMonth = () => {
   const thisMonth = new Date().getMonth() + 1;
@@ -26,7 +26,6 @@ const getMonth = () => {
 const today = `${new Date().getFullYear()}-${getMonth()}-${new Date().getDate()}`;
 
 const Page = () => {
-  const { user } = useContext(AuthContext);
   const [bookClub, setBookClub] = useState<CreateBookClub>({
     title: "",
     date: today,
@@ -36,6 +35,8 @@ const Page = () => {
   });
   const [showInvationError, setShowInvationError] = useState(false);
   const [isValidForm, setIsValidForm] = useState<boolean | null>(null);
+
+  const user = useAppSelector((state) => state.auth.value);
 
   const time = new Date(
     bookClub.date + " " + bookClub.hour + ":" + bookClub.minute

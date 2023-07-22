@@ -1,7 +1,5 @@
 "use client";
-import React, { useContext, useEffect, useState } from "react";
-import { AuthContext } from "@/context/AuthContext";
-
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -22,19 +20,20 @@ import Warning from "@/components/warning/Warning";
 import { timeAgo } from "@/utils/date/dateFc";
 import { db } from "@/utils/firebase/firebase";
 import { ArticleComment } from "@/utils/types/types";
+import { useAppSelector } from "@/redux/hooks";
 
 const Comment = ({ articleId }: { articleId: string }) => {
-  const { user, isLogin } = useContext(AuthContext);
   const [newComment, setNewComment] = useState<string>("");
   const [comments, setComments] = useState<ArticleComment[]>([]);
   const [showNotLoginWarning, setShowNotLoginWarning] = useState(false);
 
+  const user = useAppSelector((state) => state.auth.value);
   const CommentRef = collection(db, "articles", articleId, "comments");
 
   const handleSubmitComment = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!newComment) return;
-    if (!isLogin) {
+    if (!user.isLogin) {
       setShowNotLoginWarning(true);
       return;
     }

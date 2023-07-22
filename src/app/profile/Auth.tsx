@@ -1,14 +1,13 @@
 "use client";
 
-import { AuthContext } from "@/context/AuthContext";
+import { useAppSelector } from "@/redux/hooks";
 import { redirect } from "next/navigation";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const Auth = () => {
-  const { isLogin } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  console.log(isLogin);
+  const isLogin = useAppSelector((state) => state.auth.value.isLogin);
 
   useEffect(() => {
     if (isLogin === null) {

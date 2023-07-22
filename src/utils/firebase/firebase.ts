@@ -20,6 +20,7 @@ import {
   DocumentData,
   getDocs,
   Timestamp,
+  getDoc,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -132,3 +133,10 @@ export function signInWithEmail(email: string, password: string) {
       return { errorCode, errorMessage };
     });
 }
+
+export const getUserInfo = async (id: string) => {
+  const userRef = doc(db, "users", id);
+  const userInfo: DocumentData = await getDoc(userRef);
+
+  return userInfo;
+};

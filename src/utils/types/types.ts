@@ -131,6 +131,7 @@ type Article = {
 
 type AuthRedux = {
   id: string;
+  email: string;
   name: string;
   avatar: string;
   isLogin: boolean | null;

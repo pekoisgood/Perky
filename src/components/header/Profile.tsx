@@ -1,8 +1,7 @@
 "use client";
 
-import { AuthContext } from "@/context/AuthContext";
 import Image from "next/image";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { MdOutlineDataThresholding } from "react-icons/md";
 import { FiBookmark } from "react-icons/fi";
@@ -14,25 +13,31 @@ import {
 import { RxDashboard } from "react-icons/rx";
 import { useRouter } from "next/navigation";
 import { IoSettingsOutline } from "react-icons/io5";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { firebaseSignOut } from "@/utils/firebase/firebase";
+import { logout } from "@/redux/slice/authSlice";
 
 const linkClass = `flex items-center gap-2 hover:text-[#245953] duration-100`;
 const titleClass = ``;
 
 const Profile = () => {
-  const { user, isLogin, logOut } = useContext(AuthContext);
   const [showList, setShowList] = useState(false);
+
+  const user = useAppSelector((state) => state.auth.value);
+  const dispatch = useAppDispatch();
 
   const router = useRouter();
 
-  const handleLogout = () => {
-    logOut();
+  const handleLogout = async () => {
+    await firebaseSignOut();
+    dispatch(logout);
     setShowList(false);
     router.push("/");
   };
 
   return (
     <>
-      {isLogin ? (
+      {user.isLogin ? (
         <>
           <div
             onClick={() => setShowList((prev) => !prev)}

@@ -1,9 +1,8 @@
 "use client";
 
 import { useAppSelector } from "@/redux/hooks";
-import React, { useEffect, useContext } from "react";
+import React, { useEffect } from "react";
 import { useAppDispatch } from "@/redux/hooks";
-import { AuthContext } from "@/context/AuthContext";
 import {
   DocumentData,
   collection,
@@ -31,8 +30,7 @@ const dashBoardTitleClass =
 
 const ArticleRecord = () => {
   const savedArticles = useAppSelector((state) => state.savedArticle.value);
-  const { user } = useContext(AuthContext);
-
+  const user = useAppSelector((state) => state.auth.value);
   const dispatch = useAppDispatch();
 
   useEffect(() => {

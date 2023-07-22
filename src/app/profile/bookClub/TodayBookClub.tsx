@@ -12,8 +12,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "@/context/AuthContext";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Button from "@/components/button/Button";
 import BookClubSkeleton from "@/components/skeleton/BookClubSkeleton";
@@ -21,15 +20,17 @@ import { motion } from "framer-motion";
 import { easeAppearContainer } from "../articleRecord/ArticleRecord";
 
 import { BookClubInfo } from "@/utils/types/types";
+import { useAppSelector } from "@/redux/hooks";
 
 const dashBoardTitleClass =
   "font-medium text-[20px] tracking-[2px] mb-[20px] text-center lg:text-start";
 
 const TodayBookClub = () => {
-  const { user } = useContext(AuthContext);
   const [todayBookClub, setTodayBookClub] = useState<BookClubInfo[] | null>(
     null
   );
+
+  const user = useAppSelector((state) => state.auth.value);
 
   const getTime = (time: Timestamp) => {
     const date = new Date(time.seconds * 1000);

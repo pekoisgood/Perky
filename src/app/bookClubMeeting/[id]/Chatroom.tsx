@@ -1,8 +1,7 @@
 "use client";
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
-import { AuthContext } from "@/context/AuthContext";
 
 import {
   collection,
@@ -16,6 +15,7 @@ import { HiPaperAirplane } from "react-icons/hi";
 import { PiFinnTheHumanFill } from "react-icons/pi";
 import { Message } from "@/utils/types/types";
 import { db } from "@/utils/firebase/firebase";
+import { useAppSelector } from "@/redux/hooks";
 
 const Chatroom = ({
   newMessage,
@@ -24,9 +24,10 @@ const Chatroom = ({
   newMessage: string;
   setNewMessage: React.Dispatch<React.SetStateAction<string>>;
 }) => {
-  const { user } = useContext(AuthContext);
   const [messages, setMessages] = useState<Message[]>([]);
   const chatRoomMessagesRef = useRef<HTMLDivElement | null>(null);
+
+  const user = useAppSelector((state) => state.auth.value);
 
   const params = useParams();
   const roomId = params.id;
@@ -73,8 +74,6 @@ const Chatroom = ({
 
     return () => unsuscribe();
   }, [messagesRef]);
-
-  console.log(messages);
 
   return (
     <div className="min-h-full h-full relative rounded-xl p-2">

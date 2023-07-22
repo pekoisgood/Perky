@@ -1,5 +1,4 @@
 "use client";
-import { AuthContext } from "@/context/AuthContext";
 import { db } from "@/utils/firebase/firebase";
 import {
   doc,
@@ -9,11 +8,12 @@ import {
   updateDoc,
   deleteDoc,
 } from "firebase/firestore";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BsBookmark, BsBookmarkHeartFill } from "react-icons/bs";
 import Warning from "../../../components/warning/Warning";
 import Link from "next/link";
 import Button from "@/components/button/Button";
+import { useAppSelector } from "@/redux/hooks";
 
 type Prop = {
   articleId: string;
@@ -21,13 +21,14 @@ type Prop = {
 };
 
 const SaveButton = ({ articleId, count }: Prop) => {
-  const { user, isLogin } = useContext(AuthContext);
   const [isSaved, setIsSaved] = useState<boolean | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [showWarning, setShowWarning] = useState(false);
 
+  const user = useAppSelector((state) => state.auth.value);
+
   const handleSaveArticle = async () => {
-    if (!isLogin) {
+    if (!user.isLogin) {
       setShowWarning(true);
       return;
     }
@@ -57,12 +58,12 @@ const SaveButton = ({ articleId, count }: Prop) => {
   };
 
   useEffect(() => {
-    if (isLogin === null) {
+    if (user.isLogin === null) {
       setIsLoading(true);
     } else {
       setIsLoading(false);
     }
-  }, [isLogin]);
+  }, [user.isLogin]);
 
   useEffect(() => {
     const checkSavedArticle = async () => {
