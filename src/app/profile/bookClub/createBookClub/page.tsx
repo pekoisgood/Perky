@@ -10,8 +10,8 @@ import { db } from "@/utils/firebase/firebase";
 import { CreateBookClub } from "@/utils/types/types";
 import { IoMdClose } from "react-icons/io";
 import { PiWarningFill } from "react-icons/pi";
-import Button from "@/components/button/Button";
-import Warning from "../../../../components/warning/Warning";
+import Button from "@/components/Button/Button";
+import Warning from "../../../../components/Warning/Warning";
 import Search from "./Search";
 import { useAppSelector } from "@/redux/hooks";
 

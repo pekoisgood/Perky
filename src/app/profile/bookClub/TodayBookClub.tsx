@@ -14,8 +14,8 @@ import {
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Button from "@/components/button/Button";
-import BookClubSkeleton from "@/components/skeleton/BookClubSkeleton";
+import Button from "@/components/Button/Button";
+import BookClubSkeleton from "@/components/Skeleton/BookClubSkeleton";
 import { motion } from "framer-motion";
 import { easeAppearContainer } from "../articleRecord/ArticleRecord";
 

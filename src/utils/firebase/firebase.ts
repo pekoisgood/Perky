@@ -31,13 +31,13 @@ const firebaseConfig = {
   appId: "1:627741027334:web:4a3774abca3a01d1592787",
 };
 
-export const app = initializeApp(firebaseConfig);
-export const db = getFirestore(app);
-export const storage = getStorage();
-export const auth = getAuth(app);
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const storage = getStorage();
+const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 
-export const signInWithGoogle = async () => {
+const signInWithGoogle = async () => {
   try {
     const result = await signInWithPopup(auth, provider);
 
@@ -71,18 +71,18 @@ export const signInWithGoogle = async () => {
   }
 };
 
-export const firebaseSignOut = async () => {
+const firebaseSignOut = async () => {
   try {
     await signOut(auth);
   } catch (error) {
     console.log(error);
   }
 };
-export const provider = googleProvider.setCustomParameters({
+const provider = googleProvider.setCustomParameters({
   prompt: "select_account",
 });
 
-export async function getRecord(
+async function getRecord(
   category: string,
   queryItem: string,
   operator: WhereFilterOp,
@@ -106,7 +106,7 @@ export async function getRecord(
   return data;
 }
 
-export async function signUpWithEmail(email: string, password: string) {
+async function signUpWithEmail(email: string, password: string) {
   try {
     const userCredential = await createUserWithEmailAndPassword(
       auth,
@@ -120,7 +120,7 @@ export async function signUpWithEmail(email: string, password: string) {
   }
 }
 
-export function signInWithEmail(email: string, password: string) {
+function signInWithEmail(email: string, password: string) {
   signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
@@ -133,9 +133,22 @@ export function signInWithEmail(email: string, password: string) {
     });
 }
 
-export const getUserInfo = async (id: string) => {
+const getUserInfo = async (id: string) => {
   const userRef = doc(db, "users", id);
   const userInfo: DocumentData = await getDoc(userRef);
 
   return userInfo;
+};
+
+export {
+  app,
+  db,
+  storage,
+  auth,
+  signInWithGoogle,
+  firebaseSignOut,
+  getRecord,
+  signUpWithEmail,
+  signInWithEmail,
+  getUserInfo,
 };

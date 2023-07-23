@@ -12,7 +12,7 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { getDayPerMonth } from "@/components/date/Calender";
+import { getDayPerMonth } from "@/components/Date/Calender";
 ChartJS.register(
   CategoryScale,
   LinearScale,

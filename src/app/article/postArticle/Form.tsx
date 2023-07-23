@@ -15,10 +15,10 @@ import {
   where,
   getDocs,
 } from "firebase/firestore";
-import Warning from "@/components/warning/Warning";
+import Warning from "@/components/Warning/Warning";
 import { PiWarningFill } from "react-icons/pi";
 import Link from "next/link";
-import Button from "@/components/button/Button";
+import Button from "@/components/Button/Button";
 import { getDownloadURLFromFireStore } from "@/utils/compressImage/compressImage";
 
 const postStatus = {

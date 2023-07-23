@@ -1,6 +1,6 @@
 import React from "react";
 import { headers } from "next/dist/client/components/headers";
-import ArticleList from "@/app/ArticleList";
+import ArticleList from "@/components/Article/ArticleList";
 
 const Page = async ({
   searchParams,

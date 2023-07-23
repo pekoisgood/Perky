@@ -3,7 +3,7 @@ import { Poppins } from "next/font/google";
 import React from "react";
 import ReduxProvider from "@/redux/provider";
 
-import Header from "../components/header/Header";
+import Header from "../components/Header/Header";
 import Auth from "../components/Auth/Auth";
 
 const poppins = Poppins({

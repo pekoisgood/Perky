@@ -8,8 +8,8 @@ import { collection, getDocs } from "firebase/firestore";
 import { HiSearch } from "react-icons/hi";
 import { db } from "@/utils/firebase/firebase";
 import { SearchOutput, Tag } from "@/utils/types/types";
-import Button from "../button/Button";
-import Warning from "../warning/Warning";
+import Button from "../Button/Button";
+import Warning from "../Warning/Warning";
 
 const Search = () => {
   const [isSearching, setIsSearching] = useState<boolean>(false);

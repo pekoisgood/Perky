@@ -15,8 +15,8 @@ import {
 } from "firebase/firestore";
 import { HiPaperAirplane } from "react-icons/hi";
 import { PiFinnTheHumanFill } from "react-icons/pi";
-import Button from "@/components/button/Button";
-import Warning from "@/components/warning/Warning";
+import Button from "@/components/Button/Button";
+import Warning from "@/components/Warning/Warning";
 import { timeAgo } from "@/utils/date/dateFc";
 import { db } from "@/utils/firebase/firebase";
 import { ArticleComment } from "@/utils/types/types";

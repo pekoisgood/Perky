@@ -3,11 +3,11 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import ArticleSnippet from "@/app/ArticleSnippet";
+import ArticleSnippet from "@/components/Article/ArticleSnippet";
 import Image from "next/image";
 import { setRecord } from "@/redux/slice/articleRecordSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import ProfileArticleSkeleton from "@/components/skeleton/ProfileArticleSkeleton";
+import ProfileArticleSkeleton from "@/components/Skeleton/ProfileArticleSkeleton";
 
 import { Article } from "@/utils/types/types";
 

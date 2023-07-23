@@ -4,8 +4,8 @@ import React, { useState } from "react";
 
 import { HiOutlineDocumentAdd } from "react-icons/hi";
 import Link from "next/link";
-import Warning from "../warning/Warning";
-import Button from "../button/Button";
+import Warning from "../Warning/Warning";
+import Button from "../Button/Button";
 import { useAppSelector } from "@/redux/hooks";
 
 const PostArticle = () => {

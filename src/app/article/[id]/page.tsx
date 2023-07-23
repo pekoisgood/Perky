@@ -5,8 +5,8 @@ import Link from "next/link";
 import { headers } from "next/dist/client/components/headers";
 import Comment from "./Comment";
 import SaveCount from "./SaveCount";
-import Warning from "@/components/warning/Warning";
-import Button from "@/components/button/Button";
+import Warning from "@/components/Warning/Warning";
+import Button from "@/components/Button/Button";
 import { Timestamp } from "firebase/firestore";
 
 const Page = async ({ params }: { params: { id: string } }) => {

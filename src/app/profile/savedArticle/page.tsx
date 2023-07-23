@@ -13,9 +13,9 @@ import {
   query,
 } from "firebase/firestore";
 import { motion } from "framer-motion";
-import ArticleSnippet from "@/app/ArticleSnippet";
-import Button from "@/components/button/Button";
-import ProfileArticleSkeleton from "@/components/skeleton/ProfileArticleSkeleton";
+import ArticleSnippet from "@/components/Article/ArticleSnippet";
+import Button from "@/components/Button/Button";
+import ProfileArticleSkeleton from "@/components/Skeleton/ProfileArticleSkeleton";
 import { db } from "@/utils/firebase/firebase";
 import { SavedArticle } from "@/utils/types/types";
 import { useAppSelector } from "@/redux/hooks";

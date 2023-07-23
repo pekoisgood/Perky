@@ -4,8 +4,8 @@ import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setRecord } from "@/redux/slice/articleRecordSlice";
 import Link from "next/link";
-import Button from "@/components/button/Button";
-import DashboardArticleSkeleton from "@/components/skeleton/DashboardArticleSkeleton";
+import Button from "@/components/Button/Button";
+import DashboardArticleSkeleton from "@/components/Skeleton/DashboardArticleSkeleton";
 import { motion } from "framer-motion";
 
 import { Article } from "@/utils/types/types";

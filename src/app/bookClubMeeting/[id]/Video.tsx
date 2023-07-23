@@ -14,7 +14,7 @@ const MeetingProvider = dynamic(
   }
 );
 const MeetingView = dynamic(
-  () => import("../../../components/videoMeeting/MeetingView"),
+  () => import("../../../components/VideoMeeting/MeetingView"),
   {
     ssr: false,
   }

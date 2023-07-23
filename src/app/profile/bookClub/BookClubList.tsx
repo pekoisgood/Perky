@@ -19,7 +19,7 @@ import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import { motion } from "framer-motion";
 import { db } from "@/utils/firebase/firebase";
 import { BookClubInfo, Note } from "@/utils/types/types";
-import BookClubSkeleton from "@/components/skeleton/BookClubSkeleton";
+import BookClubSkeleton from "@/components/Skeleton/BookClubSkeleton";
 import { useAppSelector } from "@/redux/hooks";
 
 const container = {

@@ -1,4 +1,4 @@
-import ArticleSkeleton from "@/components/skeleton/ArticleSkeleton";
+import ArticleSkeleton from "@/components/Skeleton/ArticleSkeleton";
 import React from "react";
 
 const Loading = async () => {

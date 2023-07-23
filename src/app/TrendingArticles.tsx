@@ -5,10 +5,10 @@ import { db } from "@/utils/firebase/firebase";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import ArticleSnippet from "./ArticleSnippet";
+import ArticleSnippet from "../components/Article/ArticleSnippet";
 import monster from "../assets/image/people/monster.svg";
 import beanieMan from "../assets/image/people/guy-with-beanie.svg";
-import TrendingArticleSkeleton from "@/components/skeleton/TrendingArticleSkeleton";
+import TrendingArticleSkeleton from "@/components/Skeleton/TrendingArticleSkeleton";
 
 interface TrendingArticle {
   title: string;

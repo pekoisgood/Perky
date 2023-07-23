@@ -16,8 +16,8 @@ import { db } from "@/utils/firebase/firebase";
 import { setSavedArticle } from "@/redux/slice/savedArticle";
 import { SavedArticle } from "@/utils/types/types";
 import Link from "next/link";
-import Button from "@/components/button/Button";
-import DashboardArticleSkeleton from "@/components/skeleton/DashboardArticleSkeleton";
+import Button from "@/components/Button/Button";
+import DashboardArticleSkeleton from "@/components/Skeleton/DashboardArticleSkeleton";
 import { motion } from "framer-motion";
 import { easeAppearContainer } from "../articleRecord/ArticleRecord";
 
