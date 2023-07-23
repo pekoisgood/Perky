@@ -40,8 +40,6 @@ const Page = () => {
   const [showInvationError, setShowInvationError] = useState(false);
   const [isValidForm, setIsValidForm] = useState<boolean | null>(null);
 
-  console.log(bookClub.date);
-
   const user = useAppSelector((state) => state.auth.value);
 
   const time = new Date(

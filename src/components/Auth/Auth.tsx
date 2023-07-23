@@ -56,7 +56,7 @@ const Auth = ({
     }
 
     checkAuthStatus();
-  }, [dispatch, isLoading, isLogin, isAuthNeeded]);
+  }, [isLoading, isLogin]);
   return <>{children}</>;
 };
 

@@ -67,7 +67,7 @@ const ArticleRecord = () => {
 
     if (user.id === "") return;
     getArticle();
-  }, [user, dispatch]);
+  }, [user]);
 
   return (
     <>
