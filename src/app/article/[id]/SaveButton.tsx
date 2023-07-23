@@ -10,9 +10,9 @@ import {
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { BsBookmark, BsBookmarkHeartFill } from "react-icons/bs";
-import Warning from "../../../components/Warning/Warning";
+import Warning from "@/components/Warning/Warning";
 import Link from "next/link";
-import Button from "@/components/Button/Button";
+import Button from "../../../components/Button/Button";
 import { useAppSelector } from "@/redux/hooks";
 
 type Prop = {

@@ -7,7 +7,7 @@ import TrendingArticles from "./TrendingArticles";
 import ArticleList from "../components/Article/ArticleList";
 import sittingBoy from "../assets/image/people/boy-sitting-on-legs.svg";
 import { Article } from "@/utils/types/types";
-import ArticleListSkeleton from "@/components/Skeleton/ArticleListSkeleton";
+import ArticleListSkeleton from "../components/Skeleton/ArticleListSkeleton";
 
 const categories = [
   "Frontend",
