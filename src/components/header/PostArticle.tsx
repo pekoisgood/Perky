@@ -21,6 +21,7 @@ const PostArticle = () => {
         onClick={() => {
           !isLogin && setShowWarning(true);
         }}
+        aria-label="Link to post article."
       >
         <HiOutlineDocumentAdd size={30} />
       </Link>

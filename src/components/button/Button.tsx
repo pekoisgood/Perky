@@ -6,13 +6,16 @@ const Button = ({
   children,
   handleOnClick,
   customLayout,
+  id,
 }: {
   children: React.ReactNode;
   handleOnClick?: () => Promise<void> | void;
   customLayout?: string;
+  id?: string;
 }) => {
   return (
     <button
+      id={id}
       className={`${
         customLayout && customLayout
       } w-fit bg-orange-100 p-1 mb-[3px]

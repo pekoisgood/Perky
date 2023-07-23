@@ -60,8 +60,6 @@ const Comment = ({ articleId }: { articleId: string }) => {
     const q = query(CommentRef, orderBy("createdAt", "desc"));
     const commentsData: ArticleComment[] = [];
     const docData = (doc: DocumentData) => {
-      // console.log(doc.data());
-
       return {
         comment: doc.data().comment,
         userName: doc.data().userName,
@@ -109,6 +107,7 @@ const Comment = ({ articleId }: { articleId: string }) => {
       >
         <input
           type="text"
+          id="comment"
           value={newComment}
           className="w-[95%] h-[42px] p-2 border-[1px] border-[#245953] rounded-md focus:border-2 outline-none"
           onChange={(e) => setNewComment(e.target.value)}
@@ -171,7 +170,7 @@ const Comment = ({ articleId }: { articleId: string }) => {
           customHandleCloseButton={() => setShowNotLoginWarning(false)}
         >
           <p>You have to login to comment on this article!</p>
-          <Button>
+          <Button id={"comment"}>
             <Link href="/auth" onClick={() => setShowNotLoginWarning(false)}>
               Go to Login
             </Link>

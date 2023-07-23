@@ -251,6 +251,7 @@ const MeetingView = () => {
               alt="user avatar"
               width={100}
               height={100}
+              priority={true}
               className="rounded-full overflow-hidden object-cover w-[100px] h-[100px] border-2 border-white"
             />
           ) : (

@@ -21,6 +21,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             alt="woman sitting holding both legs"
             width={200}
             height={500}
+            priority={true}
             className="scale-x-flip w-[150px] lg:w-[200px] absolute bottom-[-36px] right-0 md:right-[44px] rotate-[5deg] lg:z-0"
           />
 
@@ -34,6 +35,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
               alt="stylish man with cap"
               width={180}
               height={500}
+              priority={true}
               className="hidden lg:block absolute top-[calc(100%-350px)] left-[25px]"
             />
           </div>
