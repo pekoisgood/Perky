@@ -1,13 +1,14 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { setRecord } from "@/redux/slice/articleRecordSlice";
 import Link from "next/link";
-import Button from "@/components/Button/Button";
-import DashboardArticleSkeleton from "@/components/Skeleton/DashboardArticleSkeleton";
+
 import { motion } from "framer-motion";
 
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { setRecord } from "@/redux/slice/articleRecordSlice";
+import Button from "@/components/Button/Button";
+import DashboardArticleSkeleton from "@/components/Skeleton/DashboardArticleSkeleton";
 import { Article } from "@/utils/types/types";
 
 const categoryClass = `w-fit bg-[#FFD89C] text-bold font-mono py-1 px-3 text-black

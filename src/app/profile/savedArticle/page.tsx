@@ -13,6 +13,7 @@ import {
   query,
 } from "firebase/firestore";
 import { motion } from "framer-motion";
+
 import ArticleSnippet from "@/components/Article/ArticleSnippet";
 import Button from "@/components/Button/Button";
 import ProfileArticleSkeleton from "@/components/Skeleton/ProfileArticleSkeleton";

@@ -1,14 +1,15 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import ArticleSnippet from "@/components/Article/ArticleSnippet";
+import Link from "next/link";
 import Image from "next/image";
+
+import { motion } from "framer-motion";
+
 import { setRecord } from "@/redux/slice/articleRecordSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import ProfileArticleSkeleton from "@/components/Skeleton/ProfileArticleSkeleton";
-
+import ArticleSnippet from "@/components/Article/ArticleSnippet";
 import { Article } from "@/utils/types/types";
 
 const Page = () => {

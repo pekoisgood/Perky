@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+
 import { MdOutlineDataThresholding } from "react-icons/md";
 import { FiBookmark } from "react-icons/fi";
 import { PiBooksDuotone, PiFilesBold } from "react-icons/pi";
 import { RxDashboard } from "react-icons/rx";
 import { IoSettingsOutline } from "react-icons/io5";
-import { usePathname } from "next/navigation";
 
 const titleClass = ` hidden lg:flex text-[16px] lg:text-[18px] font-medium`;
 

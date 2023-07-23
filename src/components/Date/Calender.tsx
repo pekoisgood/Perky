@@ -1,12 +1,13 @@
 "use client";
 
+import { motion } from "framer-motion";
+
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import {
   hadlePrevMonth,
   handleNexMonth,
   handleSelectDate,
-} from "../../redux/slice/calenderSlice";
-import { motion } from "framer-motion";
+} from "@/redux/slice/calenderSlice";
 
 export const getDayPerMonth = (m: number, y: number) => {
   if (m === 2 && y % 4 === 0) {

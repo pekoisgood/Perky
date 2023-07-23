@@ -1,7 +1,7 @@
+import { SetStateAction } from "react";
 import Error from "next/error";
 
 import { Timestamp } from "firebase/firestore";
-import { SetStateAction } from "react";
 
 type ArticleComment = {
   comment: string;

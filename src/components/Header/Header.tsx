@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+
 import Profile from "./Profile";
 import Search from "./Search";
 import logo from "./coding.png";

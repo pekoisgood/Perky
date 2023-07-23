@@ -1,6 +1,8 @@
-import "./globals.css";
-import { Poppins } from "next/font/google";
 import React from "react";
+import { Poppins } from "next/font/google";
+
+import "./globals.css";
+
 import ReduxProvider from "@/redux/provider";
 
 import Header from "../components/Header/Header";

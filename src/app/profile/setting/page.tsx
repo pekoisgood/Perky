@@ -1,13 +1,15 @@
 "use client";
 
-import Image from "next/image";
 import React, { useState } from "react";
+import Image from "next/image";
+
+import { doc, updateDoc } from "firebase/firestore";
 import { PiFinnTheHumanFill } from "react-icons/pi";
 import { BsPencilSquare } from "react-icons/bs";
+
 import Save from "@/components/Button/Save";
 import { getDownloadURLFromFireStore } from "@/utils/compressImage/compressImage";
 import { db } from "@/utils/firebase/firebase";
-import { doc, updateDoc } from "firebase/firestore";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setUser } from "@/redux/slice/authSlice";
 

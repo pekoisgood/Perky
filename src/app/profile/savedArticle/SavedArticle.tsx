@@ -1,8 +1,8 @@
 "use client";
 
-import { useAppSelector } from "@/redux/hooks";
 import React, { useEffect } from "react";
-import { useAppDispatch } from "@/redux/hooks";
+import Link from "next/link";
+
 import {
   DocumentData,
   collection,
@@ -12,13 +12,16 @@ import {
   orderBy,
   query,
 } from "firebase/firestore";
+import { motion } from "framer-motion";
+
 import { db } from "@/utils/firebase/firebase";
-import { setSavedArticle } from "@/redux/slice/savedArticle";
 import { SavedArticle } from "@/utils/types/types";
-import Link from "next/link";
+import { useAppSelector } from "@/redux/hooks";
+import { useAppDispatch } from "@/redux/hooks";
+import { setSavedArticle } from "@/redux/slice/savedArticle";
 import Button from "@/components/Button/Button";
 import DashboardArticleSkeleton from "@/components/Skeleton/DashboardArticleSkeleton";
-import { motion } from "framer-motion";
+
 import { easeAppearContainer } from "../articleRecord/ArticleRecord";
 
 const categoryClass = `w-fit bg-[#FFD89C] text-bold font-mono py-1 px-3 text-black

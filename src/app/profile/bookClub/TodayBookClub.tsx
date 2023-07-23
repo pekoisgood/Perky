@@ -1,9 +1,11 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import Link from "next/link";
+
 import { db } from "@/utils/firebase/firebase";
 import {
   DocumentData,
-  Timestamp,
   and,
   collection,
   getDocs,
@@ -12,16 +14,15 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { useEffect, useState } from "react";
-import Link from "next/link";
+import { motion } from "framer-motion";
+
 import Button from "@/components/Button/Button";
 import BookClubSkeleton from "@/components/Skeleton/BookClubSkeleton";
-import { motion } from "framer-motion";
-import { easeAppearContainer } from "../articleRecord/ArticleRecord";
-
 import { BookClubInfo } from "@/utils/types/types";
 import { useAppSelector } from "@/redux/hooks";
 import { getTime } from "@/utils/date/dateFc";
+
+import { easeAppearContainer } from "../articleRecord/ArticleRecord";
 
 const dashBoardTitleClass =
   "font-medium text-[20px] tracking-[2px] mb-[20px] text-center lg:text-start";

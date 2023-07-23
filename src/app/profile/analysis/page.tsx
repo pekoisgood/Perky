@@ -1,4 +1,5 @@
 "use client";
+
 import { useAppSelector } from "@/redux/hooks";
 import LineChart from "./LineChart";
 

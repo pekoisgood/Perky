@@ -1,14 +1,17 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
-import { collection, getDocs, orderBy, query, limit } from "firebase/firestore";
-import { db } from "@/utils/firebase/firebase";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import Image from "next/image";
-import ArticleSnippet from "../components/Article/ArticleSnippet";
-import monster from "../assets/image/people/monster.svg";
-import beanieMan from "../assets/image/people/guy-with-beanie.svg";
+
+import { collection, getDocs, orderBy, query, limit } from "firebase/firestore";
+import { motion } from "framer-motion";
+
+import { db } from "@/utils/firebase/firebase";
 import TrendingArticleSkeleton from "@/components/Skeleton/TrendingArticleSkeleton";
+import ArticleSnippet from "@/components/Article/ArticleSnippet";
+import monster from "@/assets/image/people/monster.svg";
+import beanieMan from "@/assets/image/people/guy-with-beanie.svg";
 
 interface TrendingArticle {
   title: string;

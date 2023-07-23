@@ -9,12 +9,6 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import {
-  auth,
-  db,
-  getUserInfo,
-  signInWithGoogle,
-} from "@/utils/firebase/firebase";
-import {
   collection,
   query,
   where,
@@ -25,14 +19,20 @@ import {
   getDoc,
   DocumentData,
 } from "firebase/firestore";
+
+import {
+  auth,
+  db,
+  getUserInfo,
+  signInWithGoogle,
+} from "@/utils/firebase/firebase";
 import { LoginUserInput } from "@/utils/types/types";
 import { CustomError } from "@/utils/types/types";
-
 import Background from "@/app/auth/Background";
-import laughingLady from "../../assets/image/people/laughing-lady.svg";
-import googleLogo from "../../assets/image/backgroundIcon/google.gif";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setIsLogin, setUser } from "@/redux/slice/authSlice";
+import laughingLady from "../../assets/image/people/laughing-lady.svg";
+import googleLogo from "../../assets/image/backgroundIcon/google.gif";
 
 const formClass =
   "relative w-[40%] min-w-[350px] lg:min-w-[500px] min-h-[500px] p-5 backdrop-filter backdrop-blur-[2px] bg-white/90 border-2 border-[#245953] shadow-lg rounded-xl flex flex-col justify-between items-center gap-[10px] z-10";

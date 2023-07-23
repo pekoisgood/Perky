@@ -1,5 +1,5 @@
-import { Extension, NodeViewContent, NodeViewWrapper } from "@tiptap/react";
 import React from "react";
+import { Extension, NodeViewContent, NodeViewWrapper } from "@tiptap/react";
 
 interface Prop {
   node: {

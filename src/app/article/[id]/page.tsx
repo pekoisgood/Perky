@@ -1,14 +1,15 @@
-import TextEditor from "./TextEditor";
 import Image from "next/image";
-import SaveButton from "./SaveButton";
 import Link from "next/link";
 import { headers } from "next/dist/client/components/headers";
-import Comment from "./Comment";
-import SaveCount from "./SaveCount";
+
 import Warning from "@/components/Warning/Warning";
 import Button from "@/components/Button/Button";
-import { Timestamp } from "firebase/firestore";
 import { getTime } from "@/utils/date/dateFc";
+
+import Comment from "./Comment";
+import SaveCount from "./SaveCount";
+import TextEditor from "./TextEditor";
+import SaveButton from "./SaveButton";
 
 const Page = async ({ params }: { params: { id: string } }) => {
   const articleId = params.id;

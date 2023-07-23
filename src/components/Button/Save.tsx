@@ -1,5 +1,3 @@
-import React from "react";
-
 type Props = {
   handleOnClick?: () => Promise<void> | void;
   customLayout?: string;

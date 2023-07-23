@@ -1,5 +1,8 @@
 "use client";
-import { db } from "@/utils/firebase/firebase";
+
+import React, { useEffect, useState } from "react";
+import Link from "next/link";
+
 import {
   doc,
   serverTimestamp,
@@ -8,11 +11,11 @@ import {
   updateDoc,
   deleteDoc,
 } from "firebase/firestore";
-import React, { useEffect, useState } from "react";
 import { BsBookmark, BsBookmarkHeartFill } from "react-icons/bs";
+
 import Warning from "@/components/Warning/Warning";
-import Link from "next/link";
-import Button from "../../../components/Button/Button";
+import Button from "@/components/Button/Button";
+import { db } from "@/utils/firebase/firebase";
 import { useAppSelector } from "@/redux/hooks";
 
 type Prop = {

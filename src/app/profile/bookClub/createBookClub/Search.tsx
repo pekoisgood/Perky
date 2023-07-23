@@ -1,8 +1,9 @@
-import { db } from "@/utils/firebase/firebase";
-import { collection, getDocs } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 
+import { collection, getDocs } from "firebase/firestore";
+
 import { User, CreateBookClub } from "@/utils/types/types";
+import { db } from "@/utils/firebase/firebase";
 
 type Props = {
   bookClub: CreateBookClub;

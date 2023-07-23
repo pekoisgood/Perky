@@ -1,5 +1,5 @@
-import ArticleSkeleton from "@/components/Skeleton/ArticleSkeleton";
 import React from "react";
+import ArticleSkeleton from "@/components/Skeleton/ArticleSkeleton";
 
 const Loading = async () => {
   return (

@@ -1,12 +1,14 @@
 "use client";
 
+import React, { useEffect, useState } from "react";
+import { redirect } from "next/navigation";
+
+import { onAuthStateChanged } from "firebase/auth";
+import { DocumentData, doc, getDoc } from "firebase/firestore";
+
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setIsLogin, setUser } from "@/redux/slice/authSlice";
 import { auth, db } from "@/utils/firebase/firebase";
-import { onAuthStateChanged } from "firebase/auth";
-import { DocumentData, doc, getDoc } from "firebase/firestore";
-import { redirect } from "next/navigation";
-import React, { useEffect, useState } from "react";
 
 const Auth = ({
   children,

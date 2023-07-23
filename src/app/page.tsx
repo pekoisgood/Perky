@@ -3,11 +3,13 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import TrendingArticles from "./TrendingArticles";
-import ArticleList from "../components/Article/ArticleList";
-import sittingBoy from "../assets/image/people/boy-sitting-on-legs.svg";
+
+import ArticleList from "@/components/Article/ArticleList";
+import sittingBoy from "@/assets/image/people/boy-sitting-on-legs.svg";
 import { Article } from "@/utils/types/types";
-import ArticleListSkeleton from "../components/Skeleton/ArticleListSkeleton";
+import ArticleListSkeleton from "@/components/Skeleton/ArticleListSkeleton";
+
+import TrendingArticles from "./TrendingArticles";
 
 const categories = [
   "Frontend",

@@ -1,11 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import TextEditor from "./textEditor/TextEditor";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import {
-  handlePostArticle,
-  handleUpdateArticle,
-} from "@/redux/slice/postArticleSlice";
-import { db } from "@/utils/firebase/firebase";
+import Link from "next/link";
+
 import {
   DocumentData,
   collection,
@@ -15,11 +10,18 @@ import {
   where,
   getDocs,
 } from "firebase/firestore";
-import Warning from "@/components/Warning/Warning";
 import { PiWarningFill } from "react-icons/pi";
-import Link from "next/link";
+
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import {
+  handlePostArticle,
+  handleUpdateArticle,
+} from "@/redux/slice/postArticleSlice";
+import { db } from "@/utils/firebase/firebase";
+import Warning from "@/components/Warning/Warning";
 import Button from "@/components/Button/Button";
 import { getDownloadURLFromFireStore } from "@/utils/compressImage/compressImage";
+import TextEditor from "./textEditor/TextEditor";
 
 const postStatus = {
   PENDING: "Pending",

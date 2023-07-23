@@ -1,7 +1,8 @@
 "use client";
 
-import CodeMirror from "@uiw/react-codemirror";
 import React, { useState } from "react";
+
+import CodeMirror from "@uiw/react-codemirror";
 import { vscodeDark } from "@uiw/codemirror-theme-vscode";
 import { langs } from "@uiw/codemirror-extensions-langs";
 import { VscDebugStart } from "react-icons/vsc";

@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import { Editor } from "@tiptap/react";
 import {
   FaBold,
@@ -12,7 +14,6 @@ import { PiCodeBold } from "react-icons/pi";
 import { BsQuote } from "react-icons/bs";
 import { VscHorizontalRule } from "react-icons/vsc";
 import { GrClear } from "react-icons/gr";
-import { useState } from "react";
 
 type Props = {
   editor: Editor | null;

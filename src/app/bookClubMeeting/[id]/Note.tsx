@@ -1,11 +1,12 @@
 "use client";
+import React, { useState, useEffect } from "react";
+import { useParams } from "next/navigation";
 
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import React, { useState, useEffect } from "react";
 import { setDoc, doc, getDoc } from "firebase/firestore";
+
 import { db } from "@/utils/firebase/firebase";
-import { useParams } from "next/navigation";
 import { useAppSelector } from "@/redux/hooks";
 
 const Note = ({

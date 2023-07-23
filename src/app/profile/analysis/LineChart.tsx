@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -12,7 +13,13 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+
 import { getDayPerMonth } from "@/components/Date/Calender";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { setAnalysis } from "@/redux/slice/analysisSlice";
+import { BookClubInfo, Article } from "@/utils/types/types";
+import { caculateCountPerDay } from "@/utils/date/dateFc";
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -22,12 +29,6 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { setAnalysis } from "@/redux/slice/analysisSlice";
-
-import { BookClubInfo, Article } from "@/utils/types/types";
-import { caculateCountPerDay } from "@/utils/date/dateFc";
-
 const options = {
   responsive: true,
   maintainAspectRatio: false,

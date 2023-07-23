@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import dynamic from "next/dynamic";
+import Image from "next/image";
 
 import {
   BsFillMicFill,
@@ -12,9 +13,9 @@ import { LuScreenShare, LuScreenShareOff } from "react-icons/lu";
 import { ImExit } from "react-icons/im";
 import { MdCallEnd } from "react-icons/md";
 import { PiFinnTheHumanFill } from "react-icons/pi";
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { useMeeting } from "@videosdk.live/react-sdk";
+
 import { useAppSelector } from "@/redux/hooks";
 import { PresenterId, Participant } from "@/utils/types/types";
 

@@ -1,9 +1,11 @@
 import React from "react";
-import ProfileSidebar from "./ProfileSidebar";
-import stylishManWithCap from "../../assets/image/people/stylish-man-with-cap.svg";
-import sittingWomanHoldingLegs from "../../assets/image/people/woman-sitting-holding-both-legs.svg";
 import Image from "next/image";
+
+import stylishManWithCap from "@/assets/image/people/stylish-man-with-cap.svg";
+import sittingWomanHoldingLegs from "@/assets/image/people/woman-sitting-holding-both-legs.svg";
 import Auth from "@/components/Auth/Auth";
+
+import ProfileSidebar from "./ProfileSidebar";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (

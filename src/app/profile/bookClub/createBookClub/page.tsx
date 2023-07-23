@@ -11,17 +11,10 @@ import { CreateBookClub } from "@/utils/types/types";
 import { IoMdClose } from "react-icons/io";
 import { PiWarningFill } from "react-icons/pi";
 import Button from "@/components/Button/Button";
-import Warning from "../../../../components/Warning/Warning";
-import Search from "./Search";
+import Warning from "@/components/Warning/Warning";
 import { useAppSelector } from "@/redux/hooks";
 
-const getMonth = () => {
-  const thisMonth = new Date().getMonth() + 1;
-  if (thisMonth < 10) {
-    return `0${thisMonth}`;
-  }
-  return thisMonth;
-};
+import Search from "./Search";
 
 const today = `${new Date().getFullYear()}-${
   new Date().getMonth() + 1 < 10

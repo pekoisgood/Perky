@@ -1,8 +1,10 @@
 "use client";
 
-import { useAppSelector } from "@/redux/hooks";
 import Image from "next/image";
+
 import { PiFinnTheHumanFill } from "react-icons/pi";
+
+import { useAppSelector } from "@/redux/hooks";
 
 const UserProfile = () => {
   const user = useAppSelector((state) => state.auth.value);
