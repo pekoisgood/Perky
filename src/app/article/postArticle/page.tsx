@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import CoverImage from "./CoverImage";
 import Form from "./Form";
-import Auth from "@/app/profile/Auth";
 
 const Page = () => {
   const [image, setImage] = useState<File | null>(null);
@@ -15,7 +14,6 @@ const Page = () => {
     >
       <CoverImage image={image} setImage={setImage} />
       <Form image={image} />
-      <Auth />
     </div>
   );
 };
