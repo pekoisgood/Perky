@@ -24,7 +24,9 @@ const getMonth = () => {
 };
 
 const today = `${new Date().getFullYear()}-${
-  new Date().getMonth() + 1
+  new Date().getMonth() + 1 < 10
+    ? `0${new Date().getMonth() + 1}`
+    : new Date().getMonth() + 1
 }-${new Date().getDate()}`;
 
 const Page = () => {
@@ -37,6 +39,8 @@ const Page = () => {
   });
   const [showInvationError, setShowInvationError] = useState(false);
   const [isValidForm, setIsValidForm] = useState<boolean | null>(null);
+
+  console.log(bookClub.date);
 
   const user = useAppSelector((state) => state.auth.value);
 

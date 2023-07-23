@@ -84,7 +84,7 @@ const Comment = ({ articleId }: { articleId: string }) => {
     return () => {
       unsub();
     };
-  }, [CommentRef]);
+  }, []);
 
   return (
     <div
