@@ -22,7 +22,7 @@ const categoryClass = `w-fit bg-[#FFD89C] text-bold font-mono py-1 px-3 text-bla
 shadow-[-3px_3px] shadow-black rounded-2xl border-2 border-black
 `;
 
-export default function Home() {
+const Page = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [articles, setArticles] = useState<Article[]>([]);
 
@@ -35,7 +35,6 @@ export default function Home() {
     const fetchArticles = async () => {
       isFetching = true;
       setIsLoading(true);
-      console.log("fetch!");
 
       const articlesReq = await fetch(`/api/articles?lastId=${lastId}`);
       const articlesRes = await articlesReq.json();
@@ -127,4 +126,6 @@ export default function Home() {
       </div>
     </div>
   );
-}
+};
+
+export default Page;

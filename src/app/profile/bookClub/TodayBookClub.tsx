@@ -21,6 +21,7 @@ import { easeAppearContainer } from "../articleRecord/ArticleRecord";
 
 import { BookClubInfo } from "@/utils/types/types";
 import { useAppSelector } from "@/redux/hooks";
+import { getTime } from "@/utils/date/dateFc";
 
 const dashBoardTitleClass =
   "font-medium text-[20px] tracking-[2px] mb-[20px] text-center lg:text-start";
@@ -31,18 +32,6 @@ const TodayBookClub = () => {
   );
 
   const user = useAppSelector((state) => state.auth.value);
-
-  const getTime = (time: Timestamp) => {
-    const date = new Date(time.seconds * 1000);
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-    const hour = date.getHours();
-    const minute = date.getMinutes();
-
-    return `${date.getFullYear()}/${month < 10 ? `0${month}` : month}/${
-      day < 10 ? `0${day}` : day
-    } ${hour < 10 ? `0${hour}` : hour}:${minute < 10 ? `0${minute}` : minute}`;
-  };
 
   useEffect(() => {
     const getBookClubList = async () => {
@@ -113,7 +102,7 @@ const TodayBookClub = () => {
                       {bookClub.name}
                     </p>
                     <p className="text-[12px] lg:text-[14px]">
-                      {getTime(bookClub.time)}
+                      {getTime(bookClub.time, true)}
                     </p>
                   </div>
                 </Link>

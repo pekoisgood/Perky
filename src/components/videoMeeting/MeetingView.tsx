@@ -50,7 +50,6 @@ const MeetingView = () => {
   const [participantIds, setParticipantIds] = useState<string[]>([]);
 
   const user = useAppSelector((state) => state.auth.value);
-  const guests = useAppSelector((state) => state.bookClubMeeting.value);
 
   const { join, participants, enableScreenShare, disableScreenShare } =
     useMeeting({
@@ -124,8 +123,6 @@ const MeetingView = () => {
     disableScreenShare();
     setPresenterId("");
   };
-
-  console.log(guests);
 
   return (
     <div className="flex flex-col h-full w-full">

@@ -39,11 +39,7 @@ const ArticleRecord = () => {
 
   useEffect(() => {
     const getArticleRecord = async () => {
-      console.log("get articles record!!", user.id);
-
       if (user.id) {
-        console.log("user id ok and get articles!!");
-
         const req = await fetch(`/api/articleRecord?id=${user.id}`);
         const myArticles: Article[] = await req.json();
         if (!myArticles) {

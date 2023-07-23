@@ -35,9 +35,6 @@ const ArticleRecord = () => {
 
   useEffect(() => {
     const getArticle = async () => {
-      console.log("get saved articles!!");
-      console.log("saved article user id", user.id);
-
       const savedArticles: SavedArticle[] = [];
       const articleIds: string[] = [];
       const q = query(
@@ -65,15 +62,10 @@ const ArticleRecord = () => {
         });
       }
 
-      console.log("...", savedArticles);
-
       dispatch(setSavedArticle(savedArticles));
     };
 
     if (user.id === "") return;
-
-    console.log("get article ", user);
-
     getArticle();
   }, [user, dispatch]);
 

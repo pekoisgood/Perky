@@ -56,26 +56,12 @@ const Form = ({ image }: { image: File | null }) => {
   };
 
   const postArticleErrorMessage = () => {
-    const contentMessage = "Content can't be empty.";
-    const titleMessage = "Title can't be empty.";
-    const imageMessage = "Cover image can't be empty.";
-    const tagMessage = "Tag can't be empty.";
-    const messages = [];
-
-    if (postArticle.title === "") {
-      messages.push(titleMessage);
-    }
-
-    if (!image) {
-      messages.push(imageMessage);
-    }
-    if (postArticle.content === "" || postArticle.content === "<p></p>") {
-      messages.push(contentMessage);
-    }
-
-    if (postArticle.tags.length === 0) {
-      messages.push(tagMessage);
-    }
+    const messages = [
+      !postArticle.title && "Title can't be empty",
+      (!postArticle.content || postArticle.content === "<p></p>") &&
+        "Content can't be empty",
+      !image && "Cover image can't be empty",
+    ].filter(Boolean);
 
     return (
       <ul className="flex flex-col gap-2">

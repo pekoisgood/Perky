@@ -15,10 +15,10 @@ const getMeetingId = async (token: string) => {
         const { roomId } = await result.json();
         return roomId;
       })
-      .catch((error) => console.log("error", error));
+      .catch((error) => error);
     return meetingId;
   } catch (e) {
-    console.log(e);
+    return;
   }
 };
 export const fetchMeetingId = async () => {

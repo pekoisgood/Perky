@@ -1,3 +1,5 @@
+import { Timestamp } from "firebase/firestore";
+
 const MONTH_NAMES = [
   "January",
   "February",
@@ -13,11 +15,11 @@ const MONTH_NAMES = [
   "December",
 ];
 
-function getFormattedDate(
+const getFormattedDate = (
   date: Date,
   prefomattedDate: string | boolean = false,
   hideYear = false
-) {
+) => {
   const day = date.getDate();
   const month = MONTH_NAMES[date.getMonth()];
   const year = date.getFullYear();
@@ -42,9 +44,9 @@ function getFormattedDate(
 
   // 10. January 2017. at 10:20
   return `${day}. ${month} ${year}. at ${hours}:${minutes}`;
-}
+};
 
-export function timeAgo(dateParam: Date) {
+const timeAgo = (dateParam: Date) => {
   if (!dateParam) {
     return null;
   }
@@ -54,7 +56,7 @@ export function timeAgo(dateParam: Date) {
 
   const date = typeof dateParam === "object" ? dateParam : new Date(dateParam);
   const today = new Date();
-  const seconds = Math.round((today.getTime() - +date) / 1000);
+  const seconds = Math.round((today.getTime() - Number(date)) / 1000);
   const minutes = Math.round(seconds / 60);
   const hours = Math.round(seconds / (60 * 60));
   const days = Math.round(seconds / (60 * 60 * 24));
@@ -84,4 +86,45 @@ export function timeAgo(dateParam: Date) {
   }
 
   return getFormattedDate(date);
-}
+};
+
+const caculateCountPerDay = (labels: string[], filteredRecord: Date[]) => {
+  const dataSet = [];
+  for (let i = 0; i < labels.length; i++) {
+    const labelDay = labels[i];
+    let count = 0;
+    for (let j = 0; j < filteredRecord.length; j++) {
+      const recordMon = filteredRecord[j].getMonth() + 1;
+      const recordDate = filteredRecord[j].getDate();
+      const recordDay = `${recordMon}/${recordDate}`;
+
+      if (labelDay == recordDay) {
+        count += 1;
+      }
+    }
+
+    dataSet.push(count);
+  }
+  return dataSet;
+};
+
+const getTime = (time: Timestamp, showMinutes: boolean) => {
+  const date = new Date(time.seconds * 1000);
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  const hour = date.getHours();
+  const minute = date.getMinutes();
+
+  if (showMinutes) {
+    return `${date.getFullYear()}/${month < 10 ? `0${month}` : month}/${
+      day < 10 ? `0${day}` : day
+    } ${showMinutes && hour < 10 ? `0${hour}` : hour}:${
+      minute < 10 ? `0${minute}` : minute
+    }`;
+  }
+  return `${date.getFullYear()}/${month < 10 ? `0${month}` : month}/${
+    day < 10 ? `0${day}` : day
+  } `;
+};
+
+export { timeAgo, caculateCountPerDay, getTime };

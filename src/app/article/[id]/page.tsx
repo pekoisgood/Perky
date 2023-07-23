@@ -8,6 +8,7 @@ import SaveCount from "./SaveCount";
 import Warning from "@/components/Warning/Warning";
 import Button from "@/components/Button/Button";
 import { Timestamp } from "firebase/firestore";
+import { getTime } from "@/utils/date/dateFc";
 
 const Page = async ({ params }: { params: { id: string } }) => {
   const articleId = params.id;
@@ -34,16 +35,6 @@ const Page = async ({ params }: { params: { id: string } }) => {
     );
   }
 
-  const getTime = (time: Timestamp) => {
-    const date = new Date(time.seconds * 1000);
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-
-    return `${date.getFullYear()}/${month < 10 ? `0${month}` : month}/${
-      day < 10 ? `0${day}` : day
-    }`;
-  };
-
   return (
     <div className="flex w-full max-w-[800px] mx-auto">
       <SaveButton count={article.savedCount ?? 0} articleId={articleId} />
@@ -63,7 +54,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
             {article.category}
           </Link>
           <span className="w-[5px] h-[5px] rounded-full bg-[#00000088] " />
-          <p>{getTime(article.createdAt)}</p>
+          <p>{getTime(article.createdAt, false)}</p>
         </div>
         <SaveCount articleId={articleId} />
         <div className="w-full h-fit mx-auto overflow-hidden rounded-2xl border-2 border-dashed border-[#245953] shadow-[#245953] shadow-[-7px_7px]">

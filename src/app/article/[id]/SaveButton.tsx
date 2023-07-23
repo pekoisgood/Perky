@@ -37,7 +37,6 @@ const SaveButton = ({ articleId, count }: Prop) => {
 
     if (isSaved && articleId) {
       await deleteDoc(doc(db, "users", user.id, "savedArticles", articleId));
-      console.log("ccc", count);
 
       await updateDoc(articleSavedCountRef, {
         savedCount: count,

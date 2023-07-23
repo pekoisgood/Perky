@@ -23,7 +23,9 @@ const getMonth = () => {
   return thisMonth;
 };
 
-const today = `${new Date().getFullYear()}-${getMonth()}-${new Date().getDate()}`;
+const today = `${new Date().getFullYear()}-${
+  new Date().getMonth() + 1
+}-${new Date().getDate()}`;
 
 const Page = () => {
   const [bookClub, setBookClub] = useState<CreateBookClub>({
@@ -53,24 +55,12 @@ const Page = () => {
   };
 
   const errorMessage = () => {
-    const titleMessage = "Title can't be empty.";
-    const dateMessage = "Date can't be empty.";
-    const timeMessage = "Time can't be empty.";
-    const validDateMessage = "Date or time should be in the future.";
-    const messages = [];
-
-    if (!bookClub.title) {
-      messages.push(titleMessage);
-    }
-    if (!bookClub.date) {
-      messages.push(dateMessage);
-    }
-    if (!bookClub.hour || !bookClub.minute) {
-      messages.push(timeMessage);
-    }
-    if (!isValidTime && bookClub.date) {
-      messages.push(validDateMessage);
-    }
+    const messages = [
+      !bookClub.title && "Title can't be empty.",
+      !bookClub.date && "Date can't be empty.",
+      (!bookClub.hour || !bookClub.minute) && "Time can't be empty.",
+      !isValidTime && bookClub.date && "Date or time should be in the future.",
+    ].filter(Boolean);
 
     return (
       <ul className="flex flex-col gap-2">
@@ -90,13 +80,14 @@ const Page = () => {
   };
 
   const handleCreateBookClub = async () => {
-    if (
+    const isValidForm =
       !bookClub.date ||
       !bookClub.hour ||
       !bookClub.minute ||
       !bookClub.title ||
-      !isValidTime
-    ) {
+      !isValidTime;
+
+    if (isValidForm) {
       setIsValidForm(false);
 
       setTimeout(() => {
@@ -121,8 +112,6 @@ const Page = () => {
     setIsValidForm(true);
     return;
   };
-
-  console.log(bookClub);
 
   return (
     <div className="flex flex-col gap max-w-[600px] w-[60%] mt-[20px] mx-auto">

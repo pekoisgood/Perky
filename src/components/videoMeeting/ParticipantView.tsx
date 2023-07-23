@@ -44,11 +44,7 @@ const ParticipantView = ({
         mediaStream.addTrack(micStream.track);
 
         micRef.current.srcObject = mediaStream;
-        micRef.current
-          .play()
-          .catch((error) =>
-            console.error("videoElem.current.play() failed", error)
-          );
+        micRef.current.play().catch((error) => error);
       } else {
         micRef.current.srcObject = null;
       }
@@ -71,9 +67,6 @@ const ParticipantView = ({
               url={videoStream}
               height={presenterId ? "100px" : "100%"}
               width={"100%"}
-              onError={(err) => {
-                console.log(err, "participant video error");
-              }}
               className="rounded-3xl overflow-hidden w-fit max-w-[1150px] mx-auto max-h-[calc(100vh-200px)] "
             />
             <p

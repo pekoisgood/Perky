@@ -67,7 +67,7 @@ const signInWithGoogle = async () => {
     }
     return result;
   } catch (error) {
-    console.log(error);
+    return;
   }
 };
 
@@ -75,20 +75,20 @@ const firebaseSignOut = async () => {
   try {
     await signOut(auth);
   } catch (error) {
-    console.log(error);
+    return;
   }
 };
 const provider = googleProvider.setCustomParameters({
   prompt: "select_account",
 });
 
-async function getRecord(
+const getRecord = async (
   category: string,
   queryItem: string,
   operator: WhereFilterOp,
   userId: string,
   time: string
-) {
+) => {
   const dateOffset = 24 * 60 * 60 * 1000 * 6;
   const today = new Date(new Date().toLocaleString().split(" ")[0]).getTime();
   const lastWeek = new Date(today - dateOffset);
@@ -104,9 +104,9 @@ async function getRecord(
   result.forEach((doc) => data.push(doc.data()));
 
   return data;
-}
+};
 
-async function signUpWithEmail(email: string, password: string) {
+const signUpWithEmail = async (email: string, password: string) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(
       auth,
@@ -118,9 +118,9 @@ async function signUpWithEmail(email: string, password: string) {
   } catch (error) {
     return error;
   }
-}
+};
 
-function signInWithEmail(email: string, password: string) {
+const signInWithEmail = async (email: string, password: string) => {
   signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
@@ -131,7 +131,7 @@ function signInWithEmail(email: string, password: string) {
       const errorMessage = error.message;
       return { errorCode, errorMessage };
     });
-}
+};
 
 const getUserInfo = async (id: string) => {
   const userRef = doc(db, "users", id);

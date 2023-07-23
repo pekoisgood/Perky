@@ -51,8 +51,6 @@ export const postArticleSlice = createSlice({
       return initailState;
     },
     handleShowImage: () => {
-      console.log("show image true...");
-
       return initailState;
     },
   },

@@ -38,7 +38,6 @@ const Page = () => {
         articleIds.push(doc.id);
       });
 
-      console.log(articleIds.length);
       if (articleIds.length === 0) {
         setArticles([]);
         return;
@@ -48,7 +47,6 @@ const Page = () => {
         const res: DocumentData = await getDoc(
           doc(db, "articles", articleIds[i])
         );
-        console.log(i, articleIds[i], res.data());
 
         savedArticles.push({
           id: res.id,

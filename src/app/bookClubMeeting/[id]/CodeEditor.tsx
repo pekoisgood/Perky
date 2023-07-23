@@ -11,60 +11,48 @@ type Props = {
   setCode: React.Dispatch<React.SetStateAction<string>>;
 };
 
+const languages: string[] = [
+  "Javascript",
+  "Java",
+  "Python",
+  "Php",
+  "C",
+  "Ruby",
+  "Typescript",
+];
+
+const languageIds = {
+  Javascript: 63,
+  Java: 62,
+  Php: 68,
+  Python: 71,
+  Ruby: 72,
+  Typescript: 74,
+  C: 51,
+};
+
+const getExtensionLanguage = (lang: string) => {
+  const extensionLanguages = {
+    Javascript: [langs.javascript()],
+    Java: [langs.java()],
+    Php: [langs.php()],
+    Python: [langs.python()],
+    Ruby: [langs.ruby()],
+    Typescript: [langs.typescript()],
+    C: [langs.c()],
+  };
+
+  return extensionLanguages[lang as keyof typeof extensionLanguages];
+};
+
 export default function CodeEditor({ code, setCode }: Props) {
   const [output, setOutput] = useState<string>("");
   const [isRunning, setIsRunning] = useState(false);
   const [language, setLanguage] = useState<string>("Javascript");
 
-  const languages: string[] = [
-    "Javascript",
-    "Java",
-    "Python",
-    "Php",
-    "C",
-    "Ruby",
-    "Typescript",
-  ];
-
   const handleRunCode = () => {
     setIsRunning(true);
     compile();
-  };
-
-  const getLanguageId = () => {
-    if (language === "Javascript") {
-      return 63;
-    } else if (language === "Java") {
-      return 62;
-    } else if (language === "Php") {
-      return 68;
-    } else if (language === "Python") {
-      return 71;
-    } else if (language === "Ruby") {
-      return 72;
-    } else if (language === "Typescript") {
-      return 74;
-    } else if (language === "C") {
-      return 51;
-    }
-  };
-
-  const getExtensionLanguage = () => {
-    if (language === "Javascript") {
-      return [langs.javascript()];
-    } else if (language === "Java") {
-      return [langs.java()];
-    } else if (language === "Php") {
-      return [langs.php()];
-    } else if (language === "Python") {
-      return [langs.python()];
-    } else if (language === "Ruby") {
-      return [langs.ruby()];
-    } else if (language === "Typescript") {
-      return [langs.typescript()];
-    } else if (language === "C") {
-      return [langs.c()];
-    }
   };
 
   const compile = async () => {
@@ -77,7 +65,7 @@ export default function CodeEditor({ code, setCode }: Props) {
         "X-RapidAPI-Host": "judge0-ce.p.rapidapi.com",
       },
       body: JSON.stringify({
-        language_id: getLanguageId(),
+        language_id: languageIds[language as keyof typeof languageIds],
         source_code: code,
         stdin: "SnVkZ2Uw",
       }),
@@ -152,7 +140,7 @@ export default function CodeEditor({ code, setCode }: Props) {
           <CodeMirror
             value={code}
             height="100%"
-            extensions={getExtensionLanguage()}
+            extensions={getExtensionLanguage(language)}
             theme={vscodeDark}
             className="h-full"
             id="editor"

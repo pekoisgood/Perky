@@ -30,11 +30,7 @@ const ScreenShareView = ({
         mediaStream.addTrack(micStream.track);
 
         micRef.current.srcObject = mediaStream;
-        micRef.current
-          .play()
-          .catch((error) =>
-            console.error("videoElem.current.play() failed", error)
-          );
+        micRef.current.play().catch((error) => error);
       } else {
         micRef.current.srcObject = null;
       }
@@ -56,9 +52,6 @@ const ScreenShareView = ({
             url={mediaStream}
             height={"100%"}
             width={"100%"}
-            onError={(err) => {
-              console.log(err, "presenter video error");
-            }}
           />
         </div>
       )}

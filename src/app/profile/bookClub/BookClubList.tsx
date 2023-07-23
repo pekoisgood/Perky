@@ -21,6 +21,7 @@ import { db } from "@/utils/firebase/firebase";
 import { BookClubInfo, Note } from "@/utils/types/types";
 import BookClubSkeleton from "@/components/Skeleton/BookClubSkeleton";
 import { useAppSelector } from "@/redux/hooks";
+import { getTime } from "@/utils/date/dateFc";
 
 const container = {
   hidden: {
@@ -78,18 +79,6 @@ const BookClubList = () => {
     }
 
     setNote({ id: bookClubId, note: note.note });
-  };
-
-  const getTime = (time: Timestamp) => {
-    const date = new Date(time.seconds * 1000);
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-    const hour = date.getHours();
-    const minute = date.getMinutes();
-
-    return `${date.getFullYear()}/${month < 10 ? `0${month}` : month}/${
-      day < 10 ? `0${day}` : day
-    } ${hour < 10 ? `0${hour}` : hour}:${minute < 10 ? `0${minute}` : minute}`;
   };
 
   useEffect(() => {
@@ -176,7 +165,7 @@ const BookClubList = () => {
                   <h3 className="text-[16px] text-white font-bold">
                     {bookClub.name}
                   </h3>
-                  <p className="text-[14px]">{getTime(bookClub.time)}</p>
+                  <p className="text-[14px]">{getTime(bookClub.time, true)}</p>
                   <div className="flex gap-2 justify-center text-black">
                     <Link
                       href={
