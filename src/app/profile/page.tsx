@@ -13,10 +13,10 @@ const Page = async () => {
             <TodayBookClub />
           </div>
           <div className="flex flex-col sm:flex-row basis-1/2 gap-2 md:w-[auto]">
-            <div className="basis-1/2 m-3 bg-white rounded-2xl p-5 shadow-lg min-h-[400px]">
+            <div className="basis-1/2 m-3 bg-white rounded-2xl p-5 shadow-lg">
               <ArticleRecord />
             </div>
-            <div className="basis-1/2 m-3 bg-white rounded-2xl p-5 shadow-lg min-h-[400px]">
+            <div className="basis-1/2 m-3 bg-white rounded-2xl p-5 shadow-lg">
               <SavedArticle />
             </div>
           </div>
