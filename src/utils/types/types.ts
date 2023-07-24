@@ -129,6 +129,16 @@ type Article = {
   starCounts?: number;
 };
 
+type TrendingArticle = {
+  title: string;
+  authorName: string;
+  savedCount: number;
+  id: string;
+  category: string;
+  image: string;
+  content: string;
+};
+
 type AuthRedux = {
   id: string;
   email: string;
@@ -156,5 +166,6 @@ export type {
   Auth,
   postArticle,
   Article,
+  TrendingArticle,
   AuthRedux,
 };

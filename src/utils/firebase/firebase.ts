@@ -20,6 +20,8 @@ import {
   DocumentData,
   getDocs,
   getDoc,
+  Query,
+  CollectionReference,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -140,6 +142,14 @@ const getUserInfo = async (id: string) => {
   return userInfo;
 };
 
+// const getDocsFromFireBase = async (
+//   ref: Query<DocumentData> | CollectionReference<DocumentData>
+// ) => {
+//   const result = await getDocs(ref);
+
+//   return result;
+// };
+
 export {
   app,
   db,
@@ -151,4 +161,5 @@ export {
   signUpWithEmail,
   signInWithEmail,
   getUserInfo,
+  // getDocsFromFireBase,
 };

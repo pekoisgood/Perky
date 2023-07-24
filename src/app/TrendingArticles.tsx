@@ -12,16 +12,7 @@ import TrendingArticleSkeleton from "@/components/Skeleton/TrendingArticleSkelet
 import ArticleSnippet from "@/components/Article/ArticleSnippet";
 import monster from "@/assets/image/people/monster.svg";
 import beanieMan from "@/assets/image/people/guy-with-beanie.svg";
-
-interface TrendingArticle {
-  title: string;
-  authorName: string;
-  savedCount: number;
-  id: string;
-  category: string;
-  image: string;
-  content: string;
-}
+import { TrendingArticle } from "@/utils/types/types";
 
 const container = {
   hidden: { opacity: 0 },
