@@ -20,8 +20,6 @@ import {
   DocumentData,
   getDocs,
   getDoc,
-  Query,
-  CollectionReference,
 } from "firebase/firestore";
 
 const firebaseConfig = {
