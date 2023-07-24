@@ -142,13 +142,18 @@ const getUserInfo = async (id: string) => {
   return userInfo;
 };
 
-// const getDocsFromFireBase = async (
-//   ref: Query<DocumentData> | CollectionReference<DocumentData>
-// ) => {
-//   const result = await getDocs(ref);
+const getDocsFromFireBase = async (
+  ref: Query<DocumentData> | CollectionReference<DocumentData>
+) => {
+  const result = await getDocs(ref);
+  const data: DocumentData[] = [];
 
-//   return result;
-// };
+  result.forEach((doc) => {
+    data.push({ id: doc.id, ...doc.data() });
+  });
+
+  return data;
+};
 
 export {
   app,
@@ -161,5 +166,5 @@ export {
   signUpWithEmail,
   signInWithEmail,
   getUserInfo,
-  // getDocsFromFireBase,
+  getDocsFromFireBase,
 };

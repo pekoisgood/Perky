@@ -22,11 +22,7 @@ const today = `${new Date().getFullYear()}-${
     : new Date().getMonth() + 1
 }-${new Date().getDate()}`;
 
-export const errorMessage = (
-  bookClub: CreateBookClub,
-  time: Date,
-  now: Date
-) => {
+const errorMessage = (bookClub: CreateBookClub, time: Date, now: Date) => {
   const isValidTime = time > now;
 
   const messages = [
