@@ -90,7 +90,7 @@ const Page = () => {
           <ProfileArticleSkeleton />
         </div>
       ) : articles.length > 0 ? (
-        <div className="columns-1 sm:columns-2 md:columns-3 gap-2 w-full px-3 mt-[50px]">
+        <div className="columns-1 min-[500px]:columns-2 md:columns-3 gap-2 w-full px-3 mt-[50px]">
           {articles.map((article: SavedArticle, index: number) => {
             return (
               <motion.div

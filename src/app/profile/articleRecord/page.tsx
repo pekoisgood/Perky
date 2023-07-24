@@ -60,7 +60,7 @@ const Page = () => {
           <ProfileArticleSkeleton />
         </div>
       ) : articleRecord.length > 0 ? (
-        <div className="colomns-1 sm:columns-2 md:columns-3 gap-x-5 overflow-y-scroll pt-[10px] pb-5">
+        <div className="colomns-1 min-[500px]:columns-2 md:columns-3 gap-x-5 overflow-y-scroll pt-[10px] pb-5">
           {articleRecord.map((article) => {
             return (
               <Link
