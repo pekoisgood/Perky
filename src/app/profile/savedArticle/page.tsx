@@ -117,9 +117,9 @@ const Page = () => {
                   <p className="font-semibold text-[18px] text-white tracking-[1px]">
                     {article.title}
                   </p>
-                  <p className="text-[#eee] pl-1 text-[12px]">
+                  <div className="text-[#eee] pl-1 text-[12px]">
                     <ArticleSnippet article={article.content} />
-                  </p>
+                  </div>
                 </Link>
               </motion.div>
             );
