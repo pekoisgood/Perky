@@ -1,7 +1,7 @@
 const skeletonAnimation =
   "bg-gradient-to-r from-[#eee] via-[#d6d6d6] to-[#eee] bg-[length:400%_400%] animate-skeleton";
 
-const categoryClass = `w-[80px] shadow-[-3px_3px] shadow-[#bababa] rounded-2xl px-[4px] py-[2px] `;
+const categoryClass = `h-[20px] w-[80px] shadow-[-3px_3px] shadow-[#bababa] rounded-2xl px-[4px] py-[2px] `;
 
 const DashboardArticleSkeleton = () => {
   return (

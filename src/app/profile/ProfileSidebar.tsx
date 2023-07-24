@@ -44,7 +44,7 @@ const ProfileSidebar = () => {
   };
 
   return (
-    <div className="flex flex-row lg:flex-col gap-4 w-fit mx-auto px-3 rounded-full ">
+    <div className="flex flex-row lg:flex-col gap-4 w-fit mx-auto px-3 rounded-full z-10 ">
       <Link
         href="/profile"
         className={linkClass(0)}
