@@ -76,13 +76,13 @@ const Search = () => {
           time={0}
           customHandleCloseButton={() => setIsSearching(false)}
           customLayout="fixed top-[50%] right-[50%] translate-x-[50%] translate-y-[-50%] pt-10 px-0 sm:p-10 flex items-center
-           rounded-xl bg-[white] text-black w-[90vw] sm:w-[50vw] max-w-[600px] h-[50vh] flex flex-col shadow-[-5px_5px_3px] shadow-[#3c3b3b]"
+           rounded-xl bg-[white] text-black w-[90vw] md:w-[50vw] max-w-[600px] h-[50vh] flex flex-col shadow-[-5px_5px_3px] shadow-[#3c3b3b]"
           customBg="fixed top-0 bottom-0 right-0 left-0 w-screen h-screen bg-black/20"
         >
           <div className="flex items-center gap-2 w-[90%]">
             <input
               value={searchInput}
-              className="text-[14px] sm:text-[20px] outline-none border-2 w-full border-dashed border-[#245953] rounded-md p-2 h-[35px] focus:border-solid"
+              className="text-[14px] md:text-[20px] outline-none border-2 w-full border-dashed border-[#245953] rounded-md p-2 h-[35px] focus:border-solid"
               placeholder="what are you looking for...?"
               onChange={(e) => setSearchInput(e.target.value.toLowerCase())}
             />
@@ -107,7 +107,7 @@ const Search = () => {
                     href={`/articles?tag=${tag.name}`}
                     onClick={() => setIsSearching(false)}
                   >
-                    <div className="text-[14px] sm:text-[20px] rounded-xl text-medium py-1 pl-[10px] hover:bg-[#245953]/40">
+                    <div className="text-[14px] md:text-[20px] rounded-xl text-medium py-1 pl-[10px] hover:bg-[#245953]/40">
                       {tag.name}
                     </div>
                   </Link>
