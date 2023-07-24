@@ -137,7 +137,10 @@ const Comment = ({ articleId }: { articleId: string }) => {
                       {comment.userName}
                       <span className="text-[8px] sm:text-[10px] ml-2 font-normal">
                         {comment.createdAt ?? false
-                          ? timeAgo(new Date(comment.createdAt.seconds * 1000))
+                          ? timeAgo(
+                              new Date(comment.createdAt.seconds * 1000),
+                              new Date()
+                            )
                           : "now"}
                       </span>
                     </p>

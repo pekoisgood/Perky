@@ -22,6 +22,37 @@ const today = `${new Date().getFullYear()}-${
     : new Date().getMonth() + 1
 }-${new Date().getDate()}`;
 
+export const errorMessage = (
+  bookClub: CreateBookClub,
+  time: Date,
+  now: Date
+) => {
+  const isValidTime = time > now;
+
+  const messages = [
+    !bookClub.title && "Title can't be empty.",
+    !bookClub.date && "Date can't be empty.",
+    (!bookClub.hour || !bookClub.minute) && "Time can't be empty.",
+    !isValidTime && bookClub.date && "Date or time should be in the future.",
+  ].filter(Boolean);
+
+  return (
+    <ul className="flex flex-col gap-2">
+      <PiWarningFill size={35} className="w-fit mx-auto" />
+      {messages.map((m, i) => {
+        return (
+          <li
+            key={i}
+            className="list-disc text-[12px] sm:text-[16px] lg:text-[20px]"
+          >
+            {m}
+          </li>
+        );
+      })}
+    </ul>
+  );
+};
+
 const Page = () => {
   const [bookClub, setBookClub] = useState<CreateBookClub>({
     title: "",
@@ -38,7 +69,6 @@ const Page = () => {
   const time = new Date(
     bookClub.date + " " + bookClub.hour + ":" + bookClub.minute
   );
-  const isValidTime = time > new Date();
 
   const handleRemoveGuest = (userIdTobeRomved: string) => {
     setBookClub((prev) => {
@@ -49,32 +79,9 @@ const Page = () => {
     });
   };
 
-  const errorMessage = () => {
-    const messages = [
-      !bookClub.title && "Title can't be empty.",
-      !bookClub.date && "Date can't be empty.",
-      (!bookClub.hour || !bookClub.minute) && "Time can't be empty.",
-      !isValidTime && bookClub.date && "Date or time should be in the future.",
-    ].filter(Boolean);
-
-    return (
-      <ul className="flex flex-col gap-2">
-        <PiWarningFill size={35} className="w-fit mx-auto" />
-        {messages.map((m, i) => {
-          return (
-            <li
-              key={i}
-              className="list-disc text-[12px] sm:text-[16px] lg:text-[20px]"
-            >
-              {m}
-            </li>
-          );
-        })}
-      </ul>
-    );
-  };
-
   const handleCreateBookClub = async () => {
+    const isValidTime = time > new Date();
+
     const isValidForm =
       !bookClub.date ||
       !bookClub.hour ||
@@ -223,7 +230,11 @@ const Page = () => {
       >
         Create
       </Button>
-      {isValidForm === false && <Warning time={5000}>{errorMessage()}</Warning>}
+      {isValidForm === false && (
+        <Warning time={5000}>
+          {errorMessage(bookClub, time, new Date())}
+        </Warning>
+      )}
       {isValidForm === true && (
         <Warning time={0}>
           <div className="flex flex-col gap-3">

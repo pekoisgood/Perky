@@ -55,7 +55,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
             {article.category}
           </Link>
           <span className="w-[5px] h-[5px] rounded-full bg-[#00000088] " />
-          <p>{getTime(article.createdAt, false)}</p>
+          <p>{getTime(new Date(article.createdAt.seconds * 1000), false)}</p>
         </div>
         <SaveCount articleId={articleId} />
         <div className="w-full h-fit mx-auto overflow-hidden rounded-2xl border-2 border-dashed border-[#245953] shadow-[#245953] shadow-[-7px_7px]">

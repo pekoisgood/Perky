@@ -166,7 +166,9 @@ const BookClubList = () => {
                   <h3 className="text-[16px] text-white font-bold">
                     {bookClub.name}
                   </h3>
-                  <p className="text-[14px]">{getTime(bookClub.time, true)}</p>
+                  <p className="text-[14px]">
+                    {getTime(new Date(bookClub.time.seconds * 1000), true)}
+                  </p>
                   <div className="flex gap-2 justify-center text-black">
                     <Link
                       href={

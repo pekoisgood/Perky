@@ -32,7 +32,7 @@ const languageIds = {
   C: 51,
 };
 
-const getExtensionLanguage = (lang: string) => {
+export const getExtensionLanguage = (lang: string) => {
   const extensionLanguages = {
     Javascript: [langs.javascript()],
     Java: [langs.java()],

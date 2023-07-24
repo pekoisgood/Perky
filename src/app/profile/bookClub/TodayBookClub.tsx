@@ -103,7 +103,7 @@ const TodayBookClub = () => {
                       {bookClub.name}
                     </p>
                     <p className="text-[12px] lg:text-[14px]">
-                      {getTime(bookClub.time, true)}
+                      {getTime(new Date(bookClub.time.seconds * 1000), true)}
                     </p>
                   </div>
                 </Link>
