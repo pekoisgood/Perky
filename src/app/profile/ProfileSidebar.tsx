@@ -44,7 +44,7 @@ const ProfileSidebar = () => {
   };
 
   return (
-    <>
+    <div className="flex flex-row lg:flex-col gap-4 w-fit mx-auto px-3 rounded-full ">
       <Link
         href="/profile"
         className={linkClass(0)}
@@ -93,7 +93,7 @@ const ProfileSidebar = () => {
         <IoSettingsOutline size={25} />
         <p className={titleClass}>Setting</p>
       </Link>
-    </>
+    </div>
   );
 };
 

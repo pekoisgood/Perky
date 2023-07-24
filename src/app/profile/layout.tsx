@@ -24,21 +24,20 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             priority={true}
             className="scale-x-flip w-[150px] lg:w-[200px] absolute bottom-[-36px] right-0 md:right-[44px] rotate-[5deg] lg:z-0"
           />
-
           <div
-            className={`flex gap-4 fixed top-[calc(100%-60px)] left-[50%] translate-x-[-50%] z-10 px-3 rounded-full
-            lg:h-[101%] lg:flex-col lg:pr-[15px] lg:pl-0 lg:pt-[25px] lg:sticky lg:top-0 lg:left-0 lg:bottom-0 lg:min-w-[200px] lg:translate-x-0 shadow-md lg:bg-white lg:rounded-none`}
+            className={`fixed top-[calc(100%-60px)] w-full z-10  shadow-md
+            lg:h-[102%] lg:w-[230px] lg:min-w-[230px] lg:pr-[15px] lg:pl-0 lg:pt-[25px] lg:sticky lg:top-0 lg:left-0 lg:bottom-0 lg:bg-white lg:rounded-none`}
           >
             <ProfileSidebar />
-            <Image
-              src={stylishManWithCap}
-              alt="stylish man with cap"
-              width={180}
-              height={500}
-              priority={true}
-              className="hidden lg:block absolute top-[calc(100%-350px)] left-[25px]"
-            />
           </div>
+          <Image
+            src={stylishManWithCap}
+            alt="stylish man with cap"
+            width={180}
+            height={500}
+            priority={true}
+            className="hidden lg:block absolute top-[calc(100%-350px)] left-[25px]"
+          />
           {children}
         </div>
       </div>

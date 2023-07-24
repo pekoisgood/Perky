@@ -34,7 +34,7 @@ const Page = () => {
 
   return (
     <div className="w-full relative mt-[20px]">
-      <div className="sticky top-[20px] left-[50%] translate-x-[-50%] w-full text-center">
+      <div className="sticky top-[20px] w-full text-center">
         <h1 className="bg-white/60 w-fit mx-auto text-[28px] font-bold tracking-[4px] rounded-full px-5 mb-[30px]">
           Article Record
         </h1>
@@ -60,7 +60,7 @@ const Page = () => {
           <ProfileArticleSkeleton />
         </div>
       ) : articleRecord.length > 0 ? (
-        <div className="columns-2 md:columns-3 gap-x-5 overflow-y-scroll pt-[10px] pb-5">
+        <div className="colomns-1 sm:columns-2 md:columns-3 gap-x-5 overflow-y-scroll pt-[10px] pb-5">
           {articleRecord.map((article) => {
             return (
               <Link
