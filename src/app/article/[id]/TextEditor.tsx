@@ -19,7 +19,8 @@ const Page = ({ article }: { article: string }) => {
   const editor = useEditor({
     editorProps: {
       attributes: {
-        class: "prose prose-md focus:outline-none p-3 rounded-lg mx-auto",
+        class:
+          "prose prose-md focus:outline-none p-3 rounded-lg mx-auto w-full max-w-[800px] break-words hyphens-auto",
       },
     },
     extensions: [

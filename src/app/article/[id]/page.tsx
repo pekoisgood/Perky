@@ -48,11 +48,9 @@ const Page = async ({ params }: { params: { id: string } }) => {
     <div className="flex w-full max-w-[800px] mx-auto">
       <SaveButton count={article.savedCount ?? 0} articleId={articleId} />
       <div className="grow rounded-lg flex flex-col gap-2 items-center justify-center mx-auto py-10 relative z-10">
-        <div className="w-full">
-          <h1 className="font-bold text-[24px] sm:text-[30px] w-fit mx-auto tracking-[1px] indent-[1px] text-center">
-            {article.title}
-          </h1>
-        </div>
+        <h1 className="font-bold text-[24px] sm:text-[30px] w-full mx-auto tracking-[1px] indent-[1px] text-center break-words hyphens-auto">
+          {article.title}
+        </h1>
         <div className="flex gap-3 items-center text-[13px] sm:text-[16px] text-[#245953]">
           <p>{article.authorName}</p>
           <span className="w-[5px] h-[5px] rounded-full bg-[#00000088] " />
