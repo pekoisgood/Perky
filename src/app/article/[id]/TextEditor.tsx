@@ -42,7 +42,7 @@ const Page = ({ article }: { article: string }) => {
 
   return (
     <div className="mx-auto flex flex-col min-h-[200px] w-full">
-      <EditorContent editor={editor} className="prose w-fit mx-auto" />
+      <EditorContent editor={editor} className="prose w-full" />
     </div>
   );
 };
