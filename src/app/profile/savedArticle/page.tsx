@@ -74,14 +74,15 @@ const Page = () => {
   }, [user.id]);
 
   return (
-    <div className="w-full mt-[20px] relative overflow-y-scroll">
-      <h1
-        className={`sticky top-[20px] left-[50%] translate-x-[-50%] bg-white/60 w-fit text-[28px] font-bold tracking-[4px] rounded-full px-5 mb-[30px]
-        lg:left-[calc(50%-200px)] lg:right-0 lg:translate-x-[50%]
-      `}
-      >
-        Saved Articles
-      </h1>
+    <div className="w-full mt-[20px] px-[10px] sm:px-[15px] relative overflow-y-scroll">
+      <div className="sticky top-[20px] w-full text-center">
+        <h1
+          className={` bg-white/60 w-fit mx-auto text-[28px] font-bold tracking-[4px] rounded-full px-5 mb-[30px]`}
+        >
+          Saved Articles
+        </h1>
+      </div>
+
       {articles === null ? (
         <div className="columns-2 md:columns-3 gap-2 w-full px-3 mt-[50px]">
           <ProfileArticleSkeleton />
@@ -89,7 +90,7 @@ const Page = () => {
           <ProfileArticleSkeleton />
         </div>
       ) : articles.length > 0 ? (
-        <div className="columns-2 md:columns-3 gap-2 w-full px-3 mt-[50px]">
+        <div className="columns-1 sm:columns-2 md:columns-3 gap-2 w-full px-3 mt-[50px]">
           {articles.map((article: SavedArticle, index: number) => {
             return (
               <motion.div

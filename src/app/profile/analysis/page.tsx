@@ -8,7 +8,7 @@ const Page = () => {
   const records = useAppSelector((state) => state.analysis.value);
 
   return (
-    <div className="mt-[20px] w-full mx-auto relative">
+    <div className="mt-[20px] px-[10px] sm:px-[15px] w-full mx-auto relative">
       <h1
         className={`sticky top-[20px] right-[50%] left-[50%] translate-x-[-50%] bg-white/60 w-fit text-[28px] font-bold tracking-[4px] rounded-full px-5 mb-[30px]
        lg:left-[50%] lg:translate-x-0
