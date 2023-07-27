@@ -1,11 +1,10 @@
 "use client";
 
 import Button from "@/components/Button/Button";
-import { redirect } from "next/navigation";
 import React from "react";
 import computerMan from "@/assets/image/people/computerman.svg";
-import mastacheMan from "@/assets/image/people/mastacheMan.svg";
 import Image from "next/image";
+import Link from "next/link";
 
 const NotFound = () => {
   return (
@@ -13,7 +12,9 @@ const NotFound = () => {
       <h2 className="font-bold text-[20px]">
         Oops... Could not find requested page.
       </h2>
-      <Button handleOnClick={() => redirect("/")}>Home</Button>
+      <Button>
+        <Link href="/">Home</Link>
+      </Button>
       <Image
         src={computerMan}
         alt="man holding computer"
