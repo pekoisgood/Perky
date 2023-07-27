@@ -1,12 +1,13 @@
 "use client";
+import React, { useState, useEffect } from "react";
+import { useParams } from "next/navigation";
 
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import React, { useState, useContext, useEffect } from "react";
 import { setDoc, doc, getDoc } from "firebase/firestore";
-import { db } from "@/utils/firebase";
-import { AuthContext } from "@/context/AuthContext";
-import { useParams } from "next/navigation";
+
+import { db } from "@/utils/firebase/firebase";
+import { useAppSelector } from "@/redux/hooks";
 
 const Note = ({
   text,
@@ -19,8 +20,10 @@ const Note = ({
   isPreview: boolean;
   setIsPreview: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const { user } = useContext(AuthContext);
   const [processing, setProcessing] = useState(false);
+
+  const user = useAppSelector((state) => state.auth.value);
+
   const param = useParams();
   const bookClubId = param.id;
 

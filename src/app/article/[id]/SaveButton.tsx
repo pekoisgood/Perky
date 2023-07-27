@@ -1,6 +1,8 @@
 "use client";
-import { AuthContext } from "@/context/AuthContext";
-import { db } from "@/utils/firebase";
+
+import React, { useEffect, useState } from "react";
+import Link from "next/link";
+
 import {
   doc,
   serverTimestamp,
@@ -9,11 +11,12 @@ import {
   updateDoc,
   deleteDoc,
 } from "firebase/firestore";
-import React, { useContext, useEffect, useState } from "react";
 import { BsBookmark, BsBookmarkHeartFill } from "react-icons/bs";
-import Warning from "../../../components/warning/Warning";
-import Link from "next/link";
-import Button from "@/components/button/Button";
+
+import Warning from "@/components/Warning/Warning";
+import Button from "@/components/Button/Button";
+import { db } from "@/utils/firebase/firebase";
+import { useAppSelector } from "@/redux/hooks";
 
 type Prop = {
   articleId: string;
@@ -21,13 +24,14 @@ type Prop = {
 };
 
 const SaveButton = ({ articleId, count }: Prop) => {
-  const { user, isLogin } = useContext(AuthContext);
   const [isSaved, setIsSaved] = useState<boolean | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [showWarning, setShowWarning] = useState(false);
 
+  const user = useAppSelector((state) => state.auth.value);
+
   const handleSaveArticle = async () => {
-    if (!isLogin) {
+    if (!user.isLogin) {
       setShowWarning(true);
       return;
     }
@@ -36,7 +40,6 @@ const SaveButton = ({ articleId, count }: Prop) => {
 
     if (isSaved && articleId) {
       await deleteDoc(doc(db, "users", user.id, "savedArticles", articleId));
-      console.log("ccc", count);
 
       await updateDoc(articleSavedCountRef, {
         savedCount: count,
@@ -57,17 +60,16 @@ const SaveButton = ({ articleId, count }: Prop) => {
   };
 
   useEffect(() => {
-    if (isLogin === null) {
+    if (user.isLogin === null) {
       setIsLoading(true);
     } else {
       setIsLoading(false);
     }
-  }, [isLogin]);
+  }, [user.isLogin]);
 
   useEffect(() => {
     const checkSavedArticle = async () => {
       const getArticle = await getDoc(
-        // user.id 可能還沒拿到...
         doc(db, "users", user.id, "savedArticles", articleId)
       );
       const isSaved = getArticle.data();
@@ -77,8 +79,6 @@ const SaveButton = ({ articleId, count }: Prop) => {
         setIsSaved(false);
       }
     };
-
-    console.log(user.id);
 
     if (isLoading || !user.id) return;
 

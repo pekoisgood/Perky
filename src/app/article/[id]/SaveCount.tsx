@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { db } from "@/utils/firebase";
+
 import { DocumentData, doc, onSnapshot } from "firebase/firestore";
+import { db } from "@/utils/firebase/firebase";
 
 type Props = {
   articleId: string;

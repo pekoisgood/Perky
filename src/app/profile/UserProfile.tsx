@@ -1,12 +1,13 @@
 "use client";
 
-import { AuthContext } from "@/context/AuthContext";
 import Image from "next/image";
-import { useContext } from "react";
+
 import { PiFinnTheHumanFill } from "react-icons/pi";
 
+import { useAppSelector } from "@/redux/hooks";
+
 const UserProfile = () => {
-  const { user } = useContext(AuthContext);
+  const user = useAppSelector((state) => state.auth.value);
 
   if (!user) return <></>;
   return (

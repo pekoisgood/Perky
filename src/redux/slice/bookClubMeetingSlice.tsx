@@ -1,15 +1,10 @@
 "use client";
 
 import { createSlice } from "@reduxjs/toolkit";
-
-type GuestInfo = {
-  name: string;
-  id: string;
-  avatar: string;
-};
+import { Guest } from "@/utils/types/types";
 
 type InitialState = {
-  value: GuestInfo[];
+  value: Guest[];
 };
 
 const initialState = {

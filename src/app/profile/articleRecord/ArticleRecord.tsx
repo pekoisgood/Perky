@@ -1,14 +1,15 @@
 "use client";
 
-import { useAppSelector } from "@/redux/hooks";
-import React, { useEffect, useContext } from "react";
-import { useAppDispatch } from "@/redux/hooks";
-import { Articles, setRecord } from "@/redux/slice/articleRecordSlice";
-import { AuthContext } from "@/context/AuthContext";
+import React, { useEffect } from "react";
 import Link from "next/link";
-import Button from "@/components/button/Button";
-import DashboardArticleSkeleton from "@/components/skeleton/DashboardArticleSkeleton";
+
 import { motion } from "framer-motion";
+
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { setRecord } from "@/redux/slice/articleRecordSlice";
+import Button from "@/components/Button/Button";
+import DashboardArticleSkeleton from "@/components/Skeleton/DashboardArticleSkeleton";
+import { Article } from "@/utils/types/types";
 
 const categoryClass = `w-fit bg-[#FFD89C] text-bold font-mono py-1 px-3 text-black
 shadow-[-3px_3px] shadow-black rounded-2xl border-2 border-black
@@ -33,19 +34,15 @@ export const easeAppearContainer = {
 
 const ArticleRecord = () => {
   const articleRecords = useAppSelector((state) => state.articleRecord.value);
-  const { user } = useContext(AuthContext);
 
+  const user = useAppSelector((state) => state.auth.value);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     const getArticleRecord = async () => {
-      console.log("get articles record!!", user.id);
-
       if (user.id) {
-        console.log("user id ok and get articles!!");
-
         const req = await fetch(`/api/articleRecord?id=${user.id}`);
-        const myArticles: Articles[] = await req.json();
+        const myArticles: Article[] = await req.json();
         if (!myArticles) {
           return;
         }

@@ -1,24 +1,18 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { collection, getDocs, orderBy, query, limit } from "firebase/firestore";
-import { db } from "@/utils/firebase";
-import Link from "next/link";
-import { motion } from "framer-motion";
-import Image from "next/image";
-import ArticleSnippet from "./ArticleSnippet";
-import monster from "../assets/image/people/monster.svg";
-import beanieMan from "../assets/image/people/guy-with-beanie.svg";
-import TrendingArticleSkeleton from "@/components/skeleton/TrendingArticleSkeleton";
 
-interface TrendingArticle {
-  title: string;
-  authorName: string;
-  savedCount: number;
-  id: string;
-  category: string;
-  image: string;
-  content: string;
-}
+import React, { useEffect, useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+
+import { collection, getDocs, orderBy, query, limit } from "firebase/firestore";
+import { motion } from "framer-motion";
+
+import { db } from "@/utils/firebase/firebase";
+import TrendingArticleSkeleton from "@/components/Skeleton/TrendingArticleSkeleton";
+import ArticleSnippet from "@/components/Article/ArticleSnippet";
+import monster from "@/assets/image/people/monster.svg";
+import beanieMan from "@/assets/image/people/guy-with-beanie.svg";
+import { TrendingArticle } from "@/utils/types/types";
 
 const container = {
   hidden: { opacity: 0 },
@@ -38,7 +32,7 @@ const TrendingArticles = () => {
 
   useEffect(() => {
     const getArticle = async () => {
-      let data: TrendingArticle[] = [];
+      const data: TrendingArticle[] = [];
       const q = query(
         collection(db, "articles"),
         orderBy("savedCount", "desc"),

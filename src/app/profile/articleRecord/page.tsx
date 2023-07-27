@@ -1,25 +1,28 @@
 "use client";
 
-import { AuthContext } from "@/context/AuthContext";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useContext, useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import ArticleSnippet from "@/app/ArticleSnippet";
 import Image from "next/image";
-import { Articles, setRecord } from "@/redux/slice/articleRecordSlice";
-import { useAppDispatch } from "@/redux/hooks";
-import ProfileArticleSkeleton from "@/components/skeleton/ProfileArticleSkeleton";
+
+import { motion } from "framer-motion";
+
+import { setRecord } from "@/redux/slice/articleRecordSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import ProfileArticleSkeleton from "@/components/Skeleton/ProfileArticleSkeleton";
+import ArticleSnippet from "@/components/Article/ArticleSnippet";
+import { Article } from "@/utils/types/types";
 
 const Page = () => {
-  const { user } = useContext(AuthContext);
-  const [articleRecord, setArticleRecord] = useState<Articles[] | null>(null);
+  const [articleRecord, setArticleRecord] = useState<Article[] | null>(null);
+
+  const user = useAppSelector((state) => state.auth.value);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     const getArticleRecord = async () => {
       if (user.id) {
         const req = await fetch(`/api/articleRecord?id=${user.id}`);
-        const myArticles: Articles[] = await req.json();
+        const myArticles: Article[] = await req.json();
         if (!myArticles) {
           setArticleRecord([]);
           return;

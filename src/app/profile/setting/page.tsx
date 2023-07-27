@@ -1,22 +1,26 @@
 "use client";
 
-import { AuthContext } from "@/context/AuthContext";
+import React, { useState } from "react";
 import Image from "next/image";
-import React, { useContext, useState } from "react";
+
+import { doc, updateDoc } from "firebase/firestore";
 import { PiFinnTheHumanFill } from "react-icons/pi";
 import { BsPencilSquare } from "react-icons/bs";
-import Save from "@/components/button/Save";
-import { compressImage } from "@/utils/compressImage";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { db, storage } from "@/utils/firebase";
-import { doc, updateDoc } from "firebase/firestore";
-import { User } from "firebase/auth";
+
+import Save from "@/components/Button/Save";
+import { getDownloadURLFromFireStore } from "@/utils/compressImage/compressImage";
+import { db } from "@/utils/firebase/firebase";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { setUser } from "@/redux/slice/authSlice";
 
 const Page = () => {
-  const { user, setUser } = useContext(AuthContext);
+  const user = useAppSelector((state) => state.auth.value);
+
   const [isModifying, setIsModifying] = useState(false);
   const [image, setImage] = useState<File | null>(null);
   const [name, setName] = useState(user.name);
+
+  const dispatch = useAppDispatch();
 
   const inputClass = `outline-none grow px-2 w-[180px] ${
     isModifying
@@ -26,48 +30,18 @@ const Page = () => {
 
   const handleSave = async () => {
     setIsModifying(false);
-    const file = image;
     const userRef = doc(db, "users", user.id);
 
-    if (file) {
-      // We'll store the files in this data transfer object
-      const dataTransfer = new DataTransfer();
+    if (image) {
+      const imageUrl = await getDownloadURLFromFireStore(image, user.id);
 
-      if (!file.type.startsWith("image")) {
-        // TODO: not an image
-      }
-
-      const compressedFile: any = await compressImage(file, {
-        quality: 0.5,
-        type: "image/png",
-      });
-      dataTransfer.items.add(compressedFile);
-
-      // TODO: store the file
-      const compressedImage = dataTransfer.files[0];
-
-      const storageRef = ref(storage, `${user.id}-${compressedImage.name}`);
-      await uploadBytes(storageRef, compressedImage);
-      const pathReference = ref(storage, `${user.id}-${compressedImage.name}`);
-
-      const imageUrl = await getDownloadURL(pathReference).then(
-        (downloadURL: string) => {
-          return downloadURL;
-        }
-      );
       try {
         await updateDoc(userRef, {
           avatar: imageUrl,
         });
-
-        setUser((prev: User) => {
-          return {
-            ...prev,
-            avatar: imageUrl,
-          };
-        });
+        dispatch(setUser({ avatar: imageUrl }));
       } catch (error) {
-        console.log(error);
+        return;
       }
     }
 
@@ -77,14 +51,9 @@ const Page = () => {
           name: name,
         });
 
-        setUser((prev: User) => {
-          return {
-            ...prev,
-            name: name,
-          };
-        });
+        dispatch(setUser({ name }));
       } catch (error) {
-        console.log(error);
+        return;
       }
     }
   };

@@ -1,9 +1,10 @@
 "use client";
 
-import Button from "@/components/button/Button";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import spookyMan from "../assets/image/people/spooky-man.svg";
+
+import spookyMan from "@/assets/image/people/spooky-man.svg";
+import Button from "@/components/Button/Button";
 
 export default function Error({ reset }: { reset: () => void }) {
   const router = useRouter();

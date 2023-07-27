@@ -1,9 +1,11 @@
 "use client";
 
-import { BookClub, db } from "@/utils/firebase";
+import { useEffect, useState } from "react";
+import Link from "next/link";
+
+import { db } from "@/utils/firebase/firebase";
 import {
   DocumentData,
-  Timestamp,
   and,
   collection,
   getDocs,
@@ -12,32 +14,25 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "@/context/AuthContext";
-import Link from "next/link";
-import Button from "@/components/button/Button";
-import BookClubSkeleton from "@/components/skeleton/BookClubSkeleton";
 import { motion } from "framer-motion";
+
+import Button from "@/components/Button/Button";
+import BookClubSkeleton from "@/components/Skeleton/BookClubSkeleton";
+import { BookClubInfo } from "@/utils/types/types";
+import { useAppSelector } from "@/redux/hooks";
+import { getTime } from "@/utils/date/dateFc";
+
 import { easeAppearContainer } from "../articleRecord/ArticleRecord";
 
 const dashBoardTitleClass =
   "font-medium text-[20px] tracking-[2px] mb-[20px] text-center lg:text-start";
 
 const TodayBookClub = () => {
-  const { user } = useContext(AuthContext);
-  const [todayBookClub, setTodayBookClub] = useState<BookClub[] | null>(null);
+  const [todayBookClub, setTodayBookClub] = useState<BookClubInfo[] | null>(
+    null
+  );
 
-  const getTime = (time: Timestamp) => {
-    const date = new Date(time.seconds * 1000);
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-    const hour = date.getHours();
-    const minute = date.getMinutes();
-
-    return `${date.getFullYear()}/${month < 10 ? `0${month}` : month}/${
-      day < 10 ? `0${day}` : day
-    } ${hour < 10 ? `0${hour}` : hour}:${minute < 10 ? `0${minute}` : minute}`;
-  };
+  const user = useAppSelector((state) => state.auth.value);
 
   useEffect(() => {
     const getBookClubList = async () => {
@@ -67,14 +62,11 @@ const TodayBookClub = () => {
         return;
       }
 
-      const bookClubs: BookClub[] = [];
-      console.log(result);
+      const bookClubs: BookClubInfo[] = [];
 
       result.forEach((doc: DocumentData) => {
-        console.log("result: ", doc.data());
         bookClubs.push({ id: doc.id, ...doc.data() });
       });
-      console.log(bookClubs);
 
       setTodayBookClub(bookClubs);
     };
@@ -111,7 +103,7 @@ const TodayBookClub = () => {
                       {bookClub.name}
                     </p>
                     <p className="text-[12px] lg:text-[14px]">
-                      {getTime(bookClub.time)}
+                      {getTime(new Date(bookClub.time.seconds * 1000), true)}
                     </p>
                   </div>
                 </Link>

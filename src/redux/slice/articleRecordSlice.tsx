@@ -1,23 +1,10 @@
 "use client";
 
 import { createSlice } from "@reduxjs/toolkit";
-import { Timestamp } from "firebase/firestore";
-
-export type Articles = {
-  id: string;
-  authorName: string;
-  category: string;
-  authorUserId: string;
-  content: string;
-  createdAt: Timestamp | null;
-  tags: string[];
-  title: string;
-  image: string;
-  starCounts?: number;
-};
+import { Article } from "@/utils/types/types";
 
 type InitialState = {
-  value: Articles[] | null;
+  value: Article[] | null;
 };
 
 const initialState = {

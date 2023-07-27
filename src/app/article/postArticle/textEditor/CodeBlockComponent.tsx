@@ -1,5 +1,5 @@
-import { Extension, NodeViewContent, NodeViewWrapper } from "@tiptap/react";
 import React from "react";
+import { Extension, NodeViewContent, NodeViewWrapper } from "@tiptap/react";
 
 interface Prop {
   node: {
@@ -7,7 +7,7 @@ interface Prop {
       language: string;
     };
   };
-  updateAttributes: any;
+  updateAttributes: ({ language }: { language: string }) => void;
   extension: Extension;
 }
 

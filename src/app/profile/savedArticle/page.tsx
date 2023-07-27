@@ -1,5 +1,8 @@
 "use client";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+
 import {
   DocumentData,
   collection,
@@ -9,27 +12,19 @@ import {
   orderBy,
   query,
 } from "firebase/firestore";
-import { db } from "@/utils/firebase";
-import Link from "next/link";
-import { AuthContext } from "@/context/AuthContext";
 import { motion } from "framer-motion";
-import ArticleSnippet from "@/app/ArticleSnippet";
-import Image from "next/image";
-import Button from "@/components/button/Button";
-import ProfileArticleSkeleton from "@/components/skeleton/ProfileArticleSkeleton";
 
-export type SavedArticle = {
-  title: string;
-  id: string;
-  authorName: string;
-  content: string;
-  image: string;
-  category: string;
-};
+import ArticleSnippet from "@/components/Article/ArticleSnippet";
+import Button from "@/components/Button/Button";
+import ProfileArticleSkeleton from "@/components/Skeleton/ProfileArticleSkeleton";
+import { db } from "@/utils/firebase/firebase";
+import { SavedArticle } from "@/utils/types/types";
+import { useAppSelector } from "@/redux/hooks";
 
 const Page = () => {
-  const { user } = useContext(AuthContext);
   const [articles, setArticles] = useState<SavedArticle[] | null>(null);
+
+  const user = useAppSelector((state) => state.auth.value);
 
   useEffect(() => {
     const getArticle = async () => {
@@ -44,7 +39,6 @@ const Page = () => {
         articleIds.push(doc.id);
       });
 
-      console.log(articleIds.length);
       if (articleIds.length === 0) {
         setArticles([]);
         return;
@@ -54,7 +48,6 @@ const Page = () => {
         const res: DocumentData = await getDoc(
           doc(db, "articles", articleIds[i])
         );
-        console.log(i, articleIds[i], res.data());
 
         savedArticles.push({
           id: res.id,
@@ -131,9 +124,9 @@ const Page = () => {
                   <p className="font-semibold text-[18px] text-white tracking-[1px]">
                     {article.title}
                   </p>
-                  <p className="text-[#eee] pl-1 text-[12px]">
+                  <div className="text-[#eee] pl-1 text-[12px]">
                     <ArticleSnippet article={article.content} />
-                  </p>
+                  </div>
                 </Link>
               </motion.div>
             );

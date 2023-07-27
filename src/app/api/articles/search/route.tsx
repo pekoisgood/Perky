@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { db } from "@/utils/firebase";
+import { db } from "@/utils/firebase/firebase";
 import {
   collection,
   query,
@@ -53,7 +53,7 @@ export async function GET(req: Request) {
       (article) =>
         article.title.includes(search.toLowerCase()) ||
         article.content.includes(search.toLowerCase()) ||
-        article.userName.includes(search.toLowerCase())
+        article.authorName.includes(search.toLowerCase())
     );
   } else {
     return;

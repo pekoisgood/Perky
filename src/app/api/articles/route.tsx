@@ -1,3 +1,4 @@
+import { NextResponse } from "next/server";
 import {
   DocumentData,
   collection,
@@ -10,8 +11,7 @@ import {
   doc,
   getCountFromServer,
 } from "firebase/firestore";
-import { db } from "@/utils/firebase";
-import { NextResponse } from "next/server";
+import { db } from "@/utils/firebase/firebase";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
@@ -19,7 +19,7 @@ export async function GET(req: Request) {
   const articleRef = collection(db, "articles");
   const articleCollectionSnapShot = await getCountFromServer(articleRef);
 
-  let data: DocumentData[] = [];
+  const data: DocumentData[] = [];
 
   if (lastId === "0") {
     const first = query(articleRef, orderBy("createdAt", "desc"), limit(10));

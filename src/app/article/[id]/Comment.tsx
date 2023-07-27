@@ -1,5 +1,8 @@
 "use client";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+
 import {
   collection,
   serverTimestamp,
@@ -9,38 +12,29 @@ import {
   getDocs,
   onSnapshot,
   DocumentData,
-  Timestamp,
 } from "firebase/firestore";
-import { db } from "@/utils/firebase";
-import { AuthContext } from "@/context/AuthContext";
-import Button from "@/components/button/Button";
-import Image from "next/image";
 import { HiPaperAirplane } from "react-icons/hi";
 import { PiFinnTheHumanFill } from "react-icons/pi";
-import { timeAgo } from "@/utils/func";
-import Warning from "@/components/warning/Warning";
-import Link from "next/link";
 
-type ArticleComment = {
-  comment: string;
-  createdAt: Timestamp;
-  userName: string;
-  userId: string;
-  userAvatar: string;
-};
+import Button from "@/components/Button/Button";
+import Warning from "@/components/Warning/Warning";
+import { timeAgo } from "@/utils/date/dateFc";
+import { db } from "@/utils/firebase/firebase";
+import { ArticleComment } from "@/utils/types/types";
+import { useAppSelector } from "@/redux/hooks";
 
 const Comment = ({ articleId }: { articleId: string }) => {
-  const { user, isLogin } = useContext(AuthContext);
   const [newComment, setNewComment] = useState<string>("");
   const [comments, setComments] = useState<ArticleComment[]>([]);
   const [showNotLoginWarning, setShowNotLoginWarning] = useState(false);
 
+  const user = useAppSelector((state) => state.auth.value);
   const CommentRef = collection(db, "articles", articleId, "comments");
 
   const handleSubmitComment = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!newComment) return;
-    if (!isLogin) {
+    if (!user.isLogin) {
       setShowNotLoginWarning(true);
       return;
     }
@@ -144,7 +138,10 @@ const Comment = ({ articleId }: { articleId: string }) => {
                       {comment.userName}
                       <span className="text-[8px] sm:text-[10px] ml-2 font-normal">
                         {comment.createdAt ?? false
-                          ? timeAgo(new Date(comment.createdAt.seconds * 1000))
+                          ? timeAgo(
+                              new Date(comment.createdAt.seconds * 1000),
+                              new Date()
+                            )
                           : "now"}
                       </span>
                     </p>

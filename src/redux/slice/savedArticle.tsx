@@ -1,7 +1,7 @@
 "use client";
 
 import { createSlice } from "@reduxjs/toolkit";
-import { SavedArticle } from "@/app/profile/savedArticle/page";
+import { SavedArticle } from "@/utils/types/types";
 
 type InitialState = {
   value: SavedArticle[] | null;

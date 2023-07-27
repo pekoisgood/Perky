@@ -1,9 +1,11 @@
 "use client";
 
-import { useAppSelector } from "../../../redux/hooks";
-import Calender from "../../../components/date/Calender";
-import BookClubList from "./BookClubList";
 import Link from "next/link";
+
+import { useAppSelector } from "@/redux/hooks";
+import Calender from "@/components/Date/Calender";
+
+import BookClubList from "./BookClubList";
 
 const Page = () => {
   const date = useAppSelector((state) => state.calender.value);

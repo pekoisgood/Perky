@@ -1,14 +1,6 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
-import TextEditor from "./textEditor/TextEditor";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import {
-  handlePostArticle,
-  handleUpdateArticle,
-} from "@/redux/slice/postArticleSlice";
-import { storage } from "@/utils/firebase";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { AuthContext } from "@/context/AuthContext";
-import { db } from "@/utils/firebase";
+import React, { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+
 import {
   DocumentData,
   collection,
@@ -18,11 +10,18 @@ import {
   where,
   getDocs,
 } from "firebase/firestore";
-import Warning from "@/components/warning/Warning";
 import { PiWarningFill } from "react-icons/pi";
-import Link from "next/link";
-import Button from "@/components/button/Button";
-import { compressImage } from "@/utils/compressImage";
+
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import {
+  handlePostArticle,
+  handleUpdateArticle,
+} from "@/redux/slice/postArticleSlice";
+import { db } from "@/utils/firebase/firebase";
+import Warning from "@/components/Warning/Warning";
+import Button from "@/components/Button/Button";
+import { getDownloadURLFromFireStore } from "@/utils/compressImage/compressImage";
+import TextEditor from "./textEditor/TextEditor";
 
 const postStatus = {
   PENDING: "Pending",
@@ -35,12 +34,12 @@ border-2 border-black rounded-2xl shadow-black shadow-[3px_3px]
 hover:cursor-pointer hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-none duration-100`;
 
 const Form = ({ image }: { image: File | null }) => {
-  const { user } = useContext(AuthContext);
   const [isProcessing, setIsProcessing] = useState<string | null>(null);
   const tagRef = useRef<HTMLInputElement | null>(null);
 
   const dispatch = useAppDispatch();
   const postArticle = useAppSelector((state) => state.postArticle.value);
+  const user = useAppSelector((state) => state.auth.value);
 
   const handleTag = (action: string, tag?: string) => {
     if (action === "ADD") {
@@ -59,26 +58,12 @@ const Form = ({ image }: { image: File | null }) => {
   };
 
   const postArticleErrorMessage = () => {
-    const contentMessage = "Content can't be empty.";
-    const titleMessage = "Title can't be empty.";
-    const imageMessage = "Cover image can't be empty.";
-    const tagMessage = "Tag can't be empty.";
-    const messages = [];
-
-    if (postArticle.title === "") {
-      messages.push(titleMessage);
-    }
-
-    if (!image) {
-      messages.push(imageMessage);
-    }
-    if (postArticle.content === "" || postArticle.content === "<p></p>") {
-      messages.push(contentMessage);
-    }
-
-    if (postArticle.tags.length === 0) {
-      messages.push(tagMessage);
-    }
+    const messages = [
+      !postArticle.title && "Title can't be empty",
+      (!postArticle.content || postArticle.content === "<p></p>") &&
+        "Content can't be empty",
+      !image && "Cover image can't be empty",
+    ].filter(Boolean);
 
     return (
       <ul className="flex flex-col gap-2">
@@ -107,33 +92,7 @@ const Form = ({ image }: { image: File | null }) => {
       return;
     }
     if (image && user.id && user.name) {
-      const file = image;
-
-      // We'll store the files in this data transfer object
-      const dataTransfer = new DataTransfer();
-
-      if (!file.type.startsWith("image")) {
-        // TODO: not an image
-      }
-
-      const compressedFile: any = await compressImage(file, {
-        quality: 0.3,
-        type: "image/jpeg",
-      });
-      dataTransfer.items.add(compressedFile);
-
-      // TODO: store the file
-      const compressedImage = dataTransfer.files[0];
-
-      const storageRef = ref(storage, `${user.id}-${compressedImage.name}`);
-      await uploadBytes(storageRef, compressedImage);
-      const pathReference = ref(storage, `${user.id}-${compressedImage.name}`);
-
-      const imageUrl = await getDownloadURL(pathReference).then(
-        (downloadURL: string) => {
-          return downloadURL;
-        }
-      );
+      const imageUrl = await getDownloadURLFromFireStore(image, user.id);
 
       const articleRef = collection(db, "articles");
       await addDoc(articleRef, {
@@ -145,19 +104,11 @@ const Form = ({ image }: { image: File | null }) => {
         category: postArticle.category,
         tags: postArticle.tags,
         image: imageUrl,
-        userId: user.id,
         savedCount: 0,
         userName: user.name,
       });
 
-      console.log("post article...");
-
       dispatch(handlePostArticle());
-      // setTimeout(() => {
-      //   console.log("showImage!!");
-
-      //   dispatch(handleShowImage());
-      // }, 20000);
       setIsProcessing(postStatus.SUCCESS);
 
       for (let i = 0; i < postArticle.tags.length; i++) {

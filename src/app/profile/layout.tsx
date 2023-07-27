@@ -1,9 +1,11 @@
 import React from "react";
-import ProfileSidebar from "./ProfileSidebar";
-import Auth from "./Auth";
-import stylishManWithCap from "../../assets/image/people/stylish-man-with-cap.svg";
-import sittingWomanHoldingLegs from "../../assets/image/people/woman-sitting-holding-both-legs.svg";
 import Image from "next/image";
+
+import stylishManWithCap from "@/assets/image/people/stylish-man-with-cap.svg";
+import sittingWomanHoldingLegs from "@/assets/image/people/woman-sitting-holding-both-legs.svg";
+import Auth from "@/components/Auth/Auth";
+
+import ProfileSidebar from "./ProfileSidebar";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -38,11 +40,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
               className="hidden lg:block absolute top-[calc(100%-350px)] left-[25px] z-0"
             />
           </div>
-
-          {children}
+          <Auth isAuthNeeded={true}>{children}</Auth>
         </div>
       </div>
-      <Auth />
     </div>
   );
 };

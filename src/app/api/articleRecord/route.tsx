@@ -1,3 +1,4 @@
+import { NextResponse } from "next/server";
 import {
   DocumentData,
   collection,
@@ -6,8 +7,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { db } from "@/utils/firebase";
-import { NextResponse } from "next/server";
+import { db } from "@/utils/firebase/firebase";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
@@ -20,7 +20,7 @@ export async function GET(req: Request) {
     orderBy("createdAt", "desc")
   );
   const result = await getDocs(queryArticles);
-  let data: DocumentData[] = [];
+  const data: DocumentData[] = [];
 
   result.forEach((doc) => {
     data.push({ id: doc.id, ...doc.data() });

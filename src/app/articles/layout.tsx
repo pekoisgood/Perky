@@ -1,7 +1,8 @@
 import React from "react";
 import Link from "next/link";
-import sittingBoy from "../../assets/image/people/boy-sitting-on-legs.svg";
 import Image from "next/image";
+
+import sittingBoy from "../../assets/image/people/boy-sitting-on-legs.svg";
 
 const categories = [
   "Android",

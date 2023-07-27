@@ -1,8 +1,9 @@
 "use client";
 
-import { db } from "@/utils/firebase";
+import { useEffect, useState } from "react";
+import Link from "next/link";
+
 import {
-  Timestamp,
   and,
   collection,
   doc,
@@ -13,26 +14,14 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { useContext, useEffect, useState } from "react";
-import Link from "next/link";
-import { useAppSelector } from "@/redux/hooks";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
-import { AuthContext } from "@/context/AuthContext";
 import { motion } from "framer-motion";
-import BookClubSkeleton from "@/components/skeleton/BookClubSkeleton";
 
-type BookClubItem = {
-  id: string;
-  roomId: string;
-  name: string;
-  time: Timestamp;
-  createdAt: Timestamp;
-};
-
-type Note = {
-  id: string;
-  note: string;
-};
+import { db } from "@/utils/firebase/firebase";
+import { BookClubInfo, Note } from "@/utils/types/types";
+import BookClubSkeleton from "@/components/Skeleton/BookClubSkeleton";
+import { useAppSelector } from "@/redux/hooks";
+import { getTime } from "@/utils/date/dateFc";
 
 const container = {
   hidden: {
@@ -66,11 +55,12 @@ const child = {
 };
 
 const BookClubList = () => {
-  const { user } = useContext(AuthContext);
-  const date = useAppSelector((state) => state.calender.value);
-  const [bookClubs, setBookClubs] = useState<BookClubItem[] | null>(null);
+  const [bookClubs, setBookClubs] = useState<BookClubInfo[] | null>(null);
   const [isPreviewNote, setIsPreviewNote] = useState<boolean>(false);
   const [note, setNote] = useState<Note | null>(null);
+
+  const user = useAppSelector((state) => state.auth.value);
+  const date = useAppSelector((state) => state.calender.value);
 
   const getNote = async (bookClubId: string) => {
     setIsPreviewNote(true);
@@ -89,18 +79,6 @@ const BookClubList = () => {
     }
 
     setNote({ id: bookClubId, note: note.note });
-  };
-
-  const getTime = (time: Timestamp) => {
-    const date = new Date(time.seconds * 1000);
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-    const hour = date.getHours();
-    const minute = date.getMinutes();
-
-    return `${date.getFullYear()}/${month < 10 ? `0${month}` : month}/${
-      day < 10 ? `0${day}` : day
-    } ${hour < 10 ? `0${hour}` : hour}:${minute < 10 ? `0${minute}` : minute}`;
   };
 
   useEffect(() => {
@@ -144,7 +122,7 @@ const BookClubList = () => {
         setBookClubs([]);
         return;
       }
-      const bookClubs: BookClubItem[] = [];
+      const bookClubs: BookClubInfo[] = [];
 
       result.forEach((doc) => {
         bookClubs.push({
@@ -187,7 +165,9 @@ const BookClubList = () => {
                   <h3 className="text-[16px] text-white font-bold">
                     {bookClub.name}
                   </h3>
-                  <p className="text-[14px]">{getTime(bookClub.time)}</p>
+                  <p className="text-[14px]">
+                    {getTime(new Date(bookClub.time.seconds * 1000), true)}
+                  </p>
                   <div className="flex gap-2 justify-center text-black">
                     <Link
                       href={

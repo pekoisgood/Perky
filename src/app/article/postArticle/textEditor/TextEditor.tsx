@@ -1,14 +1,13 @@
 "use client";
 
-import { EditorContent, useEditor, ReactNodeViewRenderer } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
 import React, { useEffect } from "react";
-import { MenuBar } from "./MenuBar";
+
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { handleUpdateArticle } from "@/redux/slice/postArticleSlice";
 import TextStyle from "@tiptap/extension-text-style";
 import { Color } from "@tiptap/extension-color";
-
+import { EditorContent, useEditor, ReactNodeViewRenderer } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import css from "highlight.js/lib/languages/css";
 import js from "highlight.js/lib/languages/javascript";
@@ -18,6 +17,7 @@ import { lowlight } from "lowlight";
 import "./style.css";
 
 import CodeBlockComponent from "./CodeBlockComponent";
+import { MenuBar } from "./MenuBar";
 
 lowlight.registerLanguage("html", html);
 lowlight.registerLanguage("css", css);

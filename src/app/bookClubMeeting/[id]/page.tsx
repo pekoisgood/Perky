@@ -1,12 +1,13 @@
 "use client";
 
-import Video from "./Video";
-import Side from "./Side";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+
 import { motion } from "framer-motion";
 import { IoIosChatboxes } from "react-icons/io";
 import { FaCode } from "react-icons/fa";
 import { PiNotepadBold } from "react-icons/pi";
+import { CgDetailsMore } from "react-icons/cg";
 import {
   DocumentData,
   arrayUnion,
@@ -14,17 +15,14 @@ import {
   getDoc,
   updateDoc,
 } from "firebase/firestore";
-import { db } from "@/utils/firebase";
-import { useParams } from "next/navigation";
-import { CgDetailsMore } from "react-icons/cg";
-import { AuthContext } from "@/context/AuthContext";
-import { useAppDispatch } from "@/redux/hooks";
-import { setBookClubMeetingGuest } from "@/redux/slice/bookClubMeetingSlice";
 
-type BookClub = {
-  name: string;
-  roomId: string;
-};
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { setBookClubMeetingGuest } from "@/redux/slice/bookClubMeetingSlice";
+import { db } from "@/utils/firebase/firebase";
+import { BookClubIdAndName } from "@/utils/types/types";
+
+import Video from "./Video";
+import Side from "./Side";
 
 const titleMotion = {
   hidden: {
@@ -61,16 +59,17 @@ const sidebarFunctionContainerMotion = {
 };
 
 const Page = () => {
-  const { user } = useContext(AuthContext);
   const [isShowSidebar, setIsShowSidebar] = useState<boolean>(false);
   const [showSidebarMenu, setshowhiddenSidebarMenu] = useState<boolean>(false);
   const [sidebarFunction, setSidebarFunction] = useState<string>("");
-  const [bookClub, setBookClub] = useState<BookClub>({
+  const [bookClub, setBookClub] = useState<BookClubIdAndName>({
     name: "",
     roomId: "",
   });
   const [text, setText] = useState<string>("");
   const [code, setCode] = useState<string>("console.log('hello world')");
+
+  const user = useAppSelector((state) => state.auth.value);
 
   const param = useParams();
   const bookClubId = param.id;
@@ -115,13 +114,10 @@ const Page = () => {
 
     const addAttendee = async () => {
       if (!user.id) return;
-      // console.log(bookClubId);
 
       const result: DocumentData = await getDoc(bookClubRef);
-      console.log(result.data());
 
       if (result.data().attendees.includes(user.id)) {
-        console.log("return!!");
         return;
       }
 
@@ -132,7 +128,7 @@ const Page = () => {
 
     addAttendee();
     getBookClubInfo();
-  }, []);
+  }, [user.id, bookClubId, dispatch]);
 
   return (
     <div className="relative flex flex-col h-full pt-[10px] border-dashed border-2 border-white">

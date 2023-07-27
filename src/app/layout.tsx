@@ -1,10 +1,12 @@
-import "./globals.css";
-import { Poppins } from "next/font/google";
 import React from "react";
-import ReduxProvider from "@/redux/provider";
-import { AuthContextProvider } from "@/context/AuthContext";
+import { Poppins } from "next/font/google";
 
-import Header from "../components/header/Header";
+import "./globals.css";
+
+import ReduxProvider from "@/redux/provider";
+
+import Header from "../components/Header/Header";
+import Auth from "../components/Auth/Auth";
 
 const poppins = Poppins({
   weight: ["400", "500", "600", "700", "800"],
@@ -27,19 +29,16 @@ export default function RootLayout({
         className={`box-border ${poppins.className} transform-none relative mx-auto`}
       >
         <ReduxProvider>
-          <AuthContextProvider>
-            <Header />
-            <div className="pt-[60px] w-full h-full translate-z-0">
-              <div className="fixed top-0 bottom-0 left-0 right-0 w-full pt-[60px]">
-                <div className="absolute top-[calc(100%-240px)] left-0 bg-[#E5E0FF] w-[400px] h-[400px] rounded-[59%_41%_43%_57%/37%_55%_45%_63%] z-0" />
-                <div className="absolute top-0 right-0 bg-[#E9EDC9] w-[500px] h-[400px] rounded-[52%_48%_60%_40%/59%_51%_49%_41%] z-0" />
-              </div>
-              {children}
+          <Header />
+          <div className="pt-[60px] w-full h-full translate-z-0">
+            <div className="fixed top-0 bottom-0 left-0 right-0 w-full pt-[60px]">
+              <div className="absolute top-[calc(100%-240px)] left-0 bg-[#E5E0FF] w-[400px] h-[400px] rounded-[59%_41%_43%_57%/37%_55%_45%_63%] z-0" />
+              <div className="absolute top-0 right-0 bg-[#E9EDC9] w-[500px] h-[400px] rounded-[52%_48%_60%_40%/59%_51%_49%_41%] z-0" />
             </div>
-          </AuthContextProvider>
+            <Auth>{children}</Auth>
+          </div>
         </ReduxProvider>
       </body>
     </html>
   );
 }
-// bg-[#fefae059]

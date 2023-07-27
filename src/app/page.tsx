@@ -3,12 +3,13 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+
+import ArticleList from "@/components/Article/ArticleList";
+import sittingBoy from "@/assets/image/people/boy-sitting-on-legs.svg";
+import { Article } from "@/utils/types/types";
+import ArticleListSkeleton from "@/components/Skeleton/ArticleListSkeleton";
+
 import TrendingArticles from "./TrendingArticles";
-import ArticleList from "./ArticleList";
-import sittingBoy from "../assets/image/people/boy-sitting-on-legs.svg";
-import { Article } from "@/utils/firebase";
-import ArticleListSkeleton from "@/components/skeleton/ArticleListSkeleton";
-// import { useAppSelector } from "@/redux/hooks";
 
 const categories = [
   "Frontend",
@@ -23,7 +24,7 @@ const categoryClass = `w-fit bg-[#FFD89C] text-bold font-mono py-1 px-3 text-bla
 shadow-[-3px_3px] shadow-black rounded-2xl border-2 border-black
 `;
 
-export default function Home() {
+const Page = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [articles, setArticles] = useState<Article[]>([]);
 
@@ -36,7 +37,6 @@ export default function Home() {
     const fetchArticles = async () => {
       isFetching = true;
       setIsLoading(true);
-      console.log("fetch!");
 
       const articlesReq = await fetch(`/api/articles?lastId=${lastId}`);
       const articlesRes = await articlesReq.json();
@@ -56,9 +56,6 @@ export default function Home() {
         window.innerHeight + window.scrollY >=
         document.body.offsetHeight - 100
       ) {
-        console.log("total", total);
-        console.log("lastId", lastId);
-
         if (total && articlesCount === total) return;
         if (isFetching) return;
 
@@ -69,12 +66,6 @@ export default function Home() {
     fetchArticles();
     if (!window) return;
     window.addEventListener("scroll", scrollHandler);
-
-    // setTimeout(() => {
-    //   console.log("=======set======");
-
-    //   setShowImage(true);
-    // }, 3000);
 
     return () => {
       window.removeEventListener("scroll", scrollHandler);
@@ -118,7 +109,6 @@ export default function Home() {
           <div className="lg:min-w-[100%-300px] md:min-w-[100%-210px] w-full overflow-hidden">
             {articles && articles.length > 0 && (
               <ArticleList
-                // showImage={showImage}
                 articles={articles}
                 customLayout="md:justify-start pl-[0]"
               />
@@ -138,4 +128,6 @@ export default function Home() {
       </div>
     </div>
   );
-}
+};
+
+export default Page;

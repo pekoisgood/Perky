@@ -1,25 +1,9 @@
-import { db } from "@/utils/firebase";
-import { collection, getDocs } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 
-type User = {
-  name: string;
-  userId: string;
-  email: string;
-};
+import { collection, getDocs } from "firebase/firestore";
 
-type Guest = {
-  name: string;
-  id: string;
-};
-
-type CreateBookClub = {
-  title: string;
-  date: string;
-  hour: string;
-  minute: string;
-  guest: Guest[];
-};
+import { User, CreateBookClub } from "@/utils/types/types";
+import { db } from "@/utils/firebase/firebase";
 
 type Props = {
   bookClub: CreateBookClub;
@@ -54,7 +38,8 @@ const Search = ({ bookClub, setBookClub, setShowInvationError }: Props) => {
         allUsers.push({
           name: doc.data().name,
           email: doc.data().email,
-          userId: doc.id,
+          id: doc.id,
+          avatar: doc.data().avatar ?? "",
         });
         setUsers(allUsers);
       });
@@ -85,9 +70,9 @@ const Search = ({ bookClub, setBookClub, setShowInvationError }: Props) => {
             .map((user) => {
               return (
                 <p
-                  key={user.userId}
+                  key={user.id}
                   onClick={() =>
-                    handleAddGuest(user.userId, user.name + `(${user.email})`)
+                    handleAddGuest(user.id, user.name + `(${user.email})`)
                   }
                   className=" text-slate-800 hover:cursor-pointer"
                 >

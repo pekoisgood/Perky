@@ -1,7 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import React, { useEffect } from "react";
+import Image from "next/image";
+
 import aws from "../../assets/image/backgroundIcon/aws.svg";
 import docker from "../../assets/image/backgroundIcon/docker.svg";
 import github from "../../assets/image/backgroundIcon/github.svg";

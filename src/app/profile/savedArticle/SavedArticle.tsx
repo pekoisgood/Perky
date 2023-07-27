@@ -1,9 +1,8 @@
 "use client";
 
-import { useAppSelector } from "@/redux/hooks";
-import React, { useEffect, useContext } from "react";
-import { useAppDispatch } from "@/redux/hooks";
-import { AuthContext } from "@/context/AuthContext";
+import React, { useEffect } from "react";
+import Link from "next/link";
+
 import {
   DocumentData,
   collection,
@@ -13,13 +12,16 @@ import {
   orderBy,
   query,
 } from "firebase/firestore";
-import { db } from "@/utils/firebase";
-import { setSavedArticle } from "@/redux/slice/savedArticle";
-import { SavedArticle } from "./page";
-import Link from "next/link";
-import Button from "@/components/button/Button";
-import DashboardArticleSkeleton from "@/components/skeleton/DashboardArticleSkeleton";
 import { motion } from "framer-motion";
+
+import { db } from "@/utils/firebase/firebase";
+import { SavedArticle } from "@/utils/types/types";
+import { useAppSelector } from "@/redux/hooks";
+import { useAppDispatch } from "@/redux/hooks";
+import { setSavedArticle } from "@/redux/slice/savedArticle";
+import Button from "@/components/Button/Button";
+import DashboardArticleSkeleton from "@/components/Skeleton/DashboardArticleSkeleton";
+
 import { easeAppearContainer } from "../articleRecord/ArticleRecord";
 
 const categoryClass = `w-fit bg-[#FFD89C] text-bold font-mono py-1 px-3 text-black
@@ -31,15 +33,11 @@ const dashBoardTitleClass =
 
 const ArticleRecord = () => {
   const savedArticles = useAppSelector((state) => state.savedArticle.value);
-  const { user } = useContext(AuthContext);
-
+  const user = useAppSelector((state) => state.auth.value);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     const getArticle = async () => {
-      console.log("get saved articles!!");
-      console.log("saved article user id", user.id);
-
       const savedArticles: SavedArticle[] = [];
       const articleIds: string[] = [];
       const q = query(
@@ -48,8 +46,6 @@ const ArticleRecord = () => {
       );
       const result = await getDocs(q);
       result.forEach((doc) => {
-        // console.log(doc);
-
         articleIds.push(doc.id);
       });
 
@@ -58,12 +54,6 @@ const ArticleRecord = () => {
         const res: DocumentData = await getDoc(
           doc(db, "articles", articleIds[i])
         );
-        console.log("i", i, articleIds[i]);
-
-        console.log("data", res.data());
-
-        // if (!res.data) {
-        console.log("===========push==========");
 
         savedArticles.push({
           id: res.id,
@@ -73,20 +63,14 @@ const ArticleRecord = () => {
           image: res.data().image,
           category: res.data().category,
         });
-        // }
       }
-
-      console.log("...", savedArticles);
 
       dispatch(setSavedArticle(savedArticles));
     };
 
     if (user.id === "") return;
-
-    console.log("get article ", user);
-
     getArticle();
-  }, [user, dispatch]);
+  }, [user]);
 
   return (
     <>

@@ -1,6 +1,8 @@
 "use client";
-import { useState, useEffect, useRef, useContext } from "react";
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
+import Image from "next/image";
+import { useParams } from "next/navigation";
+
 import {
   collection,
   addDoc,
@@ -8,24 +10,12 @@ import {
   query,
   orderBy,
   onSnapshot,
-  Timestamp,
 } from "firebase/firestore";
-import { db } from "@/utils/firebase";
-import { AuthContext } from "@/context/AuthContext";
-import { useParams } from "next/navigation";
 import { HiPaperAirplane } from "react-icons/hi";
 import { PiFinnTheHumanFill } from "react-icons/pi";
-import Image from "next/image";
-
-type Message = {
-  user: string;
-  text: string;
-  room: string;
-  createdAt: Timestamp;
-  id: string;
-  userId: string;
-  avatar: string;
-};
+import { Message } from "@/utils/types/types";
+import { db } from "@/utils/firebase/firebase";
+import { useAppSelector } from "@/redux/hooks";
 
 const Chatroom = ({
   newMessage,
@@ -34,9 +24,10 @@ const Chatroom = ({
   newMessage: string;
   setNewMessage: React.Dispatch<React.SetStateAction<string>>;
 }) => {
-  const { user } = useContext(AuthContext);
   const [messages, setMessages] = useState<Message[]>([]);
   const chatRoomMessagesRef = useRef<HTMLDivElement | null>(null);
+
+  const user = useAppSelector((state) => state.auth.value);
 
   const params = useParams();
   const roomId = params.id;
@@ -61,7 +52,7 @@ const Chatroom = ({
   useEffect(() => {
     const queryMessages = query(messagesRef, orderBy("createdAt"));
     const unsuscribe = onSnapshot(queryMessages, (snapshot) => {
-      let messages: Message[] = [];
+      const messages: Message[] = [];
       snapshot.forEach((doc) => {
         messages.push({
           user: doc.data().user,
@@ -82,9 +73,7 @@ const Chatroom = ({
     });
 
     return () => unsuscribe();
-  }, []);
-
-  console.log(messages);
+  }, [messagesRef]);
 
   return (
     <div className="min-h-full h-full relative rounded-xl p-2">
