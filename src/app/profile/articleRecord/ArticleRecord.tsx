@@ -52,7 +52,7 @@ const ArticleRecord = () => {
     };
 
     getArticleRecord();
-  }, [user, dispatch]);
+  }, [user]);
 
   return (
     <>

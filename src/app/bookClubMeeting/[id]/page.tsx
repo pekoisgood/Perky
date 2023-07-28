@@ -128,7 +128,7 @@ const Page = () => {
 
     addAttendee();
     getBookClubInfo();
-  }, [user.id, bookClubId, dispatch]);
+  }, [user.id, bookClubId]);
 
   return (
     <div className="relative flex flex-col h-full pt-[10px] border-dashed border-2 border-white">

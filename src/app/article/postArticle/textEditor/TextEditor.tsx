@@ -68,7 +68,7 @@ const Page = () => {
         value: editor.getHTML(),
       })
     );
-  }, [editor, dispatch, editor?.getHTML()]);
+  }, [editor, editor?.getHTML()]);
 
   return (
     <>

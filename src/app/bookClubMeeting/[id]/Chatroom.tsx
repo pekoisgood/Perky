@@ -72,8 +72,10 @@ const Chatroom = ({
       setMessages(messages);
     });
 
-    return () => unsuscribe();
-  }, [messagesRef]);
+    return () => {
+      unsuscribe();
+    };
+  }, []);
 
   return (
     <div className="min-h-full h-full relative rounded-xl p-2">
