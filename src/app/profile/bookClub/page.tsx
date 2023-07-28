@@ -10,9 +10,11 @@ const Page = () => {
 
   return (
     <div className="relative w-full mt-[20px] mx-5 md:mx-0">
-      <h1 className="sticky top-[20px] right-[50%] translate-x-[50%] bg-white/60 mx-auto w-fit text-[28px] font-bold tracking-[4px] rounded-full px-5 mb-[30px]">
-        Book Club
-      </h1>
+      <div className="sticky top-[20px] w-full text-center">
+        <h1 className="bg-white/60 w-fit mx-auto text-[28px] font-bold tracking-[4px] rounded-full px-5 mb-[60px] lg:mb-[30px]">
+          Book Club
+        </h1>
+      </div>
       <div className="flex sm:flex-row flex-col justify-start items-center sm:items-start sm:pl-5 gap-10 h-[89%] w-full max-w-[1200px] mx-auto">
         <Calender />
         <div className="flex flex-col sm:items-start items-center h-[75%] w-full">
@@ -21,7 +23,7 @@ const Page = () => {
           </p>
           <Link
             href="/profile/bookClub/createBookClub"
-            className="absolute top-[4px] right-0 group w-[78px] h-[39px] bg-[#245953] rounded-md hover:cursor-pointer "
+            className="absolute top-[50px] lg:top-[4px] right-0 group w-[78px] h-[39px] bg-[#245953] rounded-md hover:cursor-pointer "
           >
             <div className="relative w-[90px] h-[39px] z-10">
               <div
