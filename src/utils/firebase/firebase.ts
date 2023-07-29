@@ -23,7 +23,7 @@ import {
 } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCbYjeFVcLpS-4FzXRPCFm32gjlhW2mMjg",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: "test-50b43.firebaseapp.com",
   projectId: "test-50b43",
   storageBucket: "test-50b43.appspot.com",
