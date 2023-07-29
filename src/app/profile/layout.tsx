@@ -17,7 +17,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           <div className="rounded-full h-[10px] w-[10px] bg-[#22A699]" />
         </div>
         <div className="w-full h-[50px] border-b-2 border-black bg-slate-50 rounded-t-xl" />
-        <div className="flex gap-2 h-[94%] pb-[40px] lg:pb-0 bg-[#FCF8E8]/30">
+        <div className="flex gap-2 h-[94%] pb-[60px] sm:pb-[65px] lg:pb-0 bg-[#FCF8E8]/30">
           <Image
             src={sittingWomanHoldingLegs}
             alt="woman sitting holding both legs"
@@ -27,8 +27,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             className="scale-x-flip w-[150px] lg:w-[200px] absolute bottom-[-36px] right-0 md:right-[44px] rotate-[5deg] lg:z-0"
           />
           <div
-            className={`fixed top-[calc(100%-60px)] w-full shadow-md
-            lg:h-[102%] lg:w-[230px] lg:min-w-[230px] lg:pr-[15px] lg:pl-0 lg:pt-[25px] lg:sticky lg:top-0 lg:left-0 lg:bottom-0 lg:bg-white lg:rounded-none`}
+            className={`fixed top-[calc(100%-60px)] w-full h-fit lg:shadow-md z-20 left-0
+            lg:h-[102%] lg:w-[230px] lg:min-w-[230px] lg:pr-[15px] lg:pl-0 lg:pt-[25px] lg:sticky lg:top-0 lg:bottom-0 lg:bg-white lg:rounded-none`}
           >
             <ProfileSidebar />
             <Image

@@ -43,19 +43,6 @@ const Page = () => {
         </h1>
       </div>
 
-      <Link
-        href="/article/postArticle"
-        className="absolute top-[10px] right-[10px] group w-[65px] h-[35px] flex justify-center items-center bg-[#245953] text-white rounded-md py-1 hover:scale-110 z-0 border-2 border-black"
-      >
-        <div className="relative w-[65px] h-[35px]">
-          <div className="flex items-center h-full relative before:absolute before:block before:top-0 before:left-[-2px] before:content-[ ] before:w-[65px] before:h-[35px] before:bg-[#245953] before:rounded-md px-[6px] py-1 z-20 before:border-2 before:border-black before:hover:skew-x-12 before:hover:h-[32px] before:hover:top-[3px] before:hover:left-[-7px] group-hover:duration-100">
-            <span className="inline-block relative z-100 text-[12px] group-hover:left-[-6px] group-hover:duration-100 pl-[7px]">
-              Post +
-            </span>
-          </div>
-          <div className="absolute top-[-4px] left-[-2px] w-[20px] h-[9px] bg-[#245953] rounded-[40%_40%_0_0/10px_10px_0_0] z-10 border-black border-l-2 border-t-2" />
-        </div>
-      </Link>
       {articleRecord === null ? (
         <div className="columns-1 sm:columns-2 md:columns-3 gap-x-5 overflow-y-scroll pb-5">
           <ProfileArticleSkeleton />
