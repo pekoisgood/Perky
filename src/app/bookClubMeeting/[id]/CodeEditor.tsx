@@ -46,6 +46,8 @@ export const getExtensionLanguage = (lang: string) => {
   return extensionLanguages[lang as keyof typeof extensionLanguages];
 };
 
+const rapidApiKey = process.env.NEXT_PUBLIC_RAPID_API_KEY;
+
 export default function CodeEditor({ code, setCode }: Props) {
   const [output, setOutput] = useState<string>("");
   const [isRunning, setIsRunning] = useState(false);
@@ -62,7 +64,7 @@ export default function CodeEditor({ code, setCode }: Props) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "X-RapidAPI-Key": "9e4c26e51emshfc0813ef8ed0cd6p1da66bjsn10776e17400e",
+        "X-RapidAPI-Key": rapidApiKey ?? "",
         "X-RapidAPI-Host": "judge0-ce.p.rapidapi.com",
       },
       body: JSON.stringify({
@@ -86,7 +88,7 @@ export default function CodeEditor({ code, setCode }: Props) {
     const url = `https://judge0-ce.p.rapidapi.com/submissions/${token}?base64_encoded=true&fields=*`;
 
     const headers = {
-      "X-RapidAPI-Key": "9e4c26e51emshfc0813ef8ed0cd6p1da66bjsn10776e17400e",
+      "X-RapidAPI-Key": rapidApiKey ?? "",
       "X-RapidAPI-Host": "judge0-ce.p.rapidapi.com",
     };
     try {

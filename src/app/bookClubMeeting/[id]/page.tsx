@@ -101,6 +101,8 @@ const Page = () => {
         for (let i = 0; i < guestList.length; i++) {
           const guestRef = doc(db, "users", guestList[i]);
           const userInfo: DocumentData = await getDoc(guestRef);
+          console.log(userInfo.data());
+
           dispatch(
             setBookClubMeetingGuest({
               name: userInfo.data().name,
