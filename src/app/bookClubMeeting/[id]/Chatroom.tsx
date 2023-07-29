@@ -52,8 +52,6 @@ const Chatroom = ({
   useEffect(() => {
     const queryMessages = query(messagesRef, orderBy("createdAt"));
     const unsuscribe = onSnapshot(queryMessages, (snapshot) => {
-      console.log("fetch!!");
-
       const messages: Message[] = [];
       snapshot.forEach((doc) => {
         messages.push({
