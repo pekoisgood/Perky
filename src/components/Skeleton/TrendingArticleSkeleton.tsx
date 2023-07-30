@@ -49,7 +49,7 @@ const TrendingArticleSkeleton = () => {
                 </div>
               </div>
               <div
-                className={`h-[200px] basis-1/2 rounded-xl ml-auto hidden lg:block shadow-[#0000003b] shadow-[-3px_3px] ${skeletonAnimation}`}
+                className={`h-full basis-1/2 rounded-xl ml-auto hidden lg:block shadow-[#0000003b] shadow-[-3px_3px] ${skeletonAnimation}`}
               />
             </div>
           );
@@ -60,28 +60,3 @@ const TrendingArticleSkeleton = () => {
 };
 
 export default TrendingArticleSkeleton;
-
-{
-  /* <Link */
-}
-//               href={`article/${article.id}`}
-//               key={index}
-//               className="flex gap-[10px] w-full sm:w-[23%] h-[23%] md:h-[18%] border-b-[1px] sm:border-b-0 sm:border-l-[1px] border-[#d1d5db] pl-[14px] hover:translate-y-[-3px] hover:duration-100"
-//             >
-//               <div className="flex flex-row items-center sm:items-start sm:flex-col pb-[10px] sm:pb-0 gap-[10px] h-full">
-//                 <p className={`text-[10px]  ${categoryClass}`}>
-//                   {article.category}
-//                 </p>
-//                 <h4 className="font-bold text-[13px] sm:text-[15px] line-clamp-4">
-//                   {article.title}
-//                 </h4>
-//               </div>
-//               <Image
-//                 src={article.image}
-//                 alt="cover image"
-//                 width={120}
-//                 height={50}
-//                 priority={true}
-//                 className="h-[100%] rounded-xl object-cover object-center ml-auto hidden lg:flex border-black border-2 shadow-[-3px_3px] shadow-[#0000003b]"
-//               />
-//             </Link>
