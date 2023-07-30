@@ -62,6 +62,61 @@ const BookClubList = () => {
   const user = useAppSelector((state) => state.auth.value);
   const date = useAppSelector((state) => state.calender.value);
 
+  const getBookClubList = async () => {
+    setBookClubs([]);
+    const year = date.year;
+    const month = date.month;
+    const day = date.date;
+    const dateToday = new Date(`${year}-${month}-${day}`);
+    function nextDate(y: number, m: number, d: number) {
+      if (
+        (m === 2 && y % 4 === 0 && d === 29) ||
+        (m === 2 && y % 4 === 0 && d === 28) ||
+        (m % 2 === 0 && d === 30) ||
+        d === 31
+      ) {
+        if (m === 12) {
+          return new Date(`${y}-${1}-${1}`);
+        }
+        return new Date(`${y}-${m + 1}-${1}`);
+      }
+      return new Date(`${y}-${m}-${d + 1}`);
+    }
+
+    const bookClubRef = query(
+      collection(db, "bookClubs"),
+      and(
+        where("time", ">=", dateToday),
+        where("time", "<", nextDate(year, month, day)),
+
+        or(
+          where("host", "==", user.id),
+          where("guest", "array-contains", user.id)
+        )
+      ),
+      orderBy("time")
+    );
+
+    const result = await getDocs(bookClubRef);
+
+    if (result.empty) {
+      setBookClubs([]);
+      return;
+    }
+    const bookClubs: BookClubInfo[] = [];
+
+    result.forEach((doc) => {
+      bookClubs.push({
+        id: doc.id,
+        roomId: doc.data().roomId,
+        name: doc.data().name,
+        time: doc.data().time,
+        createdAt: doc.data().createdAt,
+      });
+    });
+    setBookClubs(bookClubs);
+  };
+
   const getNote = async (bookClubId: string) => {
     setIsPreviewNote(true);
 
@@ -82,61 +137,10 @@ const BookClubList = () => {
   };
 
   useEffect(() => {
-    const getBookClubList = async () => {
-      setBookClubs([]);
-      const year = date.year;
-      const month = date.month;
-      const day = date.date;
-      const dateToday = new Date(`${year}-${month}-${day}`);
-      function nextDate(y: number, m: number, d: number) {
-        if (
-          (m === 2 && y % 4 === 0 && d === 29) ||
-          (m === 2 && y % 4 === 0 && d === 28) ||
-          (m % 2 === 0 && d === 30) ||
-          d === 31
-        ) {
-          if (m === 12) {
-            return new Date(`${y}-${1}-${1}`);
-          }
-          return new Date(`${y}-${m + 1}-${1}`);
-        }
-        return new Date(`${y}-${m}-${d + 1}`);
-      }
+    if (!user.id) return;
 
-      const bookClubRef = query(
-        collection(db, "bookClubs"),
-        and(
-          where("time", ">=", dateToday),
-          where("time", "<", nextDate(year, month, day)),
-
-          or(
-            where("host", "==", user.id),
-            where("guest", "array-contains", user.id)
-          )
-        ),
-        orderBy("time")
-      );
-
-      const result = await getDocs(bookClubRef);
-      if (result.empty) {
-        setBookClubs([]);
-        return;
-      }
-      const bookClubs: BookClubInfo[] = [];
-
-      result.forEach((doc) => {
-        bookClubs.push({
-          id: doc.id,
-          roomId: doc.data().roomId,
-          name: doc.data().name,
-          time: doc.data().time,
-          createdAt: doc.data().createdAt,
-        });
-      });
-      setBookClubs(bookClubs);
-    };
     getBookClubList();
-  }, [date]);
+  }, [date, user.id]);
 
   return (
     <>

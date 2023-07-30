@@ -1,10 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
-type CalrenderState = {
-  year: number;
-  month: number;
-  date: number;
-};
+import { CalrenderState } from "@/utils/types/types";
 
 type InitialStateValue = {
   value: CalrenderState;

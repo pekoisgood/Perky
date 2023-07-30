@@ -48,7 +48,7 @@ const buttonClass =
   "bg-transparent scale-100 text-[#245953] tracking-[1px] font-semibold text-[15px] outline-none border-2 border-[#245953] shadow-[#245953] shadow-[-3px_3px] rounded-lg px-2 py-1 hover:bg-[#245953] hover:text-white hover:shadow-none hover:translate-y-[3px] hover:translate-x-[-3px] focus:scale-95 duration-75";
 
 const sloganClass =
-  "text-[60px] sm:text-[30px] md:text-[50px] lg:text-[70px] xl:text-[90px] font-extrabold tracking-[3px] text-[#245953] relative";
+  "sm:text-[28px] md:text-[48px] lg:text-[63px] xl:text-[90px] font-extrabold tracking-[3px] text-[#245953] relative";
 
 const Page = () => {
   const [loginPage, setLoginPage] = useState(true);
@@ -168,7 +168,7 @@ const Page = () => {
   return (
     <>
       <div className="relative min-h-[calc(100vh-60px)] w-screen max-w-[1210px] mx-auto flex gap-4 justify-center items-center px-[20px]">
-        <div className="w-[60%] max-w-fit sm:static absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] sm:translate-x-0 sm:translate-y-0 z-[1]">
+        <div className="w-[60%] max-w-fit sm:static absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] hidden md:block sm:translate-x-0 sm:translate-y-0 z-[1]">
           <h1 className={`${sloganClass}`}>
             Learn
             <br /> Together,

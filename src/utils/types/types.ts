@@ -117,6 +117,12 @@ type postArticle = {
   tags: string[];
 };
 
+type CalrenderState = {
+  year: number;
+  month: number;
+  date: number;
+};
+
 type Article = {
   id: string;
   authorName: string;
@@ -149,6 +155,7 @@ type AuthRedux = {
 };
 
 export type {
+  CalrenderState,
   ArticleComment,
   User,
   LoginUserInput,
