@@ -105,7 +105,7 @@ const Page = () => {
                   duration: 1,
                 }}
                 key={index}
-                className="rounded-xl p-1 block shadow-md hover:translate-y-[-10px] hover:duration-150 bg-[#245953] mb-3 break-inside-avoid"
+                className="rounded-xl p-1 block shadow-md bg-[#245953] mb-3 break-inside-avoid"
               >
                 <Link
                   href={`/article/${article.id}`}

@@ -45,7 +45,7 @@ const Warning = ({
       className={`${
         customBg
           ? customBg
-          : "fixed top-0 bottom-0 right-0 left-0 w-screen h-screen backdrop-blur-sm z-50"
+          : "fixed top-0 bottom-0 right-0 left-0 w-screen h-screen backdrop-blur-sm z-50 cursor-default"
       } `}
     >
       <div
