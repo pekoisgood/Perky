@@ -7,6 +7,7 @@ import Profile from "./Profile";
 import Search from "./Search";
 import logo from "./coding.png";
 import PostArticle from "./PostArticle";
+import BookClub from "./BookClub";
 
 const Header = () => {
   return (
@@ -26,6 +27,7 @@ const Header = () => {
         </div>
       </Link>
       <div className="w-fit ml-auto flex items-center gap-3">
+        <BookClub />
         <PostArticle />
         <Search />
         <div className="group">
