@@ -20,7 +20,7 @@ import Button from "@/components/Button/Button";
 import BookClubSkeleton from "@/components/Skeleton/BookClubSkeleton";
 import { BookClubInfo } from "@/utils/types/types";
 import { useAppSelector } from "@/redux/hooks";
-import { getTime } from "@/utils/date/dateFc";
+import { getTime, nextDate } from "@/utils/date/dateFc";
 
 import { easeAppearContainer } from "../articleRecord/ArticleRecord";
 
@@ -41,7 +41,7 @@ const TodayBookClub = () => {
       const day = new Date().getDate();
 
       const today = new Date(`${year}-${month}-${day}`);
-      const tomorrow = new Date(`${year}-${month}-${day + 1}`);
+      const tomorrow = nextDate(year, month, day);
 
       const bookClubRef = query(
         collection(db, "bookClubs"),
@@ -70,6 +70,7 @@ const TodayBookClub = () => {
 
       setTodayBookClub(bookClubs);
     };
+    if (!user.id) return;
     getBookClubList();
   }, [user.id]);
 

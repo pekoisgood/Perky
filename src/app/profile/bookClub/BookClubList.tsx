@@ -21,7 +21,7 @@ import { db } from "@/utils/firebase/firebase";
 import { BookClubInfo, Note } from "@/utils/types/types";
 import BookClubSkeleton from "@/components/Skeleton/BookClubSkeleton";
 import { useAppSelector } from "@/redux/hooks";
-import { getTime } from "@/utils/date/dateFc";
+import { getTime, nextDate } from "@/utils/date/dateFc";
 
 const container = {
   hidden: {
@@ -68,20 +68,6 @@ const BookClubList = () => {
     const month = date.month;
     const day = date.date;
     const dateToday = new Date(`${year}-${month}-${day}`);
-    function nextDate(y: number, m: number, d: number) {
-      if (
-        (m === 2 && y % 4 === 0 && d === 29) ||
-        (m === 2 && y % 4 === 0 && d === 28) ||
-        (m % 2 === 0 && d === 30) ||
-        d === 31
-      ) {
-        if (m === 12) {
-          return new Date(`${y}-${1}-${1}`);
-        }
-        return new Date(`${y}-${m + 1}-${1}`);
-      }
-      return new Date(`${y}-${m}-${d + 1}`);
-    }
 
     const bookClubRef = query(
       collection(db, "bookClubs"),

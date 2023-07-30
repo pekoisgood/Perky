@@ -113,4 +113,19 @@ const getTime = (date: Date, showMinutes: boolean) => {
   }`;
 };
 
-export { timeAgo, caculateCountPerDay, getTime, getFormattedDate };
+const nextDate = (y: number, m: number, d: number) => {
+  if (
+    (m === 2 && y % 4 === 0 && d === 29) ||
+    (m === 2 && y % 4 === 0 && d === 28) ||
+    (m % 2 === 0 && d === 30) ||
+    d === 31
+  ) {
+    if (m === 12) {
+      return new Date(`${y}-${1}-${1}`);
+    }
+    return new Date(`${y}-${m + 1}-${1}`);
+  }
+  return new Date(`${y}-${m}-${d + 1}`);
+};
+
+export { timeAgo, caculateCountPerDay, getTime, getFormattedDate, nextDate };
