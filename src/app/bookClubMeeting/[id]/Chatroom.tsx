@@ -97,7 +97,7 @@ const Chatroom = ({
                 >
                   <p className="text-[10px] pr-[6px]">{message.user}</p>
                   <p
-                    className="bg-[#9575DE] border-black border-[1px] rounded-full px-[16px] tracking-[1px] text-[14px]
+                    className="bg-[#9575DE] border-black border-[1px] rounded-xl px-[16px] tracking-[1px] text-[14px]
               shadow-black shadow-[3px_3px] py-1 w-fit text-white"
                   >
                     {message.text}
@@ -124,8 +124,8 @@ const Chatroom = ({
                       {message.user === "" ? "Demo" : message.user}
                     </p>
                     <p
-                      className="bg-[#9575DE] border-black border-[1px] rounded-full px-[16px] tracking-[1px] text-[14px]
-          shadow-black shadow-[3px_3px] py-1 w-fit text-white text-center"
+                      className="bg-[#9575DE] border-black border-[1px] rounded-xl px-[16px] tracking-[1px] text-[14px]
+          shadow-black shadow-[3px_3px] py-1 w-fit text-white"
                     >
                       {message.text}
                     </p>
@@ -156,7 +156,6 @@ const Chatroom = ({
           </button>
         </div>
       </form>
-      {/* <div className="flex gap-1 p-1 items-center absolute bottom-[-2px] right-[50%] translate-x-[50%]"> */}
     </div>
   );
 };

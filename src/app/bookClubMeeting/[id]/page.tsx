@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 import { motion } from "framer-motion";
 import { IoIosChatboxes } from "react-icons/io";
@@ -71,6 +71,7 @@ const Page = () => {
 
   const user = useAppSelector((state) => state.auth.value);
 
+  const router = useRouter();
   const param = useParams();
   const bookClubId = param.id;
 
@@ -126,6 +127,10 @@ const Page = () => {
         attendees: arrayUnion(user.id),
       });
     };
+
+    if (user.isLogin === false) {
+      router.push("/auth");
+    }
 
     addAttendee();
     getBookClubInfo();
