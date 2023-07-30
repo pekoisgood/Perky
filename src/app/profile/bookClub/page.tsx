@@ -12,7 +12,7 @@ const Page = () => {
 
   return (
     <div className="relative w-full mt-[20px] mx-5 md:mx-0">
-      <div className="sticky top-[20px] w-full text-center">
+      <div className="sticky top-[20px] w-full text-center z-10">
         <h1 className="bg-white/60 w-fit mx-auto text-[28px] font-bold tracking-[4px] rounded-full px-5 mb-[60px] lg:mb-[30px]">
           Book Club
         </h1>

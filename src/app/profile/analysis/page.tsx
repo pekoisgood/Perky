@@ -3,7 +3,7 @@
 import { useAppSelector } from "@/redux/hooks";
 import LineChart from "./LineChart";
 
-const descClass = `text-[20px] font-medium list-[circle]`;
+const descClass = `text-[12px] sm:text-[14px] md:text-[16px] font-medium list-[circle]`;
 
 const Page = () => {
   const records = useAppSelector((state) => state.analysis.value);
@@ -12,7 +12,7 @@ const Page = () => {
     <div className="mt-[20px] px-[10px] sm:px-[15px] w-full mx-auto relative">
       <h1
         className={`sticky top-[20px] right-[50%] left-[50%] translate-x-[-50%] bg-white/60 w-fit text-[28px] font-bold tracking-[4px] rounded-full px-5 mb-[30px]
-       lg:left-[50%] lg:translate-x-0
+       lg:left-[50%] lg:translate-x-0 z-10
       `}
       >
         Analysis

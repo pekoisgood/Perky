@@ -16,7 +16,7 @@ const Search = ({ bookClub, setBookClub, setShowInvationError }: Props) => {
   const [searchName, setSearchName] = useState<string>("");
   const [users, setUsers] = useState<User[]>([]);
 
-  const handleAddGuest = (id: string, name: string) => {
+  const handleAddGuest = (id: string, name: string, email: string) => {
     setIsSearching(false);
     setSearchName("");
     if (bookClub.guest.find((guest) => guest.id === id)) {
@@ -24,7 +24,7 @@ const Search = ({ bookClub, setBookClub, setShowInvationError }: Props) => {
       return;
     }
     setBookClub((prev) => {
-      return { ...prev, guest: [...prev.guest, { name, id }] };
+      return { ...prev, guest: [...prev.guest, { name, id, email }] };
     });
     return;
   };
@@ -71,9 +71,7 @@ const Search = ({ bookClub, setBookClub, setShowInvationError }: Props) => {
               return (
                 <p
                   key={user.id}
-                  onClick={() =>
-                    handleAddGuest(user.id, user.name + `(${user.email})`)
-                  }
+                  onClick={() => handleAddGuest(user.id, user.name, user.email)}
                   className=" text-slate-800 hover:cursor-pointer"
                 >
                   {user.name}

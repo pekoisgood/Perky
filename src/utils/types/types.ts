@@ -66,6 +66,7 @@ type CreateBookClub = {
 type Guest = {
   name: string;
   id: string;
+  email?: string;
   avatar?: string;
 };
 

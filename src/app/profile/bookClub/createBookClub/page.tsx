@@ -112,17 +112,17 @@ const Page = () => {
   };
 
   return (
-    <div className="flex flex-col gap max-w-[600px] w-[60%] mt-[20px] mx-auto">
-      <h1 className="mx-auto w-fit text-[28px] font-semibold tracking-[6px] indent-[6px] mb-[30px]">
+    <div className="flex flex-col gap max-w-[600px] w-full h-fit px-[20px] md:w-[60%] mt-[20px] mx-auto">
+      <h1 className="mx-auto w-fit text-[26px] font-semibold sm:tracking-[6px] sm:indent-[6px] mb-[30px] text-center ">
         New Book Club
       </h1>
       <div className="flex flex-col gap-[30px]">
         <div className="flex items-center gap-3">
-          <label className="w-fit">Title : </label>
+          <label className="w-fit whitespace-nowrap">Title : </label>
           <input
             value={bookClub.title}
             type="text"
-            className="outline-none grow px-3 py-2 border-dashed border-2 border-[#245953] rounded-2xl focus:border-solid"
+            className="w-full outline-none grow px-3 py-2 border-dashed border-2 border-[#245953] rounded-2xl focus:border-solid"
             onChange={(e) =>
               setBookClub((prev) => {
                 return {
@@ -134,7 +134,7 @@ const Page = () => {
           />
         </div>
         <div className="flex items-center gap-3">
-          <label>Date : </label>
+          <label className="whitespace-nowrap">Date : </label>
           <input
             type="date"
             className="outline-none px-3 py-2 border-dashed border-2 border-[#245953] rounded-2xl focus:border-solid"
@@ -148,7 +148,7 @@ const Page = () => {
           />
         </div>
         <div className="flex items-center gap-3">
-          <label>Time : </label>
+          <label className="whitespace-nowrap">Time : </label>
           <select
             name="hour"
             className="outline-none px-3 py-2 border-dashed border-2 border-[#245953] rounded-2xl focus:border-solid"
@@ -186,7 +186,7 @@ const Page = () => {
           </select>
         </div>
         <div className="flex items-center gap-3">
-          <label className="w-fit">Invitation : </label>
+          <label className="w-fit whitespace-nowrap">Invitation : </label>
           <div className="flex flex-col grow">
             <Search
               setBookClub={setBookClub}
@@ -206,9 +206,13 @@ const Page = () => {
             return (
               <div
                 key={user.id}
-                className="px-2 py-1 bg-orange-300 text-black border-[1px] border-black rounded-md flex gap-3 items-center "
+                className="px-2 py-1 bg-orange-300 text-black border-[1px] border-black rounded-md flex flex-row gap-3 items-center"
               >
-                <p className="text-black">{user.name}</p>
+                <div className="flex flex-col gap-1 sm:flex-row text-black break-all text-[12px] sm:text-[16px]">
+                  <p>{user.name}</p>
+                  <p>({user.email})</p>
+                </div>
+
                 <span
                   className="hover:cursor-pointer"
                   onClick={() => handleRemoveGuest(user.id)}

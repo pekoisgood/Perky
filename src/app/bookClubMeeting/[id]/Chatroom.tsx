@@ -11,7 +11,7 @@ import {
   orderBy,
   onSnapshot,
 } from "firebase/firestore";
-import { HiPaperAirplane } from "react-icons/hi";
+import { HiPaperAirplane, HiOutlineChatAlt2 } from "react-icons/hi";
 import { PiFinnTheHumanFill } from "react-icons/pi";
 import { Message } from "@/utils/types/types";
 import { db } from "@/utils/firebase/firebase";
@@ -88,50 +88,57 @@ const Chatroom = ({
           className={`flex flex-col gap-[18px] h-full w-full p-2 pb-[42px] 
           overflow-y-scroll grow  border-[1px] border-black bg-orange-50 rounded-lg`}
         >
-          {messages.map((message, index) => {
-            return message.userId === user.id ? (
-              <div
-                className="flex flex-col w-fit ml-auto items-end"
-                key={index}
-              >
-                <p className="text-[10px] pr-[6px]">{message.user}</p>
-                <p
-                  className="bg-[#9575DE] border-black border-[1px] rounded-full px-[16px] tracking-[1px] text-[14px]
-              shadow-black shadow-[3px_3px] py-1 w-fit text-white"
+          {messages.length > 0 ? (
+            messages.map((message, index) => {
+              return message.userId === user.id ? (
+                <div
+                  className="flex flex-col w-fit ml-auto items-end"
+                  key={index}
                 >
-                  {message.text}
-                </p>
-              </div>
-            ) : (
-              <div
-                className="flex gap-1 w-fit min-w-[32px] mr-auto justify-start items-center"
-                key={index}
-              >
-                {message.avatar ? (
-                  <Image
-                    src={message.avatar}
-                    alt="user avatar"
-                    width={32}
-                    height={32}
-                    className="rounded-full border-[1px] border-black overflow-hidden h-[32px] w-[32px] object-cover"
-                  />
-                ) : (
-                  <PiFinnTheHumanFill />
-                )}
-                <div>
-                  <p className="text-[12px]">
-                    {message.user === "" ? "Demo" : message.user}
-                  </p>
+                  <p className="text-[10px] pr-[6px]">{message.user}</p>
                   <p
                     className="bg-[#9575DE] border-black border-[1px] rounded-full px-[16px] tracking-[1px] text-[14px]
-          shadow-black shadow-[3px_3px] py-1 w-fit text-white text-center"
+              shadow-black shadow-[3px_3px] py-1 w-fit text-white"
                   >
                     {message.text}
                   </p>
                 </div>
-              </div>
-            );
-          })}
+              ) : (
+                <div
+                  className="flex gap-1 w-fit min-w-[32px] mr-auto justify-start items-center"
+                  key={index}
+                >
+                  {message.avatar ? (
+                    <Image
+                      src={message.avatar}
+                      alt="user avatar"
+                      width={32}
+                      height={32}
+                      className="rounded-full border-[1px] border-black overflow-hidden h-[32px] w-[32px] object-cover"
+                    />
+                  ) : (
+                    <PiFinnTheHumanFill />
+                  )}
+                  <div>
+                    <p className="text-[12px]">
+                      {message.user === "" ? "Demo" : message.user}
+                    </p>
+                    <p
+                      className="bg-[#9575DE] border-black border-[1px] rounded-full px-[16px] tracking-[1px] text-[14px]
+          shadow-black shadow-[3px_3px] py-1 w-fit text-white text-center"
+                    >
+                      {message.text}
+                    </p>
+                  </div>
+                </div>
+              );
+            })
+          ) : (
+            <div className="w-full h-full flex flex-col gap-3 items-center justify-center text-[#9c9b9b]">
+              <HiOutlineChatAlt2 size={25} />
+              <p>Say hi to everyone !</p>
+            </div>
+          )}
         </div>
         <div className="flex gap-1 p-1 items-center w-full">
           <input
