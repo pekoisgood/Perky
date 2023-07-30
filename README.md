@@ -37,6 +37,7 @@ The project is created with:
 ![ESLint](https://img.shields.io/badge/ESLint-4B3263?style=for-the-badge&logo=eslint&logoColor=white)
 
 Other libraries : 
+
 ![alt](https://badgen.net/static/Tiptap/^2.0.3/orange)
 ![alt](https://badgen.net/static/Framer%20Motion/^10.12.18/7242f5)
 ![alt](https://badgen.net/static/Chart.js/^5.2.0/e942f5)
