@@ -30,7 +30,7 @@ const PostArticle = () => {
       {showWarning && (
         <Warning time={0} customHandleCloseButton={() => setShowWarning(false)}>
           <div className="flex flex-col gap-3 items-center">
-            <p>You need to login to post a article.</p>
+            <p>You need to login to post an article.</p>
             <Link href="/auth" onClick={() => setShowWarning(false)}>
               <Button>Go to Login</Button>
             </Link>
