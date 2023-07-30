@@ -6,14 +6,14 @@ const textClass = `w-full rounded-lg shadow-[-2px_2px] shadow-[#0000003b] ${skel
 const TrendingArticleSkeleton = () => {
   return (
     <>
-      <div className="relative flex flex-wrap md:justify-between h-[92%] gap-[10px] max-w-[1280px] w-full mx-auto [&>*:nth-child(2)]:border-none z-100 px-[20px]">
+      <div className="relative flex flex-col sm:flex-row flex-wrap md:justify-between h-[92%] gap-[10px] max-w-[1280px] w-full mx-auto sm:[&>*:nth-child(2)]:border-none z-100 px-[20px]">
         <div className="flex flex-col sm:flex-row gap-[20px] w-full h-[70%] mt-auto border-b-[1px] border-[#d1d5db] pb-[30px]">
           <div
-            className={`w-full sm:min-w-[60%] rounded-xl shadow-[-10px_10px] shadow-[#0000003b] ${skeletonAnimation}`}
+            className={`w-full sm:min-w-[60%] h-[250px] sm:h-full rounded-xl shadow-[-10px_10px] shadow-[#0000003b] mt-[10px] lg:mt-0 ${skeletonAnimation}`}
           />
           <div className="flex flex-col gap-[10px] w-full">
             <p
-              className={`w-[60px] rounded-full h-[30px] shadow-[-3px_3px] shadow-[#0000003b] ${skeletonAnimation}`}
+              className={`w-[80px] rounded-full h-[30px] shadow-[-3px_3px] shadow-[#0000003b] ${skeletonAnimation}`}
             />
             <p
               className={`w-full rounded-xl h-[40px] shadow-[-2px_2px] shadow-[#0000003b] ${skeletonAnimation}`}
@@ -27,27 +27,29 @@ const TrendingArticleSkeleton = () => {
             <p
               className={`w-[40px] rounded-lg h-[20px] shadow-[-2px_2px] shadow-[#0000003b] ${skeletonAnimation}`}
             />
-            <p className={`rounded-md ${textClass} mt-auto h-[17px]`} />
-            <p className={`rounded-md ${textClass} h-[17px]`} />
+            <p className={`rounded-md ${textClass} w-full mt-auto h-[17px]`} />
+            <p className={`rounded-md ${textClass} w-full h-[17px]`} />
           </div>
         </div>
         {new Array(4).fill("").map((_, index) => {
           return (
             <div
               key={index}
-              className="flex sm:flex-row flex-col gap-[10px] w-[23%] h-[23%] md:h-[16%] border-l-[1px] border-[#d1d5db] pl-[14px] mt-[20px]"
+              className="flex  gap-[10px] w-full sm:w-[23%] h-[23%] md:h-[18%] border-b-[1px] sm:border-b-0 sm:border-l-[1px] border-[#d1d5db] sm:pl-[14px]"
             >
-              <div className="basis-2/3 flex flex-col justify-evenly gap-[7px] grow">
+              <div className="flex basis-full lg:basis-1/2 sm:flex-col gap-3">
                 <p
-                  className={`w-[60px] rounded-full h-[30px] shadow-[-3px_3px] shadow-[#0000003b] ${skeletonAnimation}`}
+                  className={`w-[80px] rounded-full h-[30px] shadow-[-3px_3px] shadow-[#0000003b] ${skeletonAnimation}`}
                 />
-                <p className={`${textClass} h-[20px]`} />
-                <p className={`${textClass} h-[20px]`} />
-                <p className={`${textClass} h-[20px]`} />
-                <p className={`${textClass} h-[20px]`} />
+                <div className="flex w-full items-start flex-col pb-[10px] sm:pb-0 gap-[10px] h-full">
+                  <p className={`${textClass} h-[20px]`} />
+                  <p className={`${textClass} h-[20px]`} />
+                  <p className={`${textClass} hidden sm:block h-[20px]`} />
+                  <p className={`${textClass} hidden sm:block h-[20px]`} />
+                </div>
               </div>
               <div
-                className={`h-[100%] basis-1/2 rounded-xl ml-auto hidden lg:flex shadow-[#0000003b] shadow-[-3px_3px] ${skeletonAnimation}`}
+                className={`h-[200px] basis-1/2 rounded-xl ml-auto hidden lg:block shadow-[#0000003b] shadow-[-3px_3px] ${skeletonAnimation}`}
               />
             </div>
           );
@@ -58,3 +60,28 @@ const TrendingArticleSkeleton = () => {
 };
 
 export default TrendingArticleSkeleton;
+
+{
+  /* <Link */
+}
+//               href={`article/${article.id}`}
+//               key={index}
+//               className="flex gap-[10px] w-full sm:w-[23%] h-[23%] md:h-[18%] border-b-[1px] sm:border-b-0 sm:border-l-[1px] border-[#d1d5db] pl-[14px] hover:translate-y-[-3px] hover:duration-100"
+//             >
+//               <div className="flex flex-row items-center sm:items-start sm:flex-col pb-[10px] sm:pb-0 gap-[10px] h-full">
+//                 <p className={`text-[10px]  ${categoryClass}`}>
+//                   {article.category}
+//                 </p>
+//                 <h4 className="font-bold text-[13px] sm:text-[15px] line-clamp-4">
+//                   {article.title}
+//                 </h4>
+//               </div>
+//               <Image
+//                 src={article.image}
+//                 alt="cover image"
+//                 width={120}
+//                 height={50}
+//                 priority={true}
+//                 className="h-[100%] rounded-xl object-cover object-center ml-auto hidden lg:flex border-black border-2 shadow-[-3px_3px] shadow-[#0000003b]"
+//               />
+//             </Link>
