@@ -10,13 +10,11 @@ const Page = () => {
 
   return (
     <div className="mt-[20px] px-[10px] sm:px-[15px] w-full mx-auto relative">
-      <h1
-        className={`sticky top-[20px] right-[50%] left-[50%] translate-x-[-50%] bg-white/60 w-fit text-[28px] font-bold tracking-[4px] rounded-full px-5 mb-[30px]
-       lg:left-[50%] lg:translate-x-0 z-10
-      `}
-      >
-        Analysis
-      </h1>
+      <div className="sticky top-[20px] w-full text-center z-10">
+        <h1 className="bg-white/60 w-fit mx-auto text-[28px] font-bold tracking-[4px] rounded-full px-5 mb-[60px] lg:mb-[30px]">
+          Analysis
+        </h1>
+      </div>
       <div className="flex flex-col items-center h-full max-h-[70%] mt-[20px]">
         <LineChart height={"h-full"} width={"w-full"} />
       </div>
