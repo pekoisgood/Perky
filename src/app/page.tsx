@@ -1,15 +1,9 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-import ArticleList from "@/components/Article/ArticleList";
 import sittingBoy from "@/assets/image/people/boy-sitting-on-legs.svg";
-import { Article } from "@/utils/types/types";
-import ArticleListSkeleton from "@/components/Skeleton/ArticleListSkeleton";
-
 import TrendingArticles from "./TrendingArticles";
+import RecentArticles from "./RecentArticles";
 
 const categories = [
   "Frontend",
@@ -25,53 +19,6 @@ shadow-[-3px_3px] shadow-black rounded-2xl border-2 border-black
 `;
 
 const Page = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [articles, setArticles] = useState<Article[]>([]);
-
-  useEffect(() => {
-    let isFetching = false;
-    let total = 0;
-    let articlesCount = 0;
-    let lastId = "0";
-
-    const fetchArticles = async () => {
-      isFetching = true;
-      setIsLoading(true);
-
-      const articlesReq = await fetch(`/api/articles?lastId=${lastId}`);
-      const articlesRes = await articlesReq.json();
-      total = articlesRes.totalCount;
-
-      setArticles((prev) => {
-        return [...prev, ...articlesRes.data];
-      });
-      articlesCount += articlesRes.data.length;
-      lastId = articlesRes.data[articlesRes.data.length - 1].id;
-      isFetching = false;
-      setIsLoading(false);
-    };
-
-    async function scrollHandler() {
-      if (
-        window.innerHeight + window.scrollY >=
-        document.body.offsetHeight - 100
-      ) {
-        if (total && articlesCount === total) return;
-        if (isFetching) return;
-
-        fetchArticles();
-      }
-    }
-
-    fetchArticles();
-    if (!window) return;
-    window.addEventListener("scroll", scrollHandler);
-
-    return () => {
-      window.removeEventListener("scroll", scrollHandler);
-    };
-  }, []);
-
   return (
     <div className="w-full mx-auto">
       <TrendingArticles />
@@ -103,26 +50,12 @@ const Page = () => {
               alt="boy sitting on legs"
               width={200}
               height={300}
+              priority={true}
               className={`absolute bottom-0 left-0 scale-150 z-0`}
             />
           </div>
           <div className="lg:min-w-[100%-300px] md:min-w-[100%-210px] w-full overflow-hidden">
-            {articles && articles.length > 0 && (
-              <ArticleList
-                articles={articles}
-                customLayout="md:justify-start pl-[0]"
-              />
-            )}
-            {isLoading && (
-              <div
-                className={`h-full flex flex-wrap gap-8 justify-center min-h-[150px] mt-[10px]`}
-              >
-                <ArticleListSkeleton />
-                <ArticleListSkeleton />
-                <ArticleListSkeleton />
-                <ArticleListSkeleton />
-              </div>
-            )}
+            <RecentArticles />
           </div>
         </div>
       </div>
