@@ -20,6 +20,8 @@ const Auth = ({
   const isLogin = useAppSelector((state) => state.auth.value.isLogin);
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  console.log("isLoading", isLoading);
+  console.log("isLogin", isLogin);
 
   useEffect(() => {
     if (isLogin === null) {

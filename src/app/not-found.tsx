@@ -12,9 +12,11 @@ const NotFound = () => {
       <h2 className="font-bold text-[20px]">
         Oops... Could not find requested page.
       </h2>
-      <Button>
-        <Link href="/">Home</Link>
-      </Button>
+
+      <Link href="/">
+        <Button>Home</Button>
+      </Link>
+
       <Image
         src={computerMan}
         alt="man holding computer"
