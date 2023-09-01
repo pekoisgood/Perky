@@ -5,6 +5,7 @@
   <br/>
 
   <p align="center"><strong>Learn together, Empower one another.</strong></p>
+  
 </p>
 
 
@@ -70,3 +71,5 @@ Other libraries :
 * Followers
 * Author section on the article page
 * Badges
+
+![Visitors](https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2Fpekoisgood%2FPerky&labelColor=%23dce775&countColor=%23d9e3f0&style=flat-square&labelStyle=upper)
