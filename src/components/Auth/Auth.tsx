@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 import { onAuthStateChanged } from "firebase/auth";
 import { DocumentData, doc, getDoc } from "firebase/firestore";
@@ -20,6 +20,7 @@ const Auth = ({
   const isLogin = useAppSelector((state) => state.auth.value.isLogin);
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const router = useRouter();
   console.log("isLoading", isLoading);
   console.log("isLogin", isLogin);
 
@@ -55,7 +56,9 @@ const Auth = ({
     if (isAuthNeeded) {
       if (isLoading) return;
       if (isLogin === false) {
-        redirect("/auth");
+        // redirect("/auth");
+        router.replace("/auth");
+        console.log("replace to auth");
       }
     }
 
