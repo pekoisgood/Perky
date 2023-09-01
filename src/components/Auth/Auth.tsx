@@ -59,6 +59,8 @@ const Auth = ({
       }
     }
 
+    console.log("re-run!");
+
     checkAuthStatus();
   }, [isLoading, isLogin]);
   return <>{children}</>;
