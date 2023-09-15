@@ -21,20 +21,26 @@ Here is a working live demo : <a href="https://perky-pekoisgood.vercel.app/">Liv
 
 
 ## Tech
+
+1. Developed using [Next.js](https://nextjs.org) 13 App router, leveraging the built-in route folder system to efficiently manage routing.
+2. Utilized [TypeScript](https://www.typescriptlang.org), [ESLint](https://eslint.org), and [Prettier](https://prettier.io) to enhance code quality and maintainability.
+3. Employed [Tailwind](https://tailwindcss.com) as the CSS library and [Redux](https://redux.js.org) for central state management, providing a centralized way to manage React state.
+4. Created reusable components to promote code reusability and maintainability.
+5. Utilized the [TipTap](https://www.tiptap.dev) library as a text editor, allowing users to write articles and include code within posts.
+6. Optimized image download speed by compressing image files before uploading them when publishing posts.
+7. Integrated the third-party [VideoSDK](https://www.videosdk.live) library to enable real-time multi-user video functionality for book club meetings.
+8. In addition to basic video functionality, the book club includes screen sharing and three additional tools: a chat room, notebook, and code editor.
+
+
+
 The project is created with:
 
 ![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
-
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
-
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
-
 ![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
-
 ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
-
 ![Firebase](https://img.shields.io/badge/firebase-%23039BE5.svg?style=for-the-badge&logo=firebase)
-
 ![ESLint](https://img.shields.io/badge/ESLint-4B3263?style=for-the-badge&logo=eslint&logoColor=white)
 
 Other libraries : 
@@ -45,6 +51,7 @@ Other libraries :
 ![alt](https://badgen.net/static/react-icons/^4.10.1/f52f5d)
 ![alt](https://badgen.net/static/react-markdown/^8.0.7/8fc5f7)
 ![alt](https://badgen.net/static/CodeMirror/^6.0.1/f51432)
+
 
 ## Demo
 * Main Page
