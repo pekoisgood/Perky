@@ -10,6 +10,7 @@ import {
   getDoc,
   updateDoc,
   deleteDoc,
+  increment,
 } from "firebase/firestore";
 import { BsBookmark, BsBookmarkHeartFill } from "react-icons/bs";
 
@@ -23,7 +24,7 @@ type Prop = {
   count: number;
 };
 
-const SaveButton = ({ articleId, count }: Prop) => {
+const SaveButton = ({ articleId }: Prop) => {
   const [isSaved, setIsSaved] = useState<boolean | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [showWarning, setShowWarning] = useState(false);
@@ -42,7 +43,7 @@ const SaveButton = ({ articleId, count }: Prop) => {
       await deleteDoc(doc(db, "users", user.id, "savedArticles", articleId));
 
       await updateDoc(articleSavedCountRef, {
-        savedCount: count,
+        savedCount: increment(-1),
       });
 
       setIsSaved(false);
@@ -52,7 +53,7 @@ const SaveButton = ({ articleId, count }: Prop) => {
         createdAt: serverTimestamp(),
       });
       await updateDoc(articleSavedCountRef, {
-        savedCount: count + 1,
+        savedCount: increment(1),
       });
 
       setIsSaved(true);

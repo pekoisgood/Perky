@@ -95,6 +95,8 @@ const Page = () => {
     }
 
     const roomId = await fetchMeetingId();
+    console.log(roomId);
+
     const data = {
       name: bookClub.title,
       time,

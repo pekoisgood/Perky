@@ -65,7 +65,7 @@ const timeAgo = (dateParam: Date, today: Date) => {
       timeHours < 10 ? "0" + timeHours : timeHours
     }:${timeMinutes < 10 ? "0" + timeMinutes : timeMinutes}`;
   } else if (monthes < 12) {
-    return `${monthes} days ago at ${
+    return `${monthes} monthes ago at ${
       timeHours < 10 ? "0" + timeHours : timeHours
     }:${timeMinutes < 10 ? "0" + timeMinutes : timeMinutes}`;
   } else if (isThisYear) {
