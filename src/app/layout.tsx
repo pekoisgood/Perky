@@ -29,9 +29,10 @@ export default function RootLayout({
       {/* Google tag (gtag.js) */}
       <Script
         async
+        id="gtag-tracking-id"
         src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_KEY}`}
       />
-      <Script id="gtag-init" strategy="afterInteractive">
+      <Script id="gtag-tracking-config" strategy="afterInteractive">
         {` window.dataLayer = window.dataLayer || [];
   window.gtag = function(){dataLayer.push(arguments);}
   window.gtag('js', new Date());
