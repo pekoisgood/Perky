@@ -26,20 +26,18 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
-        {/* Google tag (gtag.js) */}
-        <Script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=G-0RB5G1Q2EX"
-        ></Script>
-        <Script id="gtag-init">
-          {` window.dataLayer = window.dataLayer || [];
+      {/* Google tag (gtag.js) */}
+      <Script
+        async
+        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_KEY}`}
+      ></Script>
+      <Script id="gtag-init">
+        {` window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'G-0RB5G1Q2EX';`}
-        </Script>
-      </head>
+  gtag('config', ${process.env.NEXT_PUBLIC_GA_KEY};`}
+      </Script>
       <body
         className={`box-border ${poppins.className} transform-none relative mx-auto`}
       >
