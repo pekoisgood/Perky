@@ -33,10 +33,10 @@ export default function RootLayout({
       />
       <Script id="gtag-init" strategy="afterInteractive">
         {` window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  window.gtag = function(){dataLayer.push(arguments);}
+  window.gtag('js', new Date());
 
-  gtag('config', ${process.env.NEXT_PUBLIC_GA_KEY};`}
+  window.gtag('config', ${process.env.NEXT_PUBLIC_GA_KEY};`}
       </Script>
       <body
         className={`box-border ${poppins.className} transform-none relative mx-auto`}
