@@ -4,6 +4,7 @@ import Image from "next/image";
 import sittingBoy from "@/assets/image/people/boy-sitting-on-legs.svg";
 import TrendingArticles from "./TrendingArticles";
 import RecentArticles from "./RecentArticles";
+import Script from "next/script";
 
 const categories = [
   "Frontend",
@@ -21,6 +22,18 @@ shadow-[-3px_3px] shadow-black rounded-2xl border-2 border-black
 const Page = () => {
   return (
     <div className="w-full mx-auto">
+      {/* Google tag (gtag.js) */}
+      <Script
+        async
+        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_KEY}`}
+      />
+      <Script id="gtag-tracking-config">
+        {` window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)}
+  gtag('js', new Date());
+
+  gtag('config',"G-0RB5G1Q2EX")`}
+      </Script>
       <TrendingArticles />
       <div className="relative max-w-[1280px] mx-[10px] lg:mx-auto border-t-2 border-black mt-[20px]">
         <h2 className="w-fit px-2 py-1 bg-black text-white tracking-[1px] font-medium">

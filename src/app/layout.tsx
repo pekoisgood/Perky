@@ -1,7 +1,5 @@
 import React from "react";
 import { Poppins } from "next/font/google";
-import Script from "next/script";
-
 import "./globals.css";
 
 import ReduxProvider from "@/redux/provider";
@@ -40,18 +38,6 @@ export default function RootLayout({
             <Auth>{children}</Auth>
           </div>
         </ReduxProvider>
-        {/* Google tag (gtag.js) */}
-        <Script
-          async
-          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_KEY}`}
-        />
-        <Script id="gtag-tracking-config">
-          {` window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments)}
-  gtag('js', new Date());
-
-  gtag('config',"G-0RB5G1Q2EX")`}
-        </Script>
       </body>
     </html>
   );
