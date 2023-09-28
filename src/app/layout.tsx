@@ -26,21 +26,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      {/* Google tag (gtag.js) */}
-      <Script
-        async
-        id="gtag-tracking-id"
-        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_KEY}`}
-      />
-      <Script id="gtag-tracking-config" strategy="afterInteractive">
-        {` window.dataLayer = window.dataLayer || [];
-  window.gtag = function(){dataLayer.push(arguments);}
-  window.gtag('js', new Date());
-
-  window.gtag('config', ${process.env.NEXT_PUBLIC_GA_KEY};`}
-      </Script>
       <body
         className={`box-border ${poppins.className} transform-none relative mx-auto`}
+        suppressHydrationWarning={true}
       >
         <ReduxProvider>
           <Header />
@@ -52,6 +40,18 @@ export default function RootLayout({
             <Auth>{children}</Auth>
           </div>
         </ReduxProvider>
+        {/* Google tag (gtag.js) */}
+        <Script
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_KEY}`}
+        />
+        <Script id="gtag-tracking-config">
+          {` window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)}
+  gtag('js', new Date());
+
+  gtag('config',"G-0RB5G1Q2EX")`}
+        </Script>
       </body>
     </html>
   );
