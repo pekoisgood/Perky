@@ -32,7 +32,7 @@ const Page = () => {
   function gtag(){dataLayer.push(arguments)}
   gtag('js', new Date());
 
-  gtag('config',"G-0RB5G1Q2EX")`}
+  gtag('config',"${process.env.NEXT_PUBLIC_GA_KEY}")`}
       </Script>
       <TrendingArticles />
       <div className="relative max-w-[1280px] mx-[10px] lg:mx-auto border-t-2 border-black mt-[20px]">
