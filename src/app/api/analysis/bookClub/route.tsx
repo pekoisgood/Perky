@@ -11,7 +11,8 @@ export async function GET(req: Request) {
     "attendees",
     "array-contains",
     userId,
-    "time"
+    "time",
+    true
   );
 
   return NextResponse.json(data);

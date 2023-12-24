@@ -11,10 +11,11 @@ import {
   getDocs,
   orderBy,
   query,
+  where,
 } from "firebase/firestore";
 import { motion } from "framer-motion";
 
-import { db } from "@/utils/firebase/firebase";
+import { db, getSavedArticle } from "@/utils/firebase/firebase";
 import { SavedArticle } from "@/utils/types/types";
 import { useAppSelector } from "@/redux/hooks";
 import { useAppDispatch } from "@/redux/hooks";
@@ -37,40 +38,50 @@ const ArticleRecord = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const getArticle = async () => {
-      const savedArticles: SavedArticle[] = [];
-      const articleIds: string[] = [];
-      const q = query(
-        collection(db, "users", user.id, "savedArticles"),
-        orderBy("createdAt", "desc")
-      );
-      const result = await getDocs(q);
-      result.forEach((doc) => {
-        articleIds.push(doc.id);
-      });
-
-      if (!articleIds) return;
-      for (let i = 0; i < articleIds.length; i += 1) {
-        const res: DocumentData = await getDoc(
-          doc(db, "articles", articleIds[i])
-        );
-
-        savedArticles.push({
-          id: res.id,
-          authorName: res.data().authorName,
-          title: res.data().title,
-          content: res.data().content,
-          image: res.data().image,
-          category: res.data().category,
-        });
-      }
-
-      dispatch(setSavedArticle(savedArticles));
+    if (user.id === "") return;
+    const getData = async () => {
+      const articles = await getSavedArticle(user.id, 5);
+      dispatch(setSavedArticle(articles));
     };
 
-    if (user.id === "") return;
-    getArticle();
+    getData();
   }, [user]);
+
+  // useEffect(() => {
+  //   const getArticle = async () => {
+  //     const savedArticles: SavedArticle[] = [];
+  //     const articleIds: string[] = [];
+  //     const q = query(
+  //       collection(db, "users", user.id, "savedArticles"),
+  //       orderBy("createdAt", "desc")
+  //     );
+  //     const result = await getDocs(q);
+  //     result.forEach((doc) => {
+  //       articleIds.push(doc.id);
+  //     });
+
+  //     if (!articleIds) return;
+  //     for (let i = 0; i < articleIds.length; i += 1) {
+  //       const res: DocumentData = await getDoc(
+  //         doc(db, "articles", articleIds[i])
+  //       );
+
+  //       savedArticles.push({
+  //         id: res.id,
+  //         authorName: res.data().authorName,
+  //         title: res.data().title,
+  //         content: res.data().content,
+  //         image: res.data().image,
+  //         category: res.data().category,
+  //       });
+  //     }
+
+  //     dispatch(setSavedArticle(savedArticles));
+  //   };
+
+  //   if (user.id === "") return;
+  //   getArticle();
+  // }, [user]);
 
   return (
     <>

@@ -20,7 +20,10 @@ import {
   DocumentData,
   getDocs,
   getDoc,
+  orderBy,
+  limit,
 } from "firebase/firestore";
+import { SavedArticle } from "../types/types";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -87,7 +90,8 @@ const getRecord = async (
   queryItem: string,
   operator: WhereFilterOp,
   userId: string,
-  time: string
+  time: string,
+  weekly: boolean = false
 ) => {
   const dateOffset = 24 * 60 * 60 * 1000 * 6;
   const today = new Date(new Date().toLocaleString().split(" ")[0]).getTime();
@@ -95,6 +99,20 @@ const getRecord = async (
 
   const data: DocumentData[] = [];
   const articleRef = collection(db, category);
+
+  if (weekly) {
+    const queryArticles = await query(
+      articleRef,
+      where(queryItem, operator, userId),
+      where("time", ">=", lastWeek),
+      where("time", "<=", new Date(today))
+    );
+    const result = await getDocs(queryArticles);
+    result.forEach((doc) => data.push(doc.data()));
+
+    return data;
+  }
+
   const queryArticles = await query(
     articleRef,
     where(queryItem, operator, userId),
@@ -140,6 +158,40 @@ const getUserInfo = async (id: string) => {
   return userInfo;
 };
 
+const getSavedArticle = async (userId: string, limitNumber?: number) => {
+  const savedArticles: SavedArticle[] = [];
+
+  const q = () => {
+    if (limitNumber) {
+      return query(
+        collection(db, "articles"),
+        where("savedUsers", "array-contains", userId),
+        orderBy("createdAt"),
+        limit(limitNumber)
+      );
+    }
+    return query(
+      collection(db, "articles"),
+      where("savedUsers", "array-contains", userId),
+      orderBy("createdAt")
+    );
+  };
+
+  const result = await getDocs(q());
+  result.forEach((doc) => {
+    savedArticles.push({
+      title: doc.data().title,
+      id: doc.id,
+      authorName: doc.data().authorName,
+      content: doc.data().content,
+      image: doc.data().image,
+      category: doc.data().category,
+    });
+  });
+
+  return savedArticles;
+};
+
 export {
   app,
   db,
@@ -151,4 +203,5 @@ export {
   signUpWithEmail,
   signInWithEmail,
   getUserInfo,
+  getSavedArticle,
 };

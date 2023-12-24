@@ -5,7 +5,15 @@ import Image from "next/image";
 
 import { motion } from "framer-motion";
 import { MdDeleteOutline } from "react-icons/md";
-import { doc, deleteDoc } from "firebase/firestore";
+import {
+  doc,
+  deleteDoc,
+  collection,
+  getDocs,
+  query,
+  where,
+  collectionGroup,
+} from "firebase/firestore";
 
 import { setRecord } from "@/redux/slice/articleRecordSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
@@ -33,14 +41,37 @@ const Page = () => {
   const user = useAppSelector((state) => state.auth.value);
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const getArticleRecord = async () => {
+    if (user.id) {
+      const req = await fetch(`/api/articleRecord?id=${user.id}`);
+      const myArticles: Article[] = await req.json();
+      if (!myArticles) {
+        setArticleRecord([]);
+        return;
+      }
+      setArticleRecord(myArticles);
+      dispatch(setRecord(myArticles));
+    }
+  };
 
   const handleDeleteArticle = async (id: string) => {
     try {
       await deleteDoc(doc(db, "articles", id));
-      const newArticleRecord = articleRecord!.filter(
-        (article) => article.id !== id
-      );
-      setArticleRecord(newArticleRecord ?? []);
+
+      const ref = collection(db, "articles", id, "savedUsers");
+      const snapshot = await getDocs(ref);
+      const savedUsers: string[] = [];
+      if (!snapshot.empty) {
+        snapshot.forEach(async (doc) => {
+          savedUsers.push(doc.id);
+        });
+        for (let i = 0; i < savedUsers.length; i++) {
+          await deleteDoc(doc(db, "articles", id, "savedUsers", savedUsers[i]));
+        }
+      }
+      console.log(snapshot.empty);
+
+      getArticleRecord();
     } catch (error) {
       console.error(error);
     }
@@ -49,19 +80,6 @@ const Page = () => {
   };
 
   useEffect(() => {
-    const getArticleRecord = async () => {
-      if (user.id) {
-        const req = await fetch(`/api/articleRecord?id=${user.id}`);
-        const myArticles: Article[] = await req.json();
-        if (!myArticles) {
-          setArticleRecord([]);
-          return;
-        }
-        setArticleRecord(myArticles);
-        dispatch(setRecord(myArticles));
-      }
-    };
-
     getArticleRecord();
   }, [user.id]);
 

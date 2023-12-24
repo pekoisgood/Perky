@@ -11,6 +11,8 @@ import {
   updateDoc,
   deleteDoc,
   increment,
+  arrayUnion,
+  arrayRemove,
 } from "firebase/firestore";
 import { BsBookmark, BsBookmarkHeartFill } from "react-icons/bs";
 
@@ -22,9 +24,10 @@ import { useAppSelector } from "@/redux/hooks";
 type Prop = {
   articleId: string;
   count: number;
+  savedUsers: string[];
 };
 
-const SaveButton = ({ articleId }: Prop) => {
+const SaveButton = ({ articleId, savedUsers }: Prop) => {
   const [isSaved, setIsSaved] = useState<boolean | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [showWarning, setShowWarning] = useState(false);
@@ -42,15 +45,33 @@ const SaveButton = ({ articleId }: Prop) => {
     if (isSaved && articleId) {
       await deleteDoc(doc(db, "users", user.id, "savedArticles", articleId));
 
+      await updateDoc(doc(db, "articles", articleId), {
+        savedUsers: arrayRemove({
+          userId: user.id,
+        }),
+      });
+
       await updateDoc(articleSavedCountRef, {
         savedCount: increment(-1),
       });
 
       setIsSaved(false);
     } else {
+      // add savedArticleId in users collection -> savedArticles subcollection
       await setDoc(doc(db, "users", user.id, "savedArticles", articleId), {
         articleId: articleId,
         createdAt: serverTimestamp(),
+      });
+
+      // add user doc in articleId subcollection - "savedUsers"
+      await setDoc(doc(db, "articles", articleId, "savedUsers", user.id), {
+        userId: user.id,
+        createdAt: serverTimestamp(),
+      });
+
+      // add savedUser array in articleId doc
+      await updateDoc(doc(db, "articles", articleId), {
+        savedUsers: arrayUnion(user.id),
       });
       await updateDoc(articleSavedCountRef, {
         savedCount: increment(1),
@@ -70,10 +91,12 @@ const SaveButton = ({ articleId }: Prop) => {
 
   useEffect(() => {
     const checkSavedArticle = async () => {
-      const getArticle = await getDoc(
-        doc(db, "users", user.id, "savedArticles", articleId)
-      );
-      const isSaved = getArticle.data();
+      // const getArticle = await getDoc(
+      //   doc(db, "users", user.id, "savedArticles", articleId)
+      // );
+      // const isSaved = getArticle.data();
+
+      const isSaved = savedUsers.find((userId) => userId === user.id);
       if (isSaved) {
         setIsSaved(true);
       } else {

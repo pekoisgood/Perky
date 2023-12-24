@@ -11,14 +11,15 @@ import {
   getDocs,
   orderBy,
   query,
+  where,
 } from "firebase/firestore";
 import { motion } from "framer-motion";
 
 import ArticleSnippet from "@/components/Article/ArticleSnippet";
 import Button from "@/components/Button/Button";
 import ProfileArticleSkeleton from "@/components/Skeleton/ProfileArticleSkeleton";
-import { db } from "@/utils/firebase/firebase";
-import { SavedArticle } from "@/utils/types/types";
+import { db, getSavedArticle } from "@/utils/firebase/firebase";
+import { SavedArticle, Article } from "@/utils/types/types";
 import { useAppSelector } from "@/redux/hooks";
 
 const Page = () => {
@@ -27,44 +28,54 @@ const Page = () => {
   const user = useAppSelector((state) => state.auth.value);
 
   useEffect(() => {
-    const getArticle = async () => {
-      const savedArticles: SavedArticle[] = [];
-      const articleIds: string[] = [];
-      const q = query(
-        collection(db, "users", user.id, "savedArticles"),
-        orderBy("createdAt", "desc")
-      );
-      const result = await getDocs(q);
-      result.forEach((doc) => {
-        articleIds.push(doc.id);
-      });
-
-      if (articleIds.length === 0) {
-        setArticles([]);
-        return;
-      }
-
-      for (let i = 0; i < articleIds.length; i += 1) {
-        const res: DocumentData = await getDoc(
-          doc(db, "articles", articleIds[i])
-        );
-
-        savedArticles.push({
-          id: res.id,
-          authorName: res.data().authorName,
-          title: res.data().title,
-          content: res.data().content,
-          image: res.data().image,
-          category: res.data().category,
-        });
-      }
-
-      setArticles(savedArticles);
+    const getData = async () => {
+      const articles = await getSavedArticle(user.id);
+      setArticles(articles);
     };
 
     if (user.id === "") return;
-    getArticle();
+    getData();
   }, [user.id]);
+
+  // useEffect(() => {
+  //   const getArticle = async () => {
+  //     const savedArticles: SavedArticle[] = [];
+  //     const articleIds: string[] = [];
+  //     const q = query(
+  //       collection(db, "users", user.id, "savedArticles"),
+  //       orderBy("createdAt", "desc")
+  //     );
+  //     const result = await getDocs(q);
+  //     result.forEach((doc) => {
+  //       articleIds.push(doc.id);
+  //     });
+
+  //     if (articleIds.length === 0) {
+  //       setArticles([]);
+  //       return;
+  //     }
+
+  //     for (let i = 0; i < articleIds.length; i += 1) {
+  //       const res: DocumentData = await getDoc(
+  //         doc(db, "articles", articleIds[i])
+  //       );
+
+  //       savedArticles.push({
+  //         id: res.id,
+  //         authorName: res.data().authorName,
+  //         title: res.data().title,
+  //         content: res.data().content,
+  //         image: res.data().image,
+  //         category: res.data().category,
+  //       });
+  //     }
+
+  //     setArticles(savedArticles);
+  //   };
+
+  //   if (user.id === "") return;
+  //   getArticle();
+  // }, [user.id]);
 
   return (
     <div className="w-full mt-[20px] px-[10px] sm:px-[15px] relative overflow-y-scroll">

@@ -10,11 +10,16 @@ import {
 } from "@/redux/slice/calenderSlice";
 
 export const getDayPerMonth = (m: number, y: number) => {
+  const monthesBeforeJuly = m % 2 === 0 && m < 7;
+  const monthesAfterAugust = m > 8 && m % 2 !== 0;
+
   if (m === 2 && y % 4 === 0) {
     return 29;
   } else if (m === 2) {
     return 28;
-  } else if (m % 2 === 0) {
+  } else if (m === 8) {
+    return 31;
+  } else if (monthesBeforeJuly || monthesAfterAugust) {
     return 30;
   } else {
     return 31;

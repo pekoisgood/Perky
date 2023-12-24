@@ -134,6 +134,7 @@ type Article = {
   title: string;
   image: string;
   starCounts?: number;
+  savedUsers?: string[];
 };
 
 type TrendingArticle = {
