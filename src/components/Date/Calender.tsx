@@ -8,6 +8,11 @@ import {
   handleNexMonth,
   handleSelectDate,
 } from "@/redux/slice/calenderSlice";
+import { useEffect, useState } from "react";
+import { and, collection, getDocs, or, query, where } from "firebase/firestore";
+import { nextDate } from "@/utils/date/dateFc";
+import { BookClubInfo } from "@/utils/types/types";
+import { db } from "@/utils/firebase/firebase";
 
 export const getDayPerMonth = (m: number, y: number) => {
   const monthesBeforeJuly = m % 2 === 0 && m < 7;
@@ -40,26 +45,28 @@ const containerVariant = {
   },
 };
 
+const monthData = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+const week = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
+
 const Calender = () => {
   const dispatch = useAppDispatch();
-
   const date = useAppSelector((state) => state.calender.value);
+  const user = useAppSelector((state) => state.auth.value);
 
-  const monthData = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
-  const week = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
+  const [bookClubs, setBookClubs] = useState<BookClubInfo[]>([]);
 
   const getDate = (m: number, y: number) => {
     const arr = [];
@@ -75,6 +82,132 @@ const Calender = () => {
     return arr;
   };
 
+  // render
+
+  const renderPrevBtn = () => {
+    return (
+      <p
+        className="mr-auto rounded-xl bg-[#245953] px-2 py-1 text-[16px] text-white hover:cursor-pointer hover:bg-[#F7D060] hover:text-[#245953] lg:text-[20px]"
+        onClick={() => {
+          dispatch(hadlePrevMonth());
+        }}
+      >
+        prev
+      </p>
+    );
+  };
+
+  const renderNextBtn = () => {
+    return (
+      <p
+        className="ml-auto rounded-xl bg-[#245953] px-2 py-1 text-[16px] text-white hover:cursor-pointer hover:bg-[#F7D060] hover:text-[#245953] lg:text-[20px]"
+        onClick={() => {
+          dispatch(handleNexMonth());
+        }}
+      >
+        next
+      </p>
+    );
+  };
+
+  const renderWeekTitle = () => {
+    return (
+      <div className="grid grid-cols-7">
+        {week.map((d, index) => (
+          <p
+            key={index}
+            className="justify-center text-center text-[16px] font-bold lg:text-[20px]"
+          >
+            {d}
+          </p>
+        ))}
+      </div>
+    );
+  };
+
+  const renderDate = () => {
+    return (
+      <div className="mx-auto mt-2 grid grid-cols-7 items-center justify-items-center text-[20px]">
+        {getDate(date.month, date.year).map((d, index) => (
+          <div
+            key={index}
+            className="mt-2 flex items-center justify-center font-medium"
+          >
+            <p
+              data-value={Number(d)}
+              className={`
+            h-[35px] w-[35px] rounded-full text-center leading-[36px] hover:cursor-pointer
+            ${
+              d
+                ? date.date && date.date === d
+                  ? "bg-[#FF6D60] text-white"
+                  : "hover:bg-[#FF6D60] hover:text-white "
+                : ""
+            }`}
+              onClick={(e) => {
+                const value = (e.target as HTMLElement).getAttribute(
+                  "data-value",
+                );
+                if (!value) return;
+                dispatch(
+                  handleSelectDate({ type: "UPDATE", value: Number(value) }),
+                );
+              }}
+            >
+              {d}
+            </p>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  useEffect(() => {
+    const getBookClubList = async () => {
+      setBookClubs([]);
+      const year = date.year;
+      const month = date.month;
+      // const day = date.date;
+      const dateThisMonth = new Date(`${year}-${month}`);
+      const dateNextMonth = nextDate(year, month, null);
+
+      const bookClubRef = query(
+        collection(db, "bookClubs"),
+        and(
+          where("time", ">=", dateThisMonth),
+          where("time", "<", dateNextMonth),
+
+          or(
+            where("host", "==", user.id),
+            where("guest", "array-contains", user.id),
+          ),
+        ),
+      );
+
+      const result = await getDocs(bookClubRef);
+
+      if (result.empty) {
+        setBookClubs([]);
+        return;
+      }
+      const bookClubs: BookClubInfo[] = [];
+
+      result.forEach((doc) => {
+        bookClubs.push({
+          id: doc.id,
+          roomId: doc.data().roomId,
+          name: doc.data().name,
+          time: doc.data().time,
+          createdAt: doc.data().createdAt,
+        });
+      });
+      console.log(bookClubs);
+
+      setBookClubs(bookClubs);
+    };
+    getBookClubList();
+  }, [date]);
+
   return (
     <motion.div
       initial="hidden"
@@ -82,71 +215,17 @@ const Calender = () => {
       variants={containerVariant}
       className="w-fit"
     >
-      <div className="border-2 border-solid border-[#245953] bg-white w-[300px] lg:w-[500px] p-[10px] lg:px-6 lg:py-10 rounded-2xl shadow-[-5px_10px] shadow-[#245953]">
-        <div className="flex gap-3 justify-center mb-5 items-center">
-          <p
-            className="mr-auto bg-[#245953] py-1 px-2 rounded-xl text-white text-[16px] lg:text-[20px] hover:cursor-pointer hover:bg-[#F7D060] hover:text-[#245953]"
-            onClick={() => {
-              dispatch(hadlePrevMonth());
-            }}
-          >
-            prev
-          </p>
-          <p className="font-bold text-[20px] lg:text-[25px]">
+      <div className="w-[300px] rounded-2xl border-2 border-solid border-[#245953] bg-white p-[10px] shadow-[-5px_10px] shadow-[#245953] lg:w-[500px] lg:px-6 lg:py-10">
+        <div className="mb-5 flex items-center justify-center gap-3">
+          {renderPrevBtn()}
+          <p className="text-[20px] font-bold lg:text-[25px]">
             {monthData[date.month - 1]}
           </p>
-          <p className="font-bold text-[20px] lg:text-[25px]">{date.year}</p>
-          <p
-            className="ml-auto bg-[#245953] py-1 px-2 rounded-xl text-white text-[16px] lg:text-[20px] hover:cursor-pointer hover:bg-[#F7D060] hover:text-[#245953]"
-            onClick={() => {
-              dispatch(handleNexMonth());
-            }}
-          >
-            next
-          </p>
+          <p className="text-[20px] font-bold lg:text-[25px]">{date.year}</p>
+          {renderNextBtn()}
         </div>
-        <div className="grid grid-cols-7">
-          {week.map((d, index) => (
-            <p
-              key={index}
-              className="text-center justify-center text-[16px] lg:text-[20px] font-bold"
-            >
-              {d}
-            </p>
-          ))}
-        </div>
-        <div className="grid grid-cols-7 mt-2 text-[20px] items-center mx-auto justify-items-center">
-          {getDate(date.month, date.year).map((d, index) => (
-            <div
-              key={index}
-              className="flex justify-center items-center font-medium mt-2"
-            >
-              <p
-                data-value={Number(d)}
-                className={`
-                  w-[35px] h-[35px] rounded-full text-center leading-[36px] hover:cursor-pointer
-                  ${
-                    d
-                      ? date.date && date.date === d
-                        ? "text-white bg-[#FF6D60]"
-                        : "hover:bg-[#FF6D60] hover:text-white "
-                      : ""
-                  }`}
-                onClick={(e) => {
-                  const value = (e.target as HTMLElement).getAttribute(
-                    "data-value"
-                  );
-                  if (!value) return;
-                  dispatch(
-                    handleSelectDate({ type: "UPDATE", value: Number(value) })
-                  );
-                }}
-              >
-                {d}
-              </p>
-            </div>
-          ))}
-        </div>
+        {renderWeekTitle()}
+        {renderDate()}
         <p
           className="ml-auto w-fit text-[#245953] hover:cursor-pointer"
           onClick={() => dispatch(handleSelectDate({ type: "TODAY" }))}
