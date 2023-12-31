@@ -91,7 +91,7 @@ const getRecord = async (
   operator: WhereFilterOp,
   userId: string,
   time: string,
-  weekly: boolean = false
+  weekly = false,
 ) => {
   const dateOffset = 24 * 60 * 60 * 1000 * 6;
   const today = new Date(new Date().toLocaleString().split(" ")[0]).getTime();
@@ -105,7 +105,7 @@ const getRecord = async (
       articleRef,
       where(queryItem, operator, userId),
       where("time", ">=", lastWeek),
-      where("time", "<=", new Date(today))
+      where("time", "<=", new Date(today)),
     );
     const result = await getDocs(queryArticles);
     result.forEach((doc) => data.push(doc.data()));
@@ -116,7 +116,7 @@ const getRecord = async (
   const queryArticles = await query(
     articleRef,
     where(queryItem, operator, userId),
-    where(time, ">=", lastWeek)
+    where(time, ">=", lastWeek),
   );
   const result = await getDocs(queryArticles);
   result.forEach((doc) => data.push(doc.data()));
@@ -129,7 +129,7 @@ const signUpWithEmail = async (email: string, password: string) => {
     const userCredential = await createUserWithEmailAndPassword(
       auth,
       email,
-      password
+      password,
     );
     const user = userCredential.user;
     return user;
@@ -167,13 +167,13 @@ const getSavedArticle = async (userId: string, limitNumber?: number) => {
         collection(db, "articles"),
         where("savedUsers", "array-contains", userId),
         orderBy("createdAt"),
-        limit(limitNumber)
+        limit(limitNumber),
       );
     }
     return query(
       collection(db, "articles"),
       where("savedUsers", "array-contains", userId),
-      orderBy("createdAt")
+      orderBy("createdAt"),
     );
   };
 
