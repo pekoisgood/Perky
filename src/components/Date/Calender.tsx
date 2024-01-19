@@ -8,7 +8,7 @@ import {
   handleNexMonth,
   handleSelectDate,
 } from "@/redux/slice/calenderSlice";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { and, collection, getDocs, or, query, where } from "firebase/firestore";
 import { nextDate } from "@/utils/date/dateFc";
 import { BookClubInfo } from "@/utils/types/types";
@@ -65,8 +65,9 @@ const Calender = () => {
   const dispatch = useAppDispatch();
   const date = useAppSelector((state) => state.calender.value);
   const user = useAppSelector((state) => state.auth.value);
+  // console.log(date);
 
-  const [bookClubs, setBookClubs] = useState<BookClubInfo[]>([]);
+  const [bookClubs, setBookClubs] = useState<{ time: number }[]>([]);
 
   const getDate = (m: number, y: number) => {
     const arr = [];
@@ -80,6 +81,44 @@ const Calender = () => {
       arr.push(i);
     }
     return arr;
+  };
+
+  const getBookClubList = async () => {
+    setBookClubs([]);
+    const year = date.year;
+    const month = date.month;
+    // const day = date.date;
+    const dateThisMonth = new Date(`${year}-${month}`);
+    const dateNextMonth = nextDate(year, month, null);
+
+    const bookClubRef = query(
+      collection(db, "bookClubs"),
+      and(
+        where("time", ">=", dateThisMonth),
+        where("time", "<", dateNextMonth),
+
+        or(
+          where("host", "==", user.id),
+          where("guest", "array-contains", user.id),
+        ),
+      ),
+    );
+
+    const result = await getDocs(bookClubRef);
+
+    if (result.empty) {
+      setBookClubs([]);
+      return;
+    }
+    const bookClubs: { time: number }[] = [];
+
+    result.forEach((doc) => {
+      bookClubs.push({
+        time: doc.data().time.toDate().getDate(),
+      });
+    });
+
+    setBookClubs(bookClubs);
   };
 
   // render
@@ -128,15 +167,20 @@ const Calender = () => {
   const renderDate = () => {
     return (
       <div className="mx-auto mt-2 grid grid-cols-7 items-center justify-items-center text-[20px]">
-        {getDate(date.month, date.year).map((d, index) => (
-          <div
-            key={index}
-            className="mt-2 flex items-center justify-center font-medium"
-          >
-            <p
-              data-value={Number(d)}
-              className={`
-            h-[35px] w-[35px] rounded-full text-center leading-[36px] hover:cursor-pointer
+        {getDate(date.month, date.year).map((d, index) => {
+          // console.log(bookClubs.some((bookClub) => d === bookClub.time));
+          console.log(bookClubs);
+
+          return (
+            <div
+              key={index}
+              className="mt-2 flex items-center justify-center font-medium"
+            >
+              <p
+                data-value={Number(d)}
+                className={`
+            h-[35px] w-[35px] rounded-full text-center leading-[36px]  hover:cursor-pointer
+            ${bookClubs.some((bookClub) => bookClub.time === d) && `after:text-bold after:text-red-500 after:content-['*']`}
             ${
               d
                 ? date.date && date.date === d
@@ -144,69 +188,28 @@ const Calender = () => {
                   : "hover:bg-[#FF6D60] hover:text-white "
                 : ""
             }`}
-              onClick={(e) => {
-                const value = (e.target as HTMLElement).getAttribute(
-                  "data-value",
-                );
-                if (!value) return;
-                dispatch(
-                  handleSelectDate({ type: "UPDATE", value: Number(value) }),
-                );
-              }}
-            >
-              {d}
-            </p>
-          </div>
-        ))}
+                onClick={(e) => {
+                  const value = (e.target as HTMLElement).getAttribute(
+                    "data-value",
+                  );
+                  if (!value) return;
+                  dispatch(
+                    handleSelectDate({ type: "UPDATE", value: Number(value) }),
+                  );
+                }}
+              >
+                {d}
+              </p>
+            </div>
+          );
+        })}
       </div>
     );
   };
 
   useEffect(() => {
-    const getBookClubList = async () => {
-      setBookClubs([]);
-      const year = date.year;
-      const month = date.month;
-      // const day = date.date;
-      const dateThisMonth = new Date(`${year}-${month}`);
-      const dateNextMonth = nextDate(year, month, null);
-
-      const bookClubRef = query(
-        collection(db, "bookClubs"),
-        and(
-          where("time", ">=", dateThisMonth),
-          where("time", "<", dateNextMonth),
-
-          or(
-            where("host", "==", user.id),
-            where("guest", "array-contains", user.id),
-          ),
-        ),
-      );
-
-      const result = await getDocs(bookClubRef);
-
-      if (result.empty) {
-        setBookClubs([]);
-        return;
-      }
-      const bookClubs: BookClubInfo[] = [];
-
-      result.forEach((doc) => {
-        bookClubs.push({
-          id: doc.id,
-          roomId: doc.data().roomId,
-          name: doc.data().name,
-          time: doc.data().time,
-          createdAt: doc.data().createdAt,
-        });
-      });
-      console.log(bookClubs);
-
-      setBookClubs(bookClubs);
-    };
     getBookClubList();
-  }, [date]);
+  }, [date.month]);
 
   return (
     <motion.div
