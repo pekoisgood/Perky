@@ -65,7 +65,6 @@ const Calender = () => {
   const dispatch = useAppDispatch();
   const date = useAppSelector((state) => state.calender.value);
   const user = useAppSelector((state) => state.auth.value);
-  // console.log(date);
 
   const [bookClubs, setBookClubs] = useState<{ time: number }[]>([]);
 
@@ -168,9 +167,6 @@ const Calender = () => {
     return (
       <div className="mx-auto mt-2 grid grid-cols-7 items-center justify-items-center text-[20px]">
         {getDate(date.month, date.year).map((d, index) => {
-          // console.log(bookClubs.some((bookClub) => d === bookClub.time));
-          console.log(bookClubs);
-
           return (
             <div
               key={index}
