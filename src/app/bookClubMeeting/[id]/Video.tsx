@@ -11,13 +11,13 @@ const MeetingProvider = dynamic(
     import("@videosdk.live/react-sdk").then((module) => module.MeetingProvider),
   {
     ssr: false,
-  }
+  },
 );
 const MeetingView = dynamic(
   () => import("../../../components/VideoMeeting/MeetingView"),
   {
     ssr: false,
-  }
+  },
 );
 
 const Video = ({ roomId }: Props) => {
@@ -35,6 +35,7 @@ const Video = ({ roomId }: Props) => {
         webcamEnabled: true,
         participantId: user.id,
         name: user.name,
+        debugMode: true,
       }}
       token={API_KEY}
     >
