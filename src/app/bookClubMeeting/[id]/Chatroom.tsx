@@ -10,6 +10,7 @@ import {
   query,
   orderBy,
   onSnapshot,
+  Firestore,
 } from "firebase/firestore";
 import { HiPaperAirplane, HiOutlineChatAlt2 } from "react-icons/hi";
 import { PiFinnTheHumanFill } from "react-icons/pi";
@@ -29,7 +30,7 @@ const Chatroom = ({
 
   const user = useAppSelector((state) => state.auth.value);
 
-  const params = useParams();
+  const params = useParams<{ id: string }>();
   const roomId = params.id;
   const messagesRef = collection(db, "bookClubs", roomId, "messages");
 
@@ -78,34 +79,34 @@ const Chatroom = ({
   }, []);
 
   return (
-    <div className="min-h-full h-full relative rounded-xl p-2">
+    <div className="relative h-full min-h-full rounded-xl p-2">
       <form
         onSubmit={(e) => handleSubmit(e)}
-        className="flex flex-col h-full relative"
+        className="relative flex h-full flex-col"
       >
         <div
           ref={chatRoomMessagesRef}
-          className={`flex flex-col gap-[18px] h-full w-full p-2 pb-[42px] 
-          overflow-y-scroll grow  border-[1px] border-black bg-orange-50 rounded-lg`}
+          className={`flex h-full w-full grow flex-col gap-[18px] overflow-y-scroll 
+          rounded-lg border-[1px]  border-black bg-orange-50 p-2 pb-[42px]`}
         >
           {messages.length > 0 ? (
             messages.map((message, index) => {
               return message.userId === user.id ? (
                 <div
-                  className="flex flex-col w-fit ml-auto items-end"
+                  className="ml-auto flex w-fit flex-col items-end"
                   key={index}
                 >
-                  <p className="text-[10px] pr-[6px]">{message.user}</p>
+                  <p className="pr-[6px] text-[10px]">{message.user}</p>
                   <p
-                    className="bg-[#9575DE] border-black border-[1px] rounded-xl px-[16px] tracking-[1px] text-[14px]
-              shadow-black shadow-[3px_3px] py-1 w-fit text-white"
+                    className="w-fit rounded-xl border-[1px] border-black bg-[#9575DE] px-[16px] py-1
+              text-[14px] tracking-[1px] text-white shadow-[3px_3px] shadow-black"
                   >
                     {message.text}
                   </p>
                 </div>
               ) : (
                 <div
-                  className="flex gap-1 w-fit min-w-[32px] mr-auto justify-start items-center"
+                  className="mr-auto flex w-fit min-w-[32px] items-center justify-start gap-1"
                   key={index}
                 >
                   {message.avatar ? (
@@ -114,7 +115,7 @@ const Chatroom = ({
                       alt="user avatar"
                       width={32}
                       height={32}
-                      className="rounded-full border-[1px] border-black overflow-hidden h-[32px] w-[32px] object-cover"
+                      className="h-[32px] w-[32px] overflow-hidden rounded-full border-[1px] border-black object-cover"
                     />
                   ) : (
                     <PiFinnTheHumanFill />
@@ -124,8 +125,8 @@ const Chatroom = ({
                       {message.user === "" ? "Demo" : message.user}
                     </p>
                     <p
-                      className="bg-[#9575DE] border-black border-[1px] rounded-xl px-[16px] tracking-[1px] text-[14px]
-          shadow-black shadow-[3px_3px] py-1 w-fit text-white"
+                      className="w-fit rounded-xl border-[1px] border-black bg-[#9575DE] px-[16px] py-1
+          text-[14px] tracking-[1px] text-white shadow-[3px_3px] shadow-black"
                     >
                       {message.text}
                     </p>
@@ -134,16 +135,16 @@ const Chatroom = ({
               );
             })
           ) : (
-            <div className="w-full h-full flex flex-col gap-3 items-center justify-center text-[#9c9b9b]">
+            <div className="flex h-full w-full flex-col items-center justify-center gap-3 text-[#9c9b9b]">
               <HiOutlineChatAlt2 size={25} />
               <p>Say hi to everyone !</p>
             </div>
           )}
         </div>
-        <div className="flex gap-1 p-1 items-center w-full">
+        <div className="flex w-full items-center gap-1 p-1">
           <input
-            className={`flex w-full text-[15px] text-black tracking-[1px] rounded-lg border-[1px] border-black 
-            py-1 px-2 bg-orange-50 outline-none placeholder:text-black focus:border-transparent`}
+            className={`flex w-full rounded-lg border-[1px] border-black bg-orange-50 px-2 py-1 
+            text-[15px] tracking-[1px] text-black outline-none placeholder:text-black focus:border-transparent`}
             placeholder="Type message here..."
             onChange={(e) => setNewMessage(e.target.value)}
             value={newMessage}
