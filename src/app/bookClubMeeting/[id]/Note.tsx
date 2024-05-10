@@ -24,7 +24,7 @@ const Note = ({
 
   const user = useAppSelector((state) => state.auth.value);
 
-  const param = useParams();
+  const param = useParams<{ id: string }>();
   const bookClubId = param.id;
 
   const saveNote = async () => {
@@ -39,7 +39,7 @@ const Note = ({
   useEffect(() => {
     async function getNote() {
       const result = await getDoc(
-        doc(db, "users", user.id, "bookClubNotes", bookClubId)
+        doc(db, "users", user.id, "bookClubNotes", bookClubId),
       );
       const note = await result!.data();
 
@@ -54,13 +54,13 @@ const Note = ({
   }, []);
 
   return (
-    <div className="h-full relative flex flex-col gap-2">
+    <div className="relative flex h-full flex-col gap-2">
       <div
-        className={`absolute top-2 right-2 px-[5px] py-[2px] text-[12px] tracking-[1px] indent-[1px]
-        border-2 border-black rounded-lg shadow-black shadow-[-3px_3px] bg-[#9575DE] text-white
+        className={`absolute right-2 top-2 rounded-lg border-2 border-black bg-[#9575DE] px-[5px]
+        py-[2px] indent-[1px] text-[12px] tracking-[1px] text-white shadow-[-3px_3px] shadow-black
          hover:cursor-pointer ${
            isPreview
-             ? "font-medium translate-y-[2px] translate-x-[-2px] shadow-none"
+             ? "translate-x-[-2px] translate-y-[2px] font-medium shadow-none"
              : " "
          }`}
         onClick={() => setIsPreview((prev) => !prev)}
@@ -69,7 +69,7 @@ const Note = ({
       </div>
       <textarea
         value={text}
-        className={`w-full border-[1px] border-black rounded-xl p-3 resize-none outline-none tracking-[1px] bg-orange-50
+        className={`w-full resize-none rounded-xl border-[1px] border-black bg-orange-50 p-3 tracking-[1px] outline-none
         focus:border-orange-300 ${isPreview ? "h-1/2" : "h-full"}`}
         placeholder="Takes note here !"
         onChange={(e) => setText(e.target.value)}
@@ -77,16 +77,16 @@ const Note = ({
       {isPreview && (
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
-          className={`w-full prose overflow-scroll p-2 text-black border-[1px] border-black rounded-xl bg-orange-50
+          className={`prose w-full overflow-scroll rounded-xl border-[1px] border-black bg-orange-50 p-2 text-black
             ${isPreview && "h-1/2"}`}
         >
           {text}
         </ReactMarkdown>
       )}
-      <div className="flex items-center gap-2 w-fit ml-auto mt-[5px]">
+      <div className="ml-auto mt-[5px] flex w-fit items-center gap-2">
         {processing && <p className="text-[12px] text-[#EB455F]">saved ! </p>}
         <button
-          className="p-2 bg-[#EB455F] text-white text-[13px] rounded-md active:translate-y-[2px] drop-shadow-lg"
+          className="rounded-md bg-[#EB455F] p-2 text-[13px] text-white drop-shadow-lg active:translate-y-[2px]"
           onClick={saveNote}
         >
           Save

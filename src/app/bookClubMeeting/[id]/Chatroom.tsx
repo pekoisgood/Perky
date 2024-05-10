@@ -10,7 +10,6 @@ import {
   query,
   orderBy,
   onSnapshot,
-  Firestore,
 } from "firebase/firestore";
 import { HiPaperAirplane, HiOutlineChatAlt2 } from "react-icons/hi";
 import { PiFinnTheHumanFill } from "react-icons/pi";

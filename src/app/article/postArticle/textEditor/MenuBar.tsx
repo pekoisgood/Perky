@@ -26,12 +26,12 @@ export const MenuBar = ({ editor }: Props) => {
   }
 
   return (
-    <div className="flex gap-2 flex-wrap min-h-[72px]">
+    <div className="flex min-h-[72px] flex-wrap gap-2">
       <button
         onClick={() => editor.chain().focus().toggleBold().run()}
         disabled={!editor.can().chain().focus().toggleBold().run()}
-        className={`border-[1px] border-slate-200 p-1 rounded-md flex items-center justify-center
-        w-[30px] h-[30px]
+        className={`flex h-[30px] w-[30px] items-center justify-center rounded-md border-[1px]
+        border-slate-200 p-1
         ${editor.isActive("bold") ? "is-active" : ""}`}
       >
         <FaBold />
@@ -39,30 +39,30 @@ export const MenuBar = ({ editor }: Props) => {
       <button
         onClick={() => editor.chain().focus().toggleItalic().run()}
         disabled={!editor.can().chain().focus().toggleItalic().run()}
-        className={`border-[1px] border-slate-200 p-1 rounded-md flex items-center justify-center
-        w-[30px] h-[30px] ${editor.isActive("italic") ? "is-active" : ""}`}
+        className={`flex h-[30px] w-[30px] items-center justify-center rounded-md border-[1px]
+        border-slate-200 p-1 ${editor.isActive("italic") ? "is-active" : ""}`}
       >
         <FaItalic />
       </button>
       <button
         onClick={() => editor.chain().focus().toggleStrike().run()}
         disabled={!editor.can().chain().focus().toggleStrike().run()}
-        className={`border-[1px] border-slate-200 p-1 rounded-md flex items-center justify-center
-        w-[30px] h-[30px] ${editor.isActive("strike") ? "is-active" : ""}`}
+        className={`flex h-[30px] w-[30px] items-center justify-center rounded-md border-[1px]
+        border-slate-200 p-1 ${editor.isActive("strike") ? "is-active" : ""}`}
       >
         <FaStrikethrough />
       </button>
       <button
         onClick={() => editor.chain().focus().setParagraph().run()}
-        className={`border-[1px] border-slate-200 p-1 rounded-md flex items-center justify-center
-        w-[30px] h-[30px] ${editor.isActive("paragraph") ? "is-active" : ""}`}
+        className={`flex h-[30px] w-[30px] items-center justify-center rounded-md border-[1px]
+        border-slate-200 p-1 ${editor.isActive("paragraph") ? "is-active" : ""}`}
       >
         p
       </button>
       <button
         onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-        className={`border-[1px] border-slate-200 p-1 rounded-md flex items-center justify-center
-        w-[30px] h-[30px] ${
+        className={`flex h-[30px] w-[30px] items-center justify-center rounded-md border-[1px]
+        border-slate-200 p-1 ${
           editor.isActive("heading", { level: 1 }) ? "is-active" : ""
         }`}
       >
@@ -70,8 +70,8 @@ export const MenuBar = ({ editor }: Props) => {
       </button>
       <button
         onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-        className={`border-[1px] border-slate-200 p-1 rounded-md flex items-center justify-center
-        w-[30px] h-[30px] ${
+        className={`flex h-[30px] w-[30px] items-center justify-center rounded-md border-[1px]
+        border-slate-200 p-1 ${
           editor.isActive("heading", { level: 2 }) ? "is-active" : ""
         }`}
       >
@@ -79,8 +79,8 @@ export const MenuBar = ({ editor }: Props) => {
       </button>
       <button
         onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-        className={`border-[1px] border-slate-200 p-1 rounded-md flex items-center justify-center
-        w-[30px] h-[30px] ${
+        className={`flex h-[30px] w-[30px] items-center justify-center rounded-md border-[1px]
+        border-slate-200 p-1 ${
           editor.isActive("heading", { level: 3 }) ? "is-active" : ""
         }`}
       >
@@ -88,8 +88,8 @@ export const MenuBar = ({ editor }: Props) => {
       </button>
       <button
         onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
-        className={`border-[1px] border-slate-200 p-1 rounded-md flex items-center justify-center
-        w-[30px] h-[30px] ${
+        className={`flex h-[30px] w-[30px] items-center justify-center rounded-md border-[1px]
+        border-slate-200 p-1 ${
           editor.isActive("heading", { level: 4 }) ? "is-active" : ""
         }`}
       >
@@ -97,15 +97,15 @@ export const MenuBar = ({ editor }: Props) => {
       </button>
       <button
         onClick={() => editor.chain().focus().toggleBulletList().run()}
-        className={`border-[1px] border-slate-200 p-1 rounded-md flex items-center justify-center
-        w-[30px] h-[30px] ${editor.isActive("bulletList") ? "is-active" : ""}`}
+        className={`flex h-[30px] w-[30px] items-center justify-center rounded-md border-[1px]
+        border-slate-200 p-1 ${editor.isActive("bulletList") ? "is-active" : ""}`}
       >
         <FaListUl />
       </button>
       <button
         onClick={() => editor.chain().focus().toggleOrderedList().run()}
-        className={`border-[1px] border-slate-200 p-1 rounded-md flex items-center justify-center
-        w-[30px] h-[30px] ${editor.isActive("orderedList") ? "is-active" : ""}`}
+        className={`flex h-[30px] w-[30px] items-center justify-center rounded-md border-[1px]
+        border-slate-200 p-1 ${editor.isActive("orderedList") ? "is-active" : ""}`}
       >
         <FaListOl />
       </button>
@@ -113,53 +113,53 @@ export const MenuBar = ({ editor }: Props) => {
         onClick={() =>
           editor.chain().focus().toggleCodeBlock({ language: "js" }).run()
         }
-        className={`border-[1px] border-slate-200 p-1 rounded-md flex items-center justify-center
-        w-[30px] h-[30px] ${editor.isActive("codeBlock") ? "is-active" : ""}`}
+        className={`flex h-[30px] w-[30px] items-center justify-center rounded-md border-[1px]
+        border-slate-200 p-1 ${editor.isActive("codeBlock") ? "is-active" : ""}`}
       >
         <PiCodeBold />
       </button>
       <button
         onClick={() => editor.chain().focus().toggleBlockquote().run()}
-        className={`border-[1px] border-slate-200 p-1 rounded-md flex items-center justify-center
-        w-[30px] h-[30px] ${editor.isActive("blockquote") ? "is-active" : ""}`}
+        className={`flex h-[30px] w-[30px] items-center justify-center rounded-md border-[1px]
+        border-slate-200 p-1 ${editor.isActive("blockquote") ? "is-active" : ""}`}
       >
         <BsQuote />
       </button>
       <button
         onClick={() => editor.chain().focus().setHorizontalRule().run()}
-        className={`border-[1px] border-slate-200 p-1 rounded-md flex items-center justify-center
-        w-[30px] h-[30px]`}
+        className={`flex h-[30px] w-[30px] items-center justify-center rounded-md border-[1px]
+        border-slate-200 p-1`}
       >
         <VscHorizontalRule />
       </button>
       <button
         onClick={() => editor.chain().focus().undo().run()}
         disabled={!editor.can().chain().focus().undo().run()}
-        className={`border-[1px] border-slate-200 p-1 rounded-md flex items-center justify-center
-        w-[30px] h-[30px] hover:cursor-pointer`}
+        className={`flex h-[30px] w-[30px] items-center justify-center rounded-md border-[1px]
+        border-slate-200 p-1 hover:cursor-pointer`}
       >
         <FaUndo />
       </button>
       <button
         onClick={() => editor.chain().focus().redo().run()}
         disabled={!editor.can().chain().focus().redo().run()}
-        className={`border-[1px] border-slate-200 p-1 rounded-md flex items-center justify-center
-        w-[30px] h-[30px] hover:cursor-pointer`}
+        className={`flex h-[30px] w-[30px] items-center justify-center rounded-md border-[1px]
+        border-slate-200 p-1 hover:cursor-pointer`}
       >
         <FaRedo />
       </button>
       <div
-        className="border-[1px] h-[30px] border-slate-200 p-1 rounded-md hover:cursor-pointer"
+        className="h-[30px] rounded-md border-[1px] border-slate-200 p-1 hover:cursor-pointer"
         onClick={() => setShowColorPalette((prev) => !prev)}
       >
         color
       </div>
       {showColorPalette && (
-        <div className="flex flex-wrap justify-center items-center gap-2">
+        <div className="flex flex-wrap items-center justify-center gap-2">
           <button
             onClick={() => editor.chain().focus().setColor("#958DF1").run()}
-            className={`border-[1px] border-slate-200 rounded-md flex items-center justify-center
-            w-[30px] h-[30px] bg-[#958DF1] text-[#958DF1] ${
+            className={`flex h-[30px] w-[30px] items-center justify-center rounded-md
+            border-[1px] border-slate-200 bg-[#958DF1] text-[#958DF1] ${
               editor.isActive("textStyle", { color: "#958DF1" })
                 ? "is-active"
                 : ""
@@ -167,8 +167,8 @@ export const MenuBar = ({ editor }: Props) => {
           ></button>
           <button
             onClick={() => editor.chain().focus().setColor("#F98181").run()}
-            className={`border-[1px] border-slate-200 p-1 rounded-md flex items-center justify-center
-            w-[30px] h-[30px] bg-[#F98181] ${
+            className={`flex h-[30px] w-[30px] items-center justify-center rounded-md border-[1px]
+            border-slate-200 bg-[#F98181] p-1 ${
               editor.isActive("textStyle", { color: "#F98181" })
                 ? "is-active"
                 : ""
@@ -176,8 +176,8 @@ export const MenuBar = ({ editor }: Props) => {
           ></button>
           <button
             onClick={() => editor.chain().focus().setColor("#FBBC88").run()}
-            className={`border-[1px] border-slate-200 p-1 rounded-md flex items-center justify-center
-            w-[30px] h-[30px] bg-[#FBBC88] ${
+            className={`flex h-[30px] w-[30px] items-center justify-center rounded-md border-[1px]
+            border-slate-200 bg-[#FBBC88] p-1 ${
               editor.isActive("textStyle", { color: "#FBBC88" })
                 ? "is-active"
                 : ""
@@ -186,35 +186,35 @@ export const MenuBar = ({ editor }: Props) => {
 
           <button
             onClick={() => editor.chain().focus().setColor("#FAF594").run()}
-            className={`border-[1px] border-slate-200 p-1 rounded-md flex items-center justify-center
-        w-[30px] h-[30px] bg-[#FAF594] ${
+            className={`flex h-[30px] w-[30px] items-center justify-center rounded-md border-[1px]
+        border-slate-200 bg-[#FAF594] p-1 ${
           editor.isActive("textStyle", { color: "#FAF594" }) ? "is-active" : ""
         }`}
           ></button>
           <button
             onClick={() => editor.chain().focus().setColor("#70CFF8").run()}
-            className={`border-[1px] border-slate-200 p-1 rounded-md flex items-center justify-center
-        w-[30px] h-[30px] bg-[#70CFF8] ${
+            className={`flex h-[30px] w-[30px] items-center justify-center rounded-md border-[1px]
+        border-slate-200 bg-[#70CFF8] p-1 ${
           editor.isActive("textStyle", { color: "#70CFF8" }) ? "is-active" : ""
         }`}
           ></button>
           <button
             onClick={() => editor.chain().focus().setColor("#94FADB").run()}
-            className={`border-[1px] border-slate-200 p-1 rounded-md flex items-center justify-center
-        w-[30px] h-[30px] bg-[#94FADB] ${
+            className={`flex h-[30px] w-[30px] items-center justify-center rounded-md border-[1px]
+        border-slate-200 bg-[#94FADB] p-1 ${
           editor.isActive("textStyle", { color: "#94FADB" }) ? "is-active" : ""
         }`}
           ></button>
           <button
             onClick={() => editor.chain().focus().setColor("#B9F18D").run()}
-            className={`border-[1px] border-slate-200 p-1 rounded-md flex items-center justify-center
-        w-[30px] h-[30px] bg-[#B9F18D] ${
+            className={`flex h-[30px] w-[30px] items-center justify-center rounded-md border-[1px]
+        border-slate-200 bg-[#B9F18D] p-1 ${
           editor.isActive("textStyle", { color: "#B9F18D" }) ? "is-active" : ""
         }`}
           ></button>
           <button
-            className="border-[1px] border-slate-200 p-1 rounded-md flex items-center justify-center
-          w-[30px] h-[30px]"
+            className="flex h-[30px] w-[30px] items-center justify-center rounded-md border-[1px]
+          border-slate-200 p-1"
             onClick={() => editor.chain().focus().unsetColor().run()}
           >
             <GrClear />
