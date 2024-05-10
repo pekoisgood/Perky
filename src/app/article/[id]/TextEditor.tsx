@@ -24,16 +24,16 @@ const Page = ({ article }: { article: string }) => {
       },
     },
     extensions: [
-      StarterKit.configure({
-        bulletList: {
-          keepMarks: true,
-          keepAttributes: true,
-        },
-        orderedList: {
-          keepMarks: true,
-          keepAttributes: true,
-        },
-      }),
+      // StarterKit.configure({
+      //   bulletList: {
+      //     keepMarks: true,
+      //     keepAttributes: true,
+      //   },
+      //   orderedList: {
+      //     keepMarks: true,
+      //     keepAttributes: true,
+      //   },
+      // }),
       CodeBlockLowlight.configure({ lowlight }),
     ],
     content: article,
@@ -41,7 +41,7 @@ const Page = ({ article }: { article: string }) => {
   });
 
   return (
-    <div className="mx-auto flex flex-col min-h-[200px] w-full">
+    <div className="mx-auto flex min-h-[200px] w-full flex-col">
       <EditorContent editor={editor} className="prose w-full" />
     </div>
   );
