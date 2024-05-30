@@ -24,16 +24,16 @@ const Page = ({ article }: { article: string }) => {
       },
     },
     extensions: [
-      // StarterKit.configure({
-      //   bulletList: {
-      //     keepMarks: true,
-      //     keepAttributes: true,
-      //   },
-      //   orderedList: {
-      //     keepMarks: true,
-      //     keepAttributes: true,
-      //   },
-      // }),
+      StarterKit.configure({
+        bulletList: {
+          keepMarks: true,
+          keepAttributes: true,
+        },
+        orderedList: {
+          keepMarks: true,
+          keepAttributes: true,
+        },
+      }),
       CodeBlockLowlight.configure({ lowlight }),
     ],
     content: article,
