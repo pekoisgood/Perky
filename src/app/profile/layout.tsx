@@ -2,33 +2,24 @@ import React from "react";
 import Image from "next/image";
 
 import stylishManWithCap from "@/assets/image/people/stylish-man-with-cap.svg";
-import sittingWomanHoldingLegs from "@/assets/image/people/woman-sitting-holding-both-legs.svg";
 import Auth from "@/components/Auth/Auth";
 
 import ProfileSidebar from "./ProfileSidebar";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="relative flex flex-col items-center h-[calc(100vh-60px)] w-full p-[20px] z-10">
-      <div className="border-slate-400 border-2 w-full h-full relative rounded-xl shadow-[-15px_15px] shadow-black overflow-y-hidden">
-        <div className="flex gap-3 absolute top-[20px] left-[20px]">
-          <div className="rounded-full h-[10px] w-[10px] bg-[#F24C3D]" />
-          <div className="rounded-full h-[10px] w-[10px] bg-[#F2BE22]" />
-          <div className="rounded-full h-[10px] w-[10px] bg-[#22A699]" />
+    <div className="relative z-10 flex h-[calc(100vh-60px)] w-full flex-col items-center p-[20px]">
+      <div className="relative h-full w-full overflow-y-hidden rounded-xl border-2 border-slate-400 shadow-[-15px_15px] shadow-black">
+        <div className="absolute left-[20px] top-[20px] flex gap-3">
+          <div className="h-[10px] w-[10px] rounded-full bg-[#F24C3D]" />
+          <div className="h-[10px] w-[10px] rounded-full bg-[#F2BE22]" />
+          <div className="h-[10px] w-[10px] rounded-full bg-[#22A699]" />
         </div>
-        <div className="w-full h-[50px] border-b-2 border-black bg-slate-50 rounded-t-xl" />
-        <div className="flex gap-2 h-[94%] pb-[60px] sm:pb-[65px] lg:pb-0 bg-[#FCF8E8]/30">
-          <Image
-            src={sittingWomanHoldingLegs}
-            alt="woman sitting holding both legs"
-            width={200}
-            height={500}
-            priority={true}
-            className="scale-x-flip w-[150px] lg:w-[200px] absolute bottom-[-36px] right-0 md:right-[44px] rotate-[5deg] lg:z-0"
-          />
+        <div className="h-[50px] w-full rounded-t-xl border-b-2 border-black bg-slate-50" />
+        <div className="flex h-[94%] gap-2 bg-[#FCF8E8]/30 pb-[60px] sm:pb-[65px] lg:pb-0">
           <div
-            className={`fixed top-[calc(100%-60px)] w-full h-fit lg:shadow-md z-20 left-0
-            lg:h-[102%] lg:w-[230px] lg:min-w-[230px] lg:pr-[15px] lg:pl-0 lg:pt-[25px] lg:sticky lg:top-0 lg:bottom-0 lg:bg-white lg:rounded-none`}
+            className={`fixed left-0 top-[calc(100%-60px)] z-20 h-fit w-full lg:sticky
+            lg:bottom-0 lg:top-0 lg:h-[102%] lg:w-[230px] lg:min-w-[230px] lg:rounded-none lg:bg-white lg:pl-0 lg:pr-[15px] lg:pt-[25px] lg:shadow-md`}
           >
             <ProfileSidebar />
             <Image
@@ -37,7 +28,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
               width={180}
               height={500}
               priority={true}
-              className="hidden lg:block absolute top-[calc(100%-350px)] left-[25px] z-0"
+              className="absolute left-[25px] top-[calc(100%-350px)] z-0 hidden lg:block"
             />
           </div>
           <Auth isAuthNeeded={true}>{children}</Auth>

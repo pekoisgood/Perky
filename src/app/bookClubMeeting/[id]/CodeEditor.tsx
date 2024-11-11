@@ -114,10 +114,10 @@ export default function CodeEditor({ code, setCode }: Props) {
   };
 
   return (
-    <div className="m-1 rounded-xl h-full">
-      <div className="flex justify-between mb-3">
+    <div className="m-1 h-full rounded-xl">
+      <div className="mb-3 flex justify-between">
         <select
-          className="border-[1px] border-slate-400 rounded-lg"
+          className="rounded-lg border-[1px] border-slate-400"
           onChange={(e) => setLanguage(e.target.value)}
         >
           {languages.map((lan, index) => {
@@ -130,7 +130,7 @@ export default function CodeEditor({ code, setCode }: Props) {
         </select>
         <button
           onClick={handleRunCode}
-          className={`bg-orange-100 rounded-lg px-[5px] h-[27px] ${
+          className={`h-[27px] rounded-lg bg-orange-100 px-[5px] ${
             isRunning && "text-[12px]"
           }
         `}
@@ -139,7 +139,7 @@ export default function CodeEditor({ code, setCode }: Props) {
         </button>
       </div>
       <div className="h-[90%] overflow-y-scroll">
-        <div className="h-[84%] rounded-t-lg overflow-hidden">
+        <div className="h-[84%] overflow-hidden rounded-t-lg">
           <CodeMirror
             value={code}
             height="100%"
@@ -153,7 +153,7 @@ export default function CodeEditor({ code, setCode }: Props) {
           />
         </div>
 
-        <div className="h-[16%] p-2 mb-2 bg-black text-white rounded-b-lg border-white border-dashed border-t-[1px] overflow-y-scroll">
+        <div className="mb-2 h-[16%] overflow-y-scroll rounded-b-lg border-t-[1px] border-dashed border-white bg-black p-2 text-white">
           <h2 className="m-0">output :</h2>
           <div className="w-full overflow-y-scroll">{output}</div>
         </div>

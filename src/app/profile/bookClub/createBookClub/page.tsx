@@ -34,7 +34,7 @@ const errorMessage = (bookClub: CreateBookClub, time: Date, now: Date) => {
 
   return (
     <ul className="flex flex-col gap-2">
-      <PiWarningFill size={35} className="w-fit mx-auto" />
+      <PiWarningFill size={35} className="mx-auto w-fit" />
       {messages.map((m, i) => {
         return (
           <li
@@ -57,13 +57,13 @@ const Page = () => {
     minute: "00",
     guest: [],
   });
-  const [showInvationError, setShowInvationError] = useState(false);
+  const [showInvitationError, setShowInvitationError] = useState(false);
   const [isValidForm, setIsValidForm] = useState<boolean | null>(null);
 
   const user = useAppSelector((state) => state.auth.value);
 
   const time = new Date(
-    bookClub.date + " " + bookClub.hour + ":" + bookClub.minute
+    bookClub.date + " " + bookClub.hour + ":" + bookClub.minute,
   );
 
   const handleRemoveGuest = (userIdTobeRomved: string) => {
@@ -95,7 +95,6 @@ const Page = () => {
     }
 
     const roomId = await fetchMeetingId();
-    console.log(roomId);
 
     const data = {
       name: bookClub.title,
@@ -114,8 +113,8 @@ const Page = () => {
   };
 
   return (
-    <div className="flex flex-col gap max-w-[600px] w-full h-fit px-[20px] md:w-[60%] mt-[20px] mx-auto">
-      <h1 className="mx-auto w-fit text-[26px] font-semibold sm:tracking-[6px] sm:indent-[6px] mb-[30px] text-center ">
+    <div className="gap mx-auto mt-[20px] flex h-fit w-full max-w-[600px] flex-col px-[20px] md:w-[60%]">
+      <h1 className="mx-auto mb-[30px] w-fit text-center text-[26px] font-semibold sm:indent-[6px] sm:tracking-[6px] ">
         New Book Club
       </h1>
       <div className="flex flex-col gap-[30px]">
@@ -124,7 +123,7 @@ const Page = () => {
           <input
             value={bookClub.title}
             type="text"
-            className="w-full outline-none grow px-3 py-2 border-dashed border-2 border-[#245953] rounded-2xl focus:border-solid"
+            className="w-full grow rounded-2xl border-2 border-dashed border-[#245953] px-3 py-2 outline-none focus:border-solid"
             onChange={(e) =>
               setBookClub((prev) => {
                 return {
@@ -139,7 +138,7 @@ const Page = () => {
           <label className="whitespace-nowrap">Date : </label>
           <input
             type="date"
-            className="outline-none px-3 py-2 border-dashed border-2 border-[#245953] rounded-2xl focus:border-solid"
+            className="rounded-2xl border-2 border-dashed border-[#245953] px-3 py-2 outline-none focus:border-solid"
             min={today}
             value={bookClub.date}
             onChange={(e) =>
@@ -153,7 +152,7 @@ const Page = () => {
           <label className="whitespace-nowrap">Time : </label>
           <select
             name="hour"
-            className="outline-none px-3 py-2 border-dashed border-2 border-[#245953] rounded-2xl focus:border-solid"
+            className="rounded-2xl border-2 border-dashed border-[#245953] px-3 py-2 outline-none focus:border-solid"
             onChange={(e) =>
               setBookClub((prev) => {
                 return { ...prev, hour: e.target.value };
@@ -171,7 +170,7 @@ const Page = () => {
           <span>:</span>
           <select
             name="minute"
-            className="outline-none px-3 py-2 border-dashed border-2 border-[#245953] rounded-2xl focus:border-solid"
+            className="rounded-2xl border-2 border-dashed border-[#245953] px-3 py-2 outline-none focus:border-solid"
             onChange={(e) =>
               setBookClub((prev) => {
                 return { ...prev, minute: e.target.value };
@@ -189,28 +188,28 @@ const Page = () => {
         </div>
         <div className="flex items-center gap-3">
           <label className="w-fit whitespace-nowrap">Invitation : </label>
-          <div className="flex flex-col grow">
+          <div className="flex grow flex-col">
             <Search
               setBookClub={setBookClub}
               bookClub={bookClub}
-              setShowInvationError={setShowInvationError}
+              setShowInvitationError={setShowInvitationError}
             />
-            {showInvationError && (
-              <p className="text-rose-300 text-[12px]">
+            {showInvitationError && (
+              <p className="text-[12px] text-rose-300">
                 Friend already been added!
               </p>
             )}
           </div>
         </div>
-        <div className="flex gap-2 flex-wrap items-center w-full">
+        <div className="flex w-full flex-wrap items-center gap-2">
           <p>Invited Friend : </p>
           {bookClub.guest.map((user) => {
             return (
               <div
                 key={user.id}
-                className="px-2 py-1 bg-orange-300 text-black border-[1px] border-black rounded-md flex flex-row gap-3 items-center"
+                className="flex flex-row items-center gap-3 rounded-md border-[1px] border-black bg-orange-300 px-2 py-1 text-black"
               >
-                <div className="flex flex-col gap-1 sm:flex-row text-black break-all text-[12px] sm:text-[16px]">
+                <div className="flex flex-col gap-1 break-all text-[12px] text-black sm:flex-row sm:text-[16px]">
                   <p>{user.name}</p>
                   <p>({user.email})</p>
                 </div>

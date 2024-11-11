@@ -21,7 +21,7 @@ shadow-[-3px_3px] shadow-black rounded-2xl border-2 border-black
 
 const Page = () => {
   return (
-    <div className="w-full mx-auto">
+    <div className="mx-auto w-full">
       {/* Google tag (gtag.js) */}
       <Script
         async
@@ -35,12 +35,15 @@ const Page = () => {
   gtag('config',"${process.env.NEXT_PUBLIC_GA_KEY}")`}
       </Script>
       <TrendingArticles />
-      <div className="relative max-w-[1280px] mx-[10px] lg:mx-auto border-t-2 border-black mt-[20px]">
-        <h2 className="w-fit px-2 py-1 bg-black text-white tracking-[1px] font-medium">
+      <div className="relative mx-[10px] mt-[20px] max-w-[1280px] border-t-2 border-black lg:mx-auto">
+        <h2
+          className="w-fit bg-black px-2 
+        py-1 font-medium tracking-[1px] text-white"
+        >
           Recent Articles
         </h2>
-        <div className="flex mt-[20px] gap-[20px]">
-          <div className="hidden sm:flex flex-col w-[150px] items-center gap-5 mt-[56px] sticky top-[120px] left-0 h-[calc(100vh-120px)] self-start">
+        <div className="mt-[20px] flex gap-[20px]">
+          <div className="sticky left-0 top-[120px] mt-[56px] hidden h-[calc(100vh-120px)] w-[150px] flex-col items-center gap-5 self-start sm:flex">
             <h2 className={`text-center text-[20px] font-semibold`}>
               Category
             </h2>
@@ -51,7 +54,7 @@ const Page = () => {
                   key={category}
                   className={
                     categoryClass +
-                    "hover:cursor-pointer hover:animate-wiggle z-10 relative"
+                    "relative z-10 hover:animate-wiggle hover:cursor-pointer"
                   }
                 >
                   {category}
@@ -64,10 +67,10 @@ const Page = () => {
               width={200}
               height={300}
               priority={true}
-              className={`absolute bottom-0 left-0 scale-150 z-0`}
+              className={`absolute bottom-0 left-[50px] z-0 scale-150`}
             />
           </div>
-          <div className="lg:min-w-[100%-300px] md:min-w-[100%-210px] w-full overflow-hidden">
+          <div className="w-full overflow-hidden md:min-w-[100%-210px] lg:min-w-[100%-300px]">
             <RecentArticles />
           </div>
         </div>

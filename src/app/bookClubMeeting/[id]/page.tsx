@@ -60,7 +60,7 @@ const sidebarFunctionContainerMotion = {
 
 const Page = () => {
   const [isShowSidebar, setIsShowSidebar] = useState<boolean>(false);
-  const [showSidebarMenu, setshowhiddenSidebarMenu] = useState<boolean>(false);
+  const [showSidebarMenu, setShowHiddenSidebarMenu] = useState<boolean>(false);
   const [sidebarFunction, setSidebarFunction] = useState<string>("");
   const [bookClub, setBookClub] = useState<BookClubIdAndName>({
     name: "",
@@ -79,7 +79,7 @@ const Page = () => {
 
   const handleClickSidebar = (sidebarFunc: string) => {
     setIsShowSidebar(true);
-    setshowhiddenSidebarMenu(false);
+    setShowHiddenSidebarMenu(false);
     if (sidebarFunction === sidebarFunc) {
       setIsShowSidebar(false);
       setSidebarFunction("");
@@ -160,7 +160,7 @@ const Page = () => {
           p-1 shadow-[-3px_3px] shadow-orange-300 hover:cursor-pointer
           active:translate-x-[-2px] active:translate-y-[2px] active:shadow-none sm:hidden`}
           onClick={() => {
-            setshowhiddenSidebarMenu((prev) => !prev);
+            setShowHiddenSidebarMenu((prev) => !prev);
           }}
         >
           <CgDetailsMore size={20} />
