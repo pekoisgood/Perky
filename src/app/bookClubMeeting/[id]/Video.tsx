@@ -35,6 +35,7 @@ const Video = ({ roomId }: Props) => {
         webcamEnabled: true,
         participantId: user.id,
         name: user.name,
+        debugMode: false,
       }}
       token={API_KEY}
     >
