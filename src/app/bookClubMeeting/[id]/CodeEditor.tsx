@@ -48,7 +48,7 @@ export const getExtensionLanguage = (lang: string) => {
 
 // const rapidApiKey = process.env.NEXT_PUBLIC_RAPID_API_KEY;
 
-// TODO: code compiler not working, disable for temp
+// TODO: code compiler not working, disable this component for temp
 export default function CodeEditor({ code, setCode }: Props) {
   // const [output, setOutput] = useState<string>("");
   // const [isRunning, setIsRunning] = useState(false);
