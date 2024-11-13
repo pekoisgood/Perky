@@ -2,7 +2,8 @@ import { SetStateAction, useState } from "react";
 
 import Chatroom from "./Chatroom";
 import Note from "./Note";
-import CodeEditor from "./CodeEditor";
+// TODO: need to find alternative code editor compiler
+// import CodeEditor from "./CodeEditor";
 
 type Props = {
   sidebarFunction: string;
@@ -30,9 +31,11 @@ const Side = ({ sidebarFunction, text, setText, code, setCode }: Props) => {
           setIsPreview={setIsPreview}
         />
       );
-    } else if (sidebarFunction === sidebarFunctions[2]) {
-      return <CodeEditor code={code} setCode={setCode} />;
     }
+    // TODO: fixing code editor compiler
+    // else if (sidebarFunction === sidebarFunctions[2]) {
+    //   return <CodeEditor code={code} setCode={setCode} />;
+    // }
   };
 
   return <>{getSideBarFunction()}</>;

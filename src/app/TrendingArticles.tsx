@@ -36,7 +36,7 @@ const TrendingArticles = () => {
       const q = query(
         collection(db, "articles"),
         orderBy("savedCount", "desc"),
-        limit(5)
+        limit(5),
       );
       const result = await getDocs(q);
       result.forEach((doc) => {
@@ -56,8 +56,8 @@ const TrendingArticles = () => {
   }, []);
 
   return (
-    <div className="relative flex flex-col sm:h-[calc(100vh-120px)] w-full pb-[15px] sm:pb-0 shadow-lg border-t-2 border-black bg-gradient-to-t from-white to-[#FCF8E8] z-0">
-      <h2 className="w-fit h-fit px-2 py-1 bg-black text-white tracking-[1px] font-medium z-10 ">
+    <div className="relative z-0 mx-auto flex w-full max-w-[1280px] flex-col border-t-2 border-black  pb-[15px] sm:h-[calc(100vh-120px)] sm:pb-0">
+      <h2 className="z-10 h-fit w-fit bg-black px-2 py-1 font-medium tracking-[1px] text-white ">
         Trending Articles
       </h2>
       <div>
@@ -66,7 +66,7 @@ const TrendingArticles = () => {
           alt="monster"
           width={200}
           height={300}
-          className="absolute top-0 right-0 rotate-180 opacity-40"
+          className="absolute right-0 top-0 rotate-180 opacity-40"
         />
       </div>
 
@@ -75,14 +75,14 @@ const TrendingArticles = () => {
         alt="boy sitting on legs"
         width={180}
         height={300}
-        className={`absolute top-[calc(100vh-380px)] left-0 z-0 opacity-40`}
+        className={`absolute left-0 top-[calc(100vh-380px)] z-0 opacity-40`}
       />
       {articles.length > 0 ? (
         <motion.div
           initial="hidden"
           animate="show"
           variants={container}
-          className="flex flex-wrap md:justify-between h-[92%] gap-[15px] px-[20px] max-w-[1280px] mx-auto sm:[&>*:nth-child(2)]:border-none  z-10"
+          className="z-10 mx-auto flex h-[92%] max-w-[1280px] flex-wrap gap-[15px] px-[20px] md:justify-between  sm:[&>*:nth-child(2)]:border-none"
         >
           {articles.map((article, index) => {
             if (index === 0) {
@@ -90,21 +90,21 @@ const TrendingArticles = () => {
                 <Link
                   href={`article/${article.id}`}
                   key={index}
-                  className="flex flex-col sm:flex-row gap-[10px] sm:gap-[20px] w-full h-[70%] mt-auto border-b-[1px] border-[#d1d5db] pb-[30px] pt-[10px] sm:pt-0 hover:translate-y-[-3px] hover:duration-100"
+                  className="mt-auto flex h-[70%] w-full flex-col gap-[10px] border-b-[1px] border-[#d1d5db] pb-[30px] pt-[10px] hover:translate-y-[-3px] hover:duration-100 sm:flex-row sm:gap-[20px] sm:pt-0"
                 >
                   <Image
                     src={article.image}
                     alt="cover image"
                     width={800}
                     height={400}
-                    className="basis-1/2 w-full sm:min-w-[60%] object-cover rounded-xl border-black border-2 shadow-[-10px_10px] shadow-[#0000003b]"
+                    className="w-full basis-1/2 rounded-xl border-2 border-black object-cover shadow-[-10px_10px] shadow-[#0000003b] sm:min-w-[60%]"
                     priority={true}
                   />
                   <div className="flex flex-col gap-[10px]">
                     <p className={`mt-[10px] sm:mt-0 ${categoryClass}`}>
                       {article.category}
                     </p>
-                    <h3 className="text-[30px] sm:text-[40px] font-bold line-clamp-5">
+                    <h3 className="line-clamp-5 text-[30px] font-bold sm:text-[40px]">
                       {article.title}
                     </h3>
                     <p className="text-[14px] font-medium">
@@ -121,13 +121,13 @@ const TrendingArticles = () => {
                 <Link
                   href={`article/${article.id}`}
                   key={index}
-                  className="flex gap-[10px] w-full sm:w-[23%] h-[23%] md:h-[18%] border-b-[1px] sm:border-b-0 sm:border-l-[1px] border-[#d1d5db] pl-[14px] hover:translate-y-[-3px] hover:duration-100"
+                  className="flex h-[23%] w-full gap-[10px] border-b-[1px] border-[#d1d5db] pl-[14px] hover:translate-y-[-3px] hover:duration-100 sm:w-[23%] sm:border-b-0 sm:border-l-[1px] md:h-[18%]"
                 >
-                  <div className="flex flex-row items-center sm:items-start sm:flex-col pb-[10px] sm:pb-0 gap-[10px] h-full">
+                  <div className="flex h-full flex-row items-center gap-[10px] pb-[10px] sm:flex-col sm:items-start sm:pb-0">
                     <p className={`text-[10px]  ${categoryClass}`}>
                       {article.category}
                     </p>
-                    <h4 className="font-bold text-[13px] sm:text-[15px] line-clamp-4">
+                    <h4 className="line-clamp-4 text-[13px] font-bold sm:text-[15px]">
                       {article.title}
                     </h4>
                   </div>
@@ -137,7 +137,7 @@ const TrendingArticles = () => {
                     width={120}
                     height={50}
                     priority={true}
-                    className="h-[100%] rounded-xl object-cover object-center ml-auto hidden lg:flex border-black border-2 shadow-[-3px_3px] shadow-[#0000003b]"
+                    className="ml-auto hidden h-[100%] rounded-xl border-2 border-black object-cover object-center shadow-[-3px_3px] shadow-[#0000003b] lg:flex"
                   />
                 </Link>
               );

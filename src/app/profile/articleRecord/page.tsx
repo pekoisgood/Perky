@@ -32,7 +32,7 @@ type DeleteArticleMessage = {
 
 const Page = () => {
   const [articleRecord, setArticleRecord] = useState<Article[] | null>(null);
-  const [confirmDeleteMessage, setConfirmDeletMessage] =
+  const [confirmDeleteMessage, setConfirmDeleteMessage] =
     useState<DeleteArticleMessage>({
       status: false,
       id: "",
@@ -69,14 +69,13 @@ const Page = () => {
           await deleteDoc(doc(db, "articles", id, "savedUsers", savedUsers[i]));
         }
       }
-      console.log(snapshot.empty);
 
       getArticleRecord();
     } catch (error) {
       console.error(error);
     }
 
-    setConfirmDeletMessage({ status: false, id: "" });
+    setConfirmDeleteMessage({ status: false, id: "" });
   };
 
   useEffect(() => {
@@ -84,15 +83,15 @@ const Page = () => {
   }, [user.id]);
 
   return (
-    <div className="w-full relative mt-[20px]">
-      <div className="sticky top-[20px] w-full text-center z-10">
-        <h1 className="bg-white/60 w-fit mx-auto text-[28px] font-bold tracking-[4px] rounded-full px-5 mb-[30px]">
+    <div className="relative mt-[20px] w-full">
+      <div className="sticky top-[20px] z-10 w-full text-center">
+        <h1 className="mx-auto mb-[30px] w-fit rounded-full bg-white/60 px-5 text-[28px] font-bold tracking-[4px]">
           Article Record
         </h1>
       </div>
 
       {articleRecord === null ? (
-        <div className="columns-1 sm:columns-2 md:columns-3 gap-x-5 overflow-y-scroll pb-5">
+        <div className="columns-1 gap-x-5 overflow-y-scroll pb-5 sm:columns-2 md:columns-3">
           <ProfileArticleSkeleton />
           <ProfileArticleSkeleton />
           <ProfileArticleSkeleton />
@@ -105,11 +104,11 @@ const Page = () => {
         </div>
       ) : articleRecord.length > 0 ? (
         <>
-          <div className="colomns-1 min-[500px]:columns-2 md:columns-3 gap-x-5 overflow-y-scroll pt-[10px] pb-5">
+          <div className="colomns-1 gap-x-5 overflow-y-scroll pb-5 pt-[10px] min-[500px]:columns-2 md:columns-3">
             {articleRecord.map((article) => {
               return (
                 <div
-                  className="rounded-xl p-1 block bg-[#245953] break-inside-avoid mb-5 shadow-md hover:cursor-pointer"
+                  className="mb-5 block break-inside-avoid rounded-xl bg-[#245953] p-1 shadow-md hover:cursor-pointer"
                   key={article.id}
                   onClick={() => {
                     router.push(`/article/${article.id}`);
@@ -127,35 +126,35 @@ const Page = () => {
                       stiffness: 130,
                       duration: 1,
                     }}
-                    className="relative flex flex-col gap-2 h-full justify-center p-3 border-dashed border-2 border-white rounded-lg"
+                    className="relative flex h-full flex-col justify-center gap-2 rounded-lg border-2 border-dashed border-white p-3"
                   >
                     <MdDeleteOutline
                       size={30}
-                      className={`absolute top-[5px] right-[5px] bg-white/30 p-1 rounded-lg
-                      hover:text-red-400 hover:cursor-pointer
+                      className={`absolute right-[5px] top-[5px] rounded-lg bg-white/30 p-1
+                      hover:cursor-pointer hover:text-red-400
                     `}
                       onClick={(e) => {
                         e.stopPropagation();
-                        setConfirmDeletMessage({
+                        setConfirmDeleteMessage({
                           status: true,
                           id: article.id,
                         });
                       }}
                     />
-                    <div className="w-full h-[100px] mx-auto overflow-hidden rounded-2xl">
+                    <div className="mx-auto h-[100px] w-full overflow-hidden rounded-2xl">
                       <Image
                         src={article.image}
                         alt="cover image"
                         width={400}
                         height={300}
-                        className="object-cover h-full w-full"
+                        className="h-full w-full object-cover"
                         priority={true}
                       />
                     </div>
-                    <p className="font-semibold text-[18px] text-white break-words hyphens-auto">
+                    <p className="hyphens-auto break-words text-[18px] font-semibold text-white">
                       {article.title[0].toUpperCase() + article.title.slice(1)}
                     </p>
-                    <div className="text-[#eee] pl-1 text-[12px]">
+                    <div className="pl-1 text-[12px] text-[#eee]">
                       <ArticleSnippet article={article.content} />
                     </div>
                   </motion.div>
@@ -166,10 +165,10 @@ const Page = () => {
               <Warning
                 time={0}
                 customHandleCloseButton={() =>
-                  setConfirmDeletMessage({ status: false, id: "" })
+                  setConfirmDeleteMessage({ status: false, id: "" })
                 }
               >
-                <div className="flex flex-col gap-3 justify-center items-center">
+                <div className="flex flex-col items-center justify-center gap-3">
                   <p>Are you sure you want to delete this article?</p>
                   <div className="flex gap-3 text-center">
                     <Button
@@ -181,7 +180,7 @@ const Page = () => {
                     </Button>
                     <Button
                       handleOnClick={() =>
-                        setConfirmDeletMessage({ status: false, id: "" })
+                        setConfirmDeleteMessage({ status: false, id: "" })
                       }
                     >
                       No
@@ -193,7 +192,7 @@ const Page = () => {
           </div>
         </>
       ) : (
-        <div className="flex justify-center items-center h-full text-[#245953] text-center">
+        <div className="flex h-full items-center justify-center text-center text-[#245953]">
           <p>
             There&apos;s no article yet!! <br />
             Go to post your first article!!

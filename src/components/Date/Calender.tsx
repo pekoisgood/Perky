@@ -201,7 +201,6 @@ const Calender = () => {
           createdAt: doc.data().createdAt,
         });
       });
-      console.log(bookClubs);
 
       setBookClubs(bookClubs);
     };

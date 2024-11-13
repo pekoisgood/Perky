@@ -1,15 +1,11 @@
 import React from "react";
-import { Extension, NodeViewContent, NodeViewWrapper } from "@tiptap/react";
-
-interface Prop {
-  node: {
-    attrs: {
-      language: string;
-    };
-  };
-  updateAttributes: ({ language }: { language: string }) => void;
-  extension: Extension;
-}
+import {
+  DecorationWithType,
+  Extension,
+  NodeViewContent,
+  NodeViewProps,
+  NodeViewWrapper,
+} from "@tiptap/react";
 
 const CodeBlockComponent = ({
   node: {
@@ -17,7 +13,7 @@ const CodeBlockComponent = ({
   },
   updateAttributes,
   extension,
-}: Prop) => {
+}: NodeViewProps) => {
   return (
     <NodeViewWrapper className="relative">
       <select

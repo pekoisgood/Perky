@@ -89,21 +89,21 @@ const Comment = ({ articleId }: { articleId: string }) => {
 
   return (
     <div
-      className={`w-full max-w-[800px] flex flex-col justify-center gap-4 mt-[35px] bg-[#ebebeb] 
-    border-2 rounded-2xl border-[#245953] p-5 shadow-[#245953] shadow-[-5px_5px]`}
+      className={`mt-[35px] flex w-full max-w-[800px] flex-col justify-center gap-4 rounded-2xl 
+    border-2 border-[#245953] bg-[#ebebeb] p-5 shadow-[-5px_5px] shadow-[#245953]`}
     >
-      <h1 className="w-fit mx-auto font-semibold text-[20px] tracking-[2px] indent-[2px]">
+      <h1 className="mx-auto w-fit indent-[2px] text-[20px] font-semibold tracking-[2px]">
         Comment
       </h1>
       <form
         onSubmit={(e) => handleSubmitComment(e)}
-        className="flex gap-2 justify-center items-center"
+        className="flex items-center justify-center gap-2"
       >
         <input
           type="text"
           id="comment"
           value={newComment}
-          className="w-[95%] h-[42px] p-2 border-[1px] border-[#245953] rounded-md focus:border-2 outline-none"
+          className="h-[42px] w-[95%] rounded-md border-[1px] border-[#245953] p-2 outline-none focus:border-2"
           onChange={(e) => setNewComment(e.target.value)}
         />
         <Button customLayout="h-[42px] w-[42px] flex items-center justify-center rotate-90 shadow-[2px_2px]">
@@ -117,7 +117,7 @@ const Comment = ({ articleId }: { articleId: string }) => {
               return (
                 <div
                   key={index}
-                  className="flex flex-col sm:flex-row gap-3 items-center border-2 border-dashed border-orange-300 rounded-tl-xl rounded-tr-xl rounded-br-xl p-2 bg-white text-center sm:text-start"
+                  className="flex flex-col items-center gap-3 rounded-br-xl rounded-tl-xl rounded-tr-xl border-2 border-dashed border-orange-300 bg-white p-2 text-center sm:flex-row sm:text-start"
                 >
                   {comment.userAvatar ? (
                     <Image
@@ -125,27 +125,27 @@ const Comment = ({ articleId }: { articleId: string }) => {
                       alt="avatar"
                       width={30}
                       height={30}
-                      className="rounded-full overflow-hidden min-w-[30px] h-[30px] object-cover border-[1px] border-black"
+                      className="h-[30px] min-w-[30px] overflow-hidden rounded-full border-[1px] border-black object-cover"
                     />
                   ) : (
                     <PiFinnTheHumanFill
                       size={30}
-                      className="min-w-[30px] border-[1px] border-black rounded-full"
+                      className="min-w-[30px] rounded-full border-[1px] border-black"
                     />
                   )}
                   <div className="flex flex-col gap-1">
-                    <p className="text-black text-[12px] sm:text-[14px] font-semibold">
+                    <div className="flex items-center text-[12px] font-semibold text-black sm:text-[14px]">
                       {comment.userName}
-                      <span className="text-[8px] sm:text-[10px] ml-2 font-normal">
+                      <span className="ml-2 text-[8px] font-normal sm:text-[10px]">
                         {comment.createdAt ?? false
                           ? timeAgo(
                               new Date(comment.createdAt.seconds * 1000),
-                              new Date()
+                              new Date(),
                             )
                           : "now"}
                       </span>
-                    </p>
-                    <p className="text-[16px] sm:text-[18px] break-words hyphens-auto">
+                    </div>
+                    <p className="hyphens-auto break-words text-[16px] sm:text-[18px]">
                       {comment.comment}
                     </p>
                   </div>
@@ -154,7 +154,7 @@ const Comment = ({ articleId }: { articleId: string }) => {
             })}
           </div>
         ) : (
-          <p className="w-fit mx-auto text-[14px] text-black tracking-[1px]">
+          <p className="mx-auto w-fit text-[14px] tracking-[1px] text-black">
             There&apos;s no comment... Maybe you can be the first one!
           </p>
         )}

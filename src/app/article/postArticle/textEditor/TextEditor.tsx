@@ -6,7 +6,12 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { handleUpdateArticle } from "@/redux/slice/postArticleSlice";
 import TextStyle from "@tiptap/extension-text-style";
 import { Color } from "@tiptap/extension-color";
-import { EditorContent, useEditor, ReactNodeViewRenderer } from "@tiptap/react";
+import {
+  EditorContent,
+  useEditor,
+  ReactNodeViewRenderer,
+  NodeViewProps,
+} from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import css from "highlight.js/lib/languages/css";
@@ -27,7 +32,7 @@ lowlight.registerLanguage("ts", ts);
 const Page = () => {
   const dispatch = useAppDispatch();
   const articleContent = useAppSelector(
-    (state) => state.postArticle.value.content
+    (state) => state.postArticle.value.content,
   );
 
   const editor = useEditor({
@@ -66,7 +71,7 @@ const Page = () => {
         action: "UPDATE_INPUTS",
         key: "content",
         value: editor.getHTML(),
-      })
+      }),
     );
   }, [editor, editor?.getHTML()]);
 
@@ -75,7 +80,7 @@ const Page = () => {
       <MenuBar editor={editor} />
       <EditorContent
         editor={editor}
-        className="prose mx-auto w-full mt-5"
+        className="prose mx-auto mt-5 w-full"
         placeholder="Let's create some awsome content...!"
       />
     </>

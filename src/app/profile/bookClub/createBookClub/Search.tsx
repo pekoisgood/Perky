@@ -8,10 +8,10 @@ import { db } from "@/utils/firebase/firebase";
 type Props = {
   bookClub: CreateBookClub;
   setBookClub: React.Dispatch<React.SetStateAction<CreateBookClub>>;
-  setShowInvationError: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowInvitationError: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const Search = ({ bookClub, setBookClub, setShowInvationError }: Props) => {
+const Search = ({ bookClub, setBookClub, setShowInvitationError }: Props) => {
   const [isSearching, setIsSearching] = useState<boolean | null>(null);
   const [searchName, setSearchName] = useState<string>("");
   const [users, setUsers] = useState<User[]>([]);
@@ -20,7 +20,7 @@ const Search = ({ bookClub, setBookClub, setShowInvationError }: Props) => {
     setIsSearching(false);
     setSearchName("");
     if (bookClub.guest.find((guest) => guest.id === id)) {
-      setShowInvationError(true);
+      setShowInvitationError(true);
       return;
     }
     setBookClub((prev) => {
@@ -54,18 +54,18 @@ const Search = ({ bookClub, setBookClub, setShowInvationError }: Props) => {
         type="text"
         value={searchName}
         placeholder="User Name..."
-        className="w-full outline-none px-3 py-2 border-dashed border-2 border-[#245953] rounded-2xl focus:border-solid"
+        className="w-full rounded-2xl border-2 border-dashed border-[#245953] px-3 py-2 outline-none focus:border-solid"
         onClick={() => {
           setIsSearching(true);
-          setShowInvationError(false);
+          setShowInvitationError(false);
         }}
         onChange={(e) => setSearchName(e.target.value)}
       />
       {isSearching && searchName !== "" && (
-        <div className="flex flex-col gap-2 absolute top-[44px] left-0 w-full h-fit bg-slate-100/90 rounded-lg p-4 max-h-[200px] overflow-scroll">
+        <div className="absolute left-0 top-[44px] flex h-fit max-h-[200px] w-full flex-col gap-2 overflow-scroll rounded-lg bg-slate-100/90 p-4">
           {users
             .filter((user) =>
-              user.name.toLowerCase().includes(searchName.toLowerCase())
+              user.name.toLowerCase().includes(searchName.toLowerCase()),
             )
             .map((user) => {
               return (
