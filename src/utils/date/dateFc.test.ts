@@ -1,4 +1,4 @@
-import { getTime, getFormattedDate, caculateCountPerDay } from "./dateFc";
+import { getTime, getFormattedDate, calculateCountPerDay } from "./dateFc";
 
 describe("getTime()", () => {
   it("returns the formatted time with minutes in the evening", () => {
@@ -33,7 +33,7 @@ describe("getTime()", () => {
 describe("getFormattedDate()", () => {
   it("should return a formated date in DD. MM YY. at HH:MM", () => {
     expect(getFormattedDate(new Date("2023,01,01"))).toBe(
-      "1. January 2023. at 00:00"
+      "1. January 2023. at 00:00",
     );
   });
   it("returns the formatted date with full year", () => {
@@ -61,11 +61,11 @@ describe("getFormattedDate()", () => {
   });
 });
 
-describe("caculateCountPerDay", () => {
+describe("calculateCountPerDay", () => {
   it("returns an empty array for empty input arrays", () => {
     const labels: string[] = [];
     const filteredRecord: Date[] = [];
-    const result = caculateCountPerDay(labels, filteredRecord);
+    const result = calculateCountPerDay(labels, filteredRecord);
     expect(result).toEqual([]);
   });
 
@@ -75,7 +75,7 @@ describe("caculateCountPerDay", () => {
       new Date("2023-01-05"),
       new Date("2023-01-06"),
     ];
-    const result = caculateCountPerDay(labels, filteredRecord);
+    const result = calculateCountPerDay(labels, filteredRecord);
     expect(result).toEqual([0, 0, 0, 0, 1, 1, 0]);
   });
 
@@ -87,7 +87,7 @@ describe("caculateCountPerDay", () => {
       new Date("2023-01-02"),
       new Date("2023-01-03"),
     ];
-    const result = caculateCountPerDay(labels, filteredRecord);
+    const result = calculateCountPerDay(labels, filteredRecord);
     expect(result).toEqual([2, 1, 1, 0, 0, 0, 0]);
   });
 
@@ -100,7 +100,7 @@ describe("caculateCountPerDay", () => {
       new Date("2023-01-03"),
       new Date("2023-01-03"),
     ];
-    const result = caculateCountPerDay(labels, filteredRecord);
+    const result = calculateCountPerDay(labels, filteredRecord);
     expect(result).toEqual([2, 1, 2, 0, 0, 0, 0]);
   });
 });

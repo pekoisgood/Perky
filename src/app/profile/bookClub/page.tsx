@@ -14,36 +14,36 @@ const Page = () => {
     return (
       <Link
         href="/profile/bookClub/createBookClub"
-        className="absolute top-[50px] lg:top-[4px] right-0 group w-[78px] h-[39px] bg-[#245953] rounded-md hover:cursor-pointer "
+        className="group absolute right-0 top-[50px] h-[39px] w-[78px] rounded-md bg-[#245953] hover:cursor-pointer lg:top-[4px] "
       >
-        <div className="relative w-[90px] h-[39px] z-10">
+        <div className="relative z-10 h-[39px] w-[90px]">
           <div
-            className={`flex items-center gap-[1px] h-full relative 
-before:absolute before:block before:top-0 before:left-[-2px] before:content-[ ] before:w-[80px] before:h-[39px] before:bg-[#245953] before:rounded-md 
-px-[3px] py-1 z-20 before:border-2 before:border-black 
-before:hover:skew-x-12 before:hover:h-[36px] before:hover:top-[3px] before:hover:left-[-7px] group-hover:duration-100`}
+            className={`before:content-[ ] relative z-20 flex 
+h-full items-center gap-[1px] px-[3px] py-1 before:absolute before:left-[-2px] before:top-0 before:block before:h-[39px] 
+before:w-[80px] before:rounded-md before:border-2 before:border-black before:bg-[#245953] 
+before:hover:left-[-7px] before:hover:top-[3px] before:hover:h-[36px] before:hover:skew-x-12 group-hover:duration-100`}
           >
-            <span className="inline-block relative text-[12px] text-white leading-[31px] group-hover:left-[-6px] group-hover:duration-100">
+            <span className="relative inline-block text-[12px] leading-[31px] text-white group-hover:left-[-6px] group-hover:duration-100">
               New Club +
             </span>
           </div>
-          <div className="absolute top-[-4px] left-[-2px] w-[20px] h-[9px] bg-[#245953] rounded-[40%_40%_0_0/10px_10px_0_0] z-10 border-black border-l-2 border-t-2" />
+          <div className="absolute left-[-2px] top-[-4px] z-10 h-[9px] w-[20px] rounded-[40%_40%_0_0/10px_10px_0_0] border-l-2 border-t-2 border-black bg-[#245953]" />
         </div>
       </Link>
     );
   };
 
   return (
-    <div className="relative w-full mt-[20px] mx-5 md:mx-0">
-      <div className="sticky top-[20px] w-full text-center z-10">
-        <h1 className="bg-white/60 w-fit mx-auto text-[28px] font-bold tracking-[4px] rounded-full px-5 mb-[60px] lg:mb-[30px]">
+    <div className="relative mx-5 mt-[20px] w-full md:mx-0">
+      <div className="sticky top-[20px] z-10 w-full text-center">
+        <h1 className="mx-auto mb-[60px] w-fit rounded-full bg-white/60 px-5 text-[28px] font-bold tracking-[4px] lg:mb-[30px]">
           Book Club
         </h1>
       </div>
-      <div className="flex sm:flex-row flex-col justify-start items-center sm:items-start sm:pl-5 gap-10 h-[89%] w-full max-w-[1200px] mx-auto">
+      <div className="mx-auto flex h-[89%] w-full max-w-[1200px] flex-col items-center justify-start gap-10 sm:flex-row sm:items-start sm:pl-5">
         <Calender />
-        <div className="flex flex-col sm:items-start items-center h-[75%] w-full">
-          <p className="w-fit text-[18px] md:text-[20px] font-semibold">
+        <div className="flex h-[75%] w-full flex-col items-center sm:items-start">
+          <p className="w-fit text-[18px] font-semibold md:text-[20px]">
             Book Club Date : {date.year} / {date.month} / {date.date}
           </p>
           {renderAddBookClubBtn()}

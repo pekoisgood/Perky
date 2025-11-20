@@ -21,7 +21,7 @@ import { db } from "@/utils/firebase/firebase";
 import { BookClubInfo, Note } from "@/utils/types/types";
 import BookClubSkeleton from "@/components/Skeleton/BookClubSkeleton";
 import { useAppSelector } from "@/redux/hooks";
-import { getTime, nextDate } from "@/utils/date/dateFc";
+import { getTime } from "@/utils/date/dateFc";
 
 const container = {
   hidden: {
@@ -67,20 +67,18 @@ const BookClubList = () => {
     const year = date.year;
     const month = date.month;
     const day = date.date;
-    const dateToday = new Date(`${year}-${month}-${day}`);
 
     const bookClubRef = query(
       collection(db, "bookClubs"),
       and(
-        where("time", ">=", dateToday),
-        where("time", "<", nextDate(year, month, day)),
-
+        where("time", ">=", new Date(year, month - 1, day)),
+        where("time", "<", new Date(year, month - 1, day + 1)),
         or(
           where("host", "==", user.id),
-          where("guest", "array-contains", user.id)
-        )
+          where("guest", "array-contains", user.id),
+        ),
       ),
-      orderBy("time")
+      orderBy("time"),
     );
 
     const result = await getDocs(bookClubRef);
@@ -107,9 +105,9 @@ const BookClubList = () => {
     setIsPreviewNote(true);
 
     const result = await getDoc(
-      doc(db, "users", user.id, "bookClubNotes", bookClubId)
+      doc(db, "users", user.id, "bookClubNotes", bookClubId),
     );
-    const note = await result!.data();
+    const note = await result.data();
 
     if (!note) {
       setNote({
@@ -131,7 +129,7 @@ const BookClubList = () => {
   return (
     <>
       <motion.div
-        className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 mt-4 w-full relative"
+        className="relative mt-4 grid w-full grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3"
         initial="hidden"
         animate="show"
         variants={container}
@@ -149,16 +147,16 @@ const BookClubList = () => {
                 key={index}
                 variants={child}
                 whileHover={{ y: -10 }}
-                className="p-1 border-solid rounded-xl bg-[#245953] text-white w-fit h-fit mx-auto md:w-full"
+                className="mx-auto h-fit w-fit rounded-xl border-solid bg-[#245953] p-1 text-white md:w-full"
               >
-                <div className="flex flex-col p-4 gap-2 justify-center items-center border-dashed border-2 border-white rounded-lg">
-                  <h3 className="text-[16px] text-white font-bold">
+                <div className="flex flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed border-white p-4">
+                  <h3 className="text-[16px] font-bold text-white">
                     {bookClub.name}
                   </h3>
                   <p className="text-[14px]">
                     {getTime(new Date(bookClub.time.seconds * 1000), true)}
                   </p>
-                  <div className="flex gap-2 justify-center text-black">
+                  <div className="flex justify-center gap-2 text-black">
                     <Link
                       href={
                         bookClub.time.toDate() < new Date()
@@ -168,13 +166,13 @@ const BookClubList = () => {
                       className={`${
                         bookClub.time.toDate() < new Date() &&
                         "hover:cursor-not-allowed "
-                      } w-[40px] text-center p-1 rounded-lg bg-[#F0EB8D] text-[12px]`}
+                      } w-[40px] rounded-lg bg-[#F0EB8D] p-1 text-center text-[12px]`}
                     >
                       Join
                     </Link>
                     <div
                       onClick={() => getNote(bookClub.id)}
-                      className="text-center w-[40px] p-1 rounded-lg bg-[#F0EB8D] text-[12px] hover:cursor-pointer"
+                      className="w-[40px] rounded-lg bg-[#F0EB8D] p-1 text-center text-[12px] hover:cursor-pointer"
                     >
                       Note
                     </div>
@@ -184,19 +182,19 @@ const BookClubList = () => {
             );
           })
         ) : (
-          <p className="w-full col-span-2 text-[#245953] text-center md:text-start font-medium">
+          <p className="col-span-2 w-full text-center font-medium text-[#245953] md:text-start">
             No book club this day... Go join one!
           </p>
         )}
       </motion.div>
       {isPreviewNote && note && (
-        <div className="absolute top-0 left-0 w-full h-[98%]">
+        <div className="absolute left-0 top-0 h-[98%] w-full">
           <div
-            className={`flex flex-col px-[20px] absolute top-[49%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-full h-[99%]
-          bg-white/90 backdrop-blur-md rounded-xl border-[#245953] border-2 shadow-md overflow-y-scroll z-[21]`}
+            className={`absolute left-[50%] top-[49%] z-[21] flex h-[99%] w-full translate-x-[-50%] translate-y-[-50%] flex-col
+          overflow-y-scroll rounded-xl border-2 border-[#245953] bg-white/90 px-[20px] shadow-md backdrop-blur-md`}
           >
             <button
-              className="w-fit ml-auto mt-[10px]"
+              className="ml-auto mt-[10px] w-fit"
               onClick={() => {
                 setIsPreviewNote(false);
                 setNote(null);

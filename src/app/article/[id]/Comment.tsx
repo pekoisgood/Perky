@@ -137,7 +137,7 @@ const Comment = ({ articleId }: { articleId: string }) => {
                     <div className="flex items-center text-[12px] font-semibold text-black sm:text-[14px]">
                       {comment.userName}
                       <span className="ml-2 text-[8px] font-normal sm:text-[10px]">
-                        {comment.createdAt ?? false
+                        {(comment.createdAt ?? false)
                           ? timeAgo(
                               new Date(comment.createdAt.seconds * 1000),
                               new Date(),

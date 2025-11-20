@@ -75,7 +75,7 @@ const timeAgo = (dateParam: Date, today: Date) => {
   return getFormattedDate(date);
 };
 
-const caculateCountPerDay = (labels: string[], filteredRecord: Date[]) => {
+const calculateCountPerDay = (labels: string[], filteredRecord: Date[]) => {
   const dataSet = [];
   for (let i = 0; i < labels.length; i++) {
     const labelDay = labels[i];
@@ -95,11 +95,11 @@ const caculateCountPerDay = (labels: string[], filteredRecord: Date[]) => {
   return dataSet;
 };
 
-const getTime = (date: Date, showMinutes: boolean) => {
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-  const hour = date.getHours();
-  const minute = date.getMinutes();
+const getTime = (date: Date, showMinutes: boolean, utc?: boolean) => {
+  const month = utc ? date.getUTCMonth() + 1 : date.getMonth() + 1;
+  const day = utc ? date.getUTCDate() : date.getDate();
+  const hour = utc ? date.getUTCHours() : date.getHours();
+  const minute = utc ? date.getUTCMinutes() : date.getMinutes();
 
   if (showMinutes) {
     return `${date.getFullYear()}/${month < 10 ? `0${month}` : month}/${
@@ -112,6 +112,31 @@ const getTime = (date: Date, showMinutes: boolean) => {
     day < 10 ? `0${day}` : day
   }`;
 };
+
+// Get utc 1 day range from local
+function getUTCDateRange(year: number, month: number, day: number) {
+  // local starting date
+  const localStart = new Date(year, month - 1, day);
+
+  // turn into utc
+  const utcStart = new Date(
+    Date.UTC(
+      localStart.getUTCFullYear(),
+      localStart.getUTCMonth(),
+      localStart.getUTCDate(),
+    ),
+  );
+
+  const utcEnd = new Date(
+    Date.UTC(
+      localStart.getUTCFullYear(),
+      localStart.getUTCMonth(),
+      localStart.getUTCDate() + 1,
+    ),
+  );
+
+  return { utcStart, utcEnd };
+}
 
 const nextDate = (y: number, m: number, d: number | null) => {
   if (
@@ -129,4 +154,11 @@ const nextDate = (y: number, m: number, d: number | null) => {
   return new Date(`${y}-${m}-${d + 1}`);
 };
 
-export { timeAgo, caculateCountPerDay, getTime, getFormattedDate, nextDate };
+export {
+  timeAgo,
+  calculateCountPerDay,
+  getTime,
+  getFormattedDate,
+  nextDate,
+  getUTCDateRange,
+};
