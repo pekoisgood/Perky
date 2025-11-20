@@ -21,7 +21,7 @@ import { db } from "@/utils/firebase/firebase";
 import { BookClubInfo, Note } from "@/utils/types/types";
 import BookClubSkeleton from "@/components/Skeleton/BookClubSkeleton";
 import { useAppSelector } from "@/redux/hooks";
-import { getTime, getUTCDateRange } from "@/utils/date/dateFc";
+import { getTime } from "@/utils/date/dateFc";
 
 const container = {
   hidden: {
@@ -68,13 +68,11 @@ const BookClubList = () => {
     const month = date.month;
     const day = date.date;
 
-    const { utcStart, utcEnd } = getUTCDateRange(year, month, day);
-
     const bookClubRef = query(
       collection(db, "bookClubs"),
       and(
-        where("time", ">=", utcStart),
-        where("time", "<", utcEnd),
+        where("time", ">=", new Date(year, month - 1, day)),
+        where("time", "<", new Date(year, month - 1, day + 1)),
         or(
           where("host", "==", user.id),
           where("guest", "array-contains", user.id),
