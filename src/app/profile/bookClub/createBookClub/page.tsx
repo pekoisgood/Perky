@@ -9,7 +9,6 @@ import { fetchMeetingId } from "@/utils/bookClubs/videoSdk";
 import { db } from "@/utils/firebase/firebase";
 import { CreateBookClub } from "@/utils/types/types";
 import { IoMdClose } from "react-icons/io";
-import { PiWarningFill } from "react-icons/pi";
 import Button from "@/components/Button/Button";
 import Warning from "@/components/Warning/Warning";
 import { useAppSelector } from "@/redux/hooks";
@@ -22,43 +21,30 @@ const today = `${new Date().getFullYear()}-${
     : new Date().getMonth() + 1
 }-${new Date().getDate()}`;
 
-const errorMessage = (bookClub: CreateBookClub, time: Date, now: Date) => {
-  const isValidTime = time > now;
+const errorValidatedClass = "border-red-500";
 
-  const messages = [
-    !bookClub.title && "Title can't be empty.",
-    !bookClub.date && "Date can't be empty.",
-    (!bookClub.hour || !bookClub.minute) && "Time can't be empty.",
-    !isValidTime && bookClub.date && "Date or time should be in the future.",
-  ].filter(Boolean);
-
-  return (
-    <ul className="flex flex-col gap-2">
-      <PiWarningFill size={35} className="mx-auto w-fit" />
-      {messages.map((m, i) => {
-        return (
-          <li
-            key={i}
-            className="list-disc text-[12px] sm:text-[16px] lg:text-[20px]"
-          >
-            {m}
-          </li>
-        );
-      })}
-    </ul>
-  );
+type ErrorValidation = {
+  title?: string;
+  date?: string;
+  hour?: string;
+  minute?: string;
 };
 
 const Page = () => {
   const [bookClub, setBookClub] = useState<CreateBookClub>({
     title: "",
     date: today,
-    hour: "",
+    hour: "00",
     minute: "00",
     guest: [],
   });
   const [showInvitationError, setShowInvitationError] = useState(false);
-  const [isValidForm, setIsValidForm] = useState<boolean | null>(null);
+  const [isValidForm, setIsValidForm] = useState<
+    | boolean
+    | null // loading
+    | undefined // initial
+  >(undefined);
+  const [errorValidation, setErrorValidation] = useState<ErrorValidation>({});
 
   const user = useAppSelector((state) => state.auth.value);
 
@@ -67,6 +53,28 @@ const Page = () => {
   const minute = Number(bookClub.minute);
 
   const time = new Date(year, month - 1, day, hour, minute);
+
+  function handleValidation() {
+    const errorMsg: ErrorValidation = {};
+    if (!bookClub.title) {
+      errorMsg.title = "Title can't be empty.";
+    }
+
+    if (!bookClub.date) {
+      errorMsg.date = "Date can't be empty.";
+    }
+
+    if (!bookClub.hour) {
+      errorMsg.hour = "Hour can't be empty.";
+    }
+
+    if (!bookClub.minute) {
+      errorMsg.minute = "Minute can't be empty.";
+    }
+
+    setErrorValidation(errorMsg);
+    return Object.keys(errorMsg).length === 0;
+  }
 
   const handleRemoveGuest = (userIdToBeRemoved: string) => {
     setBookClub((prev) => {
@@ -78,23 +86,13 @@ const Page = () => {
   };
 
   const handleCreateBookClub = async () => {
-    const isValidTime = time > new Date();
+    const isPass = handleValidation();
 
-    const isValidForm =
-      !bookClub.date ||
-      !bookClub.hour ||
-      !bookClub.minute ||
-      !bookClub.title ||
-      !isValidTime;
-
-    if (isValidForm) {
+    if (!isPass) {
       setIsValidForm(false);
-
-      setTimeout(() => {
-        setIsValidForm(null);
-      }, 3000);
       return;
     }
+    setIsValidForm(null);
 
     const roomId = await fetchMeetingId();
 
@@ -111,8 +109,20 @@ const Page = () => {
     await addDoc(bookClubRef, data);
 
     setIsValidForm(true);
+    setErrorValidation({});
     return;
   };
+
+  function renderErrorMsg(type: keyof ErrorValidation) {
+    if (errorValidation[type]) {
+      return (
+        <p className="col-start-2 block font-bold text-red-500">
+          {errorValidation[type]}
+        </p>
+      );
+    }
+    return null;
+  }
 
   return (
     <div className="gap mx-auto mt-[20px] flex h-fit w-full max-w-[600px] flex-col px-[20px] md:w-[60%]">
@@ -120,27 +130,31 @@ const Page = () => {
         New Book Club
       </h1>
       <div className="flex flex-col gap-[30px]">
-        <div className="flex items-center gap-3">
-          <label className="w-fit whitespace-nowrap">Title : </label>
+        {/* Title */}
+        <div className="grid grid-cols-[auto_1fr] items-center gap-x-3 gap-y-2">
+          <label className="whitespace-nowrap">Title :</label>
           <input
             value={bookClub.title}
             type="text"
-            className="w-full grow rounded-2xl border-2 border-dashed border-[#245953] px-3 py-2 outline-none focus:border-solid"
+            className={`w-full rounded-2xl border-2 border-dashed px-3 py-2 outline-none focus:border-solid ${
+              errorValidation.title ? errorValidatedClass : "border-[#245953]"
+            }`}
             onChange={(e) =>
-              setBookClub((prev) => {
-                return {
-                  ...prev,
-                  title: e.target.value,
-                };
-              })
+              setBookClub((prev) => ({
+                ...prev,
+                title: e.target.value,
+              }))
             }
           />
+          {renderErrorMsg("title")}
         </div>
+
+        {/* Date */}
         <div className="flex items-center gap-3">
           <label className="whitespace-nowrap">Date : </label>
           <input
             type="date"
-            className="rounded-2xl border-2 border-dashed border-[#245953] px-3 py-2 outline-none focus:border-solid"
+            className={`rounded-2xl border-2 border-dashed  px-3 py-2 outline-none focus:border-solid  ${errorValidation.date ? errorValidatedClass : "border-[#245953]"}`}
             min={today}
             value={bookClub.date}
             onChange={(e) =>
@@ -149,12 +163,14 @@ const Page = () => {
               })
             }
           />
+          {renderErrorMsg("date")}
         </div>
+        {/* Time */}
         <div className="flex items-center gap-3">
           <label className="whitespace-nowrap">Time : </label>
           <select
             name="hour"
-            className="rounded-2xl border-2 border-dashed border-[#245953] px-3 py-2 outline-none focus:border-solid"
+            className={`rounded-2xl border-2 border-dashed px-3 py-2 outline-none focus:border-solid  ${errorValidation.minute ? errorValidatedClass : "border-[#245953]"}`}
             onChange={(e) =>
               setBookClub((prev) => {
                 return { ...prev, hour: e.target.value };
@@ -187,7 +203,10 @@ const Page = () => {
               );
             })}
           </select>
+          {renderErrorMsg("minute")}
+          {renderErrorMsg("hour")}
         </div>
+        {/* Invitation */}
         <div className="flex items-center gap-3">
           <label className="w-fit whitespace-nowrap">Invitation : </label>
           <div className="flex grow flex-col">
@@ -233,13 +252,17 @@ const Page = () => {
       >
         Create
       </Button>
-      {isValidForm === false && (
-        <Warning time={5000}>
-          {errorMessage(bookClub, time, new Date())}
-        </Warning>
+      {isValidForm === null && (
+        <Warning customCloseButton={true}>Loading</Warning>
       )}
       {isValidForm === true && (
-        <Warning time={0}>
+        <Warning
+          time={0}
+          customHandleCloseButton={() => {
+            setIsValidForm(undefined);
+            setErrorValidation({});
+          }}
+        >
           <div className="flex flex-col gap-3">
             <p>Successfully Create Book Club !</p>
             <Link href="/">
