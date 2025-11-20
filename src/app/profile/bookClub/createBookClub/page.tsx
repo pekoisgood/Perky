@@ -62,15 +62,17 @@ const Page = () => {
 
   const user = useAppSelector((state) => state.auth.value);
 
-  const time = new Date(
-    bookClub.date + " " + bookClub.hour + ":" + bookClub.minute,
-  );
+  const [year, month, day] = bookClub.date.split("-").map(Number);
+  const hour = Number(bookClub.hour);
+  const minute = Number(bookClub.minute);
 
-  const handleRemoveGuest = (userIdTobeRomved: string) => {
+  const time = new Date(year, month - 1, day, hour, minute);
+
+  const handleRemoveGuest = (userIdToBeRemoved: string) => {
     setBookClub((prev) => {
       return {
         ...prev,
-        guest: prev.guest.filter((guest) => guest.id !== userIdTobeRomved),
+        guest: prev.guest.filter((guest) => guest.id !== userIdToBeRemoved),
       };
     });
   };

@@ -18,7 +18,7 @@ import { getDayPerMonth } from "@/components/Date/Calender";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setAnalysis } from "@/redux/slice/analysisSlice";
 import { BookClubInfo, Article } from "@/utils/types/types";
-import { caculateCountPerDay } from "@/utils/date/dateFc";
+import { calculateCountPerDay } from "@/utils/date/dateFc";
 
 ChartJS.register(
   CategoryScale,
@@ -27,7 +27,7 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
 );
 const options = {
   responsive: true,
@@ -53,7 +53,7 @@ const getDateLabel = () => {
   for (let i = 0; i < 7; i++) {
     const lastDayOfMonth = getDayPerMonth(
       weekAgo.getMonth() + 1,
-      weekAgo.getFullYear()
+      weekAgo.getFullYear(),
     );
     date += 1;
     if (date > lastDayOfMonth) {
@@ -70,11 +70,9 @@ const labels = getDateLabel();
 const Page = ({ width, height }: { width?: string; height?: string }) => {
   const user = useAppSelector((state) => state.auth.value);
 
-  const [articleRecourdCreatedTime, setArticleRecourdCreatedTime] = useState(
-    []
-  );
+  const [articleRecordCreatedTime, setArticleRecordCreatedTime] = useState([]);
   const [bookClubRecordCreatedTime, setBookClubRecordCreatedTime] = useState(
-    []
+    [],
   );
 
   const dispatch = useAppDispatch();
@@ -84,10 +82,10 @@ const Page = ({ width, height }: { width?: string; height?: string }) => {
   };
 
   const filteredWeeklyArticleRecord = filterWeeklyRecord(
-    articleRecourdCreatedTime
+    articleRecordCreatedTime,
   );
   const filteredWeeklyBookClubRecord = filterWeeklyRecord(
-    bookClubRecordCreatedTime
+    bookClubRecordCreatedTime,
   );
 
   const data = {
@@ -95,14 +93,14 @@ const Page = ({ width, height }: { width?: string; height?: string }) => {
     datasets: [
       {
         label: "Book Club",
-        data: caculateCountPerDay(labels, filteredWeeklyBookClubRecord),
+        data: calculateCountPerDay(labels, filteredWeeklyBookClubRecord),
         borderColor: "#FFA41B",
         backgroundColor: "#FFA41B",
         tension: 0.1,
       },
       {
         label: "Article Post",
-        data: caculateCountPerDay(labels, filteredWeeklyArticleRecord),
+        data: calculateCountPerDay(labels, filteredWeeklyArticleRecord),
         borderColor: "#525FE1",
         backgroundColor: "#525FE1",
         tension: 0.1,
@@ -114,20 +112,20 @@ const Page = ({ width, height }: { width?: string; height?: string }) => {
     const getRecord = async () => {
       try {
         const articleRecordReq = await fetch(
-          `/api/analysis/article?id=${user.id}`
+          `/api/analysis/article?id=${user.id}`,
         );
         const articleRecord = await articleRecordReq.json();
-        const articleRecourdCreatedTime = articleRecord.map(
-          (article: Article) => new Date(article.createdAt.seconds * 1000)
+        const articleRecordCreatedTime = articleRecord.map(
+          (article: Article) => new Date(article.createdAt.seconds * 1000),
         );
-        setArticleRecourdCreatedTime(articleRecourdCreatedTime);
+        setArticleRecordCreatedTime(articleRecordCreatedTime);
 
         const bookClubRecordReq = await fetch(
-          `/api/analysis/bookClub?id=${user.id}`
+          `/api/analysis/bookClub?id=${user.id}`,
         );
         const bookClubRecord = await bookClubRecordReq.json();
         const bookClubRecordCreatedTime = bookClubRecord.map(
-          (bookClub: BookClubInfo) => new Date(bookClub.time.seconds * 1000)
+          (bookClub: BookClubInfo) => new Date(bookClub.time.seconds * 1000),
         );
         setBookClubRecordCreatedTime(bookClubRecordCreatedTime);
 
@@ -135,7 +133,7 @@ const Page = ({ width, height }: { width?: string; height?: string }) => {
           setAnalysis({
             bookClubs: bookClubRecord,
             records: articleRecord,
-          })
+          }),
         );
       } catch (error) {
         return;
@@ -150,7 +148,7 @@ const Page = ({ width, height }: { width?: string; height?: string }) => {
     <div
       className={`${width ? width : "w-full"} ${
         height ? height : "h-[auto]"
-      } relative max-w-[600px] flex flex-col items-center justify-center`}
+      } relative flex max-w-[600px] flex-col items-center justify-center`}
     >
       <Line options={options} data={data} width={300} height={200} />
     </div>
