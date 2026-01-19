@@ -29,7 +29,7 @@ Here is a working live demo : <a href="https://perky-pekoisgood.vercel.app/">Liv
 5. Utilized the [TipTap](https://www.tiptap.dev) library as a text editor, allowing users to write articles and include code within posts.
 6. Optimized image download speed by compressing image files before uploading them when publishing posts.
 7. Integrated the third-party [VideoSDK](https://www.videosdk.live) library to enable real-time multi-user video functionality for book club meetings.
-8. In addition to basic video functionality, the book club includes screen sharing and three additional tools: a chat room, notebook, and code editor.
+8. In addition to basic video functionality, the book club includes screen sharing and three additional tools: a chat room and notebook.
 
 
 
@@ -53,33 +53,42 @@ Other libraries :
 ![alt](https://badgen.net/static/Chart.js/^5.2.0/e942f5)
 ![alt](https://badgen.net/static/react-icons/^4.10.1/f52f5d)
 ![alt](https://badgen.net/static/react-markdown/^8.0.7/8fc5f7)
-![alt](https://badgen.net/static/CodeMirror/^6.0.1/f51432)
 
 
-## Demo
-* Main Page
-![首頁](https://github.com/pekoisgood/Perky/assets/115715217/2d036115-0545-4a16-bbb7-a11a3700c97c)
+## Project Preview
 
+### Book Club Page
+  * 📹 Video Collaboration
+    * **Multi-party Video Conferencing**: Supports simultaneous video/audio streams from multiple participants.
+    * **Real-time Screen Sharing**: Toggle between camera view and screen sharing with a single click.
+  * 💬 Instant Communication
+    * **Real-time Chatroom**: Fully functional chat interface integrated with Firestore Realtime Database.
+    * **Message Persistence**: Securely stores chat history, allowing users to access previous conversations upon re-joining.
 
-* Book Club
 ![讀書會畫面](https://github.com/pekoisgood/Perky/assets/115715217/bb7be432-6d0c-47a1-ad26-ebe6db018208)
 
-  
-* Article Page
-![AnyConv com__article page - demo](https://github.com/pekoisgood/Perky/assets/115715217/1e3ba2c1-1e0b-49ae-86a2-fa8c980616ec)
+### Profile Page
+  * 👤 Profile Dashboard
+    * **Personal Profile Management**: A centralized dashboard for users to manage their published content.
+    * **Weekly Tracker**: Visualized via Chart.js to provide clear activity trends.
 
-
-* Profile Dashboard
 ![螢幕快照 2023-07-30 下午6 06 53](https://github.com/pekoisgood/Perky/assets/115715217/50d48d54-74eb-4269-b9c8-40fa63f0f852)
 
+### Main Page
+![首頁](https://github.com/pekoisgood/Perky/assets/115715217/2d036115-0545-4a16-bbb7-a11a3700c97c)
 
-* Search Feature
+### Article Page
+  * 📝 Content & Community Features
+    * **Bookmarks**: Users can save favorite articles for quick access later.
+    * **Instant Commenting**: Real-time discussion threads on articles, allowing users to provide and view feedback without refreshing the page.
+
+![AnyConv com__article page - demo](https://github.com/pekoisgood/Perky/assets/115715217/1e3ba2c1-1e0b-49ae-86a2-fa8c980616ec)
+
+### Search Feature
 ![AnyConv com__search feature](https://github.com/pekoisgood/Perky/assets/115715217/0fc2f2a4-8e61-433c-a274-18bd68784be2)
 
 
-## Future Features
-* Followers
-* Author section on the article page
-* Badges
+---
 
 ![Visitors](https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2Fpekoisgood%2FPerky&labelColor=%23dce775&countColor=%23d9e3f0&style=flat-square&labelStyle=upper)
+
