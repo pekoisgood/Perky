@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { headers } from "next/dist/client/components/headers";
 
 import Warning from "@/components/Warning/Warning";
 import Button from "@/components/Button/Button";
@@ -10,6 +9,7 @@ import Comment from "./Comment";
 import SaveCount from "./SaveCount";
 import TextEditor from "./TextEditor";
 import SaveButton from "./SaveButton";
+import { headers } from "next/headers.js";
 
 const Page = async ({ params }: { params: { id: string } }) => {
   const articleId = params.id;
@@ -19,7 +19,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
   const host = headersData.get("host");
 
   const req = await fetch(
-    protocol + "://" + host + "/api/getArticle/" + articleId
+    protocol + "://" + host + "/api/getArticle/" + articleId,
   );
   const article = await req.json();
 
@@ -37,30 +37,30 @@ const Page = async ({ params }: { params: { id: string } }) => {
   }
 
   return (
-    <div className="flex w-fit mx-auto">
+    <div className="mx-auto flex w-fit">
       <SaveButton
         count={article.savedCount ?? 0}
         articleId={articleId}
         savedUsers={article.savedUsers ?? []}
       />
-      <div className="w-full max-w-[800px] grow rounded-lg flex flex-col gap-2 items-center justify-center mx-auto py-10 relative z-10">
-        <h1 className="font-bold text-[24px] sm:text-[30px] w-full mx-auto tracking-[1px] indent-[1px] text-center break-words hyphens-auto">
+      <div className="relative z-10 mx-auto flex w-full max-w-[800px] grow flex-col items-center justify-center gap-2 rounded-lg py-10">
+        <h1 className="mx-auto w-full hyphens-auto break-words text-center indent-[1px] text-[24px] font-bold tracking-[1px] sm:text-[30px]">
           {article.title}
         </h1>
-        <div className="flex gap-3 items-center text-[13px] sm:text-[16px] text-[#245953]">
+        <div className="flex items-center gap-3 text-[13px] text-[#245953] sm:text-[16px]">
           <p>{article.authorName}</p>
-          <span className="w-[5px] h-[5px] rounded-full bg-[#00000088] " />
+          <span className="h-[5px] w-[5px] rounded-full bg-[#00000088] " />
           <Link
             href={`/articles?category=${article.category}`}
-            className="bg-[#FFD89C] text-black tracking-[1px] px-2 py-1 rounded-3xl w-fit text-[10px] sm:text-[12px] border-2 border-black font-bold"
+            className="w-fit rounded-3xl border-2 border-black bg-[#FFD89C] px-2 py-1 text-[10px] font-bold tracking-[1px] text-black sm:text-[12px]"
           >
             {article.category}
           </Link>
-          <span className="w-[5px] h-[5px] rounded-full bg-[#00000088] " />
+          <span className="h-[5px] w-[5px] rounded-full bg-[#00000088] " />
           <p>{getTime(new Date(article.createdAt.seconds * 1000), false)}</p>
         </div>
         <SaveCount articleId={articleId} />
-        <div className="w-full h-fit mx-auto overflow-hidden rounded-2xl border-2 border-dashed border-[#245953] shadow-[#245953] shadow-[-7px_7px]">
+        <div className="mx-auto h-fit w-full overflow-hidden rounded-2xl border-2 border-dashed border-[#245953] shadow-[-7px_7px] shadow-[#245953]">
           {article.image && (
             <Image
               src={article.image}
@@ -68,12 +68,12 @@ const Page = async ({ params }: { params: { id: string } }) => {
               width={800}
               height={400}
               priority={true}
-              className="w-full h-[500px] object-cover"
+              className="h-[500px] w-full object-cover"
             />
           )}
         </div>
 
-        <div className="w-full mx-auto mt-8">
+        <div className="mx-auto mt-8 w-full">
           <TextEditor article={article.content} />
         </div>
         {article.tag && (
