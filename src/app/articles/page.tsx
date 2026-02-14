@@ -1,7 +1,7 @@
 import React from "react";
-import { headers } from "next/dist/client/components/headers";
 
 import ArticleList from "@/components/Article/ArticleList";
+import { headers } from "next/headers.js";
 
 const Page = async ({
   searchParams,
@@ -22,16 +22,16 @@ const Page = async ({
       "/api/articles/search?" +
       `${category ? "category" : search ? "search" : "tag"}` +
       "=" +
-      `${category ? category : search ? search : tag}`
+      `${category ? category : search ? search : tag}`,
   );
   const articles = await categoryArticlesReq.json();
 
   return (
-    <div className="flex flex-col justify-center items-center w-full mt-[60px]">
+    <div className="mt-[60px] flex w-full flex-col items-center justify-center">
       {category && (
         <h2
-          className={`text-[25px] tracking-[1px] w-fit mx-auto font-bold 
-      bg-[#FFD89C] text-bold font-mono shadow-[-3px_3px] shadow-black py-1 px-3 rounded-full border-2 border-black
+          className={`text-bold mx-auto w-fit rounded-full border-2 
+      border-black bg-[#FFD89C] px-3 py-1 font-mono text-[25px] font-bold tracking-[1px] shadow-[-3px_3px] shadow-black
       `}
         >
           {category}
@@ -39,18 +39,18 @@ const Page = async ({
       )}
       {(search || tag) && (
         <h2
-          className={`text-[25px] tracking-[1px] w-fit mx-auto font-bold 
-      text-bold font-mono py-1 px-3 rounded-full
+          className={`text-bold mx-auto w-fit rounded-full px-3 
+      py-1 font-mono text-[25px] font-bold tracking-[1px]
       `}
         >
           {`搜尋結果 : ${search || tag}`}
         </h2>
       )}
-      <div className="h-full w-full grow p-3 pt-5 flex flex-col items-center gap-3">
+      <div className="flex h-full w-full grow flex-col items-center gap-3 p-3 pt-5">
         {articles.length > 0 ? (
           <ArticleList articles={articles} customLayout="w-full" />
         ) : (
-          <p className="text-[#245953] font-medium text-center w-fit mx-auto">
+          <p className="mx-auto w-fit text-center font-medium text-[#245953]">
             Found no articles related to {search}...
           </p>
         )}
