@@ -4,9 +4,9 @@ import { doc, getDoc } from "firebase/firestore";
 
 export async function GET(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> },
 ) {
-  const articleId = params.id;
+  const { id: articleId } = await params;
   const ref = doc(db, "articles", articleId);
   const result = await getDoc(ref);
   const data = result.data();
